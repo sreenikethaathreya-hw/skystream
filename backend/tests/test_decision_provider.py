@@ -133,6 +133,49 @@ async def test_low_confidence_fields_are_reported_without_gemini(
     assert claim.low_confidence_fields == ["driver"]
 
 
+async def test_low_confidence_score_is_reported(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    from app.ai import jev_client
+
+    async def unsure_size(self, state, questions):
+        return {
+            "model": "jev-1.13.0",
+            "answers": {
+                "direction": {"type": "choice", "choice": "up", "confidence": 0.99, "probabilities": {}},
+                "magnitude": {"type": "score", "score": 1.0, "confidence": 0.27, "probabilities": {}},
+                "specificity": {"type": "score", "score": 2.0, "confidence": 0.63, "probabilities": {}},
+            },
+        }
+
+    monkeypatch.setattr(jev_client.JevClient, "ask", unsure_size)
+    provider = DecisionProvider(_settings(tmp_path, ai_mode="live"))
+    claim = await provider.structure_justification(_input())
+    assert claim.low_confidence_fields == ["magnitude"]
+
+
+async def test_gemini_resolves_low_confidence_score(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    from app.ai import gemini_client, jev_client
+
+    async def unsure_size(self, state, questions):
+        return {
+            "model": "jev-1.13.0",
+            "answers": {
+                "magnitude": {"type": "score", "score": 1.0, "confidence": 0.27, "probabilities": {}}
+            },
+        }
+
+    async def extract(self, prompt, schema, timeout_seconds):
+        assert schema["properties"]["magnitude"]["enum"][3] == "Large (over 20%)"
+        return {"magnitude": "Large (over 20%)"}
+
+    monkeypatch.setattr(jev_client.JevClient, "ask", unsure_size)
+    monkeypatch.setattr(gemini_client.GeminiClient, "extract", extract)
+    provider = DecisionProvider(_settings(tmp_path, ai_mode="live", gemini_enabled=True, gcp_project="demo"))
+    claim = await provider.structure_justification(_input())
+    assert claim.magnitude == 3.0
+    assert claim.magnitude_label == "Large (over 20%)"
+    assert claim.low_confidence_fields == []
+
+
 async def test_gemini_fallback_overrides_low_confidence_choice(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:

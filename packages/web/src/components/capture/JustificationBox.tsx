@@ -4,6 +4,15 @@ import { Button } from "@/components/ui/button";
 import { Card, CardBody, CardHeader } from "@/components/ui/card";
 import type { StructuredClaim } from "@/lib/types";
 
+const FIELD_NAMES: Record<string, string> = {
+  driver: "driver",
+  direction: "direction",
+  competitor: "competitor",
+  variety: "variety",
+  magnitude: "size of the effect",
+  specificity: "specificity",
+};
+
 export function JustificationBox({
   text,
   required,
@@ -55,10 +64,15 @@ export function JustificationBox({
               {claim.summary}
             </p>
             <ClaimTags decisions={claim.decisions} provider={claim.provider} latencyMs={claim.latencyMs} />
+            {claim.mismatches.map((m) => (
+              <p key={m.code} className="mt-2 text-xs text-crit-700" data-testid={`mismatch-${m.code}`}>
+                {m.message}
+              </p>
+            ))}
             {claim.lowConfidenceFields.length > 0 && (
-              <p className="mt-2 text-xs text-warn-700">
-                Low confidence on {claim.lowConfidenceFields.join(", ")}. Consider naming the competitor, variety or
-                customer.
+              <p className="mt-2 text-xs text-warn-700" data-testid="low-confidence">
+                Jev is unsure about the {claim.lowConfidenceFields.map((f) => FIELD_NAMES[f] ?? f).join(", ")}. Name
+                the competitor, variety or customer, and say how big the effect is.
               </p>
             )}
             {weakAddress && (

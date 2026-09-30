@@ -64,6 +64,13 @@ def test_implausible_number_raises_critical_flags() -> None:
     assert {"share_over_100", "implied_ha_over_market"} <= codes
 
 
+def test_competitor_shares_never_go_negative() -> None:
+    ctx = _ctx()
+    impact = compute_impact(ctx, EntryInput(month=9, value=500_000, low=480_000, high=520_000))
+    assert impact.mega_share > 1
+    assert all(c.new_pct == 0 for c in impact.competitors)
+
+
 def test_wide_range_is_flagged() -> None:
     ctx = _ctx()
     entry = EntryInput(month=9, value=10000, low=6000, high=12000)

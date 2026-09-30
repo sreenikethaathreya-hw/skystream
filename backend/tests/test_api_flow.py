@@ -120,6 +120,24 @@ async def test_full_demo_loop(client: AsyncClient) -> None:
     assert reps["rep-a"]["weak"] is False and reps["rep-b"]["weak"] is True
 
 
+async def test_claim_that_understates_the_number_is_flagged(client: AsyncClient) -> None:
+    body = {
+        "segmentId": 2482,
+        "month": 9,
+        "value": 128444,
+        "low": 120000,
+        "high": 136000,
+        "justification": SENTENCE,
+    }
+    analyzed = (await client.post("/api/justifications/analyze", json=body)).json()
+    assert [m["code"] for m in analyzed["claim"]["mismatches"]] == ["claim_size_mismatch"]
+    created = (await client.post("/api/entries", json=body, headers=REP_A)).json()
+    assert "claim_size_mismatch" in {f["code"] for f in created["flags"]}
+    queue = (await client.get("/api/consensus/queue")).json()
+    reasons = next(i["reasons"] for i in queue["exceptions"] if i["entry"]["id"] == created["id"])
+    assert any("describes a moderate" in r for r in reasons)
+
+
 async def test_reset_restores_seed(client: AsyncClient) -> None:
     await client.post("/api/demo/advance")
     assert (await client.post("/api/demo/reset")).status_code == 204

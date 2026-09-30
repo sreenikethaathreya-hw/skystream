@@ -9,6 +9,7 @@ from app.models import Claim, CompetitorShare, DemandEntry, Segment
 from app.schemas.api import AnalyzeOut, ClaimOut, EntryIn, EntryOut
 from app.schemas.claims import StructuredClaim, TriageDecision
 from app.schemas.demand_math import EntryInput, Flag, Impact, SegmentContext
+from app.services.claim_checks import claim_mismatches
 from app.services.context_service import build_context, get_clock, load_reference, segment_label
 from app.services.demand_math import compute_impact
 from app.services.flags import evaluate_flags
@@ -63,7 +64,7 @@ async def _structure(
     ref = await load_reference(db)
     market = next(m for m in ref.market if m.segment_id == segment.id and m.year == ctx.year)
     plan = next((p for p in ref.plan if p.segment_id == segment.id and p.year == ctx.year), None)
-    return await get_decision_provider().structure_justification(
+    claim = await get_decision_provider().structure_justification(
         JustificationInput(
             sentence=body.justification.strip(),
             segment_label=f"{segment_label(segment)} ({segment.description})",
@@ -75,6 +76,8 @@ async def _structure(
             flag_direction="up" if entry.value > impact.month_expected else "down",
         )
     )
+    mismatches = claim_mismatches(claim.direction, claim.magnitude, entry.value, impact.month_expected)
+    return claim.model_copy(update={"mismatches": mismatches})
 
 
 async def analyze(db: AsyncSession, body: EntryIn) -> AnalyzeOut:
@@ -90,6 +93,8 @@ async def create_entry(db: AsyncSession, user: DemoUser, body: EntryIn) -> Entry
     if flags and not (body.justification or "").strip():
         raise HTTPException(status_code=422, detail="A justification is required when flags fire")
     claim = await _structure(db, ctx, segment, body, entry, impact, flags)
+    if claim:
+        flags = [*flags, *claim.mismatches]
 
     await db.execute(
         update(DemandEntry)

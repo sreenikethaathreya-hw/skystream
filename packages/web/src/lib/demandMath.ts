@@ -69,7 +69,7 @@ export function computeImpact(
   const mega = ctx.mega;
   const megaBase = div(mega.syngentaValueEur, mega.marketValueEur);
   const megaNew = div(mega.syngentaValueEur - ctx.planValueEur + fyValue, mega.marketValueEur);
-  const scale = div(100 - megaNew * 100, 100 - megaBase * 100);
+  const scale = Math.max(0, div(100 - megaNew * 100, 100 - megaBase * 100));
   const competitors = mega.competitors.map((c) => ({
     name: c.name,
     baselinePct: c.sharePct,

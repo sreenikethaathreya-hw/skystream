@@ -26,6 +26,7 @@ from app.schemas.demand_math import Flag
 logger = logging.getLogger(__name__)
 
 GATED_CHOICES = ("driver", "direction", "competitor", "variety")
+GATED_SCORES = {"magnitude": MAGNITUDE_LEVELS, "specificity": SPECIFICITY_LEVELS}
 
 
 @dataclass
@@ -131,7 +132,12 @@ class DecisionProvider:
         low = [
             f
             for f in GATED_CHOICES
-            if (answers.get(f, {}).get("confidence") or 0) < self._settings.jev_confidence_threshold
+            if f in answers and (answers[f].get("confidence") or 0) < self._settings.jev_confidence_threshold
+        ] + [
+            f
+            for f in GATED_SCORES
+            if f in answers
+            and (answers[f].get("confidence") or 0) < self._settings.jev_score_confidence_threshold
         ]
         if low and self._gemini.available:
             try:
@@ -140,16 +146,20 @@ class DecisionProvider:
                     {
                         "type": "OBJECT",
                         "properties": {
-                            f: {"type": "STRING", "enum": list(questions[f]["criteria"])} for f in low
+                            f: {"type": "STRING", "enum": self._options(f, questions)} for f in low
                         },
                         "required": low,
                     },
                     timeout_seconds=self._settings.gemini_fallback_timeout_seconds,
                 )
                 for field_name, value in override.items():
-                    answers[field_name] = {**answers[field_name], "choice": value, "confidence": 1.0}
+                    if field_name in GATED_SCORES:
+                        level = float(GATED_SCORES[field_name].index(value))
+                        answers[field_name] = {**answers[field_name], "score": level, "confidence": 1.0}
+                    else:
+                        answers[field_name] = {**answers[field_name], "choice": value, "confidence": 1.0}
                 provider = f"{provider} + gemini fallback"
-            except GeminiError as exc:
+            except (GeminiError, ValueError) as exc:
                 logger.warning("Gemini fallback failed: %s", exc)
 
         def choice(name: str) -> str | None:
@@ -182,6 +192,12 @@ class DecisionProvider:
         claim.latency_ms = round((time.perf_counter() - started) * 1000)
         self._claims[claim_key] = claim
         return claim
+
+    @staticmethod
+    def _options(field_name: str, questions: dict) -> list[str]:
+        if field_name in GATED_SCORES:
+            return GATED_SCORES[field_name]
+        return list(questions[field_name]["criteria"])
 
     @staticmethod
     def _template_summary(claim: StructuredClaim) -> str:

@@ -1,4 +1,5 @@
 from app.schemas.common import CamelModel
+from app.schemas.demand_math import Flag
 
 
 class DecisionAnswer(CamelModel):
@@ -29,6 +30,7 @@ class StructuredClaim(CamelModel):
     low_confidence_fields: list[str]
     decisions: dict[str, DecisionAnswer]
     latency_ms: int
+    mismatches: list[Flag] = []
 
 
 class TriageDecision(CamelModel):

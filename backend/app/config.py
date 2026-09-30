@@ -24,6 +24,8 @@ class Settings(BaseSettings):
     jev_model: str = "jev-1.13.0"
     jev_timeout_seconds: float = 5.0
     jev_confidence_threshold: float = 0.8
+    # Score confidence is the probability of the winning level on a 4-level rubric, so it runs lower than Choice.
+    jev_score_confidence_threshold: float = 0.4
 
     gemini_enabled: bool = False
     gcp_project: str | None = None

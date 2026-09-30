@@ -71,7 +71,7 @@ def compute_impact(ctx: SegmentContext, entry: EntryInput, thresholds: Threshold
     mega = ctx.mega
     mega_base = _div(mega.syngenta_value_eur, mega.market_value_eur)
     mega_new = _div(mega.syngenta_value_eur - ctx.plan_value_eur + fy_value, mega.market_value_eur)
-    scale = _div(100 - mega_new * 100, 100 - mega_base * 100)
+    scale = max(0.0, _div(100 - mega_new * 100, 100 - mega_base * 100))
     competitors = [
         CompetitorImpact(
             name=c.name,

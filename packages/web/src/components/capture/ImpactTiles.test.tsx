@@ -29,6 +29,13 @@ describe("impact tiles", () => {
     expect(screen.getByText(/No flags/)).toBeInTheDocument();
   });
 
+  it("floors competitors at 0% and says so when Syngenta exceeds the mega-segment", () => {
+    const { impact } = live("2482 beyond the whole mega-segment");
+    render(<ShareTile impact={impact} />);
+    expect(screen.getByTestId("mega-overflow")).toBeInTheDocument();
+    expect(impact.competitors.every((c) => c.newPct === 0)).toBe(true);
+  });
+
   it("lists every flag for an implausible number", () => {
     const { flags } = live("2482 unrealistic");
     render(<FlagsTile flags={flags} />);

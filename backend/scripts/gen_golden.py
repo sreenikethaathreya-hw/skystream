@@ -58,6 +58,11 @@ def main() -> None:
             EntryInput(month=10, value=p2448 * 3, low=p2448 * 2.8, high=p2448 * 3.2),
         ),
         (
+            "2482 beyond the whole mega-segment",
+            ctx(2482),
+            EntryInput(month=9, value=250000, low=240000, high=260000),
+        ),
+        (
             "2432 with submitted months",
             ctx(2432, {10: 2600.0, 11: 2500.0}),
             EntryInput(month=12, value=1300, low=1200, high=1400),

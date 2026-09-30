@@ -94,6 +94,7 @@ export interface StructuredClaim {
   lowConfidenceFields: string[];
   decisions: Record<string, DecisionAnswer>;
   latencyMs: number;
+  mismatches: Flag[];
 }
 
 export interface AnalyzeResult {

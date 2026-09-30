@@ -39,6 +39,11 @@ export function ShareTile({ impact }: { impact: Impact }) {
           <p className="text-[11px] font-medium uppercase tracking-wide text-muted">
             Blocky PGH value share {fmtPct(impact.megaShare)} ({fmtPts((impact.megaShare - impact.megaShareBaseline) * 100)})
           </p>
+          {impact.megaShare > 1 && (
+            <p className="mt-1 text-xs text-crit-700" data-testid="mega-overflow">
+              Syngenta would exceed the whole Blocky PGH market; competitor shares stop at 0%.
+            </p>
+          )}
           {movers.map((c) => (
             <div key={c.name} className="mt-1 flex items-center justify-between text-xs">
               <span>{c.name}</span>

@@ -411,6 +411,21 @@ def flags(doc) -> None:
     )
     doc.p("Flags never block submission. Any flag makes the one-sentence justification mandatory, adds the entry to "
           "the consensus exceptions, and is stored with the entry.")
+    doc.p("Two further checks compare the structured justification with the number (claim_checks.py). They are "
+          "shown under the claim while the rep writes and stored as warning flags on submit, so they reach the "
+          "Ledger and the consensus reasons:")
+    doc.table(
+        ["Code", "Fires when", "Example"],
+        [
+            ["claim_direction_mismatch", "Jev reads the claim as up (down) but the number is at least 5% below (above) the plan month",
+             "'Growers are delaying planting' with a number 15% above plan"],
+            ["claim_size_mismatch", "The change vs the plan month is more than 2.5x the upper bound of the size Jev read (negligible 2%, small 5%, moderate 20%), or the rep describes a large effect and the number moves less than 8%",
+             "A 'small' effect described for a number 900% above plan"],
+        ],
+        widths=[3.8, 8.0, 5.2], size=8, caption="Claim-consistency checks",
+    )
+    doc.p("Competitor shares in the re-split never go below 0%: if Syngenta's implied value would exceed the whole "
+          "Blocky PGH market, every competitor shows 0% and the share tile says the number exceeds the market.")
 
 
 def ai(doc, figures: dict[str, Path]) -> None:
@@ -445,7 +460,9 @@ def ai(doc, figures: dict[str, Path]) -> None:
     doc.h("10.3 Confidence gating and fallback", 2)
     doc.bullets([
         "For driver, direction, competitor and variety, confidence below 0.8 triggers a Gemini extraction constrained to the same option lists (JSON schema enum, thinking level LOW, 5 s timeout).",
+        "Scores (size and specificity) are gated too: confidence below 0.4 (the winning level's probability on a four-level scale) triggers the same Gemini extraction over the level labels.",
         "If Gemini fails or times out, Jev's answer is kept and the field is reported as low-confidence to the rep.",
+        "Yes/no answers between 40% and 60% are shown as 'Uncertain' rather than Yes or No.",
         "The provider string stored with every claim records who decided: 'jev', 'jev + gemini fallback', 'jev (recorded)' or 'offline decider'.",
         "Finished claims are cached by state, so Structure then Submit with the same text costs one Jev call.",
     ])
@@ -761,8 +778,8 @@ def deployment(doc) -> None:
 def testing(doc) -> None:
     doc.h("20. Testing and quality")
     doc.bullets([
-        "**Backend (pytest, 25 tests)**: golden math cases, flag rules, decision provider (offline, recorded fixture, live mocked, Jev failure, low-confidence, Gemini fallback and summary), full API loop (flag enforcement, ownership, closed months, supersede, consensus, advance, CSV, RTB, track records, reset, data quality).",
-        "**Frontend (vitest, 18 tests)**: TypeScript math and flags against the same golden cases; tile components.",
+        "**Backend (pytest, 37 tests)**: golden math cases, flag rules, claim-consistency checks, decision provider (offline, recorded fixture, live mocked, Jev failure, low-confidence, Gemini fallback and summary), full API loop (flag enforcement, ownership, closed months, supersede, consensus, advance, CSV, RTB, track records, reset, data quality).",
+        "**Frontend (vitest, 22 tests)**: TypeScript math and flags against the same golden cases; tile components.",
         "**End to end (Playwright)**: the demo script from capture to track record, run locally and against production.",
         "**Static checks**: ruff (lint + format) and TypeScript strict type check.",
     ])
