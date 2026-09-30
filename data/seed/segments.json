@@ -1,0 +1,101 @@
+[
+ {
+  "id": 2432,
+  "description": "PEP-SWEET BLOCKY-SPRING-COOL to WARM-PGH-RED-FRESH",
+  "cycle": "COOL TO WARM",
+  "color": "RED",
+  "ecology": "PASSIVE GREENHOUSE",
+  "megaSegmentId": "SP01",
+  "megaSegmentDesc": "SWEET PEPPER BLOCKY PGH",
+  "profile": "spring",
+  "ownerId": "rep-b"
+ },
+ {
+  "id": 2433,
+  "description": "PEP-SWEET BLOCKY-SPRING-COOL to WARM-PGH-YELLOW-FRESH",
+  "cycle": "COOL TO WARM",
+  "color": "YELLOW",
+  "ecology": "PASSIVE GREENHOUSE",
+  "megaSegmentId": "SP01",
+  "megaSegmentDesc": "SWEET PEPPER BLOCKY PGH",
+  "profile": "spring",
+  "ownerId": "rep-b"
+ },
+ {
+  "id": 2446,
+  "description": "PEP-SWEET BLOCKY-AUTUMN-WARM to COOL-PGH-ORANGE-FRESH",
+  "cycle": "WARM TO COOL",
+  "color": "ORANGE",
+  "ecology": "PASSIVE GREENHOUSE",
+  "megaSegmentId": "SP01",
+  "megaSegmentDesc": "SWEET PEPPER BLOCKY PGH",
+  "profile": "autumn",
+  "ownerId": "rep-b"
+ },
+ {
+  "id": 2448,
+  "description": "PEP-SWEET BLOCKY-AUTUMN-EARLY-WARM to COOL-PGH-RED-FRESH",
+  "cycle": "WARM TO COOL",
+  "color": "RED",
+  "ecology": "PASSIVE GREENHOUSE",
+  "megaSegmentId": "SP01",
+  "megaSegmentDesc": "SWEET PEPPER BLOCKY PGH",
+  "profile": "autumn_early",
+  "ownerId": "rep-b"
+ },
+ {
+  "id": 2449,
+  "description": "PEP-SWEET BLOCKY-AUTUMN-EARLY-WARM to COOL-PGH-YELLOW-FRESH           ",
+  "cycle": "WARM TO COOL",
+  "color": "YELLOW",
+  "ecology": "PASSIVE GREENHOUSE",
+  "megaSegmentId": "SP01",
+  "megaSegmentDesc": "SWEET PEPPER BLOCKY PGH",
+  "profile": "autumn_early",
+  "ownerId": "rep-b"
+ },
+ {
+  "id": 2481,
+  "description": "PEP-SWEET BLOCKY-AUTUMN-MEDIUM-WARM to COOL-PGH-RED-FRESH",
+  "cycle": "WARM TO COOL",
+  "color": "RED",
+  "ecology": "PASSIVE GREENHOUSE",
+  "megaSegmentId": "SP01",
+  "megaSegmentDesc": "SWEET PEPPER BLOCKY PGH",
+  "profile": "autumn_medium",
+  "ownerId": "rep-a"
+ },
+ {
+  "id": 2482,
+  "description": "PEP-SWEET BLOCKY-AUTUMN-LATE-WARM to COOL-PGH-RED-FRESH",
+  "cycle": "WARM TO COOL",
+  "color": "RED",
+  "ecology": "PASSIVE GREENHOUSE",
+  "megaSegmentId": "SP01",
+  "megaSegmentDesc": "SWEET PEPPER BLOCKY PGH",
+  "profile": "autumn_late",
+  "ownerId": "rep-a"
+ },
+ {
+  "id": 2483,
+  "description": "PEP-SWEET BLOCKY-AUTUMN-MEDIUM-WARM to COOL-PGH-YELLOW-FRESH",
+  "cycle": "WARM TO COOL",
+  "color": "YELLOW",
+  "ecology": "PASSIVE GREENHOUSE",
+  "megaSegmentId": "SP01",
+  "megaSegmentDesc": "SWEET PEPPER BLOCKY PGH",
+  "profile": "autumn_medium",
+  "ownerId": "rep-a"
+ },
+ {
+  "id": 2484,
+  "description": "PEP-SWEET BLOCKY-AUTUMN-LATE-WARM to COOL-PGH-YELLOW-FRESH",
+  "cycle": "WARM TO COOL",
+  "color": "YELLOW",
+  "ecology": "PASSIVE GREENHOUSE",
+  "megaSegmentId": "SP01",
+  "megaSegmentDesc": "SWEET PEPPER BLOCKY PGH",
+  "profile": "autumn_late",
+  "ownerId": "rep-a"
+ }
+]

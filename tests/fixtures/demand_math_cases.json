@@ -1,0 +1,1804 @@
+[
+ {
+  "name": "2482 at plan",
+  "context": {
+   "year": 2026,
+   "clockMonth": 9,
+   "marketHectares": 3316.0,
+   "marketQtyKs": 69636.0,
+   "density": 21.0,
+   "priceExseed": 420.0,
+   "planQtyKs": 43191.0,
+   "planValueEur": 19540342.81,
+   "planNetPrice": 452.42,
+   "lastYearQtyKs": 46849.0,
+   "lastYearValueEur": 19937877.89,
+   "marketHistory": [
+    {
+     "year": 2024,
+     "hectares": 2750.0,
+     "qtyKs": 57750.0
+    },
+    {
+     "year": 2025,
+     "hectares": 2753.0,
+     "qtyKs": 57813.0
+    },
+    {
+     "year": 2026,
+     "hectares": 3316.0,
+     "qtyKs": 69636.0
+    }
+   ],
+   "planQtyHistory": [
+    {
+     "year": 2024,
+     "hectares": 0.0,
+     "qtyKs": 46572.0
+    },
+    {
+     "year": 2025,
+     "hectares": 0.0,
+     "qtyKs": 46849.0
+    },
+    {
+     "year": 2026,
+     "hectares": 0.0,
+     "qtyKs": 43191.0
+    }
+   ],
+   "netPriceHistory": [
+    399.4,
+    425.58,
+    452.42
+   ],
+   "monthlyPlan": [
+    611.0,
+    611.0,
+    611.0,
+    611.0,
+    611.0,
+    611.0,
+    8760.0,
+    12837.0,
+    12835.0,
+    3871.0,
+    611.0,
+    611.0
+   ],
+   "monthlyActual": [
+    697.0,
+    687.0,
+    689.0,
+    678.0,
+    669.0,
+    604.0,
+    9083.0,
+    13373.0,
+    null,
+    null,
+    null,
+    null
+   ],
+   "monthlyActualValue": [
+    311826.02,
+    308599.08,
+    309425.23,
+    307347.45,
+    304768.48,
+    278554.51,
+    4133929.9,
+    5956345.7,
+    null,
+    null,
+    null,
+    null
+   ],
+   "lastYearMonthly": [
+    687.0,
+    620.0,
+    711.0,
+    698.0,
+    727.0,
+    682.0,
+    9698.0,
+    13876.0,
+    14066.0,
+    3882.0,
+    576.0,
+    626.0
+   ],
+   "submitted": {},
+   "marketTrendNote": "High uncertainly due to the T. parvispinus. Posibilities that the Late cycle will grow, compared with early and medium cyle",
+   "mega": {
+    "marketValueEur": 90405811.0,
+    "syngentaValueEur": 26600738.95,
+    "syngentaSharePct": 29.4,
+    "competitors": [
+     {
+      "name": "Limagrain",
+      "sharePct": 22.5
+     },
+     {
+      "name": "Others",
+      "sharePct": 14.3
+     },
+     {
+      "name": "Sur Seeds",
+      "sharePct": 14.3
+     },
+     {
+      "name": "Rijk Zwaan",
+      "sharePct": 6.1
+     },
+     {
+      "name": "Enza Zaden",
+      "sharePct": 4.1
+     },
+     {
+      "name": "Nunhems/BASF",
+      "sharePct": 3.1
+     },
+     {
+      "name": "Semillas Fito",
+      "sharePct": 3.1
+     },
+     {
+      "name": "Panora Seeds",
+      "sharePct": 3.1
+     }
+    ],
+    "impliedHaBaseline": 2831.2685714285712,
+    "growerCeilingHa": 28393.0
+   }
+  },
+  "entry": {
+   "month": 9,
+   "value": 12835.0,
+   "low": 12193.25,
+   "high": 13476.75,
+   "price": null
+  },
+  "expected": {
+   "actualsToDate": 26480.0,
+   "monthsRemaining": 4,
+   "fyEstimate": 44408.0,
+   "fyLow": 43766.25,
+   "fyHigh": 45049.75,
+   "planFy": 43191.0,
+   "gapToPlan": 1217.0,
+   "ytgRemaining": 16711.0,
+   "requiredMonthlyRate": 4177.75,
+   "enteredMonthlyRate": 4482.0,
+   "historicalMonthlyRate": 4787.5,
+   "volumeShare": 0.6377161238439888,
+   "volumeShareLow": 0.6285003446493194,
+   "volumeShareHigh": 0.6469319030386582,
+   "planVolumeShare": 0.6202395312769258,
+   "lastYearVolumeShare": 0.8103540726134261,
+   "maxHistoricalShare": 0.8103540726134261,
+   "fyValue": 20021782.13,
+   "valueShare": 0.6845727760545312,
+   "planValueShare": 0.6681116913391814,
+   "megaShareBaseline": 0.2942370479924128,
+   "megaShare": 0.29956236187074303,
+   "competitors": [
+    {
+     "name": "Limagrain",
+     "baselinePct": 22.5,
+     "newPct": 22.330226902784293,
+     "deltaPts": -0.16977309721570677
+    },
+    {
+     "name": "Others",
+     "baselinePct": 14.3,
+     "newPct": 14.192099764880684,
+     "deltaPts": -0.10790023511931679
+    },
+    {
+     "name": "Sur Seeds",
+     "baselinePct": 14.3,
+     "newPct": 14.192099764880684,
+     "deltaPts": -0.10790023511931679
+    },
+    {
+     "name": "Rijk Zwaan",
+     "baselinePct": 6.1,
+     "newPct": 6.053972626977075,
+     "deltaPts": -0.04602737302292503
+    },
+    {
+     "name": "Enza Zaden",
+     "baselinePct": 4.1,
+     "newPct": 4.069063568951804,
+     "deltaPts": -0.030936431048195878
+    },
+    {
+     "name": "Nunhems/BASF",
+     "baselinePct": 3.1,
+     "newPct": 3.0766090399391692,
+     "deltaPts": -0.023390960060830857
+    },
+    {
+     "name": "Semillas Fito",
+     "baselinePct": 3.1,
+     "newPct": 3.0766090399391692,
+     "deltaPts": -0.023390960060830857
+    },
+    {
+     "name": "Panora Seeds",
+     "baselinePct": 3.1,
+     "newPct": 3.0766090399391692,
+     "deltaPts": -0.023390960060830857
+    }
+   ],
+   "impliedHa": 2114.6666666666665,
+   "impliedHaLow": 2084.1071428571427,
+   "impliedHaHigh": 2145.2261904761904,
+   "marketHa": 3316.0,
+   "megaImpliedHa": 2889.220952380952,
+   "revenue": {
+    "lastYear": 19937877.89,
+    "estimate": 20021782.13,
+    "change": 83904.23999999836,
+    "volumeEffect": -1038834.5520606631,
+    "priceEffect": 1122738.7920606611,
+    "priceShareOfChange": 0.5194081408868652,
+    "avgPrice": 450.85980296343,
+    "lastYearPrice": 425.57744861149655
+   },
+   "monthExpected": 12835.0,
+   "monthLastYear": 14066.0,
+   "monthSigma": 1925.25,
+   "monthZ": 0.0
+  },
+  "expectedFlags": []
+ },
+ {
+  "name": "2482 raised 25%",
+  "context": {
+   "year": 2026,
+   "clockMonth": 9,
+   "marketHectares": 3316.0,
+   "marketQtyKs": 69636.0,
+   "density": 21.0,
+   "priceExseed": 420.0,
+   "planQtyKs": 43191.0,
+   "planValueEur": 19540342.81,
+   "planNetPrice": 452.42,
+   "lastYearQtyKs": 46849.0,
+   "lastYearValueEur": 19937877.89,
+   "marketHistory": [
+    {
+     "year": 2024,
+     "hectares": 2750.0,
+     "qtyKs": 57750.0
+    },
+    {
+     "year": 2025,
+     "hectares": 2753.0,
+     "qtyKs": 57813.0
+    },
+    {
+     "year": 2026,
+     "hectares": 3316.0,
+     "qtyKs": 69636.0
+    }
+   ],
+   "planQtyHistory": [
+    {
+     "year": 2024,
+     "hectares": 0.0,
+     "qtyKs": 46572.0
+    },
+    {
+     "year": 2025,
+     "hectares": 0.0,
+     "qtyKs": 46849.0
+    },
+    {
+     "year": 2026,
+     "hectares": 0.0,
+     "qtyKs": 43191.0
+    }
+   ],
+   "netPriceHistory": [
+    399.4,
+    425.58,
+    452.42
+   ],
+   "monthlyPlan": [
+    611.0,
+    611.0,
+    611.0,
+    611.0,
+    611.0,
+    611.0,
+    8760.0,
+    12837.0,
+    12835.0,
+    3871.0,
+    611.0,
+    611.0
+   ],
+   "monthlyActual": [
+    697.0,
+    687.0,
+    689.0,
+    678.0,
+    669.0,
+    604.0,
+    9083.0,
+    13373.0,
+    null,
+    null,
+    null,
+    null
+   ],
+   "monthlyActualValue": [
+    311826.02,
+    308599.08,
+    309425.23,
+    307347.45,
+    304768.48,
+    278554.51,
+    4133929.9,
+    5956345.7,
+    null,
+    null,
+    null,
+    null
+   ],
+   "lastYearMonthly": [
+    687.0,
+    620.0,
+    711.0,
+    698.0,
+    727.0,
+    682.0,
+    9698.0,
+    13876.0,
+    14066.0,
+    3882.0,
+    576.0,
+    626.0
+   ],
+   "submitted": {},
+   "marketTrendNote": "High uncertainly due to the T. parvispinus. Posibilities that the Late cycle will grow, compared with early and medium cyle",
+   "mega": {
+    "marketValueEur": 90405811.0,
+    "syngentaValueEur": 26600738.95,
+    "syngentaSharePct": 29.4,
+    "competitors": [
+     {
+      "name": "Limagrain",
+      "sharePct": 22.5
+     },
+     {
+      "name": "Others",
+      "sharePct": 14.3
+     },
+     {
+      "name": "Sur Seeds",
+      "sharePct": 14.3
+     },
+     {
+      "name": "Rijk Zwaan",
+      "sharePct": 6.1
+     },
+     {
+      "name": "Enza Zaden",
+      "sharePct": 4.1
+     },
+     {
+      "name": "Nunhems/BASF",
+      "sharePct": 3.1
+     },
+     {
+      "name": "Semillas Fito",
+      "sharePct": 3.1
+     },
+     {
+      "name": "Panora Seeds",
+      "sharePct": 3.1
+     }
+    ],
+    "impliedHaBaseline": 2831.2685714285712,
+    "growerCeilingHa": 28393.0
+   }
+  },
+  "entry": {
+   "month": 9,
+   "value": 16043.75,
+   "low": 14760.249999999998,
+   "high": 16685.5,
+   "price": null
+  },
+  "expected": {
+   "actualsToDate": 26480.0,
+   "monthsRemaining": 4,
+   "fyEstimate": 47616.75,
+   "fyLow": 46333.25,
+   "fyHigh": 48258.5,
+   "planFy": 43191.0,
+   "gapToPlan": 4425.75,
+   "ytgRemaining": 16711.0,
+   "requiredMonthlyRate": 4177.75,
+   "enteredMonthlyRate": 5284.1875,
+   "historicalMonthlyRate": 4787.5,
+   "volumeShare": 0.6837950198173358,
+   "volumeShareLow": 0.665363461427997,
+   "volumeShareHigh": 0.6930107990120052,
+   "planVolumeShare": 0.6202395312769258,
+   "lastYearVolumeShare": 0.8103540726134261,
+   "maxHistoricalShare": 0.8103540726134261,
+   "fyValue": 21473484.805,
+   "valueShare": 0.7342085239503924,
+   "planValueShare": 0.6681116913391814,
+   "megaShareBaseline": 0.2942370479924128,
+   "megaShare": 0.31561998758022314,
+   "competitors": [
+    {
+     "name": "Limagrain",
+     "baselinePct": 22.5,
+     "newPct": 21.818303490772408,
+     "deltaPts": -0.6816965092275922
+    },
+    {
+     "name": "Others",
+     "baselinePct": 14.3,
+     "newPct": 13.866743996357576,
+     "deltaPts": -0.4332560036424251
+    },
+    {
+     "name": "Sur Seeds",
+     "baselinePct": 14.3,
+     "newPct": 13.866743996357576,
+     "deltaPts": -0.4332560036424251
+    },
+    {
+     "name": "Rijk Zwaan",
+     "baselinePct": 6.1,
+     "newPct": 5.915184501942742,
+     "deltaPts": -0.18481549805725805
+    },
+    {
+     "name": "Enza Zaden",
+     "baselinePct": 4.1,
+     "newPct": 3.9757797472074166,
+     "deltaPts": -0.12422025279258309
+    },
+    {
+     "name": "Nunhems/BASF",
+     "baselinePct": 3.1,
+     "newPct": 3.0060773698397543,
+     "deltaPts": -0.09392263016024582
+    },
+    {
+     "name": "Semillas Fito",
+     "baselinePct": 3.1,
+     "newPct": 3.0060773698397543,
+     "deltaPts": -0.09392263016024582
+    },
+    {
+     "name": "Panora Seeds",
+     "baselinePct": 3.1,
+     "newPct": 3.0060773698397543,
+     "deltaPts": -0.09392263016024582
+    }
+   ],
+   "impliedHa": 2267.464285714286,
+   "impliedHaLow": 2206.345238095238,
+   "impliedHaHigh": 2298.0238095238096,
+   "marketHa": 3316.0,
+   "megaImpliedHa": 3042.0185714285712,
+   "revenue": {
+    "lastYear": 19937877.89,
+    "estimate": 21473484.805,
+    "change": 1535606.914999999,
+    "volumeEffect": 326737.08617147646,
+    "priceEffect": 1208869.8288285215,
+    "priceShareOfChange": 0.7872260908831107,
+    "avgPrice": 450.96493996335323,
+    "lastYearPrice": 425.57744861149655
+   },
+   "monthExpected": 12835.0,
+   "monthLastYear": 14066.0,
+   "monthSigma": 1925.25,
+   "monthZ": 1.6666666666666667
+  },
+  "expectedFlags": []
+ },
+ {
+  "name": "2482 unrealistic",
+  "context": {
+   "year": 2026,
+   "clockMonth": 9,
+   "marketHectares": 3316.0,
+   "marketQtyKs": 69636.0,
+   "density": 21.0,
+   "priceExseed": 420.0,
+   "planQtyKs": 43191.0,
+   "planValueEur": 19540342.81,
+   "planNetPrice": 452.42,
+   "lastYearQtyKs": 46849.0,
+   "lastYearValueEur": 19937877.89,
+   "marketHistory": [
+    {
+     "year": 2024,
+     "hectares": 2750.0,
+     "qtyKs": 57750.0
+    },
+    {
+     "year": 2025,
+     "hectares": 2753.0,
+     "qtyKs": 57813.0
+    },
+    {
+     "year": 2026,
+     "hectares": 3316.0,
+     "qtyKs": 69636.0
+    }
+   ],
+   "planQtyHistory": [
+    {
+     "year": 2024,
+     "hectares": 0.0,
+     "qtyKs": 46572.0
+    },
+    {
+     "year": 2025,
+     "hectares": 0.0,
+     "qtyKs": 46849.0
+    },
+    {
+     "year": 2026,
+     "hectares": 0.0,
+     "qtyKs": 43191.0
+    }
+   ],
+   "netPriceHistory": [
+    399.4,
+    425.58,
+    452.42
+   ],
+   "monthlyPlan": [
+    611.0,
+    611.0,
+    611.0,
+    611.0,
+    611.0,
+    611.0,
+    8760.0,
+    12837.0,
+    12835.0,
+    3871.0,
+    611.0,
+    611.0
+   ],
+   "monthlyActual": [
+    697.0,
+    687.0,
+    689.0,
+    678.0,
+    669.0,
+    604.0,
+    9083.0,
+    13373.0,
+    null,
+    null,
+    null,
+    null
+   ],
+   "monthlyActualValue": [
+    311826.02,
+    308599.08,
+    309425.23,
+    307347.45,
+    304768.48,
+    278554.51,
+    4133929.9,
+    5956345.7,
+    null,
+    null,
+    null,
+    null
+   ],
+   "lastYearMonthly": [
+    687.0,
+    620.0,
+    711.0,
+    698.0,
+    727.0,
+    682.0,
+    9698.0,
+    13876.0,
+    14066.0,
+    3882.0,
+    576.0,
+    626.0
+   ],
+   "submitted": {},
+   "marketTrendNote": "High uncertainly due to the T. parvispinus. Posibilities that the Late cycle will grow, compared with early and medium cyle",
+   "mega": {
+    "marketValueEur": 90405811.0,
+    "syngentaValueEur": 26600738.95,
+    "syngentaSharePct": 29.4,
+    "competitors": [
+     {
+      "name": "Limagrain",
+      "sharePct": 22.5
+     },
+     {
+      "name": "Others",
+      "sharePct": 14.3
+     },
+     {
+      "name": "Sur Seeds",
+      "sharePct": 14.3
+     },
+     {
+      "name": "Rijk Zwaan",
+      "sharePct": 6.1
+     },
+     {
+      "name": "Enza Zaden",
+      "sharePct": 4.1
+     },
+     {
+      "name": "Nunhems/BASF",
+      "sharePct": 3.1
+     },
+     {
+      "name": "Semillas Fito",
+      "sharePct": 3.1
+     },
+     {
+      "name": "Panora Seeds",
+      "sharePct": 3.1
+     }
+    ],
+    "impliedHaBaseline": 2831.2685714285712,
+    "growerCeilingHa": 28393.0
+   }
+  },
+  "entry": {
+   "month": 9,
+   "value": 40000.0,
+   "low": 38000.0,
+   "high": 42000.0,
+   "price": null
+  },
+  "expected": {
+   "actualsToDate": 26480.0,
+   "monthsRemaining": 4,
+   "fyEstimate": 71573.0,
+   "fyLow": 69573.0,
+   "fyHigh": 73573.0,
+   "planFy": 43191.0,
+   "gapToPlan": 28382.0,
+   "ytgRemaining": 16711.0,
+   "requiredMonthlyRate": 4177.75,
+   "enteredMonthlyRate": 11273.25,
+   "historicalMonthlyRate": 4787.5,
+   "volumeShare": 1.0278160721465908,
+   "volumeShareLow": 0.9990952955367913,
+   "volumeShareHigh": 1.0565368487563904,
+   "planVolumeShare": 0.6202395312769258,
+   "lastYearVolumeShare": 0.8103540726134261,
+   "maxHistoricalShare": 0.8103540726134261,
+   "fyValue": 32311771.43,
+   "valueShare": 1.1047847251284912,
+   "planValueShare": 0.6681116913391814,
+   "megaShareBaseline": 0.2942370479924128,
+   "megaShare": 0.43550483242719873,
+   "competitors": [
+    {
+     "name": "Limagrain",
+     "baselinePct": 22.5,
+     "newPct": 17.996327568993006,
+     "deltaPts": -4.5036724310069935
+    },
+    {
+     "name": "Others",
+     "baselinePct": 14.3,
+     "newPct": 11.43766596607111,
+     "deltaPts": -2.8623340339288905
+    },
+    {
+     "name": "Sur Seeds",
+     "baselinePct": 14.3,
+     "newPct": 11.43766596607111,
+     "deltaPts": -2.8623340339288905
+    },
+    {
+     "name": "Rijk Zwaan",
+     "baselinePct": 6.1,
+     "newPct": 4.879004363149215,
+     "deltaPts": -1.2209956368507848
+    },
+    {
+     "name": "Enza Zaden",
+     "baselinePct": 4.1,
+     "newPct": 3.2793308014609472,
+     "deltaPts": -0.8206691985390524
+    },
+    {
+     "name": "Nunhems/BASF",
+     "baselinePct": 3.1,
+     "newPct": 2.4794940206168143,
+     "deltaPts": -0.6205059793831857
+    },
+    {
+     "name": "Semillas Fito",
+     "baselinePct": 3.1,
+     "newPct": 2.4794940206168143,
+     "deltaPts": -0.6205059793831857
+    },
+    {
+     "name": "Panora Seeds",
+     "baselinePct": 3.1,
+     "newPct": 2.4794940206168143,
+     "deltaPts": -0.6205059793831857
+    }
+   ],
+   "impliedHa": 3408.2380952380954,
+   "impliedHaLow": 3313.0,
+   "impliedHaHigh": 3503.4761904761904,
+   "marketHa": 3316.0,
+   "megaImpliedHa": 4182.792380952381,
+   "revenue": {
+    "lastYear": 19937877.89,
+    "estimate": 32311771.43,
+    "change": 12373893.54,
+    "volumeEffect": 10521976.83947064,
+    "priceEffect": 1851916.700529358,
+    "priceShareOfChange": 0.1496632159104028,
+    "avgPrice": 451.45196414849175,
+    "lastYearPrice": 425.57744861149655
+   },
+   "monthExpected": 12835.0,
+   "monthLastYear": 14066.0,
+   "monthSigma": 1925.25,
+   "monthZ": 14.109855862874952
+  },
+  "expectedFlags": [
+   "share_over_100",
+   "implied_ha_over_market",
+   "month_outlier"
+  ]
+ },
+ {
+  "name": "2482 wide range, high price",
+  "context": {
+   "year": 2026,
+   "clockMonth": 9,
+   "marketHectares": 3316.0,
+   "marketQtyKs": 69636.0,
+   "density": 21.0,
+   "priceExseed": 420.0,
+   "planQtyKs": 43191.0,
+   "planValueEur": 19540342.81,
+   "planNetPrice": 452.42,
+   "lastYearQtyKs": 46849.0,
+   "lastYearValueEur": 19937877.89,
+   "marketHistory": [
+    {
+     "year": 2024,
+     "hectares": 2750.0,
+     "qtyKs": 57750.0
+    },
+    {
+     "year": 2025,
+     "hectares": 2753.0,
+     "qtyKs": 57813.0
+    },
+    {
+     "year": 2026,
+     "hectares": 3316.0,
+     "qtyKs": 69636.0
+    }
+   ],
+   "planQtyHistory": [
+    {
+     "year": 2024,
+     "hectares": 0.0,
+     "qtyKs": 46572.0
+    },
+    {
+     "year": 2025,
+     "hectares": 0.0,
+     "qtyKs": 46849.0
+    },
+    {
+     "year": 2026,
+     "hectares": 0.0,
+     "qtyKs": 43191.0
+    }
+   ],
+   "netPriceHistory": [
+    399.4,
+    425.58,
+    452.42
+   ],
+   "monthlyPlan": [
+    611.0,
+    611.0,
+    611.0,
+    611.0,
+    611.0,
+    611.0,
+    8760.0,
+    12837.0,
+    12835.0,
+    3871.0,
+    611.0,
+    611.0
+   ],
+   "monthlyActual": [
+    697.0,
+    687.0,
+    689.0,
+    678.0,
+    669.0,
+    604.0,
+    9083.0,
+    13373.0,
+    null,
+    null,
+    null,
+    null
+   ],
+   "monthlyActualValue": [
+    311826.02,
+    308599.08,
+    309425.23,
+    307347.45,
+    304768.48,
+    278554.51,
+    4133929.9,
+    5956345.7,
+    null,
+    null,
+    null,
+    null
+   ],
+   "lastYearMonthly": [
+    687.0,
+    620.0,
+    711.0,
+    698.0,
+    727.0,
+    682.0,
+    9698.0,
+    13876.0,
+    14066.0,
+    3882.0,
+    576.0,
+    626.0
+   ],
+   "submitted": {},
+   "marketTrendNote": "High uncertainly due to the T. parvispinus. Posibilities that the Late cycle will grow, compared with early and medium cyle",
+   "mega": {
+    "marketValueEur": 90405811.0,
+    "syngentaValueEur": 26600738.95,
+    "syngentaSharePct": 29.4,
+    "competitors": [
+     {
+      "name": "Limagrain",
+      "sharePct": 22.5
+     },
+     {
+      "name": "Others",
+      "sharePct": 14.3
+     },
+     {
+      "name": "Sur Seeds",
+      "sharePct": 14.3
+     },
+     {
+      "name": "Rijk Zwaan",
+      "sharePct": 6.1
+     },
+     {
+      "name": "Enza Zaden",
+      "sharePct": 4.1
+     },
+     {
+      "name": "Nunhems/BASF",
+      "sharePct": 3.1
+     },
+     {
+      "name": "Semillas Fito",
+      "sharePct": 3.1
+     },
+     {
+      "name": "Panora Seeds",
+      "sharePct": 3.1
+     }
+    ],
+    "impliedHaBaseline": 2831.2685714285712,
+    "growerCeilingHa": 28393.0
+   }
+  },
+  "entry": {
+   "month": 9,
+   "value": 12835.0,
+   "low": 7701.0,
+   "high": 15402.0,
+   "price": 900.0
+  },
+  "expected": {
+   "actualsToDate": 26480.0,
+   "monthsRemaining": 4,
+   "fyEstimate": 44408.0,
+   "fyLow": 39274.0,
+   "fyHigh": 46975.0,
+   "planFy": 43191.0,
+   "gapToPlan": 1217.0,
+   "ytgRemaining": 16711.0,
+   "requiredMonthlyRate": 4177.75,
+   "enteredMonthlyRate": 4482.0,
+   "historicalMonthlyRate": 4787.5,
+   "volumeShare": 0.6377161238439888,
+   "volumeShareLow": 0.5639898902866334,
+   "volumeShareHigh": 0.6745792406226664,
+   "planVolumeShare": 0.6202395312769258,
+   "lastYearVolumeShare": 0.8103540726134261,
+   "maxHistoricalShare": 0.8103540726134261,
+   "fyValue": 25766471.43,
+   "valueShare": 0.8809917499569189,
+   "planValueShare": 0.6681116913391814,
+   "megaShareBaseline": 0.2942370479924128,
+   "megaShare": 0.3631057252503382,
+   "competitors": [
+    {
+     "name": "Limagrain",
+     "baselinePct": 22.5,
+     "newPct": 20.304439530446388,
+     "deltaPts": -2.1955604695536124
+    },
+    {
+     "name": "Others",
+     "baselinePct": 14.3,
+     "newPct": 12.904599346017038,
+     "deltaPts": -1.3954006539829624
+    },
+    {
+     "name": "Sur Seeds",
+     "baselinePct": 14.3,
+     "newPct": 12.904599346017038,
+     "deltaPts": -1.3954006539829624
+    },
+    {
+     "name": "Rijk Zwaan",
+     "baselinePct": 6.1,
+     "newPct": 5.504759161587687,
+     "deltaPts": -0.5952408384123125
+    },
+    {
+     "name": "Enza Zaden",
+     "baselinePct": 4.1,
+     "newPct": 3.699920092214675,
+     "deltaPts": -0.40007990778532454
+    },
+    {
+     "name": "Nunhems/BASF",
+     "baselinePct": 3.1,
+     "newPct": 2.7975005575281693,
+     "deltaPts": -0.3024994424718308
+    },
+    {
+     "name": "Semillas Fito",
+     "baselinePct": 3.1,
+     "newPct": 2.7975005575281693,
+     "deltaPts": -0.3024994424718308
+    },
+    {
+     "name": "Panora Seeds",
+     "baselinePct": 3.1,
+     "newPct": 2.7975005575281693,
+     "deltaPts": -0.3024994424718308
+    }
+   ],
+   "impliedHa": 2114.6666666666665,
+   "impliedHaLow": 1870.1904761904761,
+   "impliedHaHigh": 2236.904761904762,
+   "marketHa": 3316.0,
+   "megaImpliedHa": 2889.220952380952,
+   "revenue": {
+    "lastYear": 19937877.89,
+    "estimate": 25766471.43,
+    "change": 5828593.539999999,
+    "volumeEffect": -1038834.5520606631,
+    "priceEffect": 6867428.092060659,
+    "priceShareOfChange": 0.8686061165912462,
+    "avgPrice": 580.2213887137452,
+    "lastYearPrice": 425.57744861149655
+   },
+   "monthExpected": 12835.0,
+   "monthLastYear": 14066.0,
+   "monthSigma": 1925.25,
+   "monthZ": 0.0
+  },
+  "expectedFlags": [
+   "price_carrying",
+   "range_too_wide",
+   "price_outside_history"
+  ]
+ },
+ {
+  "name": "2482 volume cut at premium price",
+  "context": {
+   "year": 2026,
+   "clockMonth": 9,
+   "marketHectares": 3316.0,
+   "marketQtyKs": 69636.0,
+   "density": 21.0,
+   "priceExseed": 420.0,
+   "planQtyKs": 43191.0,
+   "planValueEur": 19540342.81,
+   "planNetPrice": 452.42,
+   "lastYearQtyKs": 46849.0,
+   "lastYearValueEur": 19937877.89,
+   "marketHistory": [
+    {
+     "year": 2024,
+     "hectares": 2750.0,
+     "qtyKs": 57750.0
+    },
+    {
+     "year": 2025,
+     "hectares": 2753.0,
+     "qtyKs": 57813.0
+    },
+    {
+     "year": 2026,
+     "hectares": 3316.0,
+     "qtyKs": 69636.0
+    }
+   ],
+   "planQtyHistory": [
+    {
+     "year": 2024,
+     "hectares": 0.0,
+     "qtyKs": 46572.0
+    },
+    {
+     "year": 2025,
+     "hectares": 0.0,
+     "qtyKs": 46849.0
+    },
+    {
+     "year": 2026,
+     "hectares": 0.0,
+     "qtyKs": 43191.0
+    }
+   ],
+   "netPriceHistory": [
+    399.4,
+    425.58,
+    452.42
+   ],
+   "monthlyPlan": [
+    611.0,
+    611.0,
+    611.0,
+    611.0,
+    611.0,
+    611.0,
+    8760.0,
+    12837.0,
+    12835.0,
+    3871.0,
+    611.0,
+    611.0
+   ],
+   "monthlyActual": [
+    697.0,
+    687.0,
+    689.0,
+    678.0,
+    669.0,
+    604.0,
+    9083.0,
+    13373.0,
+    null,
+    null,
+    null,
+    null
+   ],
+   "monthlyActualValue": [
+    311826.02,
+    308599.08,
+    309425.23,
+    307347.45,
+    304768.48,
+    278554.51,
+    4133929.9,
+    5956345.7,
+    null,
+    null,
+    null,
+    null
+   ],
+   "lastYearMonthly": [
+    687.0,
+    620.0,
+    711.0,
+    698.0,
+    727.0,
+    682.0,
+    9698.0,
+    13876.0,
+    14066.0,
+    3882.0,
+    576.0,
+    626.0
+   ],
+   "submitted": {},
+   "marketTrendNote": "High uncertainly due to the T. parvispinus. Posibilities that the Late cycle will grow, compared with early and medium cyle",
+   "mega": {
+    "marketValueEur": 90405811.0,
+    "syngentaValueEur": 26600738.95,
+    "syngentaSharePct": 29.4,
+    "competitors": [
+     {
+      "name": "Limagrain",
+      "sharePct": 22.5
+     },
+     {
+      "name": "Others",
+      "sharePct": 14.3
+     },
+     {
+      "name": "Sur Seeds",
+      "sharePct": 14.3
+     },
+     {
+      "name": "Rijk Zwaan",
+      "sharePct": 6.1
+     },
+     {
+      "name": "Enza Zaden",
+      "sharePct": 4.1
+     },
+     {
+      "name": "Nunhems/BASF",
+      "sharePct": 3.1
+     },
+     {
+      "name": "Semillas Fito",
+      "sharePct": 3.1
+     },
+     {
+      "name": "Panora Seeds",
+      "sharePct": 3.1
+     }
+    ],
+    "impliedHaBaseline": 2831.2685714285712,
+    "growerCeilingHa": 28393.0
+   }
+  },
+  "entry": {
+   "month": 9,
+   "value": 6417.5,
+   "low": 5775.75,
+   "high": 7059.250000000001,
+   "price": 560.0
+  },
+  "expected": {
+   "actualsToDate": 26480.0,
+   "monthsRemaining": 4,
+   "fyEstimate": 37990.5,
+   "fyLow": 37348.75,
+   "fyHigh": 38632.25,
+   "planFy": 43191.0,
+   "gapToPlan": -5200.5,
+   "ytgRemaining": 16711.0,
+   "requiredMonthlyRate": 4177.75,
+   "enteredMonthlyRate": 2877.625,
+   "historicalMonthlyRate": 4787.5,
+   "volumeShare": 0.5455583318972945,
+   "volumeShareLow": 0.5363425527026251,
+   "volumeShareHigh": 0.554774111091964,
+   "planVolumeShare": 0.6202395312769258,
+   "lastYearVolumeShare": 0.8103540726134261,
+   "maxHistoricalShare": 0.8103540726134261,
+   "fyValue": 17808771.43,
+   "valueShare": 0.608906840400012,
+   "planValueShare": 0.6681116913391814,
+   "megaShareBaseline": 0.2942370479924128,
+   "megaShare": 0.2750837285227163,
+   "competitors": [
+    {
+     "name": "Limagrain",
+     "baselinePct": 22.5,
+     "newPct": 23.110615344489688,
+     "deltaPts": 0.6106153444896876
+    },
+    {
+     "name": "Others",
+     "baselinePct": 14.3,
+     "newPct": 14.68807997449789,
+     "deltaPts": 0.3880799744978898
+    },
+    {
+     "name": "Sur Seeds",
+     "baselinePct": 14.3,
+     "newPct": 14.68807997449789,
+     "deltaPts": 0.3880799744978898
+    },
+    {
+     "name": "Rijk Zwaan",
+     "baselinePct": 6.1,
+     "newPct": 6.2655446045060925,
+     "deltaPts": 0.16554460450609287
+    },
+    {
+     "name": "Enza Zaden",
+     "baselinePct": 4.1,
+     "newPct": 4.2112676849958985,
+     "deltaPts": 0.1112676849958989
+    },
+    {
+     "name": "Nunhems/BASF",
+     "baselinePct": 3.1,
+     "newPct": 3.1841292252408016,
+     "deltaPts": 0.08412922524080146
+    },
+    {
+     "name": "Semillas Fito",
+     "baselinePct": 3.1,
+     "newPct": 3.1841292252408016,
+     "deltaPts": 0.08412922524080146
+    },
+    {
+     "name": "Panora Seeds",
+     "baselinePct": 3.1,
+     "newPct": 3.1841292252408016,
+     "deltaPts": 0.08412922524080146
+    }
+   ],
+   "impliedHa": 1809.0714285714287,
+   "impliedHaLow": 1778.5119047619048,
+   "impliedHaHigh": 1839.6309523809523,
+   "marketHa": 3316.0,
+   "megaImpliedHa": 2583.625714285714,
+   "revenue": {
+    "lastYear": 19937877.89,
+    "estimate": 17808771.43,
+    "change": -2129106.460000001,
+    "volumeEffect": -3769977.828524942,
+    "priceEffect": 1640871.368524939,
+    "priceShareOfChange": 0.3032557938261483,
+    "avgPrice": 468.7690720048433,
+    "lastYearPrice": 425.57744861149655
+   },
+   "monthExpected": 12835.0,
+   "monthLastYear": 14066.0,
+   "monthSigma": 1925.25,
+   "monthZ": -3.3333333333333335
+  },
+  "expectedFlags": [
+   "month_outlier",
+   "against_market_trend",
+   "price_outside_history"
+  ]
+ },
+ {
+  "name": "2448 raised in shrinking area",
+  "context": {
+   "year": 2026,
+   "clockMonth": 9,
+   "marketHectares": 1964.0,
+   "marketQtyKs": 41244.0,
+   "density": 21.0,
+   "priceExseed": 395.0,
+   "planQtyKs": 4080.0,
+   "planValueEur": 1663187.91,
+   "planNetPrice": 407.64,
+   "lastYearQtyKs": 4623.0,
+   "lastYearValueEur": 1767365.5,
+   "marketHistory": [
+    {
+     "year": 2024,
+     "hectares": 2090.0,
+     "qtyKs": 43890.0
+    },
+    {
+     "year": 2025,
+     "hectares": 2100.0,
+     "qtyKs": 44100.0
+    },
+    {
+     "year": 2026,
+     "hectares": 1964.0,
+     "qtyKs": 41244.0
+    }
+   ],
+   "planQtyHistory": [
+    {
+     "year": 2024,
+     "hectares": 0.0,
+     "qtyKs": 5574.0
+    },
+    {
+     "year": 2025,
+     "hectares": 0.0,
+     "qtyKs": 4623.0
+    },
+    {
+     "year": 2026,
+     "hectares": 0.0,
+     "qtyKs": 4080.0
+    }
+   ],
+   "netPriceHistory": [
+    377.63,
+    382.3,
+    407.64
+   ],
+   "monthlyPlan": [
+    62.0,
+    62.0,
+    62.0,
+    562.0,
+    1315.0,
+    1228.0,
+    479.0,
+    62.0,
+    62.0,
+    62.0,
+    62.0,
+    62.0
+   ],
+   "monthlyActual": [
+    51.0,
+    54.0,
+    48.0,
+    504.0,
+    1166.0,
+    1061.0,
+    435.0,
+    55.0,
+    null,
+    null,
+    null,
+    null
+   ],
+   "monthlyActualValue": [
+    20866.78,
+    22098.5,
+    19424.65,
+    206475.73,
+    474294.58,
+    438929.05,
+    177078.65,
+    22667.79,
+    null,
+    null,
+    null,
+    null
+   ],
+   "lastYearMonthly": [
+    76.0,
+    76.0,
+    74.0,
+    694.0,
+    1389.0,
+    1349.0,
+    610.0,
+    70.0,
+    64.0,
+    80.0,
+    73.0,
+    68.0
+   ],
+   "submitted": {},
+   "marketTrendNote": "The most impacted cycle due to the T. parvispinus. High uncertainty",
+   "mega": {
+    "marketValueEur": 90405811.0,
+    "syngentaValueEur": 26600738.95,
+    "syngentaSharePct": 29.4,
+    "competitors": [
+     {
+      "name": "Limagrain",
+      "sharePct": 22.5
+     },
+     {
+      "name": "Others",
+      "sharePct": 14.3
+     },
+     {
+      "name": "Sur Seeds",
+      "sharePct": 14.3
+     },
+     {
+      "name": "Rijk Zwaan",
+      "sharePct": 6.1
+     },
+     {
+      "name": "Enza Zaden",
+      "sharePct": 4.1
+     },
+     {
+      "name": "Nunhems/BASF",
+      "sharePct": 3.1
+     },
+     {
+      "name": "Semillas Fito",
+      "sharePct": 3.1
+     },
+     {
+      "name": "Panora Seeds",
+      "sharePct": 3.1
+     }
+    ],
+    "impliedHaBaseline": 2831.2685714285712,
+    "growerCeilingHa": 28393.0
+   }
+  },
+  "entry": {
+   "month": 10,
+   "value": 186.0,
+   "low": 173.6,
+   "high": 198.4,
+   "price": null
+  },
+  "expected": {
+   "actualsToDate": 3374.0,
+   "monthsRemaining": 4,
+   "fyEstimate": 3746.0,
+   "fyLow": 3733.6,
+   "fyHigh": 3758.4,
+   "planFy": 4080.0,
+   "gapToPlan": -334.0,
+   "ytgRemaining": 706.0,
+   "requiredMonthlyRate": 176.5,
+   "enteredMonthlyRate": 93.0,
+   "historicalMonthlyRate": 71.25,
+   "volumeShare": 0.09082533216952769,
+   "volumeShareLow": 0.09052468237804287,
+   "volumeShareHigh": 0.09112598196101251,
+   "planVolumeShare": 0.09892347977887693,
+   "lastYearVolumeShare": 0.10482993197278911,
+   "maxHistoricalShare": 0.1269993164730007,
+   "fyValue": 1533477.81,
+   "valueShare": 0.09412817146245438,
+   "planValueShare": 0.10209005682759839,
+   "megaShareBaseline": 0.2942370479924128,
+   "megaShare": 0.2928022939808592,
+   "competitors": [
+    {
+     "name": "Limagrain",
+     "baselinePct": 22.5,
+     "newPct": 22.545740521187923,
+     "deltaPts": 0.04574052118792338
+    },
+    {
+     "name": "Others",
+     "baselinePct": 14.3,
+     "newPct": 14.329070642354992,
+     "deltaPts": 0.02907064235499135
+    },
+    {
+     "name": "Sur Seeds",
+     "baselinePct": 14.3,
+     "newPct": 14.329070642354992,
+     "deltaPts": 0.02907064235499135
+    },
+    {
+     "name": "Rijk Zwaan",
+     "baselinePct": 6.1,
+     "newPct": 6.112400763522059,
+     "deltaPts": 0.012400763522059322
+    },
+    {
+     "name": "Enza Zaden",
+     "baselinePct": 4.1,
+     "newPct": 4.108334939416466,
+     "deltaPts": 0.008334939416466014
+    },
+    {
+     "name": "Nunhems/BASF",
+     "baselinePct": 3.1,
+     "newPct": 3.10630202736367,
+     "deltaPts": 0.006302027363669804
+    },
+    {
+     "name": "Semillas Fito",
+     "baselinePct": 3.1,
+     "newPct": 3.10630202736367,
+     "deltaPts": 0.006302027363669804
+    },
+    {
+     "name": "Panora Seeds",
+     "baselinePct": 3.1,
+     "newPct": 3.10630202736367,
+     "deltaPts": 0.006302027363669804
+    }
+   ],
+   "impliedHa": 178.38095238095238,
+   "impliedHaLow": 177.7904761904762,
+   "impliedHaHigh": 178.9714285714286,
+   "marketHa": 1964.0,
+   "megaImpliedHa": 2815.3638095238093,
+   "revenue": {
+    "lastYear": 1767365.5,
+    "estimate": 1533477.81,
+    "change": -233887.68999999994,
+    "volumeEffect": -335275.6961929483,
+    "priceEffect": 101388.00619294845,
+    "priceShareOfChange": 0.23218784991509991,
+    "avgPrice": 409.3640710090764,
+    "lastYearPrice": 382.2983993078088
+   },
+   "monthExpected": 62.0,
+   "monthLastYear": 80.0,
+   "monthSigma": 60.82711155397731,
+   "monthZ": 2.0385646602660685
+  },
+  "expectedFlags": [
+   "against_market_trend"
+  ]
+ },
+ {
+  "name": "2432 with submitted months",
+  "context": {
+   "year": 2026,
+   "clockMonth": 9,
+   "marketHectares": 1347.0,
+   "marketQtyKs": 33675.0,
+   "density": 25.0,
+   "priceExseed": 382.0,
+   "planQtyKs": 6807.0,
+   "planValueEur": 2627564.62,
+   "planNetPrice": 386.01,
+   "lastYearQtyKs": 8427.0,
+   "lastYearValueEur": 3321034.33,
+   "marketHistory": [
+    {
+     "year": 2024,
+     "hectares": 833.96,
+     "qtyKs": 20849.0
+    },
+    {
+     "year": 2025,
+     "hectares": 825.62,
+     "qtyKs": 20640.5
+    },
+    {
+     "year": 2026,
+     "hectares": 1347.0,
+     "qtyKs": 33675.0
+    }
+   ],
+   "planQtyHistory": [
+    {
+     "year": 2024,
+     "hectares": 0.0,
+     "qtyKs": 8319.0
+    },
+    {
+     "year": 2025,
+     "hectares": 0.0,
+     "qtyKs": 8427.0
+    },
+    {
+     "year": 2026,
+     "hectares": 0.0,
+     "qtyKs": 6807.0
+    }
+   ],
+   "netPriceHistory": [
+    366.75,
+    394.09,
+    386.01
+   ],
+   "monthlyPlan": [
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    901.0,
+    2103.0,
+    2102.0,
+    901.0
+   ],
+   "monthlyActual": [
+    90.0,
+    99.0,
+    102.0,
+    104.0,
+    96.0,
+    99.0,
+    97.0,
+    105.0,
+    null,
+    null,
+    null,
+    null
+   ],
+   "monthlyActualValue": [
+    34379.15,
+    37491.16,
+    39304.79,
+    39802.93,
+    36966.32,
+    38270.67,
+    37710.5,
+    40354.4,
+    null,
+    null,
+    null,
+    null
+   ],
+   "lastYearMonthly": [
+    128.0,
+    128.0,
+    117.0,
+    120.0,
+    118.0,
+    125.0,
+    127.0,
+    127.0,
+    1171.0,
+    2421.0,
+    2641.0,
+    1204.0
+   ],
+   "submitted": {
+    "10": 2600.0,
+    "11": 2500.0
+   },
+   "marketTrendNote": "The auctions are getting more relevance compeared with cooperatives",
+   "mega": {
+    "marketValueEur": 90405811.0,
+    "syngentaValueEur": 26600738.95,
+    "syngentaSharePct": 29.4,
+    "competitors": [
+     {
+      "name": "Limagrain",
+      "sharePct": 22.5
+     },
+     {
+      "name": "Others",
+      "sharePct": 14.3
+     },
+     {
+      "name": "Sur Seeds",
+      "sharePct": 14.3
+     },
+     {
+      "name": "Rijk Zwaan",
+      "sharePct": 6.1
+     },
+     {
+      "name": "Enza Zaden",
+      "sharePct": 4.1
+     },
+     {
+      "name": "Nunhems/BASF",
+      "sharePct": 3.1
+     },
+     {
+      "name": "Semillas Fito",
+      "sharePct": 3.1
+     },
+     {
+      "name": "Panora Seeds",
+      "sharePct": 3.1
+     }
+    ],
+    "impliedHaBaseline": 2831.2685714285712,
+    "growerCeilingHa": 28393.0
+   }
+  },
+  "entry": {
+   "month": 12,
+   "value": 1300.0,
+   "low": 1200.0,
+   "high": 1400.0,
+   "price": null
+  },
+  "expected": {
+   "actualsToDate": 792.0,
+   "monthsRemaining": 4,
+   "fyEstimate": 8093.0,
+   "fyLow": 7993.0,
+   "fyHigh": 8193.0,
+   "planFy": 6807.0,
+   "gapToPlan": 1286.0,
+   "ytgRemaining": 6015.0,
+   "requiredMonthlyRate": 1503.75,
+   "enteredMonthlyRate": 1825.25,
+   "historicalMonthlyRate": 1859.25,
+   "volumeShare": 0.2403266518188567,
+   "volumeShareLow": 0.2373570898292502,
+   "volumeShareHigh": 0.24329621380846325,
+   "planVolumeShare": 0.2021380846325167,
+   "lastYearVolumeShare": 0.40827499333833966,
+   "maxHistoricalShare": 0.40827499333833966,
+   "fyValue": 3122538.9299999997,
+   "valueShare": 0.2427375109317972,
+   "planValueShare": 0.20425958169599304,
+   "megaShareBaseline": 0.2942370479924128,
+   "megaShare": 0.2997120755877075,
+   "competitors": [
+    {
+     "name": "Limagrain",
+     "baselinePct": 22.5,
+     "newPct": 22.325453970708274,
+     "deltaPts": -0.1745460292917258
+    },
+    {
+     "name": "Others",
+     "baselinePct": 14.3,
+     "newPct": 14.189066301383482,
+     "deltaPts": -0.11093369861651858
+    },
+    {
+     "name": "Sur Seeds",
+     "baselinePct": 14.3,
+     "newPct": 14.189066301383482,
+     "deltaPts": -0.11093369861651858
+    },
+    {
+     "name": "Rijk Zwaan",
+     "baselinePct": 6.1,
+     "newPct": 6.052678632058687,
+     "deltaPts": -0.04732136794131225
+    },
+    {
+     "name": "Enza Zaden",
+     "baselinePct": 4.1,
+     "newPct": 4.068193834662396,
+     "deltaPts": -0.03180616533760361
+    },
+    {
+     "name": "Nunhems/BASF",
+     "baselinePct": 3.1,
+     "newPct": 3.0759514359642512,
+     "deltaPts": -0.024048564035748843
+    },
+    {
+     "name": "Semillas Fito",
+     "baselinePct": 3.1,
+     "newPct": 3.0759514359642512,
+     "deltaPts": -0.024048564035748843
+    },
+    {
+     "name": "Panora Seeds",
+     "baselinePct": 3.1,
+     "newPct": 3.0759514359642512,
+     "deltaPts": -0.024048564035748843
+    }
+   ],
+   "impliedHa": 323.72,
+   "impliedHaLow": 319.72,
+   "impliedHaHigh": 327.72,
+   "marketHa": 1347.0,
+   "megaImpliedHa": 2882.7085714285713,
+   "revenue": {
+    "lastYear": 3321034.33,
+    "estimate": 3122538.9299999997,
+    "change": -198495.40000000037,
+    "volumeEffect": -131627.56214785806,
+    "priceEffect": -66867.83785214208,
+    "priceShareOfChange": -0.3368734885148071,
+    "avgPrice": 385.83206845421967,
+    "lastYearPrice": 394.09449744867686
+   },
+   "monthExpected": 901.0,
+   "monthLastYear": 1204.0,
+   "monthSigma": 135.15,
+   "monthZ": 2.9522752497225304
+  },
+  "expectedFlags": []
+ }
+]

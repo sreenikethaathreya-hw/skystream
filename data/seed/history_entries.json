@@ -1,0 +1,686 @@
+[
+ {
+  "userId": "rep-a",
+  "segmentId": 2481,
+  "year": 2026,
+  "month": 5,
+  "value": 371.0,
+  "low": 341.0,
+  "high": 401.0,
+  "justification": "Cooperative in Nijar confirmed a larger Bokken order for this transplant window.",
+  "claim": {
+   "driver": "customer_win_loss",
+   "direction": "up",
+   "evidenceSource": "own_customer_contact",
+   "variety": "Bokken",
+   "competitor": null
+  },
+  "resolution": "confirmed"
+ },
+ {
+  "userId": "rep-a",
+  "segmentId": 2481,
+  "year": 2026,
+  "month": 6,
+  "value": 1005.0,
+  "low": 925.0,
+  "high": 1085.0,
+  "justification": "T. parvispinus pressure is pushing growers to delay transplanting.",
+  "claim": {
+   "driver": "pest_disease",
+   "direction": "down",
+   "evidenceSource": "own_customer_contact",
+   "variety": null,
+   "competitor": null
+  },
+  "resolution": "confirmed"
+ },
+ {
+  "userId": "rep-a",
+  "segmentId": 2481,
+  "year": 2026,
+  "month": 7,
+  "value": 931.0,
+  "low": 857.0,
+  "high": 1005.0,
+  "justification": "Water restrictions in Campo de Dalias are reducing planted area.",
+  "claim": {
+   "driver": "weather_water",
+   "direction": "down",
+   "evidenceSource": "public_statistics",
+   "variety": null,
+   "competitor": null
+  },
+  "resolution": "confirmed"
+ },
+ {
+  "userId": "rep-a",
+  "segmentId": 2481,
+  "year": 2026,
+  "month": 8,
+  "value": 422.0,
+  "low": 388.0,
+  "high": 456.0,
+  "justification": "Water restrictions in Campo de Dalias are reducing planted area.",
+  "claim": {
+   "driver": "weather_water",
+   "direction": "down",
+   "evidenceSource": "public_statistics",
+   "variety": null,
+   "competitor": null
+  },
+  "resolution": "contradicted"
+ },
+ {
+  "userId": "rep-a",
+  "segmentId": 2482,
+  "year": 2026,
+  "month": 1,
+  "value": 723.0,
+  "low": 665.0,
+  "high": 781.0,
+  "justification": "Cooperative in Nijar confirmed a larger Leontes order for this transplant window.",
+  "claim": {
+   "driver": "customer_win_loss",
+   "direction": "up",
+   "evidenceSource": "own_customer_contact",
+   "variety": "Leontes",
+   "competitor": null
+  },
+  "resolution": "confirmed"
+ },
+ {
+  "userId": "rep-a",
+  "segmentId": 2482,
+  "year": 2026,
+  "month": 2,
+  "value": 702.0,
+  "low": 646.0,
+  "high": 758.0,
+  "justification": "Growers are switching from Limagrain after T. parvispinus losses last season.",
+  "claim": {
+   "driver": "competitor_move",
+   "direction": "up",
+   "evidenceSource": "distributor",
+   "variety": null,
+   "competitor": "Limagrain"
+  },
+  "resolution": "confirmed"
+ },
+ {
+  "userId": "rep-a",
+  "segmentId": 2482,
+  "year": 2026,
+  "month": 3,
+  "value": 724.0,
+  "low": 666.0,
+  "high": 782.0,
+  "justification": "Growers are switching from Sur Seeds after T. parvispinus losses last season.",
+  "claim": {
+   "driver": "competitor_move",
+   "direction": "up",
+   "evidenceSource": "distributor",
+   "variety": null,
+   "competitor": "Sur Seeds"
+  },
+  "resolution": "confirmed"
+ },
+ {
+  "userId": "rep-a",
+  "segmentId": 2482,
+  "year": 2026,
+  "month": 4,
+  "value": 608.0,
+  "low": 559.0,
+  "high": 657.0,
+  "justification": "Water restrictions in Campo de Dalias are reducing planted area.",
+  "claim": {
+   "driver": "weather_water",
+   "direction": "down",
+   "evidenceSource": "public_statistics",
+   "variety": null,
+   "competitor": null
+  },
+  "resolution": "contradicted"
+ },
+ {
+  "userId": "rep-a",
+  "segmentId": 2482,
+  "year": 2026,
+  "month": 5,
+  "value": 704.0,
+  "low": 648.0,
+  "high": 760.0,
+  "justification": "Cooperative in Nijar confirmed a larger Leontes order for this transplant window.",
+  "claim": {
+   "driver": "customer_win_loss",
+   "direction": "up",
+   "evidenceSource": "own_customer_contact",
+   "variety": "Leontes",
+   "competitor": null
+  },
+  "resolution": "confirmed"
+ },
+ {
+  "userId": "rep-a",
+  "segmentId": 2482,
+  "year": 2026,
+  "month": 6,
+  "value": 582.0,
+  "low": 535.0,
+  "high": 629.0,
+  "justification": "Water restrictions in Campo de Dalias are reducing planted area.",
+  "claim": {
+   "driver": "weather_water",
+   "direction": "down",
+   "evidenceSource": "public_statistics",
+   "variety": null,
+   "competitor": null
+  },
+  "resolution": "confirmed"
+ },
+ {
+  "userId": "rep-a",
+  "segmentId": 2482,
+  "year": 2026,
+  "month": 7,
+  "value": 9040.0,
+  "low": 8317.0,
+  "high": 9763.0,
+  "justification": "Distributor reports bookings for Kaamos running ahead of last year.",
+  "claim": {
+   "driver": "customer_win_loss",
+   "direction": "up",
+   "evidenceSource": "distributor",
+   "variety": "Kaamos",
+   "competitor": null
+  },
+  "resolution": "confirmed"
+ },
+ {
+  "userId": "rep-a",
+  "segmentId": 2482,
+  "year": 2026,
+  "month": 8,
+  "value": 13141.0,
+  "low": 12090.0,
+  "high": 14192.0,
+  "justification": "Growers are switching from Sur Seeds after T. parvispinus losses last season.",
+  "claim": {
+   "driver": "competitor_move",
+   "direction": "up",
+   "evidenceSource": "distributor",
+   "variety": null,
+   "competitor": "Sur Seeds"
+  },
+  "resolution": "confirmed"
+ },
+ {
+  "userId": "rep-a",
+  "segmentId": 2483,
+  "year": 2026,
+  "month": 5,
+  "value": 167.0,
+  "low": 154.0,
+  "high": 180.0,
+  "justification": "Growers are switching from Limagrain after T. parvispinus losses last season.",
+  "claim": {
+   "driver": "competitor_move",
+   "direction": "up",
+   "evidenceSource": "distributor",
+   "variety": null,
+   "competitor": "Limagrain"
+  },
+  "resolution": "confirmed"
+ },
+ {
+  "userId": "rep-a",
+  "segmentId": 2483,
+  "year": 2026,
+  "month": 6,
+  "value": 412.0,
+  "low": 379.0,
+  "high": 445.0,
+  "justification": "Water restrictions in Campo de Dalias are reducing planted area.",
+  "claim": {
+   "driver": "weather_water",
+   "direction": "down",
+   "evidenceSource": "public_statistics",
+   "variety": null,
+   "competitor": null
+  },
+  "resolution": "confirmed"
+ },
+ {
+  "userId": "rep-a",
+  "segmentId": 2483,
+  "year": 2026,
+  "month": 7,
+  "value": 372.0,
+  "low": 342.0,
+  "high": 402.0,
+  "justification": "T. parvispinus pressure is pushing growers to delay transplanting.",
+  "claim": {
+   "driver": "pest_disease",
+   "direction": "down",
+   "evidenceSource": "own_customer_contact",
+   "variety": null,
+   "competitor": null
+  },
+  "resolution": "confirmed"
+ },
+ {
+  "userId": "rep-a",
+  "segmentId": 2483,
+  "year": 2026,
+  "month": 8,
+  "value": 176.0,
+  "low": 162.0,
+  "high": 190.0,
+  "justification": "T. parvispinus pressure is pushing growers to delay transplanting.",
+  "claim": {
+   "driver": "pest_disease",
+   "direction": "down",
+   "evidenceSource": "own_customer_contact",
+   "variety": null,
+   "competitor": null
+  },
+  "resolution": "confirmed"
+ },
+ {
+  "userId": "rep-a",
+  "segmentId": 2484,
+  "year": 2026,
+  "month": 7,
+  "value": 100.0,
+  "low": 92.0,
+  "high": 108.0,
+  "justification": "Cooperative in Nijar confirmed a larger Hokkaido order for this transplant window.",
+  "claim": {
+   "driver": "customer_win_loss",
+   "direction": "up",
+   "evidenceSource": "own_customer_contact",
+   "variety": "Hokkaido",
+   "competitor": null
+  },
+  "resolution": "contradicted"
+ },
+ {
+  "userId": "rep-a",
+  "segmentId": 2484,
+  "year": 2026,
+  "month": 8,
+  "value": 154.0,
+  "low": 142.0,
+  "high": 166.0,
+  "justification": "Growers are switching from Limagrain after T. parvispinus losses last season.",
+  "claim": {
+   "driver": "competitor_move",
+   "direction": "up",
+   "evidenceSource": "distributor",
+   "variety": null,
+   "competitor": "Limagrain"
+  },
+  "resolution": "confirmed"
+ },
+ {
+  "userId": "rep-b",
+  "segmentId": 2432,
+  "year": 2026,
+  "month": 1,
+  "value": 97.0,
+  "low": 93.0,
+  "high": 101.0,
+  "justification": "T. parvispinus pressure is pushing growers to delay transplanting.",
+  "claim": {
+   "driver": "pest_disease",
+   "direction": "down",
+   "evidenceSource": "own_customer_contact",
+   "variety": null,
+   "competitor": null
+  },
+  "resolution": "confirmed"
+ },
+ {
+  "userId": "rep-b",
+  "segmentId": 2432,
+  "year": 2026,
+  "month": 2,
+  "value": 106.0,
+  "low": 102.0,
+  "high": 110.0,
+  "justification": "Distributor reports bookings for Saitama running ahead of last year.",
+  "claim": {
+   "driver": "customer_win_loss",
+   "direction": "up",
+   "evidenceSource": "distributor",
+   "variety": "Saitama",
+   "competitor": null
+  },
+  "resolution": "contradicted"
+ },
+ {
+  "userId": "rep-b",
+  "segmentId": 2432,
+  "year": 2026,
+  "month": 3,
+  "value": 116.0,
+  "low": 111.0,
+  "high": 121.0,
+  "justification": "Growers are switching from Limagrain after T. parvispinus losses last season.",
+  "claim": {
+   "driver": "competitor_move",
+   "direction": "up",
+   "evidenceSource": "distributor",
+   "variety": null,
+   "competitor": "Limagrain"
+  },
+  "resolution": "confirmed"
+ },
+ {
+  "userId": "rep-b",
+  "segmentId": 2432,
+  "year": 2026,
+  "month": 4,
+  "value": 124.0,
+  "low": 119.0,
+  "high": 129.0,
+  "justification": "Growers are switching from Limagrain after T. parvispinus losses last season.",
+  "claim": {
+   "driver": "competitor_move",
+   "direction": "up",
+   "evidenceSource": "distributor",
+   "variety": null,
+   "competitor": "Limagrain"
+  },
+  "resolution": "confirmed"
+ },
+ {
+  "userId": "rep-b",
+  "segmentId": 2432,
+  "year": 2026,
+  "month": 5,
+  "value": 115.0,
+  "low": 110.0,
+  "high": 120.0,
+  "justification": "Cooperative in Nijar confirmed a larger Hokkaido order for this transplant window.",
+  "claim": {
+   "driver": "customer_win_loss",
+   "direction": "up",
+   "evidenceSource": "own_customer_contact",
+   "variety": "Hokkaido",
+   "competitor": null
+  },
+  "resolution": "contradicted"
+ },
+ {
+  "userId": "rep-b",
+  "segmentId": 2432,
+  "year": 2026,
+  "month": 6,
+  "value": 109.0,
+  "low": 105.0,
+  "high": 113.0,
+  "justification": "Distributor reports bookings for Kaamos running ahead of last year.",
+  "claim": {
+   "driver": "customer_win_loss",
+   "direction": "up",
+   "evidenceSource": "distributor",
+   "variety": "Kaamos",
+   "competitor": null
+  },
+  "resolution": "contradicted"
+ },
+ {
+  "userId": "rep-b",
+  "segmentId": 2432,
+  "year": 2026,
+  "month": 7,
+  "value": 116.0,
+  "low": 111.0,
+  "high": 121.0,
+  "justification": "Cooperative in Nijar confirmed a larger Leontes order for this transplant window.",
+  "claim": {
+   "driver": "customer_win_loss",
+   "direction": "up",
+   "evidenceSource": "own_customer_contact",
+   "variety": "Leontes",
+   "competitor": null
+  },
+  "resolution": "contradicted"
+ },
+ {
+  "userId": "rep-b",
+  "segmentId": 2432,
+  "year": 2026,
+  "month": 8,
+  "value": 124.0,
+  "low": 119.0,
+  "high": 129.0,
+  "justification": "Growers are switching from Sur Seeds after T. parvispinus losses last season.",
+  "claim": {
+   "driver": "competitor_move",
+   "direction": "up",
+   "evidenceSource": "distributor",
+   "variety": null,
+   "competitor": "Sur Seeds"
+  },
+  "resolution": "confirmed"
+ },
+ {
+  "userId": "rep-b",
+  "segmentId": 2448,
+  "year": 2026,
+  "month": 1,
+  "value": 53.0,
+  "low": 51.0,
+  "high": 55.0,
+  "justification": "Water restrictions in Campo de Dalias are reducing planted area.",
+  "claim": {
+   "driver": "weather_water",
+   "direction": "down",
+   "evidenceSource": "public_statistics",
+   "variety": null,
+   "competitor": null
+  },
+  "resolution": "confirmed"
+ },
+ {
+  "userId": "rep-b",
+  "segmentId": 2448,
+  "year": 2026,
+  "month": 2,
+  "value": 65.0,
+  "low": 62.0,
+  "high": 68.0,
+  "justification": "Growers are switching from Sur Seeds after T. parvispinus losses last season.",
+  "claim": {
+   "driver": "competitor_move",
+   "direction": "up",
+   "evidenceSource": "distributor",
+   "variety": null,
+   "competitor": "Sur Seeds"
+  },
+  "resolution": "contradicted"
+ },
+ {
+  "userId": "rep-b",
+  "segmentId": 2448,
+  "year": 2026,
+  "month": 3,
+  "value": 55.0,
+  "low": 53.0,
+  "high": 57.0,
+  "justification": "Sur Seeds is discounting aggressively in El Ejido this month.",
+  "claim": {
+   "driver": "price",
+   "direction": "down",
+   "evidenceSource": "distributor",
+   "variety": null,
+   "competitor": "Sur Seeds"
+  },
+  "resolution": "confirmed"
+ },
+ {
+  "userId": "rep-b",
+  "segmentId": 2448,
+  "year": 2026,
+  "month": 4,
+  "value": 598.0,
+  "low": 574.0,
+  "high": 622.0,
+  "justification": "Distributor reports bookings for Kaamos running ahead of last year.",
+  "claim": {
+   "driver": "customer_win_loss",
+   "direction": "up",
+   "evidenceSource": "distributor",
+   "variety": "Kaamos",
+   "competitor": null
+  },
+  "resolution": "contradicted"
+ },
+ {
+  "userId": "rep-b",
+  "segmentId": 2448,
+  "year": 2026,
+  "month": 5,
+  "value": 1294.0,
+  "low": 1242.0,
+  "high": 1346.0,
+  "justification": "Limagrain is discounting aggressively in El Ejido this month.",
+  "claim": {
+   "driver": "price",
+   "direction": "down",
+   "evidenceSource": "distributor",
+   "variety": null,
+   "competitor": "Limagrain"
+  },
+  "resolution": "confirmed"
+ },
+ {
+  "userId": "rep-b",
+  "segmentId": 2448,
+  "year": 2026,
+  "month": 6,
+  "value": 1329.0,
+  "low": 1276.0,
+  "high": 1382.0,
+  "justification": "Growers are switching from Limagrain after T. parvispinus losses last season.",
+  "claim": {
+   "driver": "competitor_move",
+   "direction": "up",
+   "evidenceSource": "distributor",
+   "variety": null,
+   "competitor": "Limagrain"
+  },
+  "resolution": "contradicted"
+ },
+ {
+  "userId": "rep-b",
+  "segmentId": 2448,
+  "year": 2026,
+  "month": 7,
+  "value": 506.0,
+  "low": 486.0,
+  "high": 526.0,
+  "justification": "Growers are switching from Limagrain after T. parvispinus losses last season.",
+  "claim": {
+   "driver": "competitor_move",
+   "direction": "up",
+   "evidenceSource": "distributor",
+   "variety": null,
+   "competitor": "Limagrain"
+  },
+  "resolution": "contradicted"
+ },
+ {
+  "userId": "rep-b",
+  "segmentId": 2448,
+  "year": 2026,
+  "month": 8,
+  "value": 55.0,
+  "low": 53.0,
+  "high": 57.0,
+  "justification": "Water restrictions in Campo de Dalias are reducing planted area.",
+  "claim": {
+   "driver": "weather_water",
+   "direction": "down",
+   "evidenceSource": "public_statistics",
+   "variety": null,
+   "competitor": null
+  },
+  "resolution": "confirmed"
+ },
+ {
+  "userId": "rep-b",
+  "segmentId": 2449,
+  "year": 2026,
+  "month": 4,
+  "value": 84.0,
+  "low": 81.0,
+  "high": 87.0,
+  "justification": "Growers are switching from Sur Seeds after T. parvispinus losses last season.",
+  "claim": {
+   "driver": "competitor_move",
+   "direction": "up",
+   "evidenceSource": "distributor",
+   "variety": null,
+   "competitor": "Sur Seeds"
+  },
+  "resolution": "contradicted"
+ },
+ {
+  "userId": "rep-b",
+  "segmentId": 2449,
+  "year": 2026,
+  "month": 5,
+  "value": 197.0,
+  "low": 189.0,
+  "high": 205.0,
+  "justification": "Cooperative in Nijar confirmed a larger Kaamos order for this transplant window.",
+  "claim": {
+   "driver": "customer_win_loss",
+   "direction": "up",
+   "evidenceSource": "own_customer_contact",
+   "variety": "Kaamos",
+   "competitor": null
+  },
+  "resolution": "contradicted"
+ },
+ {
+  "userId": "rep-b",
+  "segmentId": 2449,
+  "year": 2026,
+  "month": 6,
+  "value": 184.0,
+  "low": 177.0,
+  "high": 191.0,
+  "justification": "Distributor reports bookings for Hokkaido running ahead of last year.",
+  "claim": {
+   "driver": "customer_win_loss",
+   "direction": "up",
+   "evidenceSource": "distributor",
+   "variety": "Hokkaido",
+   "competitor": null
+  },
+  "resolution": "contradicted"
+ },
+ {
+  "userId": "rep-b",
+  "segmentId": 2449,
+  "year": 2026,
+  "month": 7,
+  "value": 74.0,
+  "low": 71.0,
+  "high": 77.0,
+  "justification": "Growers are switching from Sur Seeds after T. parvispinus losses last season.",
+  "claim": {
+   "driver": "competitor_move",
+   "direction": "up",
+   "evidenceSource": "distributor",
+   "variety": null,
+   "competitor": "Sur Seeds"
+  },
+  "resolution": "contradicted"
+ }
+]

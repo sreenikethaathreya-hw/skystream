@@ -1,0 +1,1514 @@
+[
+ {
+  "segmentId": 2432,
+  "year": 2025,
+  "month": 1,
+  "qtyKs": 128.0,
+  "valueEur": 50390.73
+ },
+ {
+  "segmentId": 2432,
+  "year": 2025,
+  "month": 2,
+  "qtyKs": 128.0,
+  "valueEur": 51296.72
+ },
+ {
+  "segmentId": 2432,
+  "year": 2025,
+  "month": 3,
+  "qtyKs": 117.0,
+  "valueEur": 46061.95
+ },
+ {
+  "segmentId": 2432,
+  "year": 2025,
+  "month": 4,
+  "qtyKs": 120.0,
+  "valueEur": 47251.98
+ },
+ {
+  "segmentId": 2432,
+  "year": 2025,
+  "month": 5,
+  "qtyKs": 118.0,
+  "valueEur": 46399.9
+ },
+ {
+  "segmentId": 2432,
+  "year": 2025,
+  "month": 6,
+  "qtyKs": 125.0,
+  "valueEur": 49257.41
+ },
+ {
+  "segmentId": 2432,
+  "year": 2025,
+  "month": 7,
+  "qtyKs": 127.0,
+  "valueEur": 50466.44
+ },
+ {
+  "segmentId": 2432,
+  "year": 2025,
+  "month": 8,
+  "qtyKs": 127.0,
+  "valueEur": 49338.46
+ },
+ {
+  "segmentId": 2432,
+  "year": 2025,
+  "month": 9,
+  "qtyKs": 1171.0,
+  "valueEur": 450461.7
+ },
+ {
+  "segmentId": 2432,
+  "year": 2025,
+  "month": 10,
+  "qtyKs": 2421.0,
+  "valueEur": 950115.72
+ },
+ {
+  "segmentId": 2432,
+  "year": 2025,
+  "month": 11,
+  "qtyKs": 2641.0,
+  "valueEur": 1049151.33
+ },
+ {
+  "segmentId": 2432,
+  "year": 2025,
+  "month": 12,
+  "qtyKs": 1204.0,
+  "valueEur": 480833.07
+ },
+ {
+  "segmentId": 2432,
+  "year": 2026,
+  "month": 1,
+  "qtyKs": 90.0,
+  "valueEur": 34379.15
+ },
+ {
+  "segmentId": 2432,
+  "year": 2026,
+  "month": 2,
+  "qtyKs": 99.0,
+  "valueEur": 37491.16
+ },
+ {
+  "segmentId": 2432,
+  "year": 2026,
+  "month": 3,
+  "qtyKs": 102.0,
+  "valueEur": 39304.79
+ },
+ {
+  "segmentId": 2432,
+  "year": 2026,
+  "month": 4,
+  "qtyKs": 104.0,
+  "valueEur": 39802.93
+ },
+ {
+  "segmentId": 2432,
+  "year": 2026,
+  "month": 5,
+  "qtyKs": 96.0,
+  "valueEur": 36966.32
+ },
+ {
+  "segmentId": 2432,
+  "year": 2026,
+  "month": 6,
+  "qtyKs": 99.0,
+  "valueEur": 38270.67
+ },
+ {
+  "segmentId": 2432,
+  "year": 2026,
+  "month": 7,
+  "qtyKs": 97.0,
+  "valueEur": 37710.5
+ },
+ {
+  "segmentId": 2432,
+  "year": 2026,
+  "month": 8,
+  "qtyKs": 105.0,
+  "valueEur": 40354.4
+ },
+ {
+  "segmentId": 2432,
+  "year": 2026,
+  "month": 9,
+  "qtyKs": 943.0,
+  "valueEur": 369470.78
+ },
+ {
+  "segmentId": 2432,
+  "year": 2026,
+  "month": 10,
+  "qtyKs": 2154.0,
+  "valueEur": 838167.06
+ },
+ {
+  "segmentId": 2432,
+  "year": 2026,
+  "month": 11,
+  "qtyKs": 2039.0,
+  "valueEur": 790137.34
+ },
+ {
+  "segmentId": 2432,
+  "year": 2026,
+  "month": 12,
+  "qtyKs": 904.0,
+  "valueEur": 351829.42
+ },
+ {
+  "segmentId": 2433,
+  "year": 2025,
+  "month": 1,
+  "qtyKs": 13.0,
+  "valueEur": 5189.79
+ },
+ {
+  "segmentId": 2433,
+  "year": 2025,
+  "month": 2,
+  "qtyKs": 12.0,
+  "valueEur": 4764.62
+ },
+ {
+  "segmentId": 2433,
+  "year": 2025,
+  "month": 3,
+  "qtyKs": 12.0,
+  "valueEur": 4890.79
+ },
+ {
+  "segmentId": 2433,
+  "year": 2025,
+  "month": 4,
+  "qtyKs": 12.0,
+  "valueEur": 4866.76
+ },
+ {
+  "segmentId": 2433,
+  "year": 2025,
+  "month": 5,
+  "qtyKs": 12.0,
+  "valueEur": 4855.27
+ },
+ {
+  "segmentId": 2433,
+  "year": 2025,
+  "month": 6,
+  "qtyKs": 12.0,
+  "valueEur": 4840.33
+ },
+ {
+  "segmentId": 2433,
+  "year": 2025,
+  "month": 7,
+  "qtyKs": 12.0,
+  "valueEur": 4797.72
+ },
+ {
+  "segmentId": 2433,
+  "year": 2025,
+  "month": 8,
+  "qtyKs": 12.0,
+  "valueEur": 4833.26
+ },
+ {
+  "segmentId": 2433,
+  "year": 2025,
+  "month": 9,
+  "qtyKs": 114.0,
+  "valueEur": 46594.28
+ },
+ {
+  "segmentId": 2433,
+  "year": 2025,
+  "month": 10,
+  "qtyKs": 251.0,
+  "valueEur": 101288.12
+ },
+ {
+  "segmentId": 2433,
+  "year": 2025,
+  "month": 11,
+  "qtyKs": 242.0,
+  "valueEur": 97214.46
+ },
+ {
+  "segmentId": 2433,
+  "year": 2025,
+  "month": 12,
+  "qtyKs": 97.0,
+  "valueEur": 38855.94
+ },
+ {
+  "segmentId": 2433,
+  "year": 2026,
+  "month": 1,
+  "qtyKs": 14.0,
+  "valueEur": 5676.42
+ },
+ {
+  "segmentId": 2433,
+  "year": 2026,
+  "month": 2,
+  "qtyKs": 14.0,
+  "valueEur": 5793.68
+ },
+ {
+  "segmentId": 2433,
+  "year": 2026,
+  "month": 3,
+  "qtyKs": 14.0,
+  "valueEur": 5695.98
+ },
+ {
+  "segmentId": 2433,
+  "year": 2026,
+  "month": 4,
+  "qtyKs": 14.0,
+  "valueEur": 5894.5
+ },
+ {
+  "segmentId": 2433,
+  "year": 2026,
+  "month": 5,
+  "qtyKs": 13.0,
+  "valueEur": 5299.41
+ },
+ {
+  "segmentId": 2433,
+  "year": 2026,
+  "month": 6,
+  "qtyKs": 12.0,
+  "valueEur": 4982.58
+ },
+ {
+  "segmentId": 2433,
+  "year": 2026,
+  "month": 7,
+  "qtyKs": 12.0,
+  "valueEur": 4904.18
+ },
+ {
+  "segmentId": 2433,
+  "year": 2026,
+  "month": 8,
+  "qtyKs": 12.0,
+  "valueEur": 5000.61
+ },
+ {
+  "segmentId": 2433,
+  "year": 2026,
+  "month": 9,
+  "qtyKs": 127.0,
+  "valueEur": 52569.31
+ },
+ {
+  "segmentId": 2433,
+  "year": 2026,
+  "month": 10,
+  "qtyKs": 315.0,
+  "valueEur": 130026.61
+ },
+ {
+  "segmentId": 2433,
+  "year": 2026,
+  "month": 11,
+  "qtyKs": 296.0,
+  "valueEur": 123760.53
+ },
+ {
+  "segmentId": 2433,
+  "year": 2026,
+  "month": 12,
+  "qtyKs": 125.0,
+  "valueEur": 51183.58
+ },
+ {
+  "segmentId": 2446,
+  "year": 2025,
+  "month": 1,
+  "qtyKs": 3.0,
+  "valueEur": 1180.47
+ },
+ {
+  "segmentId": 2446,
+  "year": 2025,
+  "month": 2,
+  "qtyKs": 3.0,
+  "valueEur": 1218.03
+ },
+ {
+  "segmentId": 2446,
+  "year": 2025,
+  "month": 3,
+  "qtyKs": 3.0,
+  "valueEur": 1185.28
+ },
+ {
+  "segmentId": 2446,
+  "year": 2025,
+  "month": 4,
+  "qtyKs": 3.0,
+  "valueEur": 1171.48
+ },
+ {
+  "segmentId": 2446,
+  "year": 2025,
+  "month": 5,
+  "qtyKs": 3.0,
+  "valueEur": 1196.19
+ },
+ {
+  "segmentId": 2446,
+  "year": 2025,
+  "month": 6,
+  "qtyKs": 49.0,
+  "valueEur": 20056.72
+ },
+ {
+  "segmentId": 2446,
+  "year": 2025,
+  "month": 7,
+  "qtyKs": 65.0,
+  "valueEur": 25747.33
+ },
+ {
+  "segmentId": 2446,
+  "year": 2025,
+  "month": 8,
+  "qtyKs": 62.0,
+  "valueEur": 24816.94
+ },
+ {
+  "segmentId": 2446,
+  "year": 2025,
+  "month": 9,
+  "qtyKs": 3.0,
+  "valueEur": 1206.7
+ },
+ {
+  "segmentId": 2446,
+  "year": 2025,
+  "month": 10,
+  "qtyKs": 3.0,
+  "valueEur": 1226.84
+ },
+ {
+  "segmentId": 2446,
+  "year": 2025,
+  "month": 11,
+  "qtyKs": 3.0,
+  "valueEur": 1174.26
+ },
+ {
+  "segmentId": 2446,
+  "year": 2025,
+  "month": 12,
+  "qtyKs": 3.0,
+  "valueEur": 1204.2
+ },
+ {
+  "segmentId": 2446,
+  "year": 2026,
+  "month": 1,
+  "qtyKs": 1.0,
+  "valueEur": 429.65
+ },
+ {
+  "segmentId": 2446,
+  "year": 2026,
+  "month": 2,
+  "qtyKs": 1.0,
+  "valueEur": 419.1
+ },
+ {
+  "segmentId": 2446,
+  "year": 2026,
+  "month": 3,
+  "qtyKs": 1.0,
+  "valueEur": 409.69
+ },
+ {
+  "segmentId": 2446,
+  "year": 2026,
+  "month": 4,
+  "qtyKs": 1.0,
+  "valueEur": 414.43
+ },
+ {
+  "segmentId": 2446,
+  "year": 2026,
+  "month": 5,
+  "qtyKs": 1.0,
+  "valueEur": 422.48
+ },
+ {
+  "segmentId": 2446,
+  "year": 2026,
+  "month": 6,
+  "qtyKs": 18.0,
+  "valueEur": 7510.83
+ },
+ {
+  "segmentId": 2446,
+  "year": 2026,
+  "month": 7,
+  "qtyKs": 28.0,
+  "valueEur": 11562.13
+ },
+ {
+  "segmentId": 2446,
+  "year": 2026,
+  "month": 8,
+  "qtyKs": 22.0,
+  "valueEur": 9024.03
+ },
+ {
+  "segmentId": 2446,
+  "year": 2026,
+  "month": 9,
+  "qtyKs": 1.0,
+  "valueEur": 421.2
+ },
+ {
+  "segmentId": 2446,
+  "year": 2026,
+  "month": 10,
+  "qtyKs": 1.0,
+  "valueEur": 420.55
+ },
+ {
+  "segmentId": 2446,
+  "year": 2026,
+  "month": 11,
+  "qtyKs": 1.0,
+  "valueEur": 410.74
+ },
+ {
+  "segmentId": 2446,
+  "year": 2026,
+  "month": 12,
+  "qtyKs": 1.0,
+  "valueEur": 417.48
+ },
+ {
+  "segmentId": 2448,
+  "year": 2025,
+  "month": 1,
+  "qtyKs": 76.0,
+  "valueEur": 29064.96
+ },
+ {
+  "segmentId": 2448,
+  "year": 2025,
+  "month": 2,
+  "qtyKs": 76.0,
+  "valueEur": 29335.54
+ },
+ {
+  "segmentId": 2448,
+  "year": 2025,
+  "month": 3,
+  "qtyKs": 74.0,
+  "valueEur": 28630.01
+ },
+ {
+  "segmentId": 2448,
+  "year": 2025,
+  "month": 4,
+  "qtyKs": 694.0,
+  "valueEur": 266184.39
+ },
+ {
+  "segmentId": 2448,
+  "year": 2025,
+  "month": 5,
+  "qtyKs": 1389.0,
+  "valueEur": 531598.58
+ },
+ {
+  "segmentId": 2448,
+  "year": 2025,
+  "month": 6,
+  "qtyKs": 1349.0,
+  "valueEur": 520963.56
+ },
+ {
+  "segmentId": 2448,
+  "year": 2025,
+  "month": 7,
+  "qtyKs": 610.0,
+  "valueEur": 235230.33
+ },
+ {
+  "segmentId": 2448,
+  "year": 2025,
+  "month": 8,
+  "qtyKs": 70.0,
+  "valueEur": 27134.39
+ },
+ {
+  "segmentId": 2448,
+  "year": 2025,
+  "month": 9,
+  "qtyKs": 64.0,
+  "valueEur": 24361.54
+ },
+ {
+  "segmentId": 2448,
+  "year": 2025,
+  "month": 10,
+  "qtyKs": 80.0,
+  "valueEur": 30510.72
+ },
+ {
+  "segmentId": 2448,
+  "year": 2025,
+  "month": 11,
+  "qtyKs": 73.0,
+  "valueEur": 27685.6
+ },
+ {
+  "segmentId": 2448,
+  "year": 2025,
+  "month": 12,
+  "qtyKs": 68.0,
+  "valueEur": 26193.24
+ },
+ {
+  "segmentId": 2448,
+  "year": 2026,
+  "month": 1,
+  "qtyKs": 51.0,
+  "valueEur": 20866.78
+ },
+ {
+  "segmentId": 2448,
+  "year": 2026,
+  "month": 2,
+  "qtyKs": 54.0,
+  "valueEur": 22098.5
+ },
+ {
+  "segmentId": 2448,
+  "year": 2026,
+  "month": 3,
+  "qtyKs": 48.0,
+  "valueEur": 19424.65
+ },
+ {
+  "segmentId": 2448,
+  "year": 2026,
+  "month": 4,
+  "qtyKs": 504.0,
+  "valueEur": 206475.73
+ },
+ {
+  "segmentId": 2448,
+  "year": 2026,
+  "month": 5,
+  "qtyKs": 1166.0,
+  "valueEur": 474294.58
+ },
+ {
+  "segmentId": 2448,
+  "year": 2026,
+  "month": 6,
+  "qtyKs": 1061.0,
+  "valueEur": 438929.05
+ },
+ {
+  "segmentId": 2448,
+  "year": 2026,
+  "month": 7,
+  "qtyKs": 435.0,
+  "valueEur": 177078.65
+ },
+ {
+  "segmentId": 2448,
+  "year": 2026,
+  "month": 8,
+  "qtyKs": 55.0,
+  "valueEur": 22667.79
+ },
+ {
+  "segmentId": 2448,
+  "year": 2026,
+  "month": 9,
+  "qtyKs": 53.0,
+  "valueEur": 21569.25
+ },
+ {
+  "segmentId": 2448,
+  "year": 2026,
+  "month": 10,
+  "qtyKs": 60.0,
+  "valueEur": 24556.69
+ },
+ {
+  "segmentId": 2448,
+  "year": 2026,
+  "month": 11,
+  "qtyKs": 53.0,
+  "valueEur": 21574.79
+ },
+ {
+  "segmentId": 2448,
+  "year": 2026,
+  "month": 12,
+  "qtyKs": 55.0,
+  "valueEur": 22628.18
+ },
+ {
+  "segmentId": 2449,
+  "year": 2025,
+  "month": 1,
+  "qtyKs": 14.0,
+  "valueEur": 5381.18
+ },
+ {
+  "segmentId": 2449,
+  "year": 2025,
+  "month": 2,
+  "qtyKs": 14.0,
+  "valueEur": 5369.51
+ },
+ {
+  "segmentId": 2449,
+  "year": 2025,
+  "month": 3,
+  "qtyKs": 15.0,
+  "valueEur": 5753.64
+ },
+ {
+  "segmentId": 2449,
+  "year": 2025,
+  "month": 4,
+  "qtyKs": 141.0,
+  "valueEur": 54520.24
+ },
+ {
+  "segmentId": 2449,
+  "year": 2025,
+  "month": 5,
+  "qtyKs": 299.0,
+  "valueEur": 113195.73
+ },
+ {
+  "segmentId": 2449,
+  "year": 2025,
+  "month": 6,
+  "qtyKs": 281.0,
+  "valueEur": 106192.19
+ },
+ {
+  "segmentId": 2449,
+  "year": 2025,
+  "month": 7,
+  "qtyKs": 102.0,
+  "valueEur": 38663.84
+ },
+ {
+  "segmentId": 2449,
+  "year": 2025,
+  "month": 8,
+  "qtyKs": 13.0,
+  "valueEur": 4991.37
+ },
+ {
+  "segmentId": 2449,
+  "year": 2025,
+  "month": 9,
+  "qtyKs": 13.0,
+  "valueEur": 4921.67
+ },
+ {
+  "segmentId": 2449,
+  "year": 2025,
+  "month": 10,
+  "qtyKs": 15.0,
+  "valueEur": 5831.43
+ },
+ {
+  "segmentId": 2449,
+  "year": 2025,
+  "month": 11,
+  "qtyKs": 14.0,
+  "valueEur": 5379.76
+ },
+ {
+  "segmentId": 2449,
+  "year": 2025,
+  "month": 12,
+  "qtyKs": 14.0,
+  "valueEur": 5401.37
+ },
+ {
+  "segmentId": 2449,
+  "year": 2026,
+  "month": 1,
+  "qtyKs": 10.0,
+  "valueEur": 4626.39
+ },
+ {
+  "segmentId": 2449,
+  "year": 2026,
+  "month": 2,
+  "qtyKs": 9.0,
+  "valueEur": 4059.27
+ },
+ {
+  "segmentId": 2449,
+  "year": 2026,
+  "month": 3,
+  "qtyKs": 9.0,
+  "valueEur": 4178.83
+ },
+ {
+  "segmentId": 2449,
+  "year": 2026,
+  "month": 4,
+  "qtyKs": 79.0,
+  "valueEur": 36008.82
+ },
+ {
+  "segmentId": 2449,
+  "year": 2026,
+  "month": 5,
+  "qtyKs": 183.0,
+  "valueEur": 82945.22
+ },
+ {
+  "segmentId": 2449,
+  "year": 2026,
+  "month": 6,
+  "qtyKs": 162.0,
+  "valueEur": 73799.25
+ },
+ {
+  "segmentId": 2449,
+  "year": 2026,
+  "month": 7,
+  "qtyKs": 68.0,
+  "valueEur": 31112.34
+ },
+ {
+  "segmentId": 2449,
+  "year": 2026,
+  "month": 8,
+  "qtyKs": 9.0,
+  "valueEur": 4060.91
+ },
+ {
+  "segmentId": 2449,
+  "year": 2026,
+  "month": 9,
+  "qtyKs": 9.0,
+  "valueEur": 4128.06
+ },
+ {
+  "segmentId": 2449,
+  "year": 2026,
+  "month": 10,
+  "qtyKs": 8.0,
+  "valueEur": 3637.95
+ },
+ {
+  "segmentId": 2449,
+  "year": 2026,
+  "month": 11,
+  "qtyKs": 9.0,
+  "valueEur": 4111.11
+ },
+ {
+  "segmentId": 2449,
+  "year": 2026,
+  "month": 12,
+  "qtyKs": 9.0,
+  "valueEur": 4183.52
+ },
+ {
+  "segmentId": 2481,
+  "year": 2025,
+  "month": 1,
+  "qtyKs": 44.0,
+  "valueEur": 16664.92
+ },
+ {
+  "segmentId": 2481,
+  "year": 2025,
+  "month": 2,
+  "qtyKs": 45.0,
+  "valueEur": 16959.51
+ },
+ {
+  "segmentId": 2481,
+  "year": 2025,
+  "month": 3,
+  "qtyKs": 46.0,
+  "valueEur": 17382.41
+ },
+ {
+  "segmentId": 2481,
+  "year": 2025,
+  "month": 4,
+  "qtyKs": 43.0,
+  "valueEur": 16211.27
+ },
+ {
+  "segmentId": 2481,
+  "year": 2025,
+  "month": 5,
+  "qtyKs": 334.0,
+  "valueEur": 125357.81
+ },
+ {
+  "segmentId": 2481,
+  "year": 2025,
+  "month": 6,
+  "qtyKs": 1025.0,
+  "valueEur": 388231.2
+ },
+ {
+  "segmentId": 2481,
+  "year": 2025,
+  "month": 7,
+  "qtyKs": 854.0,
+  "valueEur": 324991.48
+ },
+ {
+  "segmentId": 2481,
+  "year": 2025,
+  "month": 8,
+  "qtyKs": 409.0,
+  "valueEur": 153899.27
+ },
+ {
+  "segmentId": 2481,
+  "year": 2025,
+  "month": 9,
+  "qtyKs": 41.0,
+  "valueEur": 15556.74
+ },
+ {
+  "segmentId": 2481,
+  "year": 2025,
+  "month": 10,
+  "qtyKs": 43.0,
+  "valueEur": 16414.68
+ },
+ {
+  "segmentId": 2481,
+  "year": 2025,
+  "month": 11,
+  "qtyKs": 42.0,
+  "valueEur": 15948.69
+ },
+ {
+  "segmentId": 2481,
+  "year": 2025,
+  "month": 12,
+  "qtyKs": 46.0,
+  "valueEur": 17517.79
+ },
+ {
+  "segmentId": 2481,
+  "year": 2026,
+  "month": 1,
+  "qtyKs": 47.0,
+  "valueEur": 19356.52
+ },
+ {
+  "segmentId": 2481,
+  "year": 2026,
+  "month": 2,
+  "qtyKs": 45.0,
+  "valueEur": 18442.47
+ },
+ {
+  "segmentId": 2481,
+  "year": 2026,
+  "month": 3,
+  "qtyKs": 44.0,
+  "valueEur": 17777.54
+ },
+ {
+  "segmentId": 2481,
+  "year": 2026,
+  "month": 4,
+  "qtyKs": 50.0,
+  "valueEur": 20665.24
+ },
+ {
+  "segmentId": 2481,
+  "year": 2026,
+  "month": 5,
+  "qtyKs": 369.0,
+  "valueEur": 151341.81
+ },
+ {
+  "segmentId": 2481,
+  "year": 2026,
+  "month": 6,
+  "qtyKs": 991.0,
+  "valueEur": 402520.71
+ },
+ {
+  "segmentId": 2481,
+  "year": 2026,
+  "month": 7,
+  "qtyKs": 920.0,
+  "valueEur": 376061.69
+ },
+ {
+  "segmentId": 2481,
+  "year": 2026,
+  "month": 8,
+  "qtyKs": 440.0,
+  "valueEur": 181141.61
+ },
+ {
+  "segmentId": 2481,
+  "year": 2026,
+  "month": 9,
+  "qtyKs": 45.0,
+  "valueEur": 18242.04
+ },
+ {
+  "segmentId": 2481,
+  "year": 2026,
+  "month": 10,
+  "qtyKs": 48.0,
+  "valueEur": 19880.05
+ },
+ {
+  "segmentId": 2481,
+  "year": 2026,
+  "month": 11,
+  "qtyKs": 43.0,
+  "valueEur": 17696.12
+ },
+ {
+  "segmentId": 2481,
+  "year": 2026,
+  "month": 12,
+  "qtyKs": 43.0,
+  "valueEur": 17543.7
+ },
+ {
+  "segmentId": 2482,
+  "year": 2025,
+  "month": 1,
+  "qtyKs": 687.0,
+  "valueEur": 295966.65
+ },
+ {
+  "segmentId": 2482,
+  "year": 2025,
+  "month": 2,
+  "qtyKs": 620.0,
+  "valueEur": 263745.57
+ },
+ {
+  "segmentId": 2482,
+  "year": 2025,
+  "month": 3,
+  "qtyKs": 711.0,
+  "valueEur": 295725.1
+ },
+ {
+  "segmentId": 2482,
+  "year": 2025,
+  "month": 4,
+  "qtyKs": 698.0,
+  "valueEur": 301597.18
+ },
+ {
+  "segmentId": 2482,
+  "year": 2025,
+  "month": 5,
+  "qtyKs": 727.0,
+  "valueEur": 312806.15
+ },
+ {
+  "segmentId": 2482,
+  "year": 2025,
+  "month": 6,
+  "qtyKs": 682.0,
+  "valueEur": 288968.04
+ },
+ {
+  "segmentId": 2482,
+  "year": 2025,
+  "month": 7,
+  "qtyKs": 9698.0,
+  "valueEur": 4098938.21
+ },
+ {
+  "segmentId": 2482,
+  "year": 2025,
+  "month": 8,
+  "qtyKs": 13876.0,
+  "valueEur": 5878998.8
+ },
+ {
+  "segmentId": 2482,
+  "year": 2025,
+  "month": 9,
+  "qtyKs": 14066.0,
+  "valueEur": 6078698.15
+ },
+ {
+  "segmentId": 2482,
+  "year": 2025,
+  "month": 10,
+  "qtyKs": 3882.0,
+  "valueEur": 1679418.05
+ },
+ {
+  "segmentId": 2482,
+  "year": 2025,
+  "month": 11,
+  "qtyKs": 576.0,
+  "valueEur": 242492.64
+ },
+ {
+  "segmentId": 2482,
+  "year": 2025,
+  "month": 12,
+  "qtyKs": 626.0,
+  "valueEur": 266668.87
+ },
+ {
+  "segmentId": 2482,
+  "year": 2026,
+  "month": 1,
+  "qtyKs": 697.0,
+  "valueEur": 311826.02
+ },
+ {
+  "segmentId": 2482,
+  "year": 2026,
+  "month": 2,
+  "qtyKs": 687.0,
+  "valueEur": 308599.08
+ },
+ {
+  "segmentId": 2482,
+  "year": 2026,
+  "month": 3,
+  "qtyKs": 689.0,
+  "valueEur": 309425.23
+ },
+ {
+  "segmentId": 2482,
+  "year": 2026,
+  "month": 4,
+  "qtyKs": 678.0,
+  "valueEur": 307347.45
+ },
+ {
+  "segmentId": 2482,
+  "year": 2026,
+  "month": 5,
+  "qtyKs": 669.0,
+  "valueEur": 304768.48
+ },
+ {
+  "segmentId": 2482,
+  "year": 2026,
+  "month": 6,
+  "qtyKs": 604.0,
+  "valueEur": 278554.51
+ },
+ {
+  "segmentId": 2482,
+  "year": 2026,
+  "month": 7,
+  "qtyKs": 9083.0,
+  "valueEur": 4133929.9
+ },
+ {
+  "segmentId": 2482,
+  "year": 2026,
+  "month": 8,
+  "qtyKs": 13373.0,
+  "valueEur": 5956345.7
+ },
+ {
+  "segmentId": 2482,
+  "year": 2026,
+  "month": 9,
+  "qtyKs": 14009.0,
+  "valueEur": 6357578.99
+ },
+ {
+  "segmentId": 2482,
+  "year": 2026,
+  "month": 10,
+  "qtyKs": 4608.0,
+  "valueEur": 2066061.27
+ },
+ {
+  "segmentId": 2482,
+  "year": 2026,
+  "month": 11,
+  "qtyKs": 660.0,
+  "valueEur": 296361.05
+ },
+ {
+  "segmentId": 2482,
+  "year": 2026,
+  "month": 12,
+  "qtyKs": 670.0,
+  "valueEur": 301999.67
+ },
+ {
+  "segmentId": 2483,
+  "year": 2025,
+  "month": 1,
+  "qtyKs": 24.0,
+  "valueEur": 9588.41
+ },
+ {
+  "segmentId": 2483,
+  "year": 2025,
+  "month": 2,
+  "qtyKs": 25.0,
+  "valueEur": 10166.74
+ },
+ {
+  "segmentId": 2483,
+  "year": 2025,
+  "month": 3,
+  "qtyKs": 24.0,
+  "valueEur": 9855.65
+ },
+ {
+  "segmentId": 2483,
+  "year": 2025,
+  "month": 4,
+  "qtyKs": 24.0,
+  "valueEur": 9766.88
+ },
+ {
+  "segmentId": 2483,
+  "year": 2025,
+  "month": 5,
+  "qtyKs": 187.0,
+  "valueEur": 74615.82
+ },
+ {
+  "segmentId": 2483,
+  "year": 2025,
+  "month": 6,
+  "qtyKs": 485.0,
+  "valueEur": 193813.06
+ },
+ {
+  "segmentId": 2483,
+  "year": 2025,
+  "month": 7,
+  "qtyKs": 527.0,
+  "valueEur": 215582.04
+ },
+ {
+  "segmentId": 2483,
+  "year": 2025,
+  "month": 8,
+  "qtyKs": 233.0,
+  "valueEur": 94034.1
+ },
+ {
+  "segmentId": 2483,
+  "year": 2025,
+  "month": 9,
+  "qtyKs": 25.0,
+  "valueEur": 10080.29
+ },
+ {
+  "segmentId": 2483,
+  "year": 2025,
+  "month": 10,
+  "qtyKs": 24.0,
+  "valueEur": 9672.63
+ },
+ {
+  "segmentId": 2483,
+  "year": 2025,
+  "month": 11,
+  "qtyKs": 24.0,
+  "valueEur": 9723.05
+ },
+ {
+  "segmentId": 2483,
+  "year": 2025,
+  "month": 12,
+  "qtyKs": 27.0,
+  "valueEur": 11135.79
+ },
+ {
+  "segmentId": 2483,
+  "year": 2026,
+  "month": 1,
+  "qtyKs": 19.0,
+  "valueEur": 8081.04
+ },
+ {
+  "segmentId": 2483,
+  "year": 2026,
+  "month": 2,
+  "qtyKs": 20.0,
+  "valueEur": 8436.5
+ },
+ {
+  "segmentId": 2483,
+  "year": 2026,
+  "month": 3,
+  "qtyKs": 20.0,
+  "valueEur": 8668.66
+ },
+ {
+  "segmentId": 2483,
+  "year": 2026,
+  "month": 4,
+  "qtyKs": 18.0,
+  "valueEur": 7604.72
+ },
+ {
+  "segmentId": 2483,
+  "year": 2026,
+  "month": 5,
+  "qtyKs": 163.0,
+  "valueEur": 71258.56
+ },
+ {
+  "segmentId": 2483,
+  "year": 2026,
+  "month": 6,
+  "qtyKs": 403.0,
+  "valueEur": 170062.84
+ },
+ {
+  "segmentId": 2483,
+  "year": 2026,
+  "month": 7,
+  "qtyKs": 373.0,
+  "valueEur": 156102.21
+ },
+ {
+  "segmentId": 2483,
+  "year": 2026,
+  "month": 8,
+  "qtyKs": 166.0,
+  "valueEur": 70460.56
+ },
+ {
+  "segmentId": 2483,
+  "year": 2026,
+  "month": 9,
+  "qtyKs": 22.0,
+  "valueEur": 9467.54
+ },
+ {
+  "segmentId": 2483,
+  "year": 2026,
+  "month": 10,
+  "qtyKs": 20.0,
+  "valueEur": 8565.88
+ },
+ {
+  "segmentId": 2483,
+  "year": 2026,
+  "month": 11,
+  "qtyKs": 18.0,
+  "valueEur": 7654.57
+ },
+ {
+  "segmentId": 2483,
+  "year": 2026,
+  "month": 12,
+  "qtyKs": 20.0,
+  "valueEur": 8511.02
+ },
+ {
+  "segmentId": 2484,
+  "year": 2025,
+  "month": 1,
+  "qtyKs": 5.0,
+  "valueEur": 2022.0
+ },
+ {
+  "segmentId": 2484,
+  "year": 2025,
+  "month": 2,
+  "qtyKs": 5.0,
+  "valueEur": 2031.89
+ },
+ {
+  "segmentId": 2484,
+  "year": 2025,
+  "month": 3,
+  "qtyKs": 5.0,
+  "valueEur": 2003.97
+ },
+ {
+  "segmentId": 2484,
+  "year": 2025,
+  "month": 4,
+  "qtyKs": 5.0,
+  "valueEur": 1984.98
+ },
+ {
+  "segmentId": 2484,
+  "year": 2025,
+  "month": 5,
+  "qtyKs": 4.0,
+  "valueEur": 1624.05
+ },
+ {
+  "segmentId": 2484,
+  "year": 2025,
+  "month": 6,
+  "qtyKs": 6.0,
+  "valueEur": 2429.11
+ },
+ {
+  "segmentId": 2484,
+  "year": 2025,
+  "month": 7,
+  "qtyKs": 66.0,
+  "valueEur": 26510.33
+ },
+ {
+  "segmentId": 2484,
+  "year": 2025,
+  "month": 8,
+  "qtyKs": 113.0,
+  "valueEur": 45584.43
+ },
+ {
+  "segmentId": 2484,
+  "year": 2025,
+  "month": 9,
+  "qtyKs": 117.0,
+  "valueEur": 46882.2
+ },
+ {
+  "segmentId": 2484,
+  "year": 2025,
+  "month": 10,
+  "qtyKs": 33.0,
+  "valueEur": 13341.71
+ },
+ {
+  "segmentId": 2484,
+  "year": 2025,
+  "month": 11,
+  "qtyKs": 5.0,
+  "valueEur": 2026.63
+ },
+ {
+  "segmentId": 2484,
+  "year": 2025,
+  "month": 12,
+  "qtyKs": 5.0,
+  "valueEur": 1998.77
+ },
+ {
+  "segmentId": 2484,
+  "year": 2026,
+  "month": 1,
+  "qtyKs": 6.0,
+  "valueEur": 2534.95
+ },
+ {
+  "segmentId": 2484,
+  "year": 2026,
+  "month": 2,
+  "qtyKs": 6.0,
+  "valueEur": 2548.49
+ },
+ {
+  "segmentId": 2484,
+  "year": 2026,
+  "month": 3,
+  "qtyKs": 7.0,
+  "valueEur": 2925.38
+ },
+ {
+  "segmentId": 2484,
+  "year": 2026,
+  "month": 4,
+  "qtyKs": 7.0,
+  "valueEur": 2888.57
+ },
+ {
+  "segmentId": 2484,
+  "year": 2026,
+  "month": 5,
+  "qtyKs": 8.0,
+  "valueEur": 3375.07
+ },
+ {
+  "segmentId": 2484,
+  "year": 2026,
+  "month": 6,
+  "qtyKs": 7.0,
+  "valueEur": 2942.58
+ },
+ {
+  "segmentId": 2484,
+  "year": 2026,
+  "month": 7,
+  "qtyKs": 91.0,
+  "valueEur": 37670.79
+ },
+ {
+  "segmentId": 2484,
+  "year": 2026,
+  "month": 8,
+  "qtyKs": 147.0,
+  "valueEur": 61908.09
+ },
+ {
+  "segmentId": 2484,
+  "year": 2026,
+  "month": 9,
+  "qtyKs": 131.0,
+  "valueEur": 54560.12
+ },
+ {
+  "segmentId": 2484,
+  "year": 2026,
+  "month": 10,
+  "qtyKs": 42.0,
+  "valueEur": 17676.31
+ },
+ {
+  "segmentId": 2484,
+  "year": 2026,
+  "month": 11,
+  "qtyKs": 7.0,
+  "valueEur": 2944.12
+ },
+ {
+  "segmentId": 2484,
+  "year": 2026,
+  "month": 12,
+  "qtyKs": 7.0,
+  "valueEur": 2897.14
+ }
+]

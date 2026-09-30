@@ -1,0 +1,3656 @@
+[
+ {
+  "variety": "KATMANDU",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "KATMANDU",
+  "owner": "syngenta",
+  "hectares": 20.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "KATMANDU",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "KATMANDU",
+  "owner": "syngenta",
+  "hectares": 28.0,
+  "density": 20.0,
+  "region": "Murcia"
+ },
+ {
+  "variety": "KATMANDU",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "KATMANDU",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "KATMANDU",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "KATMANDU",
+  "owner": "syngenta",
+  "hectares": 54.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "KATMANDU",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "KATMANDU",
+  "owner": "syngenta",
+  "hectares": 34.0,
+  "density": 12.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "KATMANDU",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "CARLOMAGNO",
+  "owner": "syngenta",
+  "hectares": 10.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "CARLOMAGNO",
+  "owner": "syngenta",
+  "hectares": 86.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "CARLOMAGNO",
+  "owner": "syngenta",
+  "hectares": 32.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "CARLOMAGNO",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "CARLOMAGNO",
+  "owner": "syngenta",
+  "hectares": 500.0,
+  "density": 75.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "CARLOMAGNO",
+  "owner": "syngenta",
+  "hectares": 10.0,
+  "density": 10.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "CARLOMAGNO",
+  "owner": "syngenta",
+  "hectares": 30.0,
+  "density": 10.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "CARLOMAGNO",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "CARLOMAGNO",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 12.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "CARLOMAGNO",
+  "owner": "syngenta",
+  "hectares": 12.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "CARLOMAGNO",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": "CARLOMAGNO",
+  "owner": "syngenta",
+  "hectares": 4.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "CARLOMAGNO",
+  "owner": "syngenta",
+  "hectares": 24.0,
+  "density": 12.0,
+  "region": null
+ },
+ {
+  "variety": "CARLOMAGNO",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 12.0,
+  "region": null
+ },
+ {
+  "variety": "CARLOMAGNO",
+  "owner": "syngenta",
+  "hectares": 7.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "TUONELA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "ADRIANNO",
+  "owner": "syngenta",
+  "hectares": 9.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "ADRIANNO",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "ADRIANNO",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "ADRIANNO",
+  "owner": "syngenta",
+  "hectares": 26.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "ADRIANNO",
+  "owner": "syngenta",
+  "hectares": 30.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "ADRIANNO",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 12.0,
+  "region": null
+ },
+ {
+  "variety": "ADRIANNO",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": "CHURCHILL",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "CHURCHILL",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "CHURCHILL",
+  "owner": "syngenta",
+  "hectares": 500.0,
+  "density": 75.0,
+  "region": null
+ },
+ {
+  "variety": "CHURCHILL",
+  "owner": "syngenta",
+  "hectares": 1.0,
+  "density": 2.5,
+  "region": null
+ },
+ {
+  "variety": "CHURCHILL",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 12.0,
+  "region": null
+ },
+ {
+  "variety": "SENSEI",
+  "owner": "syngenta",
+  "hectares": 375.0,
+  "density": 75.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "SENSEI",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "SENSEI",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "SENSEI",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "SENSEI",
+  "owner": "syngenta",
+  "hectares": 500.0,
+  "density": 75.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "SENSEI",
+  "owner": "syngenta",
+  "hectares": 20.0,
+  "density": 10.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "SENSEI",
+  "owner": "syngenta",
+  "hectares": 10.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "SENSEI",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "SENSEI",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "SENSEI",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "SENSEI",
+  "owner": "syngenta",
+  "hectares": 12.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "SENSEI",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 12.0,
+  "region": null
+ },
+ {
+  "variety": "SENSEI",
+  "owner": "syngenta",
+  "hectares": 210.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "HOKKAIDO",
+  "owner": "syngenta",
+  "hectares": 260.0,
+  "density": 20.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "HOKKAIDO",
+  "owner": "syngenta",
+  "hectares": 80.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "HOKKAIDO",
+  "owner": "syngenta",
+  "hectares": 10.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "HOKKAIDO",
+  "owner": "syngenta",
+  "hectares": 132.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "HOKKAIDO",
+  "owner": "syngenta",
+  "hectares": 20.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "HOKKAIDO",
+  "owner": "syngenta",
+  "hectares": 500.0,
+  "density": 38.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "HOKKAIDO",
+  "owner": "syngenta",
+  "hectares": 38.0,
+  "density": 15.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "HOKKAIDO",
+  "owner": "syngenta",
+  "hectares": 30.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "HOKKAIDO",
+  "owner": "syngenta",
+  "hectares": 10.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "HOKKAIDO",
+  "owner": "syngenta",
+  "hectares": 48.0,
+  "density": 12.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "HOKKAIDO",
+  "owner": "syngenta",
+  "hectares": 40.0,
+  "density": 10.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "HOKKAIDO",
+  "owner": "syngenta",
+  "hectares": 10.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "HOKKAIDO",
+  "owner": "syngenta",
+  "hectares": 66.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "HOKKAIDO",
+  "owner": "syngenta",
+  "hectares": 30.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": "HOKKAIDO",
+  "owner": "syngenta",
+  "hectares": 4.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "HOKKAIDO",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "HOKKAIDO",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": "HOKKAIDO",
+  "owner": "syngenta",
+  "hectares": 71.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "HOKKAIDO",
+  "owner": "syngenta",
+  "hectares": 35.0,
+  "density": 3.5,
+  "region": null
+ },
+ {
+  "variety": "HOKKAIDO",
+  "owner": "syngenta",
+  "hectares": 120.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "HOKKAIDO",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "HOKKAIDO",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "HOKKAIDO",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "HOKKAIDO",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "HOKKAIDO",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": "HOKKAIDO",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": "HOKKAIDO",
+  "owner": "syngenta",
+  "hectares": 110.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "HOKKAIDO",
+  "owner": "syngenta",
+  "hectares": 500.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "SAITAMA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "SAITAMA",
+  "owner": "syngenta",
+  "hectares": 8.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "SAITAMA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "SAITAMA",
+  "owner": "syngenta",
+  "hectares": 500.0,
+  "density": 75.0,
+  "region": null
+ },
+ {
+  "variety": "SAITAMA",
+  "owner": "syngenta",
+  "hectares": 500.0,
+  "density": 75.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "SAITAMA",
+  "owner": "syngenta",
+  "hectares": 70.0,
+  "density": 10.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "SAITAMA",
+  "owner": "syngenta",
+  "hectares": 100.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "SAITAMA",
+  "owner": "syngenta",
+  "hectares": 60.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "SAITAMA",
+  "owner": "syngenta",
+  "hectares": 13.0,
+  "density": 2.5,
+  "region": null
+ },
+ {
+  "variety": "SAITAMA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "SAITAMA",
+  "owner": "syngenta",
+  "hectares": 13.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "SAITAMA",
+  "owner": "syngenta",
+  "hectares": 29.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": "SAITAMA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "SAITAMA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "SAITAMA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": "SAITAMA",
+  "owner": "syngenta",
+  "hectares": 14.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "SAITAMA",
+  "owner": "syngenta",
+  "hectares": 20.0,
+  "density": 10.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "SAITAMA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 12.0,
+  "region": null
+ },
+ {
+  "variety": "SAITAMA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "SAITAMA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 12.0,
+  "region": null
+ },
+ {
+  "variety": "SAITAMA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "SAITAMA",
+  "owner": "syngenta",
+  "hectares": 180.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "SAITAMA",
+  "owner": "syngenta",
+  "hectares": 13.0,
+  "density": 10.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "SAITAMA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "SAITAMA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "SAITAMA",
+  "owner": "syngenta",
+  "hectares": 20.0,
+  "density": 20.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "SAITAMA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "SAITAMA",
+  "owner": "syngenta",
+  "hectares": 334.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "SAITAMA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "SAITAMA",
+  "owner": "syngenta",
+  "hectares": 5.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "SAITAMA",
+  "owner": "syngenta",
+  "hectares": 76.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "SAITAMA",
+  "owner": "syngenta",
+  "hectares": 40.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "SAITAMA",
+  "owner": "syngenta",
+  "hectares": 400.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "SAITAMA",
+  "owner": "syngenta",
+  "hectares": 500.0,
+  "density": 38.0,
+  "region": null
+ },
+ {
+  "variety": "SAITAMA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "MONROVIA",
+  "owner": "syngenta",
+  "hectares": 168.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "MONROVIA",
+  "owner": "syngenta",
+  "hectares": 20.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "MONROVIA",
+  "owner": "syngenta",
+  "hectares": 7.0,
+  "density": 10.0,
+  "region": "Murcia"
+ },
+ {
+  "variety": "MONROVIA",
+  "owner": "syngenta",
+  "hectares": 44.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "MONROVIA",
+  "owner": "syngenta",
+  "hectares": 75.0,
+  "density": 25000.0,
+  "region": null
+ },
+ {
+  "variety": "MONROVIA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "MONROVIA",
+  "owner": "syngenta",
+  "hectares": 57.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "MONROVIA",
+  "owner": "syngenta",
+  "hectares": 10.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "MONROVIA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "MONROVIA",
+  "owner": "syngenta",
+  "hectares": 158.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "BILY",
+  "owner": "syngenta",
+  "hectares": 7.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "ALONSO",
+  "owner": "syngenta",
+  "hectares": 220.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "ANGUS",
+  "owner": "syngenta",
+  "hectares": 4.0,
+  "density": 10.0,
+  "region": "Murcia"
+ },
+ {
+  "variety": "ANGUS",
+  "owner": "syngenta",
+  "hectares": 100.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "ANGUS",
+  "owner": "syngenta",
+  "hectares": 25.0,
+  "density": 25000.0,
+  "region": null
+ },
+ {
+  "variety": "ANGUS",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "ANGUS",
+  "owner": "syngenta",
+  "hectares": 10.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "NAGAI",
+  "owner": "syngenta",
+  "hectares": 271.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "KABUKI",
+  "owner": "syngenta",
+  "hectares": 82.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "KABUKI",
+  "owner": "syngenta",
+  "hectares": 40.0,
+  "density": 20.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "KABUKI",
+  "owner": "syngenta",
+  "hectares": 1.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "KABUKI",
+  "owner": "syngenta",
+  "hectares": 500.0,
+  "density": 75.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "KABUKI",
+  "owner": "syngenta",
+  "hectares": 30.0,
+  "density": 15.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "KABUKI",
+  "owner": "syngenta",
+  "hectares": 15.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "KABUKI",
+  "owner": "syngenta",
+  "hectares": 2.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "KABUKI",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 12.0,
+  "region": null
+ },
+ {
+  "variety": "KABUKI",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "KABUKI",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "KABUKI",
+  "owner": "syngenta",
+  "hectares": 30.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "GACELA",
+  "owner": "syngenta",
+  "hectares": 11.0,
+  "density": 12.0,
+  "region": null
+ },
+ {
+  "variety": "GALENA",
+  "owner": "syngenta",
+  "hectares": 20.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "GALENA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "MELCHOR",
+  "owner": "syngenta",
+  "hectares": 71.0,
+  "density": 12.0,
+  "region": null
+ },
+ {
+  "variety": "MELCHOR",
+  "owner": "syngenta",
+  "hectares": 6.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "MELCHOR",
+  "owner": "syngenta",
+  "hectares": 20.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "MELCHOR",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": "MELCHOR",
+  "owner": "syngenta",
+  "hectares": 21.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "MELCHOR",
+  "owner": "syngenta",
+  "hectares": 18.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "MELCHOR",
+  "owner": "syngenta",
+  "hectares": 37.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "MELCHOR",
+  "owner": "syngenta",
+  "hectares": 248.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "MELCHOR",
+  "owner": "syngenta",
+  "hectares": 31.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "MELCHOR",
+  "owner": "syngenta",
+  "hectares": 500.0,
+  "density": 38.0,
+  "region": null
+ },
+ {
+  "variety": "NOAM",
+  "owner": "syngenta",
+  "hectares": 100.0,
+  "density": 75.0,
+  "region": "Norte"
+ },
+ {
+  "variety": "SOBEK",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "BABIECA",
+  "owner": "syngenta",
+  "hectares": 10.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "BABIECA",
+  "owner": "syngenta",
+  "hectares": 66.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "BABIECA",
+  "owner": "syngenta",
+  "hectares": 500.0,
+  "density": 38.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "BABIECA",
+  "owner": "syngenta",
+  "hectares": 28.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "BABIECA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "BABIECA",
+  "owner": "syngenta",
+  "hectares": 50.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "BABIECA",
+  "owner": "syngenta",
+  "hectares": 5.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "BABIECA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 12.0,
+  "region": null
+ },
+ {
+  "variety": "TUNDRA",
+  "owner": "syngenta",
+  "hectares": 30.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": "MERKAVA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 2.5,
+  "region": null
+ },
+ {
+  "variety": "MERKAVA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "MERKAVA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 75.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "MERKAVA",
+  "owner": "syngenta",
+  "hectares": 7.0,
+  "density": 3.5,
+  "region": null
+ },
+ {
+  "variety": "BOKKEN",
+  "owner": "syngenta",
+  "hectares": 23.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "BOKKEN",
+  "owner": "syngenta",
+  "hectares": 30.0,
+  "density": 20.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "BOKKEN",
+  "owner": "syngenta",
+  "hectares": 104.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "BOKKEN",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "BOKKEN",
+  "owner": "syngenta",
+  "hectares": 10.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "BOKKEN",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "BOKKEN",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "BOKKEN",
+  "owner": "syngenta",
+  "hectares": 100.0,
+  "density": 10.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "BOKKEN",
+  "owner": "syngenta",
+  "hectares": 140.0,
+  "density": 35.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "BOKKEN",
+  "owner": "syngenta",
+  "hectares": 9.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "BOKKEN",
+  "owner": "syngenta",
+  "hectares": 6.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "BOKKEN",
+  "owner": "syngenta",
+  "hectares": 7.0,
+  "density": 3.5,
+  "region": null
+ },
+ {
+  "variety": "BOKKEN",
+  "owner": "syngenta",
+  "hectares": 35.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "BOKKEN",
+  "owner": "syngenta",
+  "hectares": 54.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "BOKKEN",
+  "owner": "syngenta",
+  "hectares": 500.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "BOKKEN",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "BOKKEN",
+  "owner": "syngenta",
+  "hectares": 9.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": "BOKKEN",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": "BOKKEN",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "BOKKEN",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "YAZIR",
+  "owner": "syngenta",
+  "hectares": 20.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "YAZIR",
+  "owner": "syngenta",
+  "hectares": 24.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "YAZIR",
+  "owner": "syngenta",
+  "hectares": 18.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "KIRUNA",
+  "owner": "syngenta",
+  "hectares": 15.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "KIRUNA",
+  "owner": "syngenta",
+  "hectares": 32.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "KIRUNA",
+  "owner": "syngenta",
+  "hectares": 70.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "KIRUNA",
+  "owner": "syngenta",
+  "hectares": 15.0,
+  "density": 3.5,
+  "region": null
+ },
+ {
+  "variety": "KIRUNA",
+  "owner": "syngenta",
+  "hectares": 7.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "KIRUNA",
+  "owner": "syngenta",
+  "hectares": 34.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "KIRUNA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "KIRUNA",
+  "owner": "syngenta",
+  "hectares": 20.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "KIRUNA",
+  "owner": "syngenta",
+  "hectares": 40.0,
+  "density": 10.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "KIRUNA",
+  "owner": "syngenta",
+  "hectares": 70.0,
+  "density": 35.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "KIRUNA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": "KIRUNA",
+  "owner": "syngenta",
+  "hectares": 48.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "KIRUNA",
+  "owner": "syngenta",
+  "hectares": 500.0,
+  "density": 30.0,
+  "region": null
+ },
+ {
+  "variety": "KAAMOS",
+  "owner": "syngenta",
+  "hectares": 215.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "KAAMOS",
+  "owner": "syngenta",
+  "hectares": 10.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "KAAMOS",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "KAAMOS",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "KAAMOS",
+  "owner": "syngenta",
+  "hectares": 70.0,
+  "density": 35.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "KAAMOS",
+  "owner": "syngenta",
+  "hectares": 60.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "KAAMOS",
+  "owner": "syngenta",
+  "hectares": 15.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "KAAMOS",
+  "owner": "syngenta",
+  "hectares": 130.0,
+  "density": 10.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "KAAMOS",
+  "owner": "syngenta",
+  "hectares": 40.0,
+  "density": 20.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "KAAMOS",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 12.0,
+  "region": null
+ },
+ {
+  "variety": "KAAMOS",
+  "owner": "syngenta",
+  "hectares": 69.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": "KAAMOS",
+  "owner": "syngenta",
+  "hectares": 10.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "KAAMOS",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": "KAAMOS",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "KAAMOS",
+  "owner": "syngenta",
+  "hectares": 40.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "KAAMOS",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "KAAMOS",
+  "owner": "syngenta",
+  "hectares": 40.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "KAAMOS",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 1.0,
+  "region": null
+ },
+ {
+  "variety": "KAAMOS",
+  "owner": "syngenta",
+  "hectares": 500.0,
+  "density": 30.0,
+  "region": null
+ },
+ {
+  "variety": "ABAKARA",
+  "owner": "syngenta",
+  "hectares": 88.0,
+  "density": 2.5,
+  "region": null
+ },
+ {
+  "variety": "ABAKARA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": "Murcia"
+ },
+ {
+  "variety": "ABAKARA",
+  "owner": "syngenta",
+  "hectares": 70.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "JASON",
+  "owner": "syngenta",
+  "hectares": 36.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "JASON",
+  "owner": "syngenta",
+  "hectares": 11.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": "JASON",
+  "owner": "syngenta",
+  "hectares": 25.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "JASON",
+  "owner": "syngenta",
+  "hectares": 2.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "JASON",
+  "owner": "syngenta",
+  "hectares": 17.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "JASON",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "JASON",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": "JASON",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "JASON",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "JASON",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "JASON",
+  "owner": "syngenta",
+  "hectares": 500.0,
+  "density": 26.0,
+  "region": null
+ },
+ {
+  "variety": "JASON",
+  "owner": "syngenta",
+  "hectares": 260.0,
+  "density": 26.0,
+  "region": null
+ },
+ {
+  "variety": "PRETORIA",
+  "owner": "syngenta",
+  "hectares": 106.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "PRETORIA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "PRETORIA",
+  "owner": "syngenta",
+  "hectares": 176.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "PRETORIA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": "Murcia"
+ },
+ {
+  "variety": "PRETORIA",
+  "owner": "syngenta",
+  "hectares": 70.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "PRETORIA",
+  "owner": "syngenta",
+  "hectares": 20.0,
+  "density": 25000.0,
+  "region": null
+ },
+ {
+  "variety": "PRETORIA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "PRETORIA",
+  "owner": "syngenta",
+  "hectares": 13.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "PRETORIA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "ARCONTE",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "ARCONTE",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "ARCONTE",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "ARCONTE",
+  "owner": "syngenta",
+  "hectares": 2.0,
+  "density": 3.5,
+  "region": null
+ },
+ {
+  "variety": "ARCONTE",
+  "owner": "syngenta",
+  "hectares": 155.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "ARCONTE",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "ARCONTE",
+  "owner": "syngenta",
+  "hectares": 134.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "ARCONTE",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "ARCONTE",
+  "owner": "syngenta",
+  "hectares": 6.0,
+  "density": 3.5,
+  "region": null
+ },
+ {
+  "variety": "ARCONTE",
+  "owner": "syngenta",
+  "hectares": 21.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "NORRIS",
+  "owner": "syngenta",
+  "hectares": 8.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "NORRIS",
+  "owner": "syngenta",
+  "hectares": 3.0,
+  "density": 2.5,
+  "region": null
+ },
+ {
+  "variety": "NORRIS",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "NORRIS",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "NORRIS",
+  "owner": "syngenta",
+  "hectares": 11.0,
+  "density": 10.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "NORRIS",
+  "owner": "syngenta",
+  "hectares": 34.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "NORRIS",
+  "owner": "syngenta",
+  "hectares": 46.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "NORRIS",
+  "owner": "syngenta",
+  "hectares": 172.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": "NORRIS",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "NORRIS",
+  "owner": "syngenta",
+  "hectares": 500.0,
+  "density": 38.0,
+  "region": null
+ },
+ {
+  "variety": "NORRIS",
+  "owner": "syngenta",
+  "hectares": 32.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "NORRIS",
+  "owner": "syngenta",
+  "hectares": 2.0,
+  "density": 2.5,
+  "region": null
+ },
+ {
+  "variety": "NORRIS",
+  "owner": "syngenta",
+  "hectares": 80.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "NORRIS",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 4.0,
+  "region": null
+ },
+ {
+  "variety": "NORRIS",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "NORRIS",
+  "owner": "syngenta",
+  "hectares": 12.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "MUSA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "MUSA",
+  "owner": "syngenta",
+  "hectares": 250.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "MUSA",
+  "owner": "syngenta",
+  "hectares": 128.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "MUSA",
+  "owner": "syngenta",
+  "hectares": 80.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "MUSA",
+  "owner": "syngenta",
+  "hectares": 25.0,
+  "density": 25000.0,
+  "region": null
+ },
+ {
+  "variety": "MUSA",
+  "owner": "syngenta",
+  "hectares": 27.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": "MUSA",
+  "owner": "syngenta",
+  "hectares": 12.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "MUSA",
+  "owner": "syngenta",
+  "hectares": 37.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "MUSA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "GAMBITO",
+  "owner": "syngenta",
+  "hectares": 73.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "GAMBITO",
+  "owner": "syngenta",
+  "hectares": 10.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "GAMBITO",
+  "owner": "syngenta",
+  "hectares": 98.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": "GAMBITO",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "GAMBITO",
+  "owner": "syngenta",
+  "hectares": 48.0,
+  "density": 12.0,
+  "region": null
+ },
+ {
+  "variety": "GAMBITO",
+  "owner": "syngenta",
+  "hectares": 500.0,
+  "density": 26.0,
+  "region": null
+ },
+ {
+  "variety": "TAPIOCA",
+  "owner": "syngenta",
+  "hectares": 30.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "TAPIOCA",
+  "owner": "syngenta",
+  "hectares": 38.0,
+  "density": 10.0,
+  "region": "Murcia"
+ },
+ {
+  "variety": "TAPIOCA",
+  "owner": "syngenta",
+  "hectares": 70.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "TAPIOCA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "TAPIOCA",
+  "owner": "syngenta",
+  "hectares": 30.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "TAPIOCA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "TAPIOCA",
+  "owner": "syngenta",
+  "hectares": 13.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "TAPIOCA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "AYUMI",
+  "owner": "syngenta",
+  "hectares": 500.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "AYUMI",
+  "owner": "syngenta",
+  "hectares": 120.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "AYUMI",
+  "owner": "syngenta",
+  "hectares": 46.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "AYUMI",
+  "owner": "syngenta",
+  "hectares": 20.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "AYUMI",
+  "owner": "syngenta",
+  "hectares": 54.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "AYUMI",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "AYUMI",
+  "owner": "syngenta",
+  "hectares": 15.0,
+  "density": 10.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "AYUMI",
+  "owner": "syngenta",
+  "hectares": 141.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "AYUMI",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 12.0,
+  "region": null
+ },
+ {
+  "variety": "AYUMI",
+  "owner": "syngenta",
+  "hectares": 242.0,
+  "density": 3.5,
+  "region": null
+ },
+ {
+  "variety": "AYUMI",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": "AYUMI",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": "AYUMI",
+  "owner": "syngenta",
+  "hectares": 500.0,
+  "density": 38.0,
+  "region": null
+ },
+ {
+  "variety": "AKAME",
+  "owner": "syngenta",
+  "hectares": 230.0,
+  "density": 10.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "AKAME",
+  "owner": "syngenta",
+  "hectares": 100.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "AKAME",
+  "owner": "syngenta",
+  "hectares": 13.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "AKAME",
+  "owner": "syngenta",
+  "hectares": 56.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "AKAME",
+  "owner": "syngenta",
+  "hectares": 20.0,
+  "density": 10.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "AKAME",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "AKAME",
+  "owner": "syngenta",
+  "hectares": 8.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "AKAME",
+  "owner": "syngenta",
+  "hectares": 41.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": "AKAME",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "AKAME",
+  "owner": "syngenta",
+  "hectares": 28.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "AKAME",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "AKAME",
+  "owner": "syngenta",
+  "hectares": 65.0,
+  "density": 12.0,
+  "region": null
+ },
+ {
+  "variety": "AKAME",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 12.0,
+  "region": null
+ },
+ {
+  "variety": "AKAME",
+  "owner": "syngenta",
+  "hectares": 206.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "AKAME",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "AKAME",
+  "owner": "syngenta",
+  "hectares": 23.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "AKAME",
+  "owner": "syngenta",
+  "hectares": 400.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "AKAME",
+  "owner": "syngenta",
+  "hectares": 60.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "AYAX",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "AYAX",
+  "owner": "syngenta",
+  "hectares": 20.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "AYAX",
+  "owner": "syngenta",
+  "hectares": 3.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": "AYAX",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "GENGIS KAN",
+  "owner": "syngenta",
+  "hectares": 28.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "GENGIS KAN",
+  "owner": "syngenta",
+  "hectares": 10.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "GENGIS KAN",
+  "owner": "syngenta",
+  "hectares": 14.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "GENGIS KAN",
+  "owner": "syngenta",
+  "hectares": 10.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "GENGIS KAN",
+  "owner": "syngenta",
+  "hectares": 150.0,
+  "density": 10.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "GENGIS KAN",
+  "owner": "syngenta",
+  "hectares": 120.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "GENGIS KAN",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 12.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "GENGIS KAN",
+  "owner": "syngenta",
+  "hectares": 14.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "GENGIS KAN",
+  "owner": "syngenta",
+  "hectares": 9.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": "GENGIS KAN",
+  "owner": "syngenta",
+  "hectares": 81.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "GENGIS KAN",
+  "owner": "syngenta",
+  "hectares": 40.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "GENGIS KAN",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 12.0,
+  "region": null
+ },
+ {
+  "variety": "GENGIS KAN",
+  "owner": "syngenta",
+  "hectares": 80.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "GENGIS KAN",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "GENGIS KAN",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": "LEONTES",
+  "owner": "syngenta",
+  "hectares": 20.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "LEONTES",
+  "owner": "syngenta",
+  "hectares": 16.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "LEONTES",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 75.0,
+  "region": null
+ },
+ {
+  "variety": "LEONTES",
+  "owner": "syngenta",
+  "hectares": 500.0,
+  "density": 38.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "LEONTES",
+  "owner": "syngenta",
+  "hectares": 12.0,
+  "density": 12.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "LEONTES",
+  "owner": "syngenta",
+  "hectares": 30.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "LEONTES",
+  "owner": "syngenta",
+  "hectares": 25.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "LEONTES",
+  "owner": "syngenta",
+  "hectares": 8.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "LEONTES",
+  "owner": "syngenta",
+  "hectares": 38.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "LEONTES",
+  "owner": "syngenta",
+  "hectares": 1.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": "LEONTES",
+  "owner": "syngenta",
+  "hectares": 49.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "LEONTES",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 12.0,
+  "region": null
+ },
+ {
+  "variety": "LEONTES",
+  "owner": "syngenta",
+  "hectares": 40.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "LEONTES",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "LEONTES",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": "LEONTES",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": "LEONTES",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "LEONTES",
+  "owner": "syngenta",
+  "hectares": 8.0,
+  "density": 10.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "LEONTES",
+  "owner": "syngenta",
+  "hectares": 13.0,
+  "density": 12.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "LEONTES",
+  "owner": "syngenta",
+  "hectares": 40.0,
+  "density": 10.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "LEONTES",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 12.0,
+  "region": null
+ },
+ {
+  "variety": "LEONTES",
+  "owner": "syngenta",
+  "hectares": 13.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "LEONTES",
+  "owner": "syngenta",
+  "hectares": 72.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "LEONTES",
+  "owner": "syngenta",
+  "hectares": 80.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "LEONTES",
+  "owner": "syngenta",
+  "hectares": 200.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "YAMATO",
+  "owner": "syngenta",
+  "hectares": 49.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "YAMATO",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 4.0,
+  "region": null
+ },
+ {
+  "variety": "YAMATO",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "YAMATO",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "YAMATO",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 12.0,
+  "region": null
+ },
+ {
+  "variety": "BARRERA",
+  "owner": "syngenta",
+  "hectares": 93.0,
+  "density": 2.5,
+  "region": null
+ },
+ {
+  "variety": "BARRERA",
+  "owner": "syngenta",
+  "hectares": 11.0,
+  "density": 1.0,
+  "region": null
+ },
+ {
+  "variety": "BARRERA",
+  "owner": "syngenta",
+  "hectares": 22.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "BARRERA",
+  "owner": "syngenta",
+  "hectares": 92.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "BARRERA",
+  "owner": "syngenta",
+  "hectares": 500.0,
+  "density": 75.0,
+  "region": null
+ },
+ {
+  "variety": "BARRERA",
+  "owner": "syngenta",
+  "hectares": 40.0,
+  "density": 20.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "BARRERA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "BARRERA",
+  "owner": "syngenta",
+  "hectares": 10.0,
+  "density": 10.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "BARRERA",
+  "owner": "syngenta",
+  "hectares": 20.0,
+  "density": 12.0,
+  "region": null
+ },
+ {
+  "variety": "BARRERA",
+  "owner": "syngenta",
+  "hectares": 14.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "BARRERA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": "BARRERA",
+  "owner": "syngenta",
+  "hectares": 500.0,
+  "density": 26.0,
+  "region": null
+ },
+ {
+  "variety": "JABANA",
+  "owner": "syngenta",
+  "hectares": 220.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "JABANA",
+  "owner": "syngenta",
+  "hectares": 20.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "JABANA",
+  "owner": "syngenta",
+  "hectares": 20.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "JABANA",
+  "owner": "syngenta",
+  "hectares": 10.0,
+  "density": 10.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "JABANA",
+  "owner": "syngenta",
+  "hectares": 18.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": "JABANA",
+  "owner": "syngenta",
+  "hectares": 9.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "JABANA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "JABANA",
+  "owner": "syngenta",
+  "hectares": 63.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "JABANA",
+  "owner": "syngenta",
+  "hectares": 212.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "JABANA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "JABANA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "JABANA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": "JABANA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "JABANA",
+  "owner": "syngenta",
+  "hectares": 8.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "JABANA",
+  "owner": "syngenta",
+  "hectares": 50.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "KAORI",
+  "owner": "syngenta",
+  "hectares": 408.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "KAORI",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "KAORI",
+  "owner": "syngenta",
+  "hectares": 8.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": "KAORI",
+  "owner": "syngenta",
+  "hectares": 11.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "ELEKTRA",
+  "owner": "syngenta",
+  "hectares": 54.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "ELEKTRA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "ELEKTRA",
+  "owner": "syngenta",
+  "hectares": 61.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "MASAMI",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "MASAMI",
+  "owner": "syngenta",
+  "hectares": 13.0,
+  "density": 2.5,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "MASAMI",
+  "owner": "syngenta",
+  "hectares": 55.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "MASAMI",
+  "owner": "syngenta",
+  "hectares": 55.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 145.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": "MASAMI",
+  "owner": "syngenta",
+  "hectares": 81.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": "MASAMI",
+  "owner": "syngenta",
+  "hectares": 82.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "MASAMI",
+  "owner": "syngenta",
+  "hectares": 11.0,
+  "density": 3.5,
+  "region": null
+ },
+ {
+  "variety": "MASAMI",
+  "owner": "syngenta",
+  "hectares": 30.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 500.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": "MASAMI",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "MASAMI",
+  "owner": "syngenta",
+  "hectares": 65.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "MASAMI",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "MASAMI",
+  "owner": "syngenta",
+  "hectares": 300.0,
+  "density": 20.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "MASAMI",
+  "owner": "syngenta",
+  "hectares": 35.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "MASAMI",
+  "owner": "syngenta",
+  "hectares": 500.0,
+  "density": 38.0,
+  "region": null
+ },
+ {
+  "variety": "NOZOMI",
+  "owner": "syngenta",
+  "hectares": 394.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "NOZOMI",
+  "owner": "syngenta",
+  "hectares": 250.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "NOZOMI",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "NOZOMI",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "NOZOMI",
+  "owner": "syngenta",
+  "hectares": 24.0,
+  "density": 12.0,
+  "region": null
+ },
+ {
+  "variety": "NOZOMI",
+  "owner": "syngenta",
+  "hectares": 108.0,
+  "density": 12.0,
+  "region": null
+ },
+ {
+  "variety": "NARVIK",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "NARVIK",
+  "owner": "syngenta",
+  "hectares": 10.0,
+  "density": 10.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "NARVIK",
+  "owner": "syngenta",
+  "hectares": 23.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "NARVIK",
+  "owner": "syngenta",
+  "hectares": 131.0,
+  "density": 15.0,
+  "region": null
+ },
+ {
+  "variety": "NARVIK",
+  "owner": "syngenta",
+  "hectares": 36.0,
+  "density": 12.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 500.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 500.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 7.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 28.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 140.0,
+  "density": 25000.0,
+  "region": "Levante"
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 10.0,
+  "density": 0.0,
+  "region": "Levante"
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 8.0,
+  "density": 0.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 107.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 47.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 80.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 90.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 18.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": "SPARTANOS",
+  "owner": "syngenta",
+  "hectares": 4.0,
+  "density": 4.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": "SPARTANOS",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "SPARTANOS",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 85.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 10.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": "BARRACUS",
+  "owner": "syngenta",
+  "hectares": 42.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "BARRACUS",
+  "owner": "syngenta",
+  "hectares": 80.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 150.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": "BARRACUS",
+  "owner": "syngenta",
+  "hectares": 130.0,
+  "density": 2.5,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 80.0,
+  "density": 0.0,
+  "region": "Murcia"
+ },
+ {
+  "variety": "BARRACUS",
+  "owner": "syngenta",
+  "hectares": 16.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "BARRACUS",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "BARRACUS",
+  "owner": "syngenta",
+  "hectares": 29.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "TERRANOVA",
+  "owner": "syngenta",
+  "hectares": 178.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "TERRANOVA",
+  "owner": "syngenta",
+  "hectares": 56.0,
+  "density": 20.0,
+  "region": null
+ },
+ {
+  "variety": "TERRANOVA",
+  "owner": "syngenta",
+  "hectares": 33.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "TERRANOVA",
+  "owner": "syngenta",
+  "hectares": 0.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": "TERRANOVA",
+  "owner": "syngenta",
+  "hectares": 39.0,
+  "density": 10.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 28.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 14.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 42.0,
+  "density": 33000.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 160.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 500.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 447.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 250.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 500.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 30.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 150.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 150.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 25.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 75.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 70.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 500.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 500.0,
+  "density": 0.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 25.0,
+  "density": 0.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 422.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 320.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 65.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 90.0,
+  "density": 0.0,
+  "region": "Murcia"
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 15.0,
+  "density": 0.0,
+  "region": "Murcia"
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 50.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 66.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 290.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 93.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 43.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 34.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 2.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 138.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 1.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 40.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 68.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 138.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 41.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 270.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 12.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 35.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 458.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 250.0,
+  "density": 0.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 97.0,
+  "density": 0.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 18.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 20.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 500.0,
+  "density": 0.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 16.0,
+  "density": 0.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 50.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 100.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 35.0,
+  "density": 0.0,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 73.0,
+  "density": 0.0,
+  "region": "Med-Sur Almeria-Costas"
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 500.0,
+  "density": 21.89,
+  "region": null
+ },
+ {
+  "variety": null,
+  "owner": "unknown",
+  "hectares": 10.0,
+  "density": 0.0,
+  "region": null
+ }
+]

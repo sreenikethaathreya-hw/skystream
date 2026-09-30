@@ -1,0 +1,1073 @@
+[
+ {
+  "segmentId": 2446,
+  "year": 2027,
+  "hectares": 292.0,
+  "qtyKs": 6132.0,
+  "density": 21.0,
+  "priceExseed": 397.0,
+  "priceFarmgate": 457.0,
+  "notes": {
+   "competitors": null,
+   "dynamics": null,
+   "growers": null,
+   "consumers": null,
+   "distributors": null,
+   "technology": null
+  }
+ },
+ {
+  "segmentId": 2446,
+  "year": 2029,
+  "hectares": 293.0,
+  "qtyKs": 6153.0,
+  "density": 21.0,
+  "priceExseed": 414.0,
+  "priceFarmgate": 476.0,
+  "notes": {
+   "competitors": null,
+   "dynamics": null,
+   "growers": null,
+   "consumers": null,
+   "distributors": null,
+   "technology": null
+  }
+ },
+ {
+  "segmentId": 2446,
+  "year": 2025,
+  "hectares": 296.0,
+  "qtyKs": 6216.0,
+  "density": 21.0,
+  "priceExseed": 316.69,
+  "priceFarmgate": 342.02,
+  "notes": {
+   "competitors": null,
+   "dynamics": null,
+   "growers": null,
+   "consumers": null,
+   "distributors": null,
+   "technology": null
+  }
+ },
+ {
+  "segmentId": 2446,
+  "year": 2026,
+  "hectares": 293.0,
+  "qtyKs": 6153.0,
+  "density": 21.0,
+  "priceExseed": 394.0,
+  "priceFarmgate": 453.0,
+  "notes": {
+   "competitors": null,
+   "dynamics": null,
+   "growers": null,
+   "consumers": null,
+   "distributors": null,
+   "technology": null
+  }
+ },
+ {
+  "segmentId": 2446,
+  "year": 2030,
+  "hectares": 294.0,
+  "qtyKs": 6174.0,
+  "density": 21.0,
+  "priceExseed": 424.0,
+  "priceFarmgate": 488.0,
+  "notes": {
+   "competitors": null,
+   "dynamics": null,
+   "growers": null,
+   "consumers": null,
+   "distributors": null,
+   "technology": null
+  }
+ },
+ {
+  "segmentId": 2446,
+  "year": 2024,
+  "hectares": 296.0,
+  "qtyKs": 6216.0,
+  "density": 21.0,
+  "priceExseed": 320.95,
+  "priceFarmgate": 346.62,
+  "notes": {
+   "competitors": null,
+   "dynamics": null,
+   "growers": null,
+   "consumers": null,
+   "distributors": null,
+   "technology": null
+  }
+ },
+ {
+  "segmentId": 2446,
+  "year": 2028,
+  "hectares": 292.0,
+  "qtyKs": 6132.0,
+  "density": 21.0,
+  "priceExseed": 406.0,
+  "priceFarmgate": 466.0,
+  "notes": {
+   "competitors": null,
+   "dynamics": null,
+   "growers": null,
+   "consumers": null,
+   "distributors": null,
+   "technology": null
+  }
+ },
+ {
+  "segmentId": 2481,
+  "year": 2029,
+  "hectares": 1440.0,
+  "qtyKs": 30240.0,
+  "density": 21.0,
+  "priceExseed": 424.0,
+  "priceFarmgate": 488.0,
+  "notes": {
+   "competitors": null,
+   "dynamics": null,
+   "growers": null,
+   "consumers": null,
+   "distributors": null,
+   "technology": null
+  }
+ },
+ {
+  "segmentId": 2481,
+  "year": 2025,
+  "hectares": 1770.0,
+  "qtyKs": 37170.0,
+  "density": 21.0,
+  "priceExseed": 330.3,
+  "priceFarmgate": 356.73,
+  "notes": {
+   "competitors": null,
+   "dynamics": null,
+   "growers": null,
+   "consumers": null,
+   "distributors": null,
+   "technology": null
+  }
+ },
+ {
+  "segmentId": 2481,
+  "year": 2026,
+  "hectares": 1437.0,
+  "qtyKs": 30177.0,
+  "density": 21.0,
+  "priceExseed": 406.0,
+  "priceFarmgate": 466.0,
+  "notes": {
+   "competitors": null,
+   "dynamics": null,
+   "growers": null,
+   "consumers": null,
+   "distributors": null,
+   "technology": null
+  }
+ },
+ {
+  "segmentId": 2481,
+  "year": 2024,
+  "hectares": 1765.0,
+  "qtyKs": 37065.0,
+  "density": 21.0,
+  "priceExseed": 334.75,
+  "priceFarmgate": 361.53,
+  "notes": {
+   "competitors": null,
+   "dynamics": null,
+   "growers": null,
+   "consumers": null,
+   "distributors": null,
+   "technology": null
+  }
+ },
+ {
+  "segmentId": 2481,
+  "year": 2028,
+  "hectares": 1436.0,
+  "qtyKs": 30156.0,
+  "density": 21.0,
+  "priceExseed": 416.0,
+  "priceFarmgate": 479.0,
+  "notes": {
+   "competitors": null,
+   "dynamics": null,
+   "growers": null,
+   "consumers": null,
+   "distributors": null,
+   "technology": null
+  }
+ },
+ {
+  "segmentId": 2481,
+  "year": 2027,
+  "hectares": 1435.0,
+  "qtyKs": 30135.0,
+  "density": 21.0,
+  "priceExseed": 407.0,
+  "priceFarmgate": 468.0,
+  "notes": {
+   "competitors": null,
+   "dynamics": null,
+   "growers": null,
+   "consumers": null,
+   "distributors": null,
+   "technology": null
+  }
+ },
+ {
+  "segmentId": 2481,
+  "year": 2030,
+  "hectares": 1444.0,
+  "qtyKs": 30324.0,
+  "density": 21.0,
+  "priceExseed": 436.0,
+  "priceFarmgate": 502.0,
+  "notes": {
+   "competitors": null,
+   "dynamics": null,
+   "growers": null,
+   "consumers": null,
+   "distributors": null,
+   "technology": null
+  }
+ },
+ {
+  "segmentId": 2449,
+  "year": 2026,
+  "hectares": 316.0,
+  "qtyKs": 6636.0,
+  "density": 21.0,
+  "priceExseed": 423.0,
+  "priceFarmgate": 487.0,
+  "notes": {
+   "competitors": null,
+   "dynamics": null,
+   "growers": null,
+   "consumers": null,
+   "distributors": null,
+   "technology": null
+  }
+ },
+ {
+  "segmentId": 2449,
+  "year": 2028,
+  "hectares": 315.0,
+  "qtyKs": 6615.0,
+  "density": 21.0,
+  "priceExseed": 433.0,
+  "priceFarmgate": 498.0,
+  "notes": {
+   "competitors": null,
+   "dynamics": null,
+   "growers": null,
+   "consumers": null,
+   "distributors": null,
+   "technology": null
+  }
+ },
+ {
+  "segmentId": 2449,
+  "year": 2030,
+  "hectares": 316.0,
+  "qtyKs": 6636.0,
+  "density": 21.0,
+  "priceExseed": 451.0,
+  "priceFarmgate": 519.0,
+  "notes": {
+   "competitors": null,
+   "dynamics": null,
+   "growers": null,
+   "consumers": null,
+   "distributors": null,
+   "technology": null
+  }
+ },
+ {
+  "segmentId": 2449,
+  "year": 2025,
+  "hectares": 439.0,
+  "qtyKs": 9219.0,
+  "density": 21.0,
+  "priceExseed": 332.42,
+  "priceFarmgate": 359.01,
+  "notes": {
+   "competitors": null,
+   "dynamics": null,
+   "growers": null,
+   "consumers": null,
+   "distributors": null,
+   "technology": null
+  }
+ },
+ {
+  "segmentId": 2449,
+  "year": 2029,
+  "hectares": 316.0,
+  "qtyKs": 6636.0,
+  "density": 21.0,
+  "priceExseed": 442.0,
+  "priceFarmgate": 508.0,
+  "notes": {
+   "competitors": null,
+   "dynamics": null,
+   "growers": null,
+   "consumers": null,
+   "distributors": null,
+   "technology": null
+  }
+ },
+ {
+  "segmentId": 2449,
+  "year": 2027,
+  "hectares": 315.0,
+  "qtyKs": 6615.0,
+  "density": 21.0,
+  "priceExseed": 427.0,
+  "priceFarmgate": 491.0,
+  "notes": {
+   "competitors": null,
+   "dynamics": null,
+   "growers": null,
+   "consumers": null,
+   "distributors": null,
+   "technology": null
+  }
+ },
+ {
+  "segmentId": 2449,
+  "year": 2024,
+  "hectares": 437.0,
+  "qtyKs": 9177.0,
+  "density": 21.0,
+  "priceExseed": 336.89,
+  "priceFarmgate": 363.84,
+  "notes": {
+   "competitors": null,
+   "dynamics": null,
+   "growers": null,
+   "consumers": null,
+   "distributors": null,
+   "technology": null
+  }
+ },
+ {
+  "segmentId": 2432,
+  "year": 2029,
+  "hectares": 1348.0,
+  "qtyKs": 33700.0,
+  "density": 25.0,
+  "priceExseed": 403.0,
+  "priceFarmgate": 464.0,
+  "notes": {
+   "competitors": "Bemol (RZ), Neltro (Fito) and Syngenta (Monrovia & Angus) are leading the market",
+   "dynamics": "The auctions are getting more relevance compeared with cooperatives",
+   "growers": "PM resistance\nBotrytis\nUncertainly about the prices flutuation\nLack of light and strong rains in the last 3 years",
+   "consumers": "Commodity product. Size diversification",
+   "distributors": "Main distributors",
+   "technology": "Higher PM resistance"
+  }
+ },
+ {
+  "segmentId": 2432,
+  "year": 2027,
+  "hectares": 1346.0,
+  "qtyKs": 33650.0,
+  "density": 25.0,
+  "priceExseed": 387.0,
+  "priceFarmgate": 445.0,
+  "notes": {
+   "competitors": "Bemol (RZ), Neltro (Fito) and Syngenta (Monrovia & Angus) are leading the market",
+   "dynamics": "The auctions are getting more relevance compeared with cooperatives",
+   "growers": "PM resistance\nBotrytis\nUncertainly about the prices flutuation\nLack of light and strong rains in the last 3 years",
+   "consumers": "Commodity product. Size diversification",
+   "distributors": "Main distributors",
+   "technology": "Higher PM resistance"
+  }
+ },
+ {
+  "segmentId": 2432,
+  "year": 2030,
+  "hectares": 1349.0,
+  "qtyKs": 33725.0,
+  "density": 25.0,
+  "priceExseed": 410.0,
+  "priceFarmgate": 472.0,
+  "notes": {
+   "competitors": "Bemol (RZ), Neltro (Fito) and Syngenta (Monrovia & Angus) are leading the market",
+   "dynamics": "The auctions are getting more relevance compeared with cooperatives",
+   "growers": "PM resistance\nBotrytis\nUncertainly about the prices flutuation\nLack of light and strong rains in the last 3 years",
+   "consumers": "Commodity product. Size diversification",
+   "distributors": "Main distributors",
+   "technology": "Higher PM resistance"
+  }
+ },
+ {
+  "segmentId": 2432,
+  "year": 2026,
+  "hectares": 1347.0,
+  "qtyKs": 33675.0,
+  "density": 25.0,
+  "priceExseed": 382.0,
+  "priceFarmgate": 440.0,
+  "notes": {
+   "competitors": "Bemol (RZ), Neltro (Fito) and Syngenta (Monrovia & Angus) are leading the market",
+   "dynamics": "The auctions are getting more relevance compeared with cooperatives",
+   "growers": "PM resistance\nBotrytis\nUncertainly about the prices flutuation\nLack of light and strong rains in the last 3 years",
+   "consumers": "Commodity product. Size diversification",
+   "distributors": "Main distributors",
+   "technology": "Higher PM resistance"
+  }
+ },
+ {
+  "segmentId": 2432,
+  "year": 2025,
+  "hectares": 825.62,
+  "qtyKs": 20640.5,
+  "density": 25.0,
+  "priceExseed": 307.87,
+  "priceFarmgate": 332.5,
+  "notes": {
+   "competitors": "Bemol (RZ), Neltro (Fito) and Syngenta (Monrovia & Angus) are leading the market",
+   "dynamics": "The auctions are getting more relevance compeared with cooperatives",
+   "growers": "PM resistance\nBotrytis\nUncertainly about the prices flutuation\nLack of light and strong rains in the last 3 years",
+   "consumers": "Commodity product. Size diversification",
+   "distributors": "Main distributors",
+   "technology": "Higher PM resistance"
+  }
+ },
+ {
+  "segmentId": 2432,
+  "year": 2024,
+  "hectares": 833.96,
+  "qtyKs": 20849.0,
+  "density": 25.0,
+  "priceExseed": 312.01,
+  "priceFarmgate": 336.98,
+  "notes": {
+   "competitors": "Bemol (RZ), Neltro (Fito) and Syngenta (Monrovia & Angus) are leading the market",
+   "dynamics": "The auctions are getting more relevance compeared with cooperatives",
+   "growers": "PM resistance\nBotrytis\nUncertainly about the prices flutuation\nLack of light and strong rains in the last 3 years",
+   "consumers": "Commodity product. Size diversification",
+   "distributors": "Main distributors",
+   "technology": "Higher PM resistance"
+  }
+ },
+ {
+  "segmentId": 2432,
+  "year": 2028,
+  "hectares": 1347.0,
+  "qtyKs": 33675.0,
+  "density": 25.0,
+  "priceExseed": 394.0,
+  "priceFarmgate": 453.0,
+  "notes": {
+   "competitors": "Bemol (RZ), Neltro (Fito) and Syngenta (Monrovia & Angus) are leading the market",
+   "dynamics": "The auctions are getting more relevance compeared with cooperatives",
+   "growers": "PM resistance\nBotrytis\nUncertainly about the prices flutuation\nLack of light and strong rains in the last 3 years",
+   "consumers": "Commodity product. Size diversification",
+   "distributors": "Main distributors",
+   "technology": "Higher PM resistance"
+  }
+ },
+ {
+  "segmentId": 2433,
+  "year": 2027,
+  "hectares": 240.0,
+  "qtyKs": 6000.0,
+  "density": 25.0,
+  "priceExseed": 389.0,
+  "priceFarmgate": 448.0,
+  "notes": {
+   "competitors": "Brocanto (EZ), Tallante (Bayer) and Yaraví (RZ) are leading the market.",
+   "dynamics": "The auctions are getting more relevance compeared with cooperatives",
+   "growers": "PM resistance\nBotrytis\nUncertainly about the prices flutuation\nLack of light and strong rains in the last 3 years",
+   "consumers": "Commodity product. Size diversification",
+   "distributors": "Main distributors",
+   "technology": "Higher PM resistance"
+  }
+ },
+ {
+  "segmentId": 2433,
+  "year": 2025,
+  "hectares": 225.44,
+  "qtyKs": 5636.0,
+  "density": 25.0,
+  "priceExseed": 307.87,
+  "priceFarmgate": 332.5,
+  "notes": {
+   "competitors": "Brocanto (EZ), Tallante (Bayer) and Yaraví (RZ) are leading the market.",
+   "dynamics": "The auctions are getting more relevance compeared with cooperatives",
+   "growers": "PM resistance\nBotrytis\nUncertainly about the prices flutuation\nLack of light and strong rains in the last 3 years",
+   "consumers": "Commodity product. Size diversification",
+   "distributors": "Main distributors",
+   "technology": "Higher PM resistance"
+  }
+ },
+ {
+  "segmentId": 2433,
+  "year": 2028,
+  "hectares": 241.0,
+  "qtyKs": 6025.0,
+  "density": 25.0,
+  "priceExseed": 396.0,
+  "priceFarmgate": 456.0,
+  "notes": {
+   "competitors": "Brocanto (EZ), Tallante (Bayer) and Yaraví (RZ) are leading the market.",
+   "dynamics": "The auctions are getting more relevance compeared with cooperatives",
+   "growers": "PM resistance\nBotrytis\nUncertainly about the prices flutuation\nLack of light and strong rains in the last 3 years",
+   "consumers": "Commodity product. Size diversification",
+   "distributors": "Main distributors",
+   "technology": "Higher PM resistance"
+  }
+ },
+ {
+  "segmentId": 2433,
+  "year": 2029,
+  "hectares": 242.0,
+  "qtyKs": 6050.0,
+  "density": 25.0,
+  "priceExseed": 402.0,
+  "priceFarmgate": 462.0,
+  "notes": {
+   "competitors": "Brocanto (EZ), Tallante (Bayer) and Yaraví (RZ) are leading the market.",
+   "dynamics": "The auctions are getting more relevance compeared with cooperatives",
+   "growers": "PM resistance\nBotrytis\nUncertainly about the prices flutuation\nLack of light and strong rains in the last 3 years",
+   "consumers": "Commodity product. Size diversification",
+   "distributors": "Main distributors",
+   "technology": "Higher PM resistance"
+  }
+ },
+ {
+  "segmentId": 2433,
+  "year": 2024,
+  "hectares": 227.71,
+  "qtyKs": 5692.75,
+  "density": 25.0,
+  "priceExseed": 312.01,
+  "priceFarmgate": 336.98,
+  "notes": {
+   "competitors": "Brocanto (EZ), Tallante (Bayer) and Yaraví (RZ) are leading the market.",
+   "dynamics": "The auctions are getting more relevance compeared with cooperatives",
+   "growers": "PM resistance\nBotrytis\nUncertainly about the prices flutuation\nLack of light and strong rains in the last 3 years",
+   "consumers": "Commodity product. Size diversification",
+   "distributors": "Main distributors",
+   "technology": "Higher PM resistance"
+  }
+ },
+ {
+  "segmentId": 2433,
+  "year": 2026,
+  "hectares": 241.0,
+  "qtyKs": 6025.0,
+  "density": 25.0,
+  "priceExseed": 385.0,
+  "priceFarmgate": 442.0,
+  "notes": {
+   "competitors": "Brocanto (EZ), Tallante (Bayer) and Yaraví (RZ) are leading the market.",
+   "dynamics": "The auctions are getting more relevance compeared with cooperatives",
+   "growers": "PM resistance\nBotrytis\nUncertainly about the prices flutuation\nLack of light and strong rains in the last 3 years",
+   "consumers": "Commodity product. Size diversification",
+   "distributors": "Main distributors",
+   "technology": "Higher PM resistance"
+  }
+ },
+ {
+  "segmentId": 2433,
+  "year": 2030,
+  "hectares": 243.0,
+  "qtyKs": 6075.0,
+  "density": 25.0,
+  "priceExseed": 410.0,
+  "priceFarmgate": 472.0,
+  "notes": {
+   "competitors": "Brocanto (EZ), Tallante (Bayer) and Yaraví (RZ) are leading the market.",
+   "dynamics": "The auctions are getting more relevance compeared with cooperatives",
+   "growers": "PM resistance\nBotrytis\nUncertainly about the prices flutuation\nLack of light and strong rains in the last 3 years",
+   "consumers": "Commodity product. Size diversification",
+   "distributors": "Main distributors",
+   "technology": "Higher PM resistance"
+  }
+ },
+ {
+  "segmentId": 2448,
+  "year": 2027,
+  "hectares": 1960.0,
+  "qtyKs": 41160.0,
+  "density": 21.0,
+  "priceExseed": 399.0,
+  "priceFarmgate": 458.0,
+  "notes": {
+   "competitors": "Sur seeds and Clause are leading this microsegment",
+   "dynamics": "The most impacted cycle due to the T. parvispinus. High uncertainty",
+   "growers": "PM treats\nPeVYV\nPeWBVYV",
+   "consumers": "Comodity product",
+   "distributors": "Sur seeds is supported by Agrupainver, one of the most important distributors in Almeria and partner of Sur Seeds.",
+   "technology": "No future changes in technology adoption"
+  }
+ },
+ {
+  "segmentId": 2448,
+  "year": 2030,
+  "hectares": 1968.0,
+  "qtyKs": 41328.0,
+  "density": 21.0,
+  "priceExseed": 422.0,
+  "priceFarmgate": 485.0,
+  "notes": {
+   "competitors": "Sur seeds and Clause are leading this microsegment",
+   "dynamics": "The most impacted cycle due to the T. parvispinus. High uncertainty",
+   "growers": "PM treats\nPeVYV\nPeWBVYV",
+   "consumers": "Comodity product",
+   "distributors": "Sur seeds is supported by Agrupainver, one of the most important distributors in Almeria and partner of Sur Seeds.",
+   "technology": "No future changes in technology adoption"
+  }
+ },
+ {
+  "segmentId": 2448,
+  "year": 2029,
+  "hectares": 1965.0,
+  "qtyKs": 41265.0,
+  "density": 21.0,
+  "priceExseed": 413.0,
+  "priceFarmgate": 475.0,
+  "notes": {
+   "competitors": "Sur seeds and Clause are leading this microsegment",
+   "dynamics": "The most impacted cycle due to the T. parvispinus. High uncertainty",
+   "growers": "PM treats\nPeVYV\nPeWBVYV",
+   "consumers": "Comodity product",
+   "distributors": "Sur seeds is supported by Agrupainver, one of the most important distributors in Almeria and partner of Sur Seeds.",
+   "technology": "No future changes in technology adoption"
+  }
+ },
+ {
+  "segmentId": 2448,
+  "year": 2028,
+  "hectares": 1963.0,
+  "qtyKs": 41223.0,
+  "density": 21.0,
+  "priceExseed": 404.0,
+  "priceFarmgate": 465.0,
+  "notes": {
+   "competitors": "Sur seeds and Clause are leading this microsegment",
+   "dynamics": "The most impacted cycle due to the T. parvispinus. High uncertainty",
+   "growers": "PM treats\nPeVYV\nPeWBVYV",
+   "consumers": "Comodity product",
+   "distributors": "Sur seeds is supported by Agrupainver, one of the most important distributors in Almeria and partner of Sur Seeds.",
+   "technology": "No future changes in technology adoption"
+  }
+ },
+ {
+  "segmentId": 2448,
+  "year": 2024,
+  "hectares": 2090.0,
+  "qtyKs": 43890.0,
+  "density": 21.0,
+  "priceExseed": 337.65,
+  "priceFarmgate": 364.66,
+  "notes": {
+   "competitors": "Sur seeds and Clause are leading this microsegment",
+   "dynamics": "The most impacted cycle due to the T. parvispinus. High uncertainty",
+   "growers": "PM treats\nPeVYV\nPeWBVYV",
+   "consumers": "Comodity product",
+   "distributors": "Sur seeds is supported by Agrupainver, one of the most important distributors in Almeria and partner of Sur Seeds.",
+   "technology": "No future changes in technology adoption"
+  }
+ },
+ {
+  "segmentId": 2448,
+  "year": 2026,
+  "hectares": 1964.0,
+  "qtyKs": 41244.0,
+  "density": 21.0,
+  "priceExseed": 395.0,
+  "priceFarmgate": 454.0,
+  "notes": {
+   "competitors": "Sur seeds and Clause are leading this microsegment",
+   "dynamics": "The most impacted cycle due to the T. parvispinus. High uncertainty",
+   "growers": "PM treats\nPeVYV\nPeWBVYV",
+   "consumers": "Comodity product",
+   "distributors": "Sur seeds is supported by Agrupainver, one of the most important distributors in Almeria and partner of Sur Seeds.",
+   "technology": "No future changes in technology adoption"
+  }
+ },
+ {
+  "segmentId": 2448,
+  "year": 2025,
+  "hectares": 2100.0,
+  "qtyKs": 44100.0,
+  "density": 21.0,
+  "priceExseed": 333.17,
+  "priceFarmgate": 359.82,
+  "notes": {
+   "competitors": "Sur seeds and Clause are leading this microsegment",
+   "dynamics": "The most impacted cycle due to the T. parvispinus. High uncertainty",
+   "growers": "PM treats\nPeVYV\nPeWBVYV",
+   "consumers": "Comodity product",
+   "distributors": "Sur seeds is supported by Agrupainver, one of the most important distributors in Almeria and partner of Sur Seeds.",
+   "technology": "No future changes in technology adoption"
+  }
+ },
+ {
+  "segmentId": 2482,
+  "year": 2027,
+  "hectares": 3317.0,
+  "qtyKs": 69657.0,
+  "density": 21.0,
+  "priceExseed": 424.0,
+  "priceFarmgate": 488.0,
+  "notes": {
+   "competitors": "Syngenta is leading the BP market. Mainly due to the late porfolio. Nunhems (Arkos) and Sur Seeds (Alabarda and Cañon) are the main cometitors.",
+   "dynamics": "High uncertainly due to the T. parvispinus. Posibilities that the Late cycle will grow, compared with early and medium cyle",
+   "growers": "PM treats\nPeVYV\nPeWBVYV",
+   "consumers": "Commodity product. Fruit size diversification.",
+   "distributors": "Main distributors",
+   "technology": "Higher PM resistance."
+  }
+ },
+ {
+  "segmentId": 2482,
+  "year": 2025,
+  "hectares": 2753.0,
+  "qtyKs": 57813.0,
+  "density": 21.0,
+  "priceExseed": 367.4,
+  "priceFarmgate": 396.79,
+  "notes": {
+   "competitors": "Syngenta is leading the BP market. Mainly due to the late porfolio. Nunhems (Arkos) and Sur Seeds (Alabarda and Cañon) are the main cometitors.",
+   "dynamics": "High uncertainly due to the T. parvispinus. Posibilities that the Late cycle will grow, compared with early and medium cyle",
+   "growers": "PM treats\nPeVYV\nPeWBVYV",
+   "consumers": "Commodity product. Fruit size diversification.",
+   "distributors": "Main distributors",
+   "technology": "Higher PM resistance."
+  }
+ },
+ {
+  "segmentId": 2482,
+  "year": 2029,
+  "hectares": 3321.0,
+  "qtyKs": 69741.0,
+  "density": 21.0,
+  "priceExseed": 442.0,
+  "priceFarmgate": 508.0,
+  "notes": {
+   "competitors": "Syngenta is leading the BP market. Mainly due to the late porfolio. Nunhems (Arkos) and Sur Seeds (Alabarda and Cañon) are the main cometitors.",
+   "dynamics": "High uncertainly due to the T. parvispinus. Posibilities that the Late cycle will grow, compared with early and medium cyle",
+   "growers": "PM treats\nPeVYV\nPeWBVYV",
+   "consumers": "Commodity product. Fruit size diversification.",
+   "distributors": "Main distributors",
+   "technology": "Higher PM resistance."
+  }
+ },
+ {
+  "segmentId": 2482,
+  "year": 2030,
+  "hectares": 3324.0,
+  "qtyKs": 69804.0,
+  "density": 21.0,
+  "priceExseed": 453.0,
+  "priceFarmgate": 520.0,
+  "notes": {
+   "competitors": "Syngenta is leading the BP market. Mainly due to the late porfolio. Nunhems (Arkos) and Sur Seeds (Alabarda and Cañon) are the main cometitors.",
+   "dynamics": "High uncertainly due to the T. parvispinus. Posibilities that the Late cycle will grow, compared with early and medium cyle",
+   "growers": "PM treats\nPeVYV\nPeWBVYV",
+   "consumers": "Commodity product. Fruit size diversification.",
+   "distributors": "Main distributors",
+   "technology": "Higher PM resistance."
+  }
+ },
+ {
+  "segmentId": 2482,
+  "year": 2028,
+  "hectares": 3318.0,
+  "qtyKs": 69678.0,
+  "density": 21.0,
+  "priceExseed": 434.0,
+  "priceFarmgate": 499.0,
+  "notes": {
+   "competitors": "Syngenta is leading the BP market. Mainly due to the late porfolio. Nunhems (Arkos) and Sur Seeds (Alabarda and Cañon) are the main cometitors.",
+   "dynamics": "High uncertainly due to the T. parvispinus. Posibilities that the Late cycle will grow, compared with early and medium cyle",
+   "growers": "PM treats\nPeVYV\nPeWBVYV",
+   "consumers": "Commodity product. Fruit size diversification.",
+   "distributors": "Main distributors",
+   "technology": "Higher PM resistance."
+  }
+ },
+ {
+  "segmentId": 2482,
+  "year": 2026,
+  "hectares": 3316.0,
+  "qtyKs": 69636.0,
+  "density": 21.0,
+  "priceExseed": 420.0,
+  "priceFarmgate": 483.0,
+  "notes": {
+   "competitors": "Syngenta is leading the BP market. Mainly due to the late porfolio. Nunhems (Arkos) and Sur Seeds (Alabarda and Cañon) are the main cometitors.",
+   "dynamics": "High uncertainly due to the T. parvispinus. Posibilities that the Late cycle will grow, compared with early and medium cyle",
+   "growers": "PM treats\nPeVYV\nPeWBVYV",
+   "consumers": "Commodity product. Fruit size diversification.",
+   "distributors": "Main distributors",
+   "technology": "Higher PM resistance."
+  }
+ },
+ {
+  "segmentId": 2482,
+  "year": 2024,
+  "hectares": 2750.0,
+  "qtyKs": 57750.0,
+  "density": 21.0,
+  "priceExseed": 374.43,
+  "priceFarmgate": 404.38,
+  "notes": {
+   "competitors": "Syngenta is leading the BP market. Mainly due to the late porfolio. Nunhems (Arkos) and Sur Seeds (Alabarda and Cañon) are the main cometitors.",
+   "dynamics": "High uncertainly due to the T. parvispinus. Posibilities that the Late cycle will grow, compared with early and medium cyle",
+   "growers": "PM treats\nPeVYV\nPeWBVYV",
+   "consumers": "Commodity product. Fruit size diversification.",
+   "distributors": "Main distributors",
+   "technology": "Higher PM resistance."
+  }
+ },
+ {
+  "segmentId": 2484,
+  "year": 2030,
+  "hectares": 318.0,
+  "qtyKs": 6678.0,
+  "density": 21.0,
+  "priceExseed": 428.0,
+  "priceFarmgate": 492.0,
+  "notes": {
+   "competitors": "Fito (Madagascar), Nunhems (Salonikas) and Sur Seeds (Urca)",
+   "dynamics": "This micro can grow due to the less exposure to the T. parvispinus.",
+   "growers": "PM treats\nPeVYV\nPeWBVYV",
+   "consumers": "Commodity product.Size diversification",
+   "distributors": "MAin distributors.",
+   "technology": "Higher PM resistance"
+  }
+ },
+ {
+  "segmentId": 2484,
+  "year": 2029,
+  "hectares": 318.0,
+  "qtyKs": 6678.0,
+  "density": 21.0,
+  "priceExseed": 417.0,
+  "priceFarmgate": 480.0,
+  "notes": {
+   "competitors": "Fito (Madagascar), Nunhems (Salonikas) and Sur Seeds (Urca)",
+   "dynamics": "This micro can grow due to the less exposure to the T. parvispinus.",
+   "growers": "PM treats\nPeVYV\nPeWBVYV",
+   "consumers": "Commodity product.Size diversification",
+   "distributors": "MAin distributors.",
+   "technology": "Higher PM resistance"
+  }
+ },
+ {
+  "segmentId": 2484,
+  "year": 2027,
+  "hectares": 316.0,
+  "qtyKs": 6636.0,
+  "density": 21.0,
+  "priceExseed": 399.0,
+  "priceFarmgate": 458.0,
+  "notes": {
+   "competitors": "Fito (Madagascar), Nunhems (Salonikas) and Sur Seeds (Urca)",
+   "dynamics": "This micro can grow due to the less exposure to the T. parvispinus.",
+   "growers": "PM treats\nPeVYV\nPeWBVYV",
+   "consumers": "Commodity product.Size diversification",
+   "distributors": "MAin distributors.",
+   "technology": "Higher PM resistance"
+  }
+ },
+ {
+  "segmentId": 2484,
+  "year": 2026,
+  "hectares": 316.0,
+  "qtyKs": 6636.0,
+  "density": 21.0,
+  "priceExseed": 397.0,
+  "priceFarmgate": 457.0,
+  "notes": {
+   "competitors": "Fito (Madagascar), Nunhems (Salonikas) and Sur Seeds (Urca)",
+   "dynamics": "This micro can grow due to the less exposure to the T. parvispinus.",
+   "growers": "PM treats\nPeVYV\nPeWBVYV",
+   "consumers": "Commodity product.Size diversification",
+   "distributors": "MAin distributors.",
+   "technology": "Higher PM resistance"
+  }
+ },
+ {
+  "segmentId": 2484,
+  "year": 2024,
+  "hectares": 260.0,
+  "qtyKs": 5460.0,
+  "density": 21.0,
+  "priceExseed": 339.54,
+  "priceFarmgate": 366.71,
+  "notes": {
+   "competitors": "Fito (Madagascar), Nunhems (Salonikas) and Sur Seeds (Urca)",
+   "dynamics": "This micro can grow due to the less exposure to the T. parvispinus.",
+   "growers": "PM treats\nPeVYV\nPeWBVYV",
+   "consumers": "Commodity product.Size diversification",
+   "distributors": "MAin distributors.",
+   "technology": "Higher PM resistance"
+  }
+ },
+ {
+  "segmentId": 2484,
+  "year": 2028,
+  "hectares": 317.0,
+  "qtyKs": 6657.0,
+  "density": 21.0,
+  "priceExseed": 408.0,
+  "priceFarmgate": 469.0,
+  "notes": {
+   "competitors": "Fito (Madagascar), Nunhems (Salonikas) and Sur Seeds (Urca)",
+   "dynamics": "This micro can grow due to the less exposure to the T. parvispinus.",
+   "growers": "PM treats\nPeVYV\nPeWBVYV",
+   "consumers": "Commodity product.Size diversification",
+   "distributors": "MAin distributors.",
+   "technology": "Higher PM resistance"
+  }
+ },
+ {
+  "segmentId": 2484,
+  "year": 2025,
+  "hectares": 262.0,
+  "qtyKs": 5502.0,
+  "density": 21.0,
+  "priceExseed": 335.03,
+  "priceFarmgate": 361.84,
+  "notes": {
+   "competitors": "Fito (Madagascar), Nunhems (Salonikas) and Sur Seeds (Urca)",
+   "dynamics": "This micro can grow due to the less exposure to the T. parvispinus.",
+   "growers": "PM treats\nPeVYV\nPeWBVYV",
+   "consumers": "Commodity product.Size diversification",
+   "distributors": "MAin distributors.",
+   "technology": "Higher PM resistance"
+  }
+ },
+ {
+  "segmentId": 2483,
+  "year": 2029,
+  "hectares": 1128.0,
+  "qtyKs": 23688.0,
+  "density": 21.0,
+  "priceExseed": 424.0,
+  "priceFarmgate": 488.0,
+  "notes": {
+   "competitors": "Limagrain (Hazera with insignia and Clause with Ilusion) are leading the market",
+   "dynamics": "The plantations of this cycle will be delayed to mid-late plantations",
+   "growers": "PM treats\nPeVYV\nPeWBVYV",
+   "consumers": "Commodity prooduct. Size diversification.",
+   "distributors": "Main distributors",
+   "technology": "Higher PM resistance"
+  }
+ },
+ {
+  "segmentId": 2483,
+  "year": 2028,
+  "hectares": 1122.0,
+  "qtyKs": 23562.0,
+  "density": 21.0,
+  "priceExseed": 416.0,
+  "priceFarmgate": 479.0,
+  "notes": {
+   "competitors": "Limagrain (Hazera with insignia and Clause with Ilusion) are leading the market",
+   "dynamics": "The plantations of this cycle will be delayed to mid-late plantations",
+   "growers": "PM treats\nPeVYV\nPeWBVYV",
+   "consumers": "Commodity prooduct. Size diversification.",
+   "distributors": "Main distributors",
+   "technology": "Higher PM resistance"
+  }
+ },
+ {
+  "segmentId": 2483,
+  "year": 2030,
+  "hectares": 1131.0,
+  "qtyKs": 23751.0,
+  "density": 21.0,
+  "priceExseed": 436.0,
+  "priceFarmgate": 502.0,
+  "notes": {
+   "competitors": "Limagrain (Hazera with insignia and Clause with Ilusion) are leading the market",
+   "dynamics": "The plantations of this cycle will be delayed to mid-late plantations",
+   "growers": "PM treats\nPeVYV\nPeWBVYV",
+   "consumers": "Commodity prooduct. Size diversification.",
+   "distributors": "Main distributors",
+   "technology": "Higher PM resistance"
+  }
+ },
+ {
+  "segmentId": 2483,
+  "year": 2024,
+  "hectares": 995.0,
+  "qtyKs": 20895.0,
+  "density": 21.0,
+  "priceExseed": 333.58,
+  "priceFarmgate": 360.27,
+  "notes": {
+   "competitors": "Limagrain (Hazera with insignia and Clause with Ilusion) are leading the market",
+   "dynamics": "The plantations of this cycle will be delayed to mid-late plantations",
+   "growers": "PM treats\nPeVYV\nPeWBVYV",
+   "consumers": "Commodity prooduct. Size diversification.",
+   "distributors": "Main distributors",
+   "technology": "Higher PM resistance"
+  }
+ },
+ {
+  "segmentId": 2483,
+  "year": 2025,
+  "hectares": 1001.0,
+  "qtyKs": 21021.0,
+  "density": 21.0,
+  "priceExseed": 329.15,
+  "priceFarmgate": 355.48,
+  "notes": {
+   "competitors": "Limagrain (Hazera with insignia and Clause with Ilusion) are leading the market",
+   "dynamics": "The plantations of this cycle will be delayed to mid-late plantations",
+   "growers": "PM treats\nPeVYV\nPeWBVYV",
+   "consumers": "Commodity prooduct. Size diversification.",
+   "distributors": "Main distributors",
+   "technology": "Higher PM resistance"
+  }
+ },
+ {
+  "segmentId": 2483,
+  "year": 2026,
+  "hectares": 1122.0,
+  "qtyKs": 23562.0,
+  "density": 21.0,
+  "priceExseed": 406.0,
+  "priceFarmgate": 466.0,
+  "notes": {
+   "competitors": "Limagrain (Hazera with insignia and Clause with Ilusion) are leading the market",
+   "dynamics": "The plantations of this cycle will be delayed to mid-late plantations",
+   "growers": "PM treats\nPeVYV\nPeWBVYV",
+   "consumers": "Commodity prooduct. Size diversification.",
+   "distributors": "Main distributors",
+   "technology": "Higher PM resistance"
+  }
+ },
+ {
+  "segmentId": 2483,
+  "year": 2027,
+  "hectares": 1121.0,
+  "qtyKs": 23541.0,
+  "density": 21.0,
+  "priceExseed": 407.0,
+  "priceFarmgate": 468.0,
+  "notes": {
+   "competitors": "Limagrain (Hazera with insignia and Clause with Ilusion) are leading the market",
+   "dynamics": "The plantations of this cycle will be delayed to mid-late plantations",
+   "growers": "PM treats\nPeVYV\nPeWBVYV",
+   "consumers": "Commodity prooduct. Size diversification.",
+   "distributors": "Main distributors",
+   "technology": "Higher PM resistance"
+  }
+ }
+]

@@ -1,0 +1,25 @@
+{
+  "name": "skystream",
+  "private": true,
+  "workspaces": [
+    "packages/web",
+    "tests/e2e"
+  ],
+  "scripts": {
+    "dev": "concurrently -n api,web \"npm run dev:api\" \"npm run dev:web\"",
+    "dev:api": "cd backend && uv run uvicorn app.main:app --reload --port 8000",
+    "dev:web": "npm run dev --workspace=packages/web",
+    "db:migrate": "cd backend && uv run alembic upgrade head",
+    "db:seed": "cd backend && uv run python seed.py",
+    "ingest": "cd backend && uv run python ../scripts/ingest/build_seed.py",
+    "build:web": "npm run build --workspace=packages/web",
+    "lint": "npm run lint --workspace=packages/web",
+    "test:e2e": "npm run test --workspace=tests/e2e"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.4"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

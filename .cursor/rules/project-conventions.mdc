@@ -1,0 +1,14 @@
+---
+description: Skystream layout, commands and non-negotiables
+alwaysApply: true
+---
+
+Read `CLAUDE.md` at the repo root before changing code. Key rules:
+
+- Demand math and flags are mirrored in Python (`backend/app/services/demand_math.py`, `flags.py`) and
+  TypeScript (`packages/web/src/lib/demandMath.ts`, `flags.ts`). Change both and the golden fixtures together.
+- Jev (decisions) and Gemini (prose) are only reached through `backend/app/ai/decision_provider.py`.
+- No forecasting model; the rep supplies every number.
+- Seed data must stay anonymized; `data/raw/` is never committed.
+- Backend: routers -> services -> models, async SQLAlchemy 2.0, one model per file, Alembic for schema.
+- Frontend: TanStack Query hooks for data, no network calls on the keystroke path, strict TS.

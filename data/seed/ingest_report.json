@@ -1,0 +1,88 @@
+{
+ "sales": {
+  "secondCopyIdentical": true,
+  "rowsRead": 2694,
+  "countryNormalized": 205,
+  "rowsWithoutMicroSegmentId": 40,
+  "idsRecoveredByExactDescription": 5,
+  "rowsDroppedWithoutId": 35,
+  "rowsWithoutQuantity": 55
+ },
+ "hierarchy": {
+  "tabs": {
+   "prod hierarchy": 679,
+   "examples": 38,
+   "5yrSales": 344,
+   "MAPS": 1009,
+   "MAPS (2)": 679
+  },
+  "scopeMicroSegments": 18
+ },
+ "market": {
+  "rowsRead": 3553,
+  "duplicatePairs": 821,
+  "conflictingDuplicatePairs": 232,
+  "rowsRemovedAsDuplicates": 823,
+  "rowsWithHaAndDensity": 994,
+  "qtyEqualsHaTimesDensityRows": 994
+ },
+ "competitors": {
+  "rowsRead": 525,
+  "megaSegmentsSummingTo100": 80,
+  "megaSegments": 87
+ },
+ "grower": {
+  "rowsRead": 8998,
+  "countryPicklistMismatch": 8953,
+  "regionMissingPct": 80.5,
+  "emptyColumns": [
+   "Grower Price (Local Currency)",
+   "Total Addressable Market (Grower Price) Currency",
+   "Total Addressable Market (Grower Price)"
+  ],
+  "scopeRows": 522,
+  "scopeRowsCapped": 32,
+  "scopeHectaresRaw": 92030,
+  "scopeHectaresCapped": 38724
+ },
+ "geo": {
+  "cityRows": 761,
+  "subtotalRows": 62,
+  "provincesOrRegions": 61,
+  "postcodesMissingLeadingZero": 1222
+ },
+ "scope": {
+  "activeMicroSegments": [
+   2432,
+   2433,
+   2446,
+   2448,
+   2449,
+   2481,
+   2482,
+   2483,
+   2484
+  ],
+  "inactiveMicroSegments": [
+   2429,
+   2430,
+   2431,
+   2441,
+   2442,
+   2445,
+   2447,
+   2485,
+   2486
+  ],
+  "segmentsWithSalesButNoMarket": [],
+  "growerHaCap": 500
+ },
+ "anonymization": {
+  "method": "hidden scale factor + 3% per-row noise",
+  "repNames": "pseudonymized (Rep A, Rep B)"
+ },
+ "synthetic": {
+  "monthlySplit": "seasonal curve per cycle profile (to confirm)",
+  "clockStart": "2026-09"
+ }
+}
