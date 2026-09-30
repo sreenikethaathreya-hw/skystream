@@ -2,18 +2,21 @@ from fastapi import HTTPException
 from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.ai.decision_provider import JustificationInput, get_decision_provider
-from app.constants.demo import DEMO_USERS, MONTH_NAMES, SYNGENTA_VARIETIES, DemoUser
+from app.ai.decision_provider import JustificationInput, decision_policy, get_decision_provider
+from app.constants.demo import MONTH_NAMES
 from app.database import async_session
-from app.models import Claim, CompetitorShare, DemandEntry, Segment
+from app.models import Claim, DemandEntry, Segment
 from app.schemas.api import AnalyzeOut, ClaimOut, EntryIn, EntryOut
 from app.schemas.claims import StructuredClaim, TriageDecision
 from app.schemas.demand_math import EntryInput, Flag, Impact, SegmentContext
 from app.services.claim_checks import claim_mismatches
-from app.services.context_service import build_context, get_clock, load_reference, segment_label
+from app.services.context_service import build_context, segment_label, variety_options
+from app.services.cube_builder import Reference
 from app.services.demand_math import compute_impact
 from app.services.flags import evaluate_flags
 from app.services.seed_service import signal_for
+from app.services.settings_service import AppSettings, get_app_settings
+from app.services.user_service import CurrentUser, can_submit, user_names
 
 REPLACEABLE = ("submitted", "discuss", "challenged", "approved")
 
@@ -33,37 +36,33 @@ def _notes_text(notes: dict, plan_comment: str | None) -> str:
     return " | ".join(parts) or "none"
 
 
-async def _competitor_names(db: AsyncSession, year: int) -> list[str]:
-    rows = (
-        await db.execute(select(CompetitorShare.competitor).where(CompetitorShare.year == year))
-    ).scalars()
-    return sorted({c for c in rows if c not in ("Syngenta", "Others")})
-
-
-async def _evaluate(db: AsyncSession, body: EntryIn):
-    ctx, segment = await build_context(db, body.segment_id)
+async def _evaluate(db: AsyncSession, body: EntryIn, settings: AppSettings):
+    ctx, segment, ref = await build_context(db, body.country_code, body.segment_id)
     if body.month < ctx.clock_month:
         raise HTTPException(status_code=400, detail="That month is closed; actuals are already in")
     entry = EntryInput(month=body.month, value=body.value, low=body.low, high=body.high, price=body.price)
-    impact = compute_impact(ctx, entry)
-    flags = evaluate_flags(ctx, entry, impact)
-    return ctx, segment, entry, impact, flags
+    impact = compute_impact(ctx, entry, settings.thresholds)
+    flags = evaluate_flags(ctx, entry, impact, settings.thresholds)
+    return ctx, segment, ref, entry, impact, flags
 
 
 async def _structure(
-    db: AsyncSession,
     ctx: SegmentContext,
     segment: Segment,
+    ref: Reference,
     body: EntryIn,
     entry: EntryInput,
     impact: Impact,
     flags: list[Flag],
+    settings: AppSettings,
 ) -> StructuredClaim | None:
     if not body.justification or not body.justification.strip():
         return None
-    ref = await load_reference(db)
     market = next(m for m in ref.market if m.segment_id == segment.id and m.year == ctx.year)
     plan = next((p for p in ref.plan if p.segment_id == segment.id and p.year == ctx.year), None)
+    competitors = sorted(
+        {c.competitor for c in ref.competitors if c.year == ctx.year} - {"Syngenta", "Others"}
+    )
     claim = await get_decision_provider().structure_justification(
         JustificationInput(
             sentence=body.justification.strip(),
@@ -71,34 +70,38 @@ async def _structure(
             entry_summary=_entry_summary(body.month, entry, impact),
             flags=flags,
             market_notes=_notes_text(market.notes or {}, plan.comment if plan else None),
-            competitors=await _competitor_names(db, ctx.year),
-            varieties=SYNGENTA_VARIETIES,
+            competitors=competitors,
+            varieties=variety_options(ref),
             flag_direction="up" if entry.value > impact.month_expected else "down",
-        )
+        ),
+        decision_policy(settings),
     )
     mismatches = claim_mismatches(claim.direction, claim.magnitude, entry.value, impact.month_expected)
     return claim.model_copy(update={"mismatches": mismatches})
 
 
 async def analyze(db: AsyncSession, body: EntryIn) -> AnalyzeOut:
-    ctx, segment, entry, impact, flags = await _evaluate(db, body)
-    claim = await _structure(db, ctx, segment, body, entry, impact, flags)
+    settings = await get_app_settings(db)
+    ctx, segment, ref, entry, impact, flags = await _evaluate(db, body, settings)
+    claim = await _structure(ctx, segment, ref, body, entry, impact, flags, settings)
     return AnalyzeOut(impact=impact, flags=flags, claim=claim)
 
 
-async def create_entry(db: AsyncSession, user: DemoUser, body: EntryIn) -> EntryOut:
-    ctx, segment, entry, impact, flags = await _evaluate(db, body)
-    if user.role != "rep" or segment.owner_id != user.id:
-        raise HTTPException(status_code=403, detail="Only the owning rep can submit for this segment")
+async def create_entry(db: AsyncSession, user: CurrentUser, body: EntryIn) -> EntryOut:
+    settings = await get_app_settings(db)
+    ctx, segment, ref, entry, impact, flags = await _evaluate(db, body, settings)
+    if not can_submit(user, body.country_code, segment):
+        raise HTTPException(status_code=403, detail="Only a rep assigned to this segment can submit for it")
     if flags and not (body.justification or "").strip():
         raise HTTPException(status_code=422, detail="A justification is required when flags fire")
-    claim = await _structure(db, ctx, segment, body, entry, impact, flags)
+    claim = await _structure(ctx, segment, ref, body, entry, impact, flags, settings)
     if claim:
         flags = [*flags, *claim.mismatches]
 
     await db.execute(
         update(DemandEntry)
         .where(
+            DemandEntry.country_code == body.country_code,
             DemandEntry.segment_id == body.segment_id,
             DemandEntry.year == ctx.year,
             DemandEntry.month == body.month,
@@ -109,6 +112,7 @@ async def create_entry(db: AsyncSession, user: DemoUser, body: EntryIn) -> Entry
     )
     row = DemandEntry(
         user_id=user.id,
+        country_code=body.country_code,
         segment_id=body.segment_id,
         year=ctx.year,
         month=body.month,
@@ -147,7 +151,7 @@ async def create_entry(db: AsyncSession, user: DemoUser, body: EntryIn) -> Entry
         )
         db.add(claim_row)
     await db.commit()
-    return to_out(row, claim_row, {segment.id: segment})
+    return to_out(row, claim_row, {segment.id: segment}, {user.id: user.name})
 
 
 async def polish_claim_summary(entry_id: str) -> None:
@@ -185,13 +189,15 @@ def claim_out(claim: Claim) -> ClaimOut:
     )
 
 
-def to_out(entry: DemandEntry, claim: Claim | None, segments: dict[int, Segment]) -> EntryOut:
-    user = DEMO_USERS.get(entry.user_id)
+def to_out(
+    entry: DemandEntry, claim: Claim | None, segments: dict[int, Segment], names: dict[str, str]
+) -> EntryOut:
     segment = segments.get(entry.segment_id)
     return EntryOut(
         id=entry.id,
         user_id=entry.user_id,
-        user_name=user.name if user else entry.user_id,
+        user_name=names.get(entry.user_id, entry.user_id),
+        country_code=entry.country_code,
         segment_id=entry.segment_id,
         segment_label=segment_label(segment) if segment else str(entry.segment_id),
         year=entry.year,
@@ -212,20 +218,32 @@ def to_out(entry: DemandEntry, claim: Claim | None, segments: dict[int, Segment]
     )
 
 
+def scope_filter(query, country_code: str | None, mega: str | None):
+    if country_code:
+        query = query.where(DemandEntry.country_code == country_code.upper())
+    if mega:
+        query = query.join(Segment, Segment.id == DemandEntry.segment_id).where(
+            Segment.mega_segment_id == mega
+        )
+    return query
+
+
 async def list_entries(
     db: AsyncSession,
+    country_code: str | None = None,
+    mega: str | None = None,
     segment_id: int | None = None,
     user_id: str | None = None,
     include_superseded: bool = False,
     limit: int = 200,
 ) -> list[EntryOut]:
-    await get_clock(db)
     query = (
         select(DemandEntry, Claim)
         .outerjoin(Claim, Claim.entry_id == DemandEntry.id)
         .order_by(DemandEntry.created_at.desc(), DemandEntry.month.desc())
         .limit(limit)
     )
+    query = scope_filter(query, country_code, mega)
     if segment_id is not None:
         query = query.where(DemandEntry.segment_id == segment_id)
     if user_id is not None:
@@ -234,4 +252,5 @@ async def list_entries(
         query = query.where(DemandEntry.status != "superseded")
     rows = (await db.execute(query)).all()
     segments = {s.id: s for s in (await db.execute(select(Segment))).scalars()}
-    return [to_out(entry, claim, segments) for entry, claim in rows]
+    names = await user_names(db)
+    return [to_out(entry, claim, segments, names) for entry, claim in rows]

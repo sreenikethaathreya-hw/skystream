@@ -2,10 +2,11 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.database import get_db
+from app.middleware.auth import get_current_user
 from app.schemas.api import AdvanceOut, TrackRecordOut
 from app.services import clock_service, rep_service
 
-router = APIRouter(prefix="/api", tags=["demo"])
+router = APIRouter(prefix="/api", tags=["demo"], dependencies=[Depends(get_current_user)])
 
 
 @router.post("/demo/advance", response_model=AdvanceOut)

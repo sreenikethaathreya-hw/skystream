@@ -1,6 +1,6 @@
 import type { Flag, Impact, SegmentContext, Thresholds } from "./mathTypes";
 
-export type Role = "rep" | "lead";
+export type Role = "rep" | "lead" | "admin";
 
 export interface DemoUser {
   id: string;
@@ -17,15 +17,35 @@ export interface AiStatus {
   geminiModel: string;
 }
 
+export type DataMode = "demo" | "real";
+
+export interface AppConfig {
+  dataMode: DataMode;
+  firebase: { apiKey: string; authDomain: string; projectId: string } | null;
+}
+
 export interface Meta {
-  country: string;
-  species: string;
+  dataMode: DataMode;
+  me: DemoUser;
+  users: DemoUser[];
+  clock: { year: number; month: number } | null;
+  ai: AiStatus & { externalAiAllowed: boolean };
+  thresholds: Thresholds;
+  currency: string;
+}
+
+export interface ScopeOption {
+  countryCode: string;
+  countryName: string;
+  species: string | null;
   megaSegmentId: string;
   megaSegmentDesc: string;
-  users: DemoUser[];
-  clock: { year: number; month: number };
-  ai: AiStatus;
-  thresholds: Thresholds;
+  segments: number;
+}
+
+export interface Scope {
+  countryCode: string;
+  megaSegmentId: string;
 }
 
 export interface MonthEntry {
@@ -44,7 +64,10 @@ export interface SegmentCube {
   description: string;
   color: string | null;
   profile: string;
-  ownerId: string;
+  editable: boolean;
+  ownerNames: string[];
+  planBasis: string;
+  lastYearBasis: string;
   planComment: string | null;
   marketNotes: Record<string, string | null>;
   context: SegmentContext;
@@ -58,8 +81,15 @@ export interface CompetitorRow {
 }
 
 export interface Cube {
+  countryCode: string;
+  countryName: string;
+  megaSegmentId: string;
+  megaSegmentDesc: string;
+  species: string | null;
+  currency: string;
   year: number;
   clockMonth: number;
+  yearClosed: boolean;
   thresholds: Thresholds;
   competitors: CompetitorRow[];
   varieties: string[];
@@ -146,6 +176,7 @@ export interface Entry {
   id: string;
   userId: string;
   userName: string;
+  countryCode: string;
   segmentId: number;
   segmentLabel: string;
   year: number;
@@ -166,6 +197,7 @@ export interface Entry {
 }
 
 export interface EntryPayload {
+  countryCode: string;
   segmentId: number;
   month: number;
   value: number;
@@ -225,3 +257,66 @@ export interface Rtb {
 }
 
 export type DataQuality = Record<string, Record<string, unknown>>;
+
+export interface UploadKind {
+  kind: string;
+  label: string;
+  source: string;
+  required: boolean;
+  template: boolean;
+  lastCommittedAt: string | null;
+}
+
+export interface UploadReport {
+  kind: string;
+  rowsRead?: number;
+  accepted?: number;
+  rejected?: number;
+  rejects?: { row: number; reason: string }[];
+  rejectsTruncated?: boolean;
+  warnings?: { message: string; count: number }[];
+  info?: Record<string, unknown>;
+  countries?: string[];
+  error?: string;
+}
+
+export interface UploadBatch {
+  id: string;
+  kind: string;
+  filename: string;
+  uploadedBy: string;
+  status: "previewed" | "committed" | "discarded" | "superseded" | "failed";
+  rowsRead: number;
+  accepted: number;
+  rejected: number;
+  warnings: number;
+  report: UploadReport;
+  commitSummary: Record<string, unknown> | null;
+  createdAt: string;
+  committedAt: string | null;
+}
+
+export interface UserScope {
+  countryCode: string;
+  scopeType: "mega" | "micro";
+  scopeId: string;
+}
+
+export interface AdminUser {
+  email: string;
+  name: string;
+  role: Role | "admin";
+  active: boolean;
+  lastSeenAt: string | null;
+  scopes: UserScope[];
+}
+
+export interface AppSettings {
+  currentYear: number;
+  thresholds: Thresholds;
+  jevConfidenceThreshold: number;
+  jevScoreConfidenceThreshold: number;
+  growerHaCap: number;
+  externalAiAllowed: boolean;
+  currency: string;
+}

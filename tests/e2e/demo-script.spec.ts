@@ -100,3 +100,36 @@ test("demo script: capture, flag, structure, submit, consensus, advance, track r
   const csv = await (await request.get("http://localhost:8000/api/export/supply.csv")).text();
   expect(csv).toContain("2482");
 });
+
+test("admin uploads monthly actuals and the rep's claim resolves", async ({ page, request }) => {
+  expect((await request.post("http://localhost:8000/api/demo/reset")).status()).toBe(204);
+  await page.goto("/capture");
+  await page.evaluate(() => localStorage.setItem("skystream.demoUser", "rep-a"));
+  await page.reload();
+
+  await page.getByTestId("segment-2482").click();
+  await page.getByTestId("demand-input").fill("14500");
+  await page.getByTestId("justification-input").fill(SENTENCE);
+  await page.getByTestId("submit-entry").click();
+  await expect(page.getByText(/Submitted 14,500 KS/)).toBeVisible();
+
+  await actAs(page, "admin");
+  await page.goto("/admin/data");
+  await page.getByLabel("Upload kind").selectOption("actuals");
+  await page.getByTestId("upload-file").setInputFiles({
+    name: "sep-actuals.csv",
+    mimeType: "text/csv",
+    buffer: Buffer.from("country_code,micro_segment_id,year,month,sales_qty_ks\nES,2482,2026,9,13900\nXX,2482,2026,9,1\n"),
+  });
+  await page.getByTestId("upload-button").click();
+  const preview = page.getByTestId("batch-preview");
+  await expect(preview).toContainText("Unknown country 'XX'");
+  await page.screenshot({ path: `${SHOTS}/08-admin-upload-preview.png`, fullPage: true });
+  await page.getByTestId("commit-upload").click();
+  await expect(page.getByTestId("commit-summary")).toContainText("Claims resolved 1");
+  await expect(page.getByText(/1 claims resolved against the new actuals/)).toBeVisible();
+
+  await page.goto("/ledger");
+  await expect(page.getByTestId("ledger-list")).toContainText("Resolved against actuals");
+  await expect(page.getByText(/Oct 2026/).first()).toBeVisible();
+});

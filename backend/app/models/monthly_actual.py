@@ -1,16 +1,17 @@
-from sqlalchemy import Float, ForeignKey, Integer, UniqueConstraint
+from sqlalchemy import Float, ForeignKey, Integer, String, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.models.base import Base
 
 
 class MonthlyActual(Base):
-    """Synthetic monthly sales. Rows at or after the demo clock exist but are not revealed."""
+    """Monthly Syngenta sales. In demo mode future months exist but stay hidden behind the demo clock."""
 
     __tablename__ = "monthly_actuals"
-    __table_args__ = (UniqueConstraint("segment_id", "year", "month"),)
+    __table_args__ = (UniqueConstraint("country_code", "segment_id", "year", "month"),)
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    country_code: Mapped[str] = mapped_column(String(2), index=True)
     segment_id: Mapped[int] = mapped_column(ForeignKey("segments.id"), index=True)
     year: Mapped[int] = mapped_column(Integer)
     month: Mapped[int] = mapped_column(Integer)

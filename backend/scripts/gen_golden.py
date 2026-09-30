@@ -10,13 +10,75 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from app.config import get_settings  # noqa: E402
+from app.ingest.lookups import ImportContext  # noqa: E402
+from app.ingest.reader import read_upload  # noqa: E402
+from app.ingest.registry import UPLOAD_KINDS  # noqa: E402
+from app.models import CompetitorShare, MarketYear, MonthlyPlan, PlanYear, Segment  # noqa: E402
 from app.schemas.demand_math import EntryInput  # noqa: E402
-from app.services.cube_builder import build_mega, build_segment_context  # noqa: E402
+from app.services.cube_builder import Reference, build_mega, build_segment_context  # noqa: E402
 from app.services.demand_math import compute_impact  # noqa: E402
 from app.services.flags import evaluate_flags  # noqa: E402
 from app.services.seed_service import read_seed, reference_from_seed  # noqa: E402
 
 OUT = Path(__file__).resolve().parents[2] / "tests" / "fixtures" / "demand_math_cases.json"
+UPLOADS = Path(__file__).resolve().parents[2] / "tests" / "fixtures" / "uploads"
+
+
+def portugal_context():
+    """A second country built through the real upload validators (tests/fixtures/uploads), flat monthly plan."""
+    ctx = ImportContext(country_aliases={"ES": "ES", "SPAIN": "ES", "PT": "PT", "PORTUGAL": "PT"})
+
+    def rows(kind: str, filename: str) -> list[dict]:
+        content = (UPLOADS / filename).read_bytes()
+        return UPLOAD_KINDS[kind].validator(read_upload(content, filename, []), ctx)[0]
+
+    for h in rows("hierarchy", "hierarchy.csv"):
+        ctx.segment_ids.add(h["id"])
+        ctx.mega_by_segment[h["id"]] = h["megaSegmentId"]
+    segments = [
+        Segment(id=2482, mega_segment_id="SP01", description="", mega_segment_desc="", profile="autumn_late")
+    ]
+    market = [
+        MarketYear(**_orm(m), notes=m["notes"])
+        for m in rows("market", "market.csv")
+        if m["countryCode"] == "PT" and m["segmentId"] == 2482
+    ]
+    plan = [
+        PlanYear(**_orm(p))
+        for p in rows("plan", "plan.csv")
+        if p["countryCode"] == "PT" and p["segmentId"] == 2482
+    ]
+    monthly = [
+        MonthlyPlan(segment_id=2482, year=p.year, month=m, qty_ks=p.qty_ks / 12)
+        for p in plan
+        for m in range(1, 13)
+    ]
+    competitors = [
+        CompetitorShare(competitor=c["competitor"], year=c["year"], share_pct=c["sharePct"])
+        for c in rows("competitors", "competitors.csv")
+        if c["countryCode"] == "PT"
+    ]
+    ref = Reference(
+        segments=segments, market=market, plan=plan, monthly_plan=monthly, competitors=competitors
+    )
+    return build_segment_context(ref, 2482, 2026, 3, {}, build_mega(ref, 2026))
+
+
+def _orm(row: dict) -> dict:
+    keys = {
+        "segmentId": "segment_id",
+        "year": "year",
+        "hectares": "hectares",
+        "qtyKs": "qty_ks",
+        "density": "density",
+        "priceExseed": "price_exseed",
+        "priceFarmgate": "price_farmgate",
+        "valueEur": "value_eur",
+        "netPrice": "net_price",
+        "fpiQtyKs": "fpi_qty_ks",
+        "comment": "comment",
+    }
+    return {keys[k]: v for k, v in row.items() if k in keys}
 
 
 def main() -> None:
@@ -68,6 +130,16 @@ def main() -> None:
             EntryInput(month=12, value=1300, low=1200, high=1400),
         ),
     ]
+
+    portugal = portugal_context()
+    pt_plan = portugal.monthly_plan[2]
+    cases.append(
+        (
+            "PT 2482 from uploads, flat plan, no actuals",
+            portugal,
+            EntryInput(month=3, value=pt_plan * 1.4, low=pt_plan * 1.3, high=pt_plan * 1.5),
+        )
+    )
 
     payload = []
     for name, context, entry in cases:

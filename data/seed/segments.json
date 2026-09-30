@@ -7,6 +7,7 @@
   "ecology": "PASSIVE GREENHOUSE",
   "megaSegmentId": "SP01",
   "megaSegmentDesc": "SWEET PEPPER BLOCKY PGH",
+  "species": "PEPPER SWEET",
   "profile": "spring",
   "ownerId": "rep-b"
  },
@@ -18,6 +19,7 @@
   "ecology": "PASSIVE GREENHOUSE",
   "megaSegmentId": "SP01",
   "megaSegmentDesc": "SWEET PEPPER BLOCKY PGH",
+  "species": "PEPPER SWEET",
   "profile": "spring",
   "ownerId": "rep-b"
  },
@@ -29,6 +31,7 @@
   "ecology": "PASSIVE GREENHOUSE",
   "megaSegmentId": "SP01",
   "megaSegmentDesc": "SWEET PEPPER BLOCKY PGH",
+  "species": "PEPPER SWEET",
   "profile": "autumn",
   "ownerId": "rep-b"
  },
@@ -40,6 +43,7 @@
   "ecology": "PASSIVE GREENHOUSE",
   "megaSegmentId": "SP01",
   "megaSegmentDesc": "SWEET PEPPER BLOCKY PGH",
+  "species": "PEPPER SWEET",
   "profile": "autumn_early",
   "ownerId": "rep-b"
  },
@@ -51,6 +55,7 @@
   "ecology": "PASSIVE GREENHOUSE",
   "megaSegmentId": "SP01",
   "megaSegmentDesc": "SWEET PEPPER BLOCKY PGH",
+  "species": "PEPPER SWEET",
   "profile": "autumn_early",
   "ownerId": "rep-b"
  },
@@ -62,6 +67,7 @@
   "ecology": "PASSIVE GREENHOUSE",
   "megaSegmentId": "SP01",
   "megaSegmentDesc": "SWEET PEPPER BLOCKY PGH",
+  "species": "PEPPER SWEET",
   "profile": "autumn_medium",
   "ownerId": "rep-a"
  },
@@ -73,6 +79,7 @@
   "ecology": "PASSIVE GREENHOUSE",
   "megaSegmentId": "SP01",
   "megaSegmentDesc": "SWEET PEPPER BLOCKY PGH",
+  "species": "PEPPER SWEET",
   "profile": "autumn_late",
   "ownerId": "rep-a"
  },
@@ -84,6 +91,7 @@
   "ecology": "PASSIVE GREENHOUSE",
   "megaSegmentId": "SP01",
   "megaSegmentDesc": "SWEET PEPPER BLOCKY PGH",
+  "species": "PEPPER SWEET",
   "profile": "autumn_medium",
   "ownerId": "rep-a"
  },
@@ -95,6 +103,7 @@
   "ecology": "PASSIVE GREENHOUSE",
   "megaSegmentId": "SP01",
   "megaSegmentDesc": "SWEET PEPPER BLOCKY PGH",
+  "species": "PEPPER SWEET",
   "profile": "autumn_late",
   "ownerId": "rep-a"
  }

@@ -1,6 +1,16 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { api } from "@/lib/api";
-import type { AdvanceResult, AnalyzeResult, Entry, EntryPayload, Rtb } from "@/lib/types";
+import { api, scopeQuery } from "@/lib/api";
+import type {
+  AdminUser,
+  AdvanceResult,
+  AnalyzeResult,
+  AppSettings,
+  Entry,
+  EntryPayload,
+  Rtb,
+  Scope,
+  UploadBatch,
+} from "@/lib/types";
 
 function useInvalidateAll() {
   const queryClient = useQueryClient();
@@ -31,7 +41,7 @@ export function useResetDemo() {
 export function useBulkApprove() {
   const invalidate = useInvalidateAll();
   return useMutation({
-    mutationFn: () => api.post<{ approved: number }>("/consensus/bulk-approve"),
+    mutationFn: (scope: Scope | null) => api.post<{ approved: number }>(`/consensus/bulk-approve?${scopeQuery(scope)}`),
     onSuccess: invalidate,
   });
 }
@@ -46,4 +56,45 @@ export function useDecide() {
 }
 
 export const useDraftRtb = () =>
-  useMutation({ mutationFn: (segmentId: number) => api.post<Rtb>("/consensus/rtb", { segmentId }) });
+  useMutation({
+    mutationFn: ({ countryCode, segmentId }: { countryCode: string; segmentId: number }) =>
+      api.post<Rtb>("/consensus/rtb", { countryCode, segmentId }),
+  });
+
+export function useUpload() {
+  const invalidate = useInvalidateAll();
+  return useMutation({
+    mutationFn: ({ kind, file }: { kind: string; file: File }) => {
+      const form = new FormData();
+      form.append("kind", kind);
+      form.append("file", file);
+      return api.upload<UploadBatch>("/admin/uploads", form);
+    },
+    onSuccess: invalidate,
+  });
+}
+
+export function useBatchAction() {
+  const invalidate = useInvalidateAll();
+  return useMutation({
+    mutationFn: ({ id, action }: { id: string; action: "commit" | "discard" }) =>
+      api.post<UploadBatch>(`/admin/uploads/${id}/${action}`),
+    onSuccess: invalidate,
+  });
+}
+
+export function useSaveUser() {
+  const invalidate = useInvalidateAll();
+  return useMutation({
+    mutationFn: (user: Omit<AdminUser, "lastSeenAt">) => api.put<AdminUser[]>("/admin/users", user),
+    onSuccess: invalidate,
+  });
+}
+
+export function useSaveSettings() {
+  const invalidate = useInvalidateAll();
+  return useMutation({
+    mutationFn: (patch: Partial<AppSettings>) => api.put<AppSettings>("/admin/settings", patch),
+    onSuccess: invalidate,
+  });
+}

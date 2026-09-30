@@ -29,7 +29,8 @@ async def recompute_track_records(db: AsyncSession) -> None:
             .join(Claim, Claim.entry_id == DemandEntry.id)
             .join(
                 MonthlyActual,
-                (MonthlyActual.segment_id == DemandEntry.segment_id)
+                (MonthlyActual.country_code == DemandEntry.country_code)
+                & (MonthlyActual.segment_id == DemandEntry.segment_id)
                 & (MonthlyActual.year == DemandEntry.year)
                 & (MonthlyActual.month == DemandEntry.month),
             )

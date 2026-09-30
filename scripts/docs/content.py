@@ -8,6 +8,7 @@ from docx.shared import Pt, RGBColor
 
 LIVE_URL = "https://skystream-510015.web.app"
 RUN_URL = "https://skystream-api-842137351485.us-central1.run.app"
+REAL_URL = "https://skystream-real-842137351485.europe-west1.run.app"
 
 
 def build(doc, figures: dict[str, Path], shots: Path, ledger_shot: Path, segments: list, competitors: list,
@@ -40,6 +41,7 @@ def build(doc, figures: dict[str, Path], shots: Path, ledger_shot: Path, segment
     api(doc)
     deployment(doc)
     testing(doc)
+    real_mode(doc)
     limits(doc)
     glossary(doc)
 
@@ -778,20 +780,20 @@ def deployment(doc) -> None:
 def testing(doc) -> None:
     doc.h("20. Testing and quality")
     doc.bullets([
-        "**Backend (pytest, 37 tests)**: golden math cases, flag rules, claim-consistency checks, decision provider (offline, recorded fixture, live mocked, Jev failure, low-confidence, Gemini fallback and summary), full API loop (flag enforcement, ownership, closed months, supersede, consensus, advance, CSV, RTB, track records, reset, data quality).",
-        "**Frontend (vitest, 22 tests)**: TypeScript math and flags against the same golden cases; tile components.",
+        "**Backend (pytest, 55 tests)**: golden math cases, flag rules, claim-consistency checks, decision provider (offline, recorded fixture, live mocked, Jev failure, low-confidence, Gemini fallback and summary), full API loop (flag enforcement, ownership, closed months, supersede, consensus, advance, CSV, RTB, track records, reset, data quality).",
+        "**Frontend (vitest, 24 tests)**: TypeScript math and flags against the same golden cases; tile components.",
         "**End to end (Playwright)**: the demo script from capture to track record, run locally and against production.",
         "**Static checks**: ruff (lint + format) and TypeScript strict type check.",
     ])
 
 
 def limits(doc) -> None:
-    doc.h("21. Limitations, risks and next steps")
+    doc.h("22. Limitations, risks and next steps")
     doc.table(
         ["Area", "Current state", "Next step"],
         [
-            ["Authentication", "Role switcher via header", "Firebase Auth / SSO with role claims"],
-            ["Persistence", "SQLite per Cloud Run instance, reset on cold start; brief inconsistency possible if a second instance starts", "Cloud SQL Postgres (already supported) or min-instances=1"],
+            ["Authentication", "Demo: role switcher. Real: Firebase Google sign-in with registered users", "Company SSO (SAML/OIDC) through Identity Platform"],
+            ["Persistence", "Demo: SQLite per instance. Real: Cloud SQL Postgres", "Point the demo at Postgres too if it must keep entries"],
             ["Monthly data", "Synthetic curves and actuals", "Confirm seasonality; load real monthly demand and year-to-date actuals"],
             ["Claim signals", "Competitor and hectare claims checked against monthly sales", "Add competitor-share and MAPA/ESYRCE hectare feeds"],
             ["Jev", "Early-access model; confidence gating + Gemini fallback + offline decider", "Record fixtures for demos; tune option wording and 0.8 threshold on labelled examples"],
@@ -800,7 +802,7 @@ def limits(doc) -> None:
         ],
         widths=[3.0, 7.0, 7.0], size=8, caption="Limitations and next steps",
     )
-    doc.h("21.1 Open questions for the SMEs", 2)
+    doc.h("22.1 Open questions for the SMEs", 2)
     doc.bullets([
         "Are the 2024-2025 Sales rows actuals and 2026+ the plan? Where do monthly demand and year-to-date actuals live today?",
         "Entry unit and level: thousand seeds per micro-segment, or per mega-segment?",
@@ -812,8 +814,63 @@ def limits(doc) -> None:
     ])
 
 
+def real_mode(doc) -> None:
+    doc.h("21. Real-figures mode")
+    doc.p(f"The same application runs on real figures at {REAL_URL} (Cloud Run europe-west1, Cloud SQL Postgres). "
+          "Demo mode keeps the anonymized seed; real mode only shows what admins upload, for any country and crop.")
+    doc.table(
+        ["", "Demo", "Real"],
+        [
+            ["Figures", "Anonymized seed, Spain > Sweet Pepper > Blocky PGH", "Admin uploads, any country / mega-segment"],
+            ["Sign-in", "Role switcher", "Firebase Google sign-in; only registered, active users"],
+            ["Access", "Seeded owners", "user_scopes: country + mega-segment or micro-segment per rep"],
+            ["Calendar", "Advance month button", "A month closes when its actuals are uploaded"],
+            ["Storage", "SQLite per instance", "Cloud SQL Postgres (skystream-pg)"],
+            ["Jev", "Allowed", "Off until an admin enables it after clearance; Gemini/offline meanwhile"],
+        ],
+        widths=[3, 6.5, 7.5], size=8.5, caption="Modes",
+    )
+    doc.h("21.1 Inputs the admin provides", 2)
+    doc.table(
+        ["#", "File", "Format", "Required columns", "Behaviour"],
+        [
+            ["1", "Product hierarchy", "xlsx tab 'prod hierarchy' or csv",
+             "f_specie, f_megaSegment, f_megaSegmentDesc, f_microSegment, f_microSegmentDesc", "Upserts segments; everything else is keyed on these IDs"],
+            ["2", "Market (MAPSHistData)", "as exported", "Country, Micro Segment, Year, Market Planted Area (HA), Market Qty (KS), Market Avg Plant Density, Market AvgPrice (ExSeed)",
+             "Replaces country/segment/year rows; latest Modified wins; warns if qty differs from ha x density"],
+            ["3", "Syngenta plan (Syngenta5YrsSales)", "as exported", "Title, Country, Microsegment ID, Sales Qty, Sales Value",
+             "IDs recovered from descriptions; duplicates summed; net price = value / qty; rebuilds the monthly plan"],
+            ["4", "Competitor shares", "as exported", "Forecast Customer Country_D, Mega_Segment_Id, CompetitorDesc, YYYY%",
+             "Replaces country/mega/year; warns when shares do not sum to 100"],
+            ["5", "Monthly actuals", "template", "country_code, micro_segment_id, year, month, sales_qty_ks (+ optional sales_value_eur)",
+             "Closes those months, resolves due claims, recomputes track records"],
+            ["6", "Rep assignments", "template", "email, name, role, country_code, scope_type, scope_ids", "Upserts users and replaces their scopes"],
+            ["7", "Grower potential (optional)", "as exported", "Country Name, Crop Local, Hecatres Info.", "Caps rows at the hectare cap; feeds the ceiling flag and variety options"],
+            ["8", "Seasonality (optional)", "template", "country_code, micro_segment_id or mega_segment_id, month, weight",
+             "Normalized per key; splits the yearly plan (else last two complete years of actuals, else flat)"],
+        ],
+        widths=[0.6, 3.0, 2.4, 6.0, 5.0], size=7.5, caption="Uploads, in load order",
+    )
+    doc.p("Every upload becomes a preview batch showing rows read, accepted, rejected (with row number and reason) "
+          "and warnings. Nothing changes until an admin commits; earlier committed batches for the same countries are "
+          "marked superseded. Admins also manage users and scopes, and settings (planning year, thresholds, AI "
+          "confidence levels, hectare cap, currency and the Jev switch).")
+    doc.h("21.2 What reps enter", 2)
+    doc.bullets([
+        "Scope (country, crop, mega-segment) from the header; only segments in their scopes are editable.",
+        "An open month: after the last month with uploaded actuals.",
+        "Demand in thousand seeds, a low/high range, optional net price, and a justification of up to 600 characters (required when flagged).",
+    ])
+    doc.h("21.3 First run", 2)
+    doc.numbered([
+        "Firebase console: Authentication > Get started > enable Google sign-in.",
+        "Authentication > Settings > Authorized domains: add skystream-real-842137351485.europe-west1.run.app.",
+        "Sign in with a bootstrap admin email (BOOTSTRAP_ADMIN_EMAILS), upload the files in order, add reps and leads.",
+    ])
+
+
 def glossary(doc) -> None:
-    doc.h("22. Glossary")
+    doc.h("23. Glossary")
     doc.table(
         ["Term", "Meaning"],
         [

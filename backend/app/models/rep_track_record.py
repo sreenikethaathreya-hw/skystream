@@ -9,7 +9,7 @@ from app.models.base import Base, utcnow
 class RepTrackRecord(Base):
     __tablename__ = "rep_track_records"
 
-    user_id: Mapped[str] = mapped_column(String(40), primary_key=True)
+    user_id: Mapped[str] = mapped_column(String(200), primary_key=True)
     entries_resolved: Mapped[int] = mapped_column(Integer, default=0)
     bias_pct: Mapped[float | None] = mapped_column(Float)
     claim_hit_rate: Mapped[float | None] = mapped_column(Float)

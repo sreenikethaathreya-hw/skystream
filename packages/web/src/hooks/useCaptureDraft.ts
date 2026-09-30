@@ -27,12 +27,18 @@ export function useCaptureDraft(cube: Cube | undefined, preferredSegmentId: numb
 
   const segment = cube?.segments.find((s) => s.id === segmentId) ?? cube?.segments[0];
 
+  const scopeKey = cube ? `${cube.countryCode}|${cube.megaSegmentId}` : "";
+  useEffect(() => {
+    setSegmentId(preferredSegmentId);
+    // Pick the rep's own segment again whenever the scope changes, not on every refetch.
+  }, [scopeKey]); // eslint-disable-line react-hooks/exhaustive-deps
+
   useEffect(() => {
     if (!segmentId && preferredSegmentId) setSegmentId(preferredSegmentId);
   }, [preferredSegmentId, segmentId]);
 
   useEffect(() => {
-    if (cube && month < cube.clockMonth) setMonth(cube.clockMonth);
+    if (cube && month < cube.clockMonth) setMonth(Math.min(cube.clockMonth, 12));
   }, [cube, month]);
 
   useEffect(() => {

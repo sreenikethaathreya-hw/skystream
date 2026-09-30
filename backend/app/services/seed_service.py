@@ -15,9 +15,13 @@ from app.models import (
     MonthlyPlan,
     PlanYear,
     RepTrackRecord,
+    Seasonality,
     Segment,
 )
 from app.services.cube_builder import Reference
+
+DEMO_COUNTRY = "ES"
+DEMO_CROP_LOCAL = "SWEET PEPPER BLOCKY PGH"
 
 SIGNAL_BY_DRIVER = {
     "competitor_move": "competitor_share",
@@ -44,6 +48,7 @@ def reference_from_seed(seed_dir: Path) -> Reference:
             Segment(
                 id=s["id"],
                 description=s["description"],
+                species=s.get("species"),
                 cycle=s["cycle"],
                 color=s["color"],
                 ecology=s["ecology"],
@@ -56,6 +61,7 @@ def reference_from_seed(seed_dir: Path) -> Reference:
         ],
         market=[
             MarketYear(
+                country_code=m.get("countryCode", DEMO_COUNTRY),
                 segment_id=m["segmentId"],
                 year=m["year"],
                 hectares=m["hectares"],
@@ -69,6 +75,7 @@ def reference_from_seed(seed_dir: Path) -> Reference:
         ],
         plan=[
             PlanYear(
+                country_code=p.get("countryCode", DEMO_COUNTRY),
                 segment_id=p["segmentId"],
                 year=p["year"],
                 qty_ks=p["qtyKs"],
@@ -80,11 +87,19 @@ def reference_from_seed(seed_dir: Path) -> Reference:
             for p in rows("plan_years")
         ],
         monthly_plan=[
-            MonthlyPlan(segment_id=r["segmentId"], year=r["year"], month=r["month"], qty_ks=r["qtyKs"])
+            MonthlyPlan(
+                country_code=r.get("countryCode", DEMO_COUNTRY),
+                segment_id=r["segmentId"],
+                year=r["year"],
+                month=r["month"],
+                qty_ks=r["qtyKs"],
+                basis="synthetic",
+            )
             for r in rows("monthly_plan")
         ],
         monthly_actuals=[
             MonthlyActual(
+                country_code=r.get("countryCode", DEMO_COUNTRY),
                 segment_id=r["segmentId"],
                 year=r["year"],
                 month=r["month"],
@@ -95,6 +110,7 @@ def reference_from_seed(seed_dir: Path) -> Reference:
         ],
         competitors=[
             CompetitorShare(
+                country_code=c.get("countryCode", DEMO_COUNTRY),
                 mega_segment_id=c["megaSegmentId"],
                 competitor=c["competitor"],
                 year=c["year"],
@@ -106,6 +122,8 @@ def reference_from_seed(seed_dir: Path) -> Reference:
         ],
         grower=[
             GrowerPotential(
+                country_code=g.get("countryCode", DEMO_COUNTRY),
+                crop_local=g.get("cropLocal", DEMO_CROP_LOCAL),
                 variety=g["variety"],
                 owner=g["owner"],
                 hectares=g["hectares"],
@@ -122,6 +140,7 @@ def _history_rows(seed_dir: Path) -> list[tuple[DemandEntry, Claim]]:
     for h in read_seed(seed_dir, "history_entries"):
         entry = DemandEntry(
             user_id=h["userId"],
+            country_code=DEMO_COUNTRY,
             segment_id=h["segmentId"],
             year=h["year"],
             month=h["month"],
@@ -155,6 +174,7 @@ async def seed_database(db: AsyncSession, seed_dir: Path) -> None:
     from app.services.track_record_service import recompute_track_records
 
     for model in (
+        Seasonality,
         Claim,
         DemandEntry,
         RepTrackRecord,

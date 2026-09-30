@@ -133,6 +133,24 @@ async def test_low_confidence_fields_are_reported_without_gemini(
     assert claim.low_confidence_fields == ["driver"]
 
 
+async def test_external_ai_gate_blocks_jev(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    from app.ai import jev_client
+    from app.ai.decision_provider import DecisionPolicy
+
+    calls = []
+
+    async def ask(self, state, questions):
+        calls.append(state)
+        return {"model": "jev-1.13.0", "answers": {}}
+
+    monkeypatch.setattr(jev_client.JevClient, "ask", ask)
+    provider = DecisionProvider(_settings(tmp_path, ai_mode="live"))
+    blocked = await provider.structure_justification(_input(), DecisionPolicy(allow_jev=False))
+    assert blocked.provider == "offline decider" and calls == []
+    allowed = await provider.structure_justification(_input(), DecisionPolicy(allow_jev=True))
+    assert allowed.provider == "jev" and len(calls) == 1
+
+
 async def test_low_confidence_score_is_reported(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     from app.ai import jev_client
 

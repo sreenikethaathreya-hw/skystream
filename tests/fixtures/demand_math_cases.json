@@ -12,7 +12,7 @@
    "planValueEur": 19540342.81,
    "planNetPrice": 452.42,
    "lastYearQtyKs": 46849.0,
-   "lastYearValueEur": 19937877.89,
+   "lastYearValueEur": 20004023.41,
    "marketHistory": [
     {
      "year": 2024,
@@ -238,14 +238,14 @@
    "marketHa": 3316.0,
    "megaImpliedHa": 2889.220952380952,
    "revenue": {
-    "lastYear": 19937877.89,
+    "lastYear": 20004023.41,
     "estimate": 20021782.13,
-    "change": 83904.23999999836,
-    "volumeEffect": -1038834.5520606631,
-    "priceEffect": 1122738.7920606611,
-    "priceShareOfChange": 0.5194081408868652,
+    "change": 17758.719999998808,
+    "volumeEffect": -1042280.9695790731,
+    "priceEffect": 1060039.6895790736,
+    "priceShareOfChange": 0.5042235992693692,
     "avgPrice": 450.85980296343,
-    "lastYearPrice": 425.57744861149655
+    "lastYearPrice": 426.98933616512625
    },
    "monthExpected": 12835.0,
    "monthLastYear": 14066.0,
@@ -267,7 +267,7 @@
    "planValueEur": 19540342.81,
    "planNetPrice": 452.42,
    "lastYearQtyKs": 46849.0,
-   "lastYearValueEur": 19937877.89,
+   "lastYearValueEur": 20004023.41,
    "marketHistory": [
     {
      "year": 2024,
@@ -493,14 +493,14 @@
    "marketHa": 3316.0,
    "megaImpliedHa": 3042.0185714285712,
    "revenue": {
-    "lastYear": 19937877.89,
+    "lastYear": 20004023.41,
     "estimate": 21473484.805,
-    "change": 1535606.914999999,
-    "volumeEffect": 326737.08617147646,
-    "priceEffect": 1208869.8288285215,
-    "priceShareOfChange": 0.7872260908831107,
+    "change": 1469461.3949999996,
+    "volumeEffect": 327821.0628407757,
+    "priceEffect": 1141640.3321592247,
+    "priceShareOfChange": 0.776910734806493,
     "avgPrice": 450.96493996335323,
-    "lastYearPrice": 425.57744861149655
+    "lastYearPrice": 426.98933616512625
    },
    "monthExpected": 12835.0,
    "monthLastYear": 14066.0,
@@ -522,7 +522,7 @@
    "planValueEur": 19540342.81,
    "planNetPrice": 452.42,
    "lastYearQtyKs": 46849.0,
-   "lastYearValueEur": 19937877.89,
+   "lastYearValueEur": 20004023.41,
    "marketHistory": [
     {
      "year": 2024,
@@ -748,14 +748,14 @@
    "marketHa": 3316.0,
    "megaImpliedHa": 4182.792380952381,
    "revenue": {
-    "lastYear": 19937877.89,
+    "lastYear": 20004023.41,
     "estimate": 32311771.43,
-    "change": 12373893.54,
-    "volumeEffect": 10521976.83947064,
-    "priceEffect": 1851916.700529358,
-    "priceShareOfChange": 0.1496632159104028,
+    "change": 12307748.02,
+    "volumeEffect": 10556884.347346582,
+    "priceEffect": 1750863.6726534194,
+    "priceShareOfChange": 0.14225702945886434,
     "avgPrice": 451.45196414849175,
-    "lastYearPrice": 425.57744861149655
+    "lastYearPrice": 426.98933616512625
    },
    "monthExpected": 12835.0,
    "monthLastYear": 14066.0,
@@ -781,7 +781,7 @@
    "planValueEur": 19540342.81,
    "planNetPrice": 452.42,
    "lastYearQtyKs": 46849.0,
-   "lastYearValueEur": 19937877.89,
+   "lastYearValueEur": 20004023.41,
    "marketHistory": [
     {
      "year": 2024,
@@ -1007,14 +1007,14 @@
    "marketHa": 3316.0,
    "megaImpliedHa": 2889.220952380952,
    "revenue": {
-    "lastYear": 19937877.89,
+    "lastYear": 20004023.41,
     "estimate": 25766471.43,
-    "change": 5828593.539999999,
-    "volumeEffect": -1038834.5520606631,
-    "priceEffect": 6867428.092060659,
-    "priceShareOfChange": 0.8686061165912462,
+    "change": 5762448.02,
+    "volumeEffect": -1042280.9695790731,
+    "priceEffect": 6804728.989579071,
+    "priceShareOfChange": 0.867174761469158,
     "avgPrice": 580.2213887137452,
-    "lastYearPrice": 425.57744861149655
+    "lastYearPrice": 426.98933616512625
    },
    "monthExpected": 12835.0,
    "monthLastYear": 14066.0,
@@ -1040,7 +1040,7 @@
    "planValueEur": 19540342.81,
    "planNetPrice": 452.42,
    "lastYearQtyKs": 46849.0,
-   "lastYearValueEur": 19937877.89,
+   "lastYearValueEur": 20004023.41,
    "marketHistory": [
     {
      "year": 2024,
@@ -1266,14 +1266,14 @@
    "marketHa": 3316.0,
    "megaImpliedHa": 2583.625714285714,
    "revenue": {
-    "lastYear": 19937877.89,
+    "lastYear": 20004023.41,
     "estimate": 17808771.43,
-    "change": -2129106.460000001,
-    "volumeEffect": -3769977.828524942,
-    "priceEffect": 1640871.368524939,
-    "priceShareOfChange": 0.3032557938261483,
+    "change": -2195251.9800000004,
+    "volumeEffect": -3782485.034418771,
+    "priceEffect": 1587233.05441877,
+    "priceShareOfChange": 0.2955896432846777,
     "avgPrice": 468.7690720048433,
-    "lastYearPrice": 425.57744861149655
+    "lastYearPrice": 426.98933616512625
    },
    "monthExpected": 12835.0,
    "monthLastYear": 14066.0,
@@ -1299,7 +1299,7 @@
    "planValueEur": 1663187.91,
    "planNetPrice": 407.64,
    "lastYearQtyKs": 4623.0,
-   "lastYearValueEur": 1767365.5,
+   "lastYearValueEur": 1776892.8599999999,
    "marketHistory": [
     {
      "year": 2024,
@@ -1525,14 +1525,14 @@
    "marketHa": 1964.0,
    "megaImpliedHa": 2815.3638095238093,
    "revenue": {
-    "lastYear": 1767365.5,
+    "lastYear": 1776892.8599999999,
     "estimate": 1533477.81,
-    "change": -233887.68999999994,
-    "volumeEffect": -335275.6961929483,
-    "priceEffect": 101388.00619294845,
-    "priceShareOfChange": 0.23218784991509991,
+    "change": -243415.0499999998,
+    "volumeEffect": -337083.0712134977,
+    "priceEffect": 93668.02121349798,
+    "priceShareOfChange": 0.2174527769291101,
     "avgPrice": 409.3640710090764,
-    "lastYearPrice": 382.2983993078088
+    "lastYearPrice": 384.3592602206359
    },
    "monthExpected": 62.0,
    "monthLastYear": 80.0,
@@ -1556,7 +1556,7 @@
    "planValueEur": 19540342.81,
    "planNetPrice": 452.42,
    "lastYearQtyKs": 46849.0,
-   "lastYearValueEur": 19937877.89,
+   "lastYearValueEur": 20004023.41,
    "marketHistory": [
     {
      "year": 2024,
@@ -1782,14 +1782,14 @@
    "marketHa": 3316.0,
    "megaImpliedHa": 14182.792380952382,
    "revenue": {
-    "lastYear": 19937877.89,
+    "lastYear": 20004023.41,
     "estimate": 127319971.43,
-    "change": 107382093.54,
-    "volumeEffect": 99893241.04788491,
-    "priceEffect": 7488852.492115083,
-    "priceShareOfChange": 0.06974023550141975,
+    "change": 107315948.02000001,
+    "volumeEffect": 100224644.9420231,
+    "priceEffect": 7091303.077976909,
+    "priceShareOfChange": 0.06607874420170368,
     "avgPrice": 452.1739351074144,
-    "lastYearPrice": 425.57744861149655
+    "lastYearPrice": 426.98933616512625
    },
    "monthExpected": 12835.0,
    "monthLastYear": 14066.0,
@@ -1815,7 +1815,7 @@
    "planValueEur": 2627564.62,
    "planNetPrice": 386.01,
    "lastYearQtyKs": 8427.0,
-   "lastYearValueEur": 3321034.33,
+   "lastYearValueEur": 3321025.41,
    "marketHistory": [
     {
      "year": 2024,
@@ -2044,19 +2044,182 @@
    "marketHa": 1347.0,
    "megaImpliedHa": 2882.7085714285713,
    "revenue": {
-    "lastYear": 3321034.33,
+    "lastYear": 3321025.41,
     "estimate": 3122538.9299999997,
-    "change": -198495.40000000037,
-    "volumeEffect": -131627.56214785806,
-    "priceEffect": -66867.83785214208,
-    "priceShareOfChange": -0.3368734885148071,
+    "change": -198486.48000000045,
+    "volumeEffect": -131627.2086080456,
+    "priceEffect": -66859.27139195494,
+    "priceShareOfChange": -0.33684546872892684,
     "avgPrice": 385.83206845421967,
-    "lastYearPrice": 394.09449744867686
+    "lastYearPrice": 394.09343894624425
    },
    "monthExpected": 901.0,
    "monthLastYear": 1204.0,
    "monthSigma": 135.15,
    "monthZ": 2.9522752497225304
+  },
+  "expectedFlags": []
+ },
+ {
+  "name": "PT 2482 from uploads, flat plan, no actuals",
+  "context": {
+   "year": 2026,
+   "clockMonth": 3,
+   "marketHectares": 500.0,
+   "marketQtyKs": 10500.0,
+   "density": 21.0,
+   "priceExseed": 400.0,
+   "planQtyKs": 2500.0,
+   "planValueEur": 1000000.0,
+   "planNetPrice": 400.0,
+   "lastYearQtyKs": 0.0,
+   "lastYearValueEur": 0.0,
+   "marketHistory": [
+    {
+     "year": 2026,
+     "hectares": 500.0,
+     "qtyKs": 10500.0
+    }
+   ],
+   "planQtyHistory": [
+    {
+     "year": 2026,
+     "hectares": 0.0,
+     "qtyKs": 2500.0
+    }
+   ],
+   "netPriceHistory": [
+    400.0
+   ],
+   "monthlyPlan": [
+    208.33333333333334,
+    208.33333333333334,
+    208.33333333333334,
+    208.33333333333334,
+    208.33333333333334,
+    208.33333333333334,
+    208.33333333333334,
+    208.33333333333334,
+    208.33333333333334,
+    208.33333333333334,
+    208.33333333333334,
+    208.33333333333334
+   ],
+   "monthlyActual": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "monthlyActualValue": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "lastYearMonthly": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "submitted": {},
+   "marketTrendNote": "Small market",
+   "mega": {
+    "marketValueEur": 4200000.0,
+    "syngentaValueEur": 1000000.0,
+    "syngentaSharePct": 20.0,
+    "competitors": [
+     {
+      "name": "Rijk Zwaan",
+      "sharePct": 70.0
+     }
+    ],
+    "impliedHaBaseline": 119.04761904761905,
+    "growerCeilingHa": 0.0
+   }
+  },
+  "entry": {
+   "month": 3,
+   "value": 291.6666666666667,
+   "low": 270.83333333333337,
+   "high": 312.5,
+   "price": null
+  },
+  "expected": {
+   "actualsToDate": 0.0,
+   "monthsRemaining": 10,
+   "fyEstimate": 2166.6666666666665,
+   "fyLow": 2145.8333333333335,
+   "fyHigh": 2187.5,
+   "planFy": 2500.0,
+   "gapToPlan": -333.3333333333335,
+   "ytgRemaining": 2500.0,
+   "requiredMonthlyRate": 250.0,
+   "enteredMonthlyRate": 216.66666666666666,
+   "historicalMonthlyRate": 0.0,
+   "volumeShare": 0.20634920634920634,
+   "volumeShareLow": 0.2043650793650794,
+   "volumeShareHigh": 0.20833333333333334,
+   "planVolumeShare": 0.23809523809523808,
+   "lastYearVolumeShare": 0.0,
+   "maxHistoricalShare": 0.23809523809523808,
+   "fyValue": 866666.6666666666,
+   "valueShare": 0.20634920634920634,
+   "planValueShare": 0.23809523809523808,
+   "megaShareBaseline": 0.23809523809523808,
+   "megaShare": 0.20634920634920634,
+   "competitors": [
+    {
+     "name": "Rijk Zwaan",
+     "baselinePct": 70.0,
+     "newPct": 72.91666666666667,
+     "deltaPts": 2.9166666666666714
+    }
+   ],
+   "impliedHa": 103.17460317460316,
+   "impliedHaLow": 102.18253968253968,
+   "impliedHaHigh": 104.16666666666667,
+   "marketHa": 500.0,
+   "megaImpliedHa": 103.17460317460316,
+   "revenue": {
+    "lastYear": 0.0,
+    "estimate": 866666.6666666666,
+    "change": 866666.6666666666,
+    "volumeEffect": 0.0,
+    "priceEffect": 866666.6666666666,
+    "priceShareOfChange": 1.0,
+    "avgPrice": 400.0,
+    "lastYearPrice": 0.0
+   },
+   "monthExpected": 208.33333333333334,
+   "monthLastYear": 0.0,
+   "monthSigma": 50.0,
+   "monthZ": 1.666666666666667
   },
   "expectedFlags": []
  }

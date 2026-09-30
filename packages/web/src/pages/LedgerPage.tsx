@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { EntryCard } from "@/components/ledger/EntryCard";
 import { useCube, useEntries } from "@/hooks/queries";
-import { useDemoUser } from "@/hooks/useDemoUser";
+import { useScope } from "@/hooks/useScope";
+import { useReps } from "@/hooks/queries";
 
 export function LedgerPage() {
   const [segmentId, setSegmentId] = useState<number | undefined>();
   const [userId, setUserId] = useState<string | undefined>();
-  const { data: cube } = useCube();
-  const { users } = useDemoUser();
-  const { data: entries, isLoading } = useEntries({ segmentId, userId });
+  const { scope } = useScope();
+  const { data: cube } = useCube(scope);
+  const { data: reps = [] } = useReps();
+  const { data: entries, isLoading } = useEntries({ scope, segmentId, userId });
 
   return (
     <div className="flex flex-col gap-4">
@@ -40,13 +42,11 @@ export function LedgerPage() {
             onChange={(e) => setUserId(e.target.value || undefined)}
           >
             <option value="">All reps</option>
-            {users
-              .filter((u) => u.role === "rep")
-              .map((u) => (
-                <option key={u.id} value={u.id}>
-                  {u.name}
-                </option>
-              ))}
+            {reps.map((r) => (
+              <option key={r.user.id} value={r.user.id}>
+                {r.user.name}
+              </option>
+            ))}
           </select>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { fmtPct } from "@/lib/format";
-import type { DemoUser, SegmentCube } from "@/lib/types";
+import type { SegmentCube } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 const COLOR_DOT: Record<string, string> = {
@@ -13,28 +13,20 @@ const COLOR_DOT: Record<string, string> = {
 export function SegmentList({
   segments,
   selectedId,
-  user,
-  users,
   onSelect,
 }: {
   segments: SegmentCube[];
   selectedId: number | undefined;
-  user: DemoUser | undefined;
-  users: DemoUser[];
   onSelect: (id: number) => void;
 }) {
-  const ordered = [...segments].sort((a, b) => {
-    const mineA = a.ownerId === user?.id ? 0 : 1;
-    const mineB = b.ownerId === user?.id ? 0 : 1;
-    return mineA - mineB || b.context.planQtyKs - a.context.planQtyKs;
-  });
+  const ordered = [...segments].sort(
+    (a, b) => Number(b.editable) - Number(a.editable) || b.context.planQtyKs - a.context.planQtyKs,
+  );
   return (
     <div className="flex flex-col gap-1.5">
       <p className="px-1 text-xs font-medium uppercase tracking-wide text-muted">Micro-segments</p>
       {ordered.map((s) => {
         const share = s.context.marketQtyKs ? s.context.planQtyKs / s.context.marketQtyKs : 0;
-        const owner = users.find((u) => u.id === s.ownerId);
-        const mine = s.ownerId === user?.id;
         return (
           <button
             key={s.id}
@@ -53,7 +45,9 @@ export function SegmentList({
               <span className="tabular text-xs text-muted">{fmtPct(share)}</span>
             </div>
             <div className="mt-1 flex items-center gap-1.5">
-              <Badge tone={mine ? "brand" : "neutral"}>{mine ? "Yours" : owner?.name ?? s.ownerId}</Badge>
+              <Badge tone={s.editable ? "brand" : "neutral"}>
+                {s.editable ? "Yours" : s.ownerNames.join(", ") || "Unassigned"}
+              </Badge>
               <span className="tabular text-[11px] text-muted">
                 plan {Math.round(s.context.planQtyKs).toLocaleString("en-US")} KS
               </span>

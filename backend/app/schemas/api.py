@@ -19,15 +19,34 @@ class ClockOut(CamelModel):
     month: int
 
 
+class FirebaseConfigOut(CamelModel):
+    api_key: str
+    auth_domain: str
+    project_id: str
+
+
+class ConfigOut(CamelModel):
+    data_mode: str
+    firebase: FirebaseConfigOut | None
+
+
 class MetaOut(CamelModel):
-    country: str
-    species: str
-    mega_segment_id: str
-    mega_segment_desc: str
+    data_mode: str
+    me: UserOut
     users: list[UserOut]
-    clock: ClockOut
+    clock: ClockOut | None
     ai: dict[str, str | bool]
     thresholds: Thresholds
+    currency: str
+
+
+class ScopeOptionOut(CamelModel):
+    country_code: str
+    country_name: str
+    species: str | None
+    mega_segment_id: str
+    mega_segment_desc: str
+    segments: int
 
 
 class CompetitorOut(CamelModel):
@@ -52,7 +71,10 @@ class SegmentCubeOut(CamelModel):
     description: str
     color: str | None
     profile: str
-    owner_id: str
+    editable: bool
+    owner_names: list[str]
+    plan_basis: str
+    last_year_basis: str
     plan_comment: str | None
     market_notes: dict[str, str | None]
     context: SegmentContext
@@ -60,8 +82,15 @@ class SegmentCubeOut(CamelModel):
 
 
 class CubeOut(CamelModel):
+    country_code: str
+    country_name: str
+    mega_segment_id: str
+    mega_segment_desc: str
+    species: str | None
+    currency: str
     year: int
     clock_month: int
+    year_closed: bool
     thresholds: Thresholds
     competitors: list[CompetitorOut]
     varieties: list[str]
@@ -69,6 +98,7 @@ class CubeOut(CamelModel):
 
 
 class EntryIn(CamelModel):
+    country_code: str = Field(default="ES", min_length=2, max_length=2)
     segment_id: int
     month: int = Field(ge=1, le=12)
     value: float = Field(ge=0)
@@ -81,6 +111,7 @@ class EntryIn(CamelModel):
     def _range_brackets_value(self) -> "EntryIn":
         if not self.low <= self.value <= self.high:
             raise ValueError("low <= value <= high is required")
+        self.country_code = self.country_code.upper()
         return self
 
 
@@ -115,6 +146,7 @@ class EntryOut(CamelModel):
     id: str
     user_id: str
     user_name: str
+    country_code: str
     segment_id: int
     segment_label: str
     year: int
@@ -181,6 +213,7 @@ class DecisionIn(CamelModel):
 
 
 class RtbIn(CamelModel):
+    country_code: str = Field(default="ES", min_length=2, max_length=2)
     segment_id: int
 
 
@@ -189,3 +222,51 @@ class RtbOut(CamelModel):
     text: str
     provider: str
     cited_entry_ids: list[str]
+
+
+class ScopeIn(CamelModel):
+    country_code: str = Field(min_length=2, max_length=2)
+    scope_type: str = Field(pattern="^(mega|micro)$")
+    scope_id: str = Field(min_length=1, max_length=20)
+
+
+class UserAdminIn(CamelModel):
+    email: str = Field(pattern=r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+    name: str = Field(min_length=1, max_length=120)
+    role: str = Field(pattern="^(admin|lead|rep)$")
+    active: bool = True
+    scopes: list[ScopeIn] = []
+
+
+class UserAdminOut(CamelModel):
+    email: str
+    name: str
+    role: str
+    active: bool
+    last_seen_at: datetime | None
+    scopes: list[ScopeIn]
+
+
+class UploadKindOut(CamelModel):
+    kind: str
+    label: str
+    source: str
+    required: bool
+    template: bool
+    last_committed_at: datetime | None
+
+
+class BatchOut(CamelModel):
+    id: str
+    kind: str
+    filename: str
+    uploaded_by: str
+    status: str
+    rows_read: int
+    accepted: int
+    rejected: int
+    warnings: int
+    report: dict
+    commit_summary: dict | None
+    created_at: datetime
+    committed_at: datetime | None

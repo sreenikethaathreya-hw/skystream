@@ -1,0 +1,5 @@
+email,name,role,country_code,scope_type,scope_ids
+ana@example.com,Ana Rep,rep,ES,micro,2482
+pedro@example.com,Pedro Rep,rep,PT,mega,SP01
+lead@example.com,Lena Lead,lead,ES,mega,SP01
+nobody@example.com,Bad Role,owner,ES,micro,2482

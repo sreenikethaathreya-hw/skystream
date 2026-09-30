@@ -6,7 +6,7 @@ import { Card, CardBody, CardHeader } from "@/components/ui/card";
 import { useDraftRtb } from "@/hooks/mutations";
 import type { SegmentCube } from "@/lib/types";
 
-export function RtbPanel({ segments }: { segments: SegmentCube[] }) {
+export function RtbPanel({ countryCode, segments }: { countryCode: string; segments: SegmentCube[] }) {
   const [segmentId, setSegmentId] = useState<number>(segments.find((s) => s.id === 2482)?.id ?? segments[0]?.id);
   const draft = useDraftRtb();
   return (
@@ -30,7 +30,7 @@ export function RtbPanel({ segments }: { segments: SegmentCube[] }) {
               </option>
             ))}
           </select>
-          <Button variant="secondary" onClick={() => draft.mutate(segmentId)} disabled={draft.isPending} data-testid="draft-rtb">
+          <Button variant="secondary" onClick={() => draft.mutate({ countryCode, segmentId })} disabled={draft.isPending} data-testid="draft-rtb">
             {draft.isPending ? "Drafting..." : "Draft RTB"}
           </Button>
         </div>

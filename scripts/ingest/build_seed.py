@@ -78,6 +78,7 @@ def build_segments(hierarchy: pd.DataFrame, market: pd.DataFrame, report: Report
                 "ecology": _text(row["Ecology Desc"]),
                 "megaSegmentId": SCOPE_MEGA_ID,
                 "megaSegmentDesc": SCOPE_MEGA_DESC,
+                "species": _text(row["f_specie"]),
                 "profile": profile_for(description),
                 "ownerId": owner_of(segment_id),
             }

@@ -1,4 +1,4 @@
-from sqlalchemy import JSON, Float, ForeignKey, Integer, UniqueConstraint
+from sqlalchemy import JSON, Float, ForeignKey, Integer, String, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.models.base import Base
@@ -6,9 +6,10 @@ from app.models.base import Base
 
 class MarketYear(Base):
     __tablename__ = "market_years"
-    __table_args__ = (UniqueConstraint("segment_id", "year"),)
+    __table_args__ = (UniqueConstraint("country_code", "segment_id", "year"),)
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    country_code: Mapped[str] = mapped_column(String(2), index=True)
     segment_id: Mapped[int] = mapped_column(ForeignKey("segments.id"), index=True)
     year: Mapped[int] = mapped_column(Integer)
     hectares: Mapped[float] = mapped_column(Float)

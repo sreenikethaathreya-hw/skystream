@@ -41,6 +41,32 @@ class JustificationInput:
     flag_direction: str | None
 
 
+@dataclass(frozen=True)
+class DecisionPolicy:
+    """Per-request rules: whether text may go to Jev's hosted API, and when to fall back to Gemini."""
+
+    allow_jev: bool = True
+    choice_threshold: float = 0.8
+    score_threshold: float = 0.4
+
+
+def decision_policy(app_settings) -> DecisionPolicy:
+    return DecisionPolicy(
+        allow_jev=app_settings.external_ai_allowed,
+        choice_threshold=app_settings.jev_confidence_threshold,
+        score_threshold=app_settings.jev_score_confidence_threshold,
+    )
+
+
+def default_policy() -> DecisionPolicy:
+    settings = get_settings()
+    return DecisionPolicy(
+        allow_jev=settings.external_ai_allowed or settings.is_demo,
+        choice_threshold=settings.jev_confidence_threshold,
+        score_threshold=settings.jev_score_confidence_threshold,
+    )
+
+
 @dataclass
 class _Decision:
     answers: dict
@@ -78,12 +104,15 @@ class DecisionProvider:
             "geminiModel": self._settings.gemini_model,
         }
 
-    async def _decide(self, kind: str, state: str, questions: dict, offline: Callable[[], dict]) -> _Decision:
+    async def _decide(
+        self, kind: str, state: str, questions: dict, offline: Callable[[], dict], policy: DecisionPolicy
+    ) -> _Decision:
         key = FixtureStore.key(kind, state, questions)
-        if key in self._cache:
-            return self._cache[key]
+        cache_key = f"{key}:{policy.allow_jev}"
+        if cache_key in self._cache:
+            return self._cache[cache_key]
         decision: _Decision | None = None
-        if self.mode in ("live", "record"):
+        if self.mode in ("live", "record") and policy.allow_jev:
             try:
                 started = time.perf_counter()
                 result = await self._jev.ask(state, questions)
@@ -104,10 +133,13 @@ class DecisionProvider:
                 decision = _Decision(recorded["answers"], "jev (recorded)", recorded.get("model"))
             else:
                 decision = _Decision(offline(), "offline decider", None)
-        self._cache[key] = decision
+        self._cache[cache_key] = decision
         return decision
 
-    async def structure_justification(self, data: JustificationInput) -> StructuredClaim:
+    async def structure_justification(
+        self, data: JustificationInput, policy: DecisionPolicy | None = None
+    ) -> StructuredClaim:
+        policy = policy or default_policy()
         started = time.perf_counter()
         questions = justification_questions(data.competitors, data.varieties, bool(data.flags))
         flag_lines = "\n".join(f"- {f.message}" for f in data.flags) or "- none"
@@ -115,7 +147,7 @@ class DecisionProvider:
             f"JUSTIFICATION: {data.sentence}\nSEGMENT: {data.segment_label}\n"
             f"ENTRY: {data.entry_summary}\nFLAGS:\n{flag_lines}\nMARKET NOTES: {data.market_notes}"
         )
-        claim_key = FixtureStore.key("claim", state, questions)
+        claim_key = f"{FixtureStore.key('claim', state, questions)}:{policy}"
         if claim_key in self._claims:
             return self._claims[claim_key].model_copy(update={"latency_ms": 0})
         decision = await self._decide(
@@ -125,6 +157,7 @@ class DecisionProvider:
             lambda: offline_decider.answer_justification(
                 data.sentence, questions, data.market_notes, data.flag_direction
             ),
+            policy,
         )
         answers = {k: dict(v) for k, v in decision.answers.items()}
         provider = decision.provider
@@ -132,12 +165,11 @@ class DecisionProvider:
         low = [
             f
             for f in GATED_CHOICES
-            if f in answers and (answers[f].get("confidence") or 0) < self._settings.jev_confidence_threshold
+            if f in answers and (answers[f].get("confidence") or 0) < policy.choice_threshold
         ] + [
             f
             for f in GATED_SCORES
-            if f in answers
-            and (answers[f].get("confidence") or 0) < self._settings.jev_score_confidence_threshold
+            if f in answers and (answers[f].get("confidence") or 0) < policy.score_threshold
         ]
         if low and self._gemini.available:
             try:
@@ -224,7 +256,7 @@ class DecisionProvider:
             return None
 
     async def verify_claim(
-        self, claim_text: str, evidence_text: str, numeric_support: bool
+        self, claim_text: str, evidence_text: str, numeric_support: bool, policy: DecisionPolicy | None = None
     ) -> tuple[float, str]:
         state = f"CLAIM: {claim_text}\nEVIDENCE: {evidence_text}"
         decision = await self._decide(
@@ -232,17 +264,25 @@ class DecisionProvider:
             state,
             verification_question(),
             lambda: offline_decider.answer_verification(numeric_support),
+            policy or default_policy(),
         )
         return float(decision.answers["supported"]["noul"]), decision.provider
 
     async def triage(
-        self, entry_text: str, has_critical: bool, has_warning: bool, weak_record: bool, specificity: float
+        self,
+        entry_text: str,
+        has_critical: bool,
+        has_warning: bool,
+        weak_record: bool,
+        specificity: float,
+        policy: DecisionPolicy | None = None,
     ) -> TriageDecision:
         decision = await self._decide(
             "triage",
             entry_text,
             triage_question(),
             lambda: offline_decider.answer_triage(has_critical, has_warning, weak_record, specificity),
+            policy or default_policy(),
         )
         answer = decision.answers["triage"]
         return TriageDecision(

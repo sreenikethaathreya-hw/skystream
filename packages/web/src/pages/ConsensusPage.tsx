@@ -8,7 +8,9 @@ import { ProbBar } from "@/components/ui/prob-bar";
 import { useToast } from "@/components/ui/toast";
 import { useBulkApprove, useDecide } from "@/hooks/mutations";
 import { useCube, useQueue } from "@/hooks/queries";
-import { useDemoUser } from "@/hooks/useDemoUser";
+import { useScope } from "@/hooks/useScope";
+import { useSession } from "@/hooks/useSession";
+import { api, scopeQuery } from "@/lib/api";
 import { fmtKs, monthName } from "@/lib/format";
 import type { QueueItem } from "@/lib/types";
 
@@ -61,12 +63,17 @@ function ExceptionCard({ item, canDecide }: { item: QueueItem; canDecide: boolea
 }
 
 export function ConsensusPage() {
-  const { data: queue, isLoading } = useQueue();
-  const { data: cube } = useCube();
-  const { user } = useDemoUser();
+  const { scope } = useScope();
+  const { data: queue, isLoading } = useQueue(scope);
+  const { data: cube } = useCube(scope);
+  const { user } = useSession();
   const bulk = useBulkApprove();
   const toast = useToast();
-  const isLead = user?.role === "lead";
+  const isLead = user?.role === "lead" || user?.role === "admin";
+  const exportCsv = () =>
+    api
+      .download(`/export/supply.csv?${scopeQuery(scope)}`, `supply-${scope?.countryCode}-${scope?.megaSegmentId}.csv`)
+      .catch((e: Error) => toast({ tone: "error", title: "Export failed", body: e.message }));
 
   return (
     <div className="grid gap-6 xl:grid-cols-[1fr_380px]">
@@ -79,7 +86,7 @@ export function ConsensusPage() {
               approved in bulk.
             </p>
           </div>
-          {!isLead && <Badge tone="warn">Switch to the consensus lead to decide</Badge>}
+          {!isLead && <Badge tone="warn">Only a consensus lead can decide</Badge>}
         </div>
         {isLoading && <p className="text-sm text-muted">Loading queue...</p>}
         <div className="flex flex-col gap-3" data-testid="exceptions">
@@ -113,7 +120,7 @@ export function ConsensusPage() {
               disabled={!isLead || !queue?.routine.length || bulk.isPending}
               data-testid="bulk-approve"
               onClick={() =>
-                bulk.mutate(undefined, {
+                bulk.mutate(scope, {
                   onSuccess: (r) => toast({ tone: "success", title: `Approved ${r.approved} routine entries` }),
                   onError: (e) => toast({ tone: "error", title: "Bulk approve failed", body: e.message }),
                 })
@@ -124,7 +131,7 @@ export function ConsensusPage() {
           </CardBody>
         </Card>
 
-        {cube && <RtbPanel segments={cube.segments} />}
+        {cube && <RtbPanel countryCode={cube.countryCode} segments={cube.segments} />}
 
         <Card>
           <CardHeader
@@ -133,11 +140,9 @@ export function ConsensusPage() {
             icon={<Download size={15} />}
           />
           <CardBody>
-            <a href="/api/export/supply.csv" download data-testid="export-csv">
-              <Button variant="secondary" className="w-full">
-                Export supply range CSV
-              </Button>
-            </a>
+            <Button variant="secondary" className="w-full" onClick={exportCsv} data-testid="export-csv">
+              Export supply range CSV
+            </Button>
           </CardBody>
         </Card>
       </aside>

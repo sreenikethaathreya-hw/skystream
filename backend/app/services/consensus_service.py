@@ -2,24 +2,25 @@ from fastapi import HTTPException
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.ai.decision_provider import get_decision_provider
-from app.constants.demo import DEMO_USERS, MONTH_NAMES, DemoUser
+from app.ai.decision_provider import decision_policy, get_decision_provider
+from app.constants.demo import MONTH_NAMES
 from app.models import Claim, CompetitorShare, DemandEntry, MarketYear, PlanYear, Segment
 from app.models.base import utcnow
 from app.schemas.api import EntryOut, QueueItemOut, QueueOut, RtbOut
-from app.services.context_service import get_clock, segment_label
-from app.services.entry_service import to_out
+from app.services.context_service import current_period, segment_label
+from app.services.entry_service import scope_filter, to_out
 from app.services.rep_service import is_weak, track_records
+from app.services.settings_service import get_app_settings
+from app.services.user_service import CurrentUser, user_names
 
 OPEN_STATUSES = ("submitted", "discuss", "challenged")
 DECISION_STATUS = {"approve": "approved", "discuss": "discuss", "challenge": "challenged"}
 
 
-def exception_reasons(entry: DemandEntry, claim: Claim | None, weak_rep: bool) -> list[str]:
+def exception_reasons(entry: DemandEntry, claim: Claim | None, weak_rep: bool, rep_name: str) -> list[str]:
     reasons = [f["message"] for f in entry.flags or []]
-    user = DEMO_USERS.get(entry.user_id)
     if weak_rep:
-        reasons.append(f"{user.name if user else entry.user_id} has a weak track record")
+        reasons.append(f"{rep_name} has a weak track record")
     if claim is not None:
         if claim.specificity is not None and claim.specificity < 1.5:
             reasons.append("Justification is vague")
@@ -32,33 +33,34 @@ def exception_reasons(entry: DemandEntry, claim: Claim | None, weak_rep: bool) -
     return reasons
 
 
-async def _open_entries(db: AsyncSession) -> list[tuple[DemandEntry, Claim | None]]:
-    rows = await db.execute(
+async def _open_entries(db: AsyncSession, country: str | None, mega: str | None):
+    query = (
         select(DemandEntry, Claim)
         .outerjoin(Claim, Claim.entry_id == DemandEntry.id)
         .where(DemandEntry.source == "live", DemandEntry.status.in_(OPEN_STATUSES))
-        .order_by(DemandEntry.segment_id, DemandEntry.month)
+        .order_by(DemandEntry.country_code, DemandEntry.segment_id, DemandEntry.month)
     )
-    return [(entry, claim) for entry, claim in rows.all()]
+    return [(entry, claim) for entry, claim in (await db.execute(scope_filter(query, country, mega))).all()]
 
 
-async def build_queue(db: AsyncSession) -> QueueOut:
-    await get_clock(db)
+async def build_queue(db: AsyncSession, country: str | None = None, mega: str | None = None) -> QueueOut:
     records = await track_records(db)
     segments = {s.id: s for s in (await db.execute(select(Segment))).scalars()}
+    names = await user_names(db)
+    policy = decision_policy(await get_app_settings(db))
     provider = get_decision_provider()
     exceptions: list[QueueItemOut] = []
     routine: list[EntryOut] = []
-    for entry, claim in await _open_entries(db):
+    for entry, claim in await _open_entries(db, country, mega):
         weak = is_weak(records.get(entry.user_id))
-        reasons = exception_reasons(entry, claim, weak)
+        reasons = exception_reasons(entry, claim, weak, names.get(entry.user_id, entry.user_id))
         if not reasons:
-            routine.append(to_out(entry, claim, segments))
+            routine.append(to_out(entry, claim, segments, names))
             continue
         if entry.triage is None:
             severities = {f["severity"] for f in entry.flags or []}
             text = (
-                f"{segment_label(segments[entry.segment_id])} {MONTH_NAMES[entry.month - 1]}: "
+                f"{entry.country_code} {segment_label(segments[entry.segment_id])} {MONTH_NAMES[entry.month - 1]}: "
                 f"{entry.value:,.0f} KS. Justification: {entry.justification or 'none'}. "
                 f"Concerns: {'; '.join(reasons)}"
             )
@@ -68,15 +70,18 @@ async def build_queue(db: AsyncSession) -> QueueOut:
                 has_warning="warning" in severities,
                 weak_record=weak,
                 specificity=claim.specificity if claim and claim.specificity is not None else 0.0,
+                policy=policy,
             )
             entry.triage = decision.model_dump(by_alias=True)
-        exceptions.append(QueueItemOut(entry=to_out(entry, claim, segments), reasons=reasons))
+        exceptions.append(QueueItemOut(entry=to_out(entry, claim, segments, names), reasons=reasons))
     await db.commit()
     return QueueOut(exceptions=exceptions, routine=routine)
 
 
-async def bulk_approve(db: AsyncSession, user: DemoUser) -> int:
-    queue = await build_queue(db)
+async def bulk_approve(
+    db: AsyncSession, user: CurrentUser, country: str | None = None, mega: str | None = None
+) -> int:
+    queue = await build_queue(db, country, mega)
     ids = [e.id for e in queue.routine]
     for entry_id in ids:
         entry = await db.get(DemandEntry, entry_id)
@@ -86,7 +91,7 @@ async def bulk_approve(db: AsyncSession, user: DemoUser) -> int:
     return len(ids)
 
 
-async def decide(db: AsyncSession, user: DemoUser, entry_id: str, decision: str) -> None:
+async def decide(db: AsyncSession, user: CurrentUser, entry_id: str, decision: str) -> None:
     entry = await db.get(DemandEntry, entry_id)
     if entry is None or entry.source != "live":
         raise HTTPException(status_code=404, detail="Entry not found")
@@ -96,25 +101,40 @@ async def decide(db: AsyncSession, user: DemoUser, entry_id: str, decision: str)
     await db.commit()
 
 
-async def draft_rtb(db: AsyncSession, segment_id: int) -> RtbOut:
-    clock = await get_clock(db)
+async def draft_rtb(db: AsyncSession, country_code: str, segment_id: int) -> RtbOut:
+    period = await current_period(db, country_code)
     segment = await db.get(Segment, segment_id)
     if segment is None:
-        raise HTTPException(status_code=404, detail="Segment not in the locked scope")
+        raise HTTPException(status_code=404, detail="Unknown micro-segment")
+    year = period.year
     market = {
         m.year: m
-        for m in (await db.execute(select(MarketYear).where(MarketYear.segment_id == segment_id))).scalars()
+        for m in (
+            await db.execute(
+                select(MarketYear).where(
+                    MarketYear.country_code == country_code, MarketYear.segment_id == segment_id
+                )
+            )
+        ).scalars()
     }
     plan = (
         await db.execute(
-            select(PlanYear).where(PlanYear.segment_id == segment_id, PlanYear.year == clock.year)
+            select(PlanYear).where(
+                PlanYear.country_code == country_code,
+                PlanYear.segment_id == segment_id,
+                PlanYear.year == year,
+            )
         )
     ).scalar_one_or_none()
     confirmed = (
         await db.execute(
             select(DemandEntry, Claim)
             .join(Claim, Claim.entry_id == DemandEntry.id)
-            .where(DemandEntry.segment_id == segment_id, Claim.resolution == "confirmed")
+            .where(
+                DemandEntry.country_code == country_code,
+                DemandEntry.segment_id == segment_id,
+                Claim.resolution == "confirmed",
+            )
             .order_by(DemandEntry.month.desc())
             .limit(5)
         )
@@ -123,7 +143,12 @@ async def draft_rtb(db: AsyncSession, segment_id: int) -> RtbOut:
         (
             await db.execute(
                 select(CompetitorShare)
-                .where(CompetitorShare.year == clock.year, CompetitorShare.competitor.notin_(["Others"]))
+                .where(
+                    CompetitorShare.country_code == country_code,
+                    CompetitorShare.mega_segment_id == segment.mega_segment_id,
+                    CompetitorShare.year == year,
+                    CompetitorShare.competitor.notin_(["Others"]),
+                )
                 .order_by(CompetitorShare.share_pct.desc())
                 .limit(4)
             )
@@ -131,16 +156,16 @@ async def draft_rtb(db: AsyncSession, segment_id: int) -> RtbOut:
         .scalars()
         .all()
     )
+    names = await user_names(db)
 
-    now, before = market.get(clock.year), market.get(clock.year - 1)
+    now, before = market.get(year), market.get(year - 1)
     area_trend = (
         (now.hectares - before.hectares) / before.hectares if now and before and before.hectares else 0.0
     )
     share = plan.qty_ks / now.qty_ks if plan and now and now.qty_ks else 0.0
-    label = segment_label(segment)
+    label = f"{country_code} {segment_label(segment)}"
     evidence = [
-        f"{MONTH_NAMES[e.month - 1]} ({DEMO_USERS[e.user_id].name if e.user_id in DEMO_USERS else e.user_id}): "
-        f"{e.justification}"
+        f"{MONTH_NAMES[e.month - 1]} ({names.get(e.user_id, e.user_id)}): {e.justification}"
         for e, _ in confirmed
     ]
     comp_line = ", ".join(
@@ -151,12 +176,12 @@ async def draft_rtb(db: AsyncSession, segment_id: int) -> RtbOut:
     fallback = "\n".join(
         [
             f"Reasons to believe: {label}",
-            f"- Market: {now.hectares:,.0f} ha in {clock.year} ({area_trend:+.1%} vs {clock.year - 1}); "
+            f"- Market: {now.hectares:,.0f} ha in {year} ({area_trend:+.1%} vs {year - 1}); "
             f"Syngenta plan {plan.qty_ks if plan else 0:,.0f} KS, {share:.1%} volume share."
             if now
             else "- Market: n/a",
             f"- Confirmed field evidence ({len(evidence)}): " + ("; ".join(evidence[:3]) or "none yet"),
-            f"- Competitive context: {comp_line}.",
+            f"- Competitive context: {comp_line or 'no competitor data'}.",
             f"- Watch: {dynamics}" if dynamics else "- Watch: no market dynamics note",
         ]
     )

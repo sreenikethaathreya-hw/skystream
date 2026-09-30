@@ -11,7 +11,8 @@ class DemandEntry(Base):
     __tablename__ = "demand_entries"
 
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
-    user_id: Mapped[str] = mapped_column(String(40), index=True)
+    user_id: Mapped[str] = mapped_column(String(200), index=True)
+    country_code: Mapped[str] = mapped_column(String(2), index=True, server_default="ES")
     segment_id: Mapped[int] = mapped_column(ForeignKey("segments.id"), index=True)
     year: Mapped[int] = mapped_column(Integer)
     month: Mapped[int] = mapped_column(Integer)
@@ -25,6 +26,6 @@ class DemandEntry(Base):
     status: Mapped[str] = mapped_column(String(20), default="submitted", index=True)
     source: Mapped[str] = mapped_column(String(20), default="live")
     triage: Mapped[dict | None] = mapped_column(JSON)
-    reviewed_by: Mapped[str | None] = mapped_column(String(40))
+    reviewed_by: Mapped[str | None] = mapped_column(String(200))
     reviewed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)

@@ -5,11 +5,13 @@ from app.ai.decision_provider import get_decision_provider
 from app.config import get_settings
 from app.constants.demo import DEMO_USERS
 from app.database import get_db
-from app.schemas.api import ClockOut, MetaOut, UserOut
-from app.schemas.demand_math import Thresholds
-from app.services.context_service import get_clock
-from app.services.export_service import ingest_report
-from app.services.seed_service import read_seed
+from app.middleware.auth import get_current_user
+from app.models import DemoClock
+from app.schemas.api import ClockOut, ConfigOut, FirebaseConfigOut, MetaOut, ScopeOptionOut, UserOut
+from app.services import export_service
+from app.services.context_service import scope_options
+from app.services.settings_service import get_app_settings
+from app.services.user_service import CurrentUser, touch
 
 router = APIRouter(prefix="/api", tags=["meta"])
 
@@ -19,22 +21,45 @@ async def health() -> dict[str, str]:
     return {"status": "ok"}
 
 
+@router.get("/config", response_model=ConfigOut)
+async def config() -> ConfigOut:
+    """Public: tells the SPA which mode it is in and how to start Firebase sign-in."""
+    settings = get_settings()
+    firebase = None
+    if not settings.is_demo and settings.firebase_web_api_key and settings.firebase_project_id:
+        firebase = FirebaseConfigOut(
+            api_key=settings.firebase_web_api_key,
+            auth_domain=settings.firebase_auth_domain or f"{settings.firebase_project_id}.firebaseapp.com",
+            project_id=settings.firebase_project_id,
+        )
+    return ConfigOut(data_mode=settings.data_mode, firebase=firebase)
+
+
 @router.get("/meta", response_model=MetaOut)
-async def meta(db: AsyncSession = Depends(get_db)) -> MetaOut:
-    clock = await get_clock(db)
-    scope = read_seed(get_settings().seed_dir, "meta")
+async def meta(db: AsyncSession = Depends(get_db), user: CurrentUser = Depends(get_current_user)) -> MetaOut:
+    settings = get_settings()
+    app_settings = await get_app_settings(db)
+    clock = await db.get(DemoClock, 1) if settings.is_demo else None
+    if not settings.is_demo:
+        await touch(db, user.id)
     return MetaOut(
-        country=scope["country"],
-        species=scope["species"],
-        mega_segment_id=scope["megaSegmentId"],
-        mega_segment_desc=scope["megaSegmentDesc"],
-        users=[UserOut.model_validate(u) for u in DEMO_USERS.values()],
-        clock=ClockOut(year=clock.year, month=clock.month),
-        ai=get_decision_provider().status(),
-        thresholds=Thresholds(),
+        data_mode=settings.data_mode,
+        me=UserOut(id=user.id, name=user.name, role=user.role, title=user.title),
+        users=[UserOut.model_validate(u) for u in DEMO_USERS.values()] if settings.is_demo else [],
+        clock=ClockOut(year=clock.year, month=clock.month) if clock else None,
+        ai={**get_decision_provider().status(), "externalAiAllowed": app_settings.external_ai_allowed},
+        thresholds=app_settings.thresholds,
+        currency=app_settings.currency,
     )
 
 
+@router.get("/scopes", response_model=list[ScopeOptionOut])
+async def scopes(db: AsyncSession = Depends(get_db), user: CurrentUser = Depends(get_current_user)):
+    return await scope_options(db, user)
+
+
 @router.get("/data-quality")
-async def data_quality() -> dict:
-    return ingest_report()
+async def data_quality(
+    db: AsyncSession = Depends(get_db), _: CurrentUser = Depends(get_current_user)
+) -> dict:
+    return await export_service.data_quality(db)

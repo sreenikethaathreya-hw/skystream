@@ -60,6 +60,14 @@ def build_mega(ref: Reference, year: int) -> MegaContext:
     )
 
 
+def last_year_basis(ref: Reference, segment_id: int, year: int) -> str:
+    """'actuals' when all 12 months of last year's actuals are loaded, else 'plan' (or 'none')."""
+    rows = _monthly(ref.monthly_actuals, year - 1).get(segment_id)
+    if rows and all(r is not None for r in rows):
+        return "actuals"
+    return "plan" if (segment_id, year - 1) in _index(ref.plan) else "none"
+
+
 def build_segment_context(
     ref: Reference,
     segment_id: int,
@@ -75,7 +83,11 @@ def build_segment_context(
     last = plan.get((segment_id, year - 1))
     monthly_plan = _monthly(ref.monthly_plan, year)[segment_id]
     actual_rows = _monthly(ref.monthly_actuals, year)[segment_id]
-    last_rows = _monthly(ref.monthly_actuals, year - 1)[segment_id]
+    last_actuals = _monthly(ref.monthly_actuals, year - 1)[segment_id]
+    use_actuals = last_year_basis(ref, segment_id, year) == "actuals"
+    last_rows = last_actuals if use_actuals else _monthly(ref.monthly_plan, year - 1)[segment_id]
+    last_qty = sum(r.qty_ks for r in last_actuals) if use_actuals else (last.qty_ks if last else 0.0)
+    last_value = sum(r.value_eur for r in last_actuals) if use_actuals else (last.value_eur if last else 0.0)
 
     revealed = [r if r is not None and r.month < clock_month else None for r in actual_rows]
     years = sorted({r.year for r in ref.market if r.segment_id == segment_id})
@@ -91,8 +103,8 @@ def build_segment_context(
         plan_qty_ks=p.qty_ks if p else 0.0,
         plan_value_eur=p.value_eur if p else 0.0,
         plan_net_price=p.net_price if p else 0.0,
-        last_year_qty_ks=last.qty_ks if last else 0.0,
-        last_year_value_eur=last.value_eur if last else 0.0,
+        last_year_qty_ks=last_qty,
+        last_year_value_eur=last_value,
         market_history=[
             MarketPoint(
                 year=y,
