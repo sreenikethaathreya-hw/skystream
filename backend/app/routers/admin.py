@@ -3,7 +3,7 @@ from fastapi.responses import PlainTextResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.database import get_db
-from app.ingest.templates import TEMPLATES, template_csv
+from app.ingest.template_files import TEMPLATES, template_csv
 from app.middleware.auth import get_current_user, require_role
 from app.schemas.api import BatchOut, UploadKindOut, UserAdminIn, UserAdminOut
 from app.services import upload_service, user_service

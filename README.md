@@ -43,7 +43,10 @@ same countries replaces it. Upload in this order:
 | 7 | Grower potential (CRM export) | as exported | `Country Name`, `Crop Local`, `Hecatres Info.` | Optional. Rows above the hectare cap (default 500) are capped. |
 | 8 | Seasonality | template | `country_code`, `micro_segment_id` or `mega_segment_id`, `month`, `weight` | Optional. Otherwise the plan is split by the last two complete years of actuals, else flat. |
 
-Countries can be ISO codes or names (`Spain`, `SPAIN`, `ES`). Templates download from the Data screen.
+Countries can be ISO codes or names (`Spain`, `SPAIN`, `ES`). **Every kind has a downloadable CSV template** on
+the Data screen (or `GET /api/admin/templates/<kind>.csv`). The export-based templates use the exact i-MAPS / CRM
+column names, including the optional ones, so the real export can be uploaded unchanged or the template filled
+in by hand. Each template's example rows pass its own validator (`backend/tests/test_ingest_templates.py`).
 
 Reps enter, per micro-segment and open month: demand in thousand seeds, a low/high range, an optional net price,
 and a justification of up to 600 characters (required when a flag fires). Admins set the planning year,

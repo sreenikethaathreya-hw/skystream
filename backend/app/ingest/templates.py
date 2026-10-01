@@ -1,7 +1,5 @@
-"""Validators and downloadable templates for the files that do not exist in i-MAPS today."""
+"""Validators for the files that do not exist in i-MAPS today (templates live in template_files.py)."""
 
-import csv
-import io
 import re
 from collections import defaultdict
 
@@ -13,37 +11,6 @@ from app.ingest.report import ImportReport
 
 ROLES = {"admin", "lead", "rep"}
 EMAIL = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
-
-TEMPLATES: dict[str, tuple[list[str], list[list[str]]]] = {
-    "actuals": (
-        ["country_code", "micro_segment_id", "year", "month", "sales_qty_ks", "sales_value_eur"],
-        [["ES", "2482", "2026", "9", "13250", "5994000"], ["ES", "2432", "2026", "9", "1180", ""]],
-    ),
-    "assignments": (
-        ["email", "name", "role", "country_code", "scope_type", "scope_ids"],
-        [
-            ["ana.rep@example.com", "Ana Rep", "rep", "ES", "micro", "2481;2482;2483;2484"],
-            ["lead@example.com", "Consensus Lead", "lead", "ES", "mega", "SP01"],
-            ["admin@example.com", "Data Admin", "admin", "", "", ""],
-        ],
-    ),
-    "seasonality": (
-        ["country_code", "micro_segment_id", "mega_segment_id", "month", "weight"],
-        [
-            ["ES", "", "SP01", str(m), w]
-            for m, w in zip(range(1, 13), ["2", "2", "2", "3", "6", "12", "18", "22", "18", "8", "4", "3"])
-        ],
-    ),
-}
-
-
-def template_csv(kind: str) -> str:
-    header, rows = TEMPLATES[kind]
-    buffer = io.StringIO()
-    writer = csv.writer(buffer)
-    writer.writerow(header)
-    writer.writerows(rows)
-    return buffer.getvalue()
 
 
 def validate_actuals(frame: pd.DataFrame, ctx: ImportContext) -> tuple[list[dict], ImportReport]:

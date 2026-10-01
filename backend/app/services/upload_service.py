@@ -11,6 +11,7 @@ from app.ingest.lookups import load_context
 from app.ingest.reader import read_upload
 from app.ingest.registry import UPLOAD_KINDS
 from app.ingest.report import ImportFailure
+from app.ingest.template_files import TEMPLATES
 from app.models import DemoClock, UploadBatch
 from app.models.base import utcnow
 from app.schemas.api import BatchOut, UploadKindOut
@@ -42,7 +43,7 @@ async def list_kinds(db: AsyncSession) -> list[UploadKindOut]:
             label=k.label,
             source=k.source,
             required=k.required,
-            template=k.template,
+            template=k.kind in TEMPLATES,
             last_committed_at=latest.get(k.kind),
         )
         for k in UPLOAD_KINDS.values()
