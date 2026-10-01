@@ -1,9 +1,11 @@
 import { fmtNum, monthName } from "@/lib/format";
+import { USD, type Money } from "@/lib/money";
 
 export interface DraftNumbers {
   value: number;
   lowPct: number;
   highPct: number;
+  /** Net price in USD per KS; the input shows and accepts the display currency. */
   price: number | null;
 }
 
@@ -13,20 +15,28 @@ export function EntryPanel({
   planNetPrice,
   draft,
   onChange,
+  money = USD,
+  committedInIbp,
 }: {
   month: number;
   planMonth: number;
   planNetPrice: number;
   draft: DraftNumbers;
   onChange: (next: DraftNumbers) => void;
+  money?: Money;
+  /** IBP mode: the number box becomes a what-if; the committed number lives in IBP. */
+  committedInIbp?: number | null;
 }) {
+  const shownPrice = draft.price == null ? "" : Number(money.fromUsd(draft.price).toFixed(2));
   const low = draft.value * (1 - draft.lowPct);
   const high = draft.value * (1 + draft.highPct);
   return (
     <div className="grid gap-4 md:grid-cols-[1.2fr_1fr_0.8fr]">
       <label className="flex flex-col gap-1">
         <span className="text-xs font-medium text-muted">
-          {monthName(month)} demand (thousand seeds) · plan {fmtNum(planMonth)}
+          {committedInIbp === undefined
+            ? `${monthName(month)} demand (thousand seeds) · plan ${fmtNum(planMonth)}`
+            : `What if (not submitted) · ${committedInIbp === null ? "no IBP number yet" : `IBP ${fmtNum(committedInIbp)}`} · plan ${fmtNum(planMonth)}`}
         </span>
         <input
           type="number"
@@ -60,14 +70,16 @@ export function EntryPanel({
       </div>
 
       <label className="flex flex-col gap-1">
-        <span className="text-xs font-medium text-muted">Net price EUR/KS (optional)</span>
+        <span className="text-xs font-medium text-muted">Net price {money.code}/KS (optional)</span>
         <input
           type="number"
           min={0}
-          placeholder={`plan ${fmtNum(planNetPrice)}`}
+          placeholder={`plan ${fmtNum(money.fromUsd(planNetPrice))}`}
           data-testid="price-input"
-          value={draft.price ?? ""}
-          onChange={(e) => onChange({ ...draft, price: e.target.value === "" ? null : Number(e.target.value) })}
+          value={shownPrice}
+          onChange={(e) =>
+            onChange({ ...draft, price: e.target.value === "" ? null : money.toUsd(Number(e.target.value)) })
+          }
           className="tabular h-14 rounded-xl border border-line bg-surface px-4 text-lg outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
         />
       </label>

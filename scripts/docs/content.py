@@ -168,14 +168,14 @@ def scope(doc, segments: list, competitors: list) -> None:
     doc.h("3. Scope, constraints and the locked segment")
     doc.h("3.1 Why Spain > Sweet Pepper > Blocky PGH", 2)
     doc.bullets([
-        "Sweet pepper is Syngenta's largest line in the Spain sample (about EUR 28.8M of 2026 plan sales before anonymization).",
+        "Sweet pepper is Syngenta's largest line in the Spain sample (about USD 28.8M of 2026 plan sales before anonymization).",
         "Blocky PGH is the mega-segment where Syngenta leads (about 31% value share in the competitor file, reconciled exactly by the app's own calculation).",
         "It has the richest supporting material: rep comments, six market-note fields, a full competitor split, CRM grower rows with Syngenta varieties, and a clear market driver (the T. parvispinus pest).",
         "The market and sales data are national (no province split), so the locked geography is Spain; Almeria appears only as context in comments and grower regions.",
     ])
     doc.h("3.2 The nine active micro-segments (2026, anonymized plan)", 2)
     doc.table(
-        ["ID", "Cycle / colour", "Owner", "Planted ha", "Area vs 2025", "Density (k/ha)", "Market KS", "Ex-seed EUR/KS",
+        ["ID", "Cycle / colour", "Owner", "Planted ha", "Area vs 2025", "Density (k/ha)", "Market KS", "Ex-seed USD/KS",
          "Plan KS", "Vol. share"],
         segments, size=7.5, caption="Locked micro-segments (market from MV360 Market, plan from MV360 Sales, anonymized)",
     )
@@ -232,7 +232,7 @@ def walkthrough(doc, shots: Path, ledger_shot: Path) -> None:
           "for closed months) and Demand (latest submitted entry, or the live draft for the selected month). Closed "
           "months are greyed and cannot be selected; the selected open month is highlighted.")
     doc.p("**Entry panel.** The demand number in thousand seeds (KS), a two-slider confidence range (low and high "
-          "percentages, default -8% / +8%) and an optional net price in EUR/KS (defaults to the plan net price).")
+          "percentages, default -8% / +8%) and an optional net price in the display currency per KS (stored as USD) (defaults to the plan net price).")
     doc.p("**Live tiles** (recomputed on every keystroke, no server call):")
     doc.bullets([
         "**Market share**: full-year volume share with low-high range, change vs plan and vs last year, value share, Blocky PGH mega-segment value share and the three competitors that lose most when Syngenta gains.",
@@ -388,7 +388,7 @@ def calculations(doc) -> None:
         widths=[3.6, 8.4, 5.0], size=8, caption="Formulas (identical in demand_math.py and demandMath.ts)",
     )
     doc.p("Market Qty (KS) equals Market Planted Area (HA) x Market Avg Plant Density on all 994 market rows that carry "
-          "both values, which is why hectares and seed quantity can be converted in both directions. Competitor EUR "
+          "both values, which is why hectares and seed quantity can be converted in both directions. Competitor USD "
           "values equal market quantity x ex-seed price x share (median ratio 1.000 across 73 mega-segments), which "
           "is why value share is computed against quantity x ex-seed price.")
 
@@ -579,7 +579,7 @@ def data_elements(doc, figures: dict[str, Path]) -> None:
          "market_years.qty_ks -> volume share, share range, share_over_100, share_above_history, historical max share."],
         ["Market Avg Plant Density", "Converts seed quantity (thousand seeds) to hectares.",
          "market_years.density -> implied hectares, mega implied hectares, grower-potential flag."],
-        ["Market AvgPrice (ExSeed)", "Seed price in the market; market value = quantity x ex-seed price reconciles the competitor EUR values.",
+        ["Market AvgPrice (ExSeed)", "Seed price in the market; market value = quantity x ex-seed price reconciles the competitor USD values.",
          "market_years.price_exseed -> value share, mega value share, competitor re-split."],
         ["Market AvgPrice (Farmgate)", "Grower-level price; kept for context and future margin views.", "market_years.price_farmgate -> stored, not used in the math."],
         ["CompetitorPOV", "Qualitative intelligence on who leads the segment.", "market_years.notes.competitors -> Jev state (consistency check), capture context."],
@@ -602,7 +602,7 @@ def data_elements(doc, figures: dict[str, Path]) -> None:
         ["Sales Qty", "Syngenta volume in thousand seeds - the number the rep is re-estimating.",
          "Anonymized -> plan_years.qty_ks -> plan FY, share numerator, last-year volume, monthly_plan and monthly_actuals split, track record baselines."],
         ["Sales Value", "Syngenta revenue; together with quantity gives net price.",
-         "Anonymized -> plan_years.value_eur and net_price = value / qty -> FY value, value share, revenue split, price flags, mega Syngenta value."],
+         "Anonymized -> plan_years.value_usd and net_price = value / qty -> FY value, value share, revenue split, price flags, mega Syngenta value."],
         ["FPI Qty", "New-launch quantity growing towards 2030; treatment in share is an open SME question.", "plan_years.fpi_qty_ks -> stored for context."],
         ["Qualitative Comments", "The rep's own reasoning in the plan (e.g. '80% of this microsegment', Sur Seeds / Limagrain leadership).",
          "plan_years.comment -> capture header quote, Jev state ('rep comment'), RTB context."],
@@ -616,8 +616,8 @@ def data_elements(doc, figures: dict[str, Path]) -> None:
          "competitor_shares.competitor -> share tile competitor split, Jev competitor options, RTB competitive context."],
         ["2024% ... 2030%", "Share per competitor per year (sums to 100 per mega-segment in 80 of 87 cases).",
          "Syngenta share recomputed from anonymized sales; other competitors rescaled to 100 - Syngenta -> competitor_shares.share_pct -> re-split on every keystroke."],
-        ["2024 ... 2030 (EUR)", "Validated that value = market qty x ex-seed price x share (median ratio 1.000).",
-         "Recomputed from market value x share -> competitor_shares.value_eur."],
+        ["2024 ... 2030 (USD)", "Validated that value = market qty x ex-seed price x share (median ratio 1.000).",
+         "Recomputed from market value x share -> competitor_shares.value_usd."],
         ["CompetitorTrend", "Growing / Declining / No change signal.", "competitor_shares.trend -> RTB competitive context, cube."],
     ])
 
@@ -746,10 +746,10 @@ def data_model(doc) -> None:
         [
             ["segments", "id (micro-segment), description, cycle, color, ecology, mega_segment_id, profile, owner_id", "9 locked micro-segments"],
             ["market_years", "segment_id, year, hectares, qty_ks, density, price_exseed, price_farmgate, notes (JSON)", "63 rows"],
-            ["plan_years", "segment_id, year, qty_ks, value_eur, net_price, fpi_qty_ks, comment", "63 rows"],
-            ["competitor_shares", "mega_segment_id, competitor, year, share_pct, value_eur, trend", "9 players x 7 years"],
+            ["plan_years", "segment_id, year, qty_ks, value_usd, net_price, fpi_qty_ks, comment", "63 rows"],
+            ["competitor_shares", "mega_segment_id, competitor, year, share_pct, value_usd, trend", "9 players x 7 years"],
             ["monthly_plan", "segment_id, year, month, qty_ks", "2025-2026"],
-            ["monthly_actuals", "segment_id, year, month, qty_ks, value_eur", "2025-2026 (2026 revealed by clock)"],
+            ["monthly_actuals", "segment_id, year, month, qty_ks, value_usd", "2025-2026 (2026 revealed by clock)"],
             ["grower_potential", "variety, owner, hectares, density, region", "522 capped rows"],
             ["demand_entries", "id, user_id, segment_id, year, month, value, low, high, price, justification, impact, flags, status, source, triage, reviewed_by/at, created_at", "Ledger"],
             ["claims", "entry_id, driver, direction, magnitude, competitor, variety, evidence_source, verifiable, consistent_with_notes, specificity, addresses_flags, summary, decisions, provider, signal, check_year/month, resolution, resolution_detail, resolved_at", "One per justified entry"],
@@ -876,7 +876,7 @@ def real_mode(doc) -> None:
              "IDs recovered from descriptions; duplicates summed; net price = value / qty; rebuilds the monthly plan"],
             ["4", "Competitor shares", "as exported", "Forecast Customer Country_D, Mega_Segment_Id, CompetitorDesc, YYYY%",
              "Replaces country/mega/year; warns when shares do not sum to 100"],
-            ["5", "Monthly actuals", "template", "country_code, micro_segment_id, year, month, sales_qty_ks (+ optional sales_value_eur)",
+            ["5", "Monthly actuals", "template", "country_code, micro_segment_id, year, month, sales_qty_ks (+ optional sales_value_usd)",
              "Closes those months, resolves due claims, recomputes track records"],
             ["6", "Rep assignments", "template", "email, name, role, country_code, scope_type, scope_ids", "Upserts users and replaces their scopes"],
             ["7", "Grower potential (optional)", "as exported", "Country Name, Crop Local, Hecatres Info.", "Caps rows at the hectare cap; feeds the ceiling flag and variety options"],

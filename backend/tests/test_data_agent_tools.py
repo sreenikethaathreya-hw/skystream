@@ -34,13 +34,23 @@ async def test_every_tool_reports_a_status(seeded: None) -> None:
         await tools.list_lead_rules(ctx),
         await tools.list_open_exceptions(ctx),
         await tools.sum_segment_figures("plan_ks", [2482, 2484], [10, 11], ctx),
+        await tools.get_ibp_forecast(2482, ctx),
     ]
     assert all(r["status"] == "success" for r in results), [r for r in results if r["status"] != "success"]
+
+
+async def test_ibp_forecast_tool_shows_varieties_and_reference_status(seeded: None) -> None:
+    result = await tools.get_ibp_forecast(2432, _ctx())
+    october = [r for r in result["rows"] if r[0] == "Oct"]
+    assert {r[1] for r in october} == {"Bokken", "Kaamos"}
+    assert result["month_totals_ks"]["Oct"] == 7090
+    assert all(r[4] == "reference only" for r in result["rows"])
 
 
 async def test_out_of_scope_segment_is_refused_without_figures(seeded: None) -> None:
     ctx = _ctx(visible=[2482])
     for result in (
+        await tools.get_ibp_forecast(2432, ctx),
         await tools.get_segment_baseline(2432, 10, ctx),
         await tools.get_monthly_series(2432, ctx),
         await tools.list_demand_entries(2432, 0, "", "", ctx),

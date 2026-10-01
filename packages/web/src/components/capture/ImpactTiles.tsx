@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { AlertTriangle, CheckCircle2, Map as MapIcon, PieChart, Target } from "lucide-react";
 import { Card, CardBody, CardHeader } from "@/components/ui/card";
 import { fmtKs, fmtNum, fmtPct, fmtPts } from "@/lib/format";
@@ -112,7 +113,7 @@ export function HectaresTile({ impact }: { impact: Impact }) {
   );
 }
 
-export function FlagsTile({ flags }: { flags: Flag[] }) {
+export function FlagsTile({ flags, ask }: { flags: Flag[]; ask?: (flag: Flag) => ReactNode }) {
   return (
     <Card data-testid="tile-flags" className={cn(flags.some((f) => f.severity === "critical") && "border-crit-500/50")}>
       <CardHeader
@@ -132,6 +133,7 @@ export function FlagsTile({ flags }: { flags: Flag[] }) {
             )}
           >
             {f.message}
+            {ask && <div className="mt-1 flex justify-end">{ask(f)}</div>}
           </div>
         ))}
       </CardBody>

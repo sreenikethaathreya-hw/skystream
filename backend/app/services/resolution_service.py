@@ -9,17 +9,28 @@ from app.models import Claim, DemandEntry, MonthlyActual, MonthlyPlan, Segment
 from app.models.base import utcnow
 from app.schemas.api import ResolvedClaimOut
 from app.services.context_service import segment_label
+from app.services.settings_service import get_app_settings
 from app.services.user_service import user_names
 
 NEUTRAL_BAND = 0.05
 
 
-def numeric_support(direction: str, actual: float, plan: float) -> bool:
+def numeric_support(
+    direction: str,
+    actual: float,
+    plan: float,
+    rep_value: float | None = None,
+    baseline: str = "plan",
+    tolerance: float = NEUTRAL_BAND,
+) -> bool:
+    """'plan': the actual moved the way the rep said versus plan. 'rep_number': the rep's own number held."""
+    if baseline == "rep_number" and rep_value:
+        return abs(actual - rep_value) / rep_value <= tolerance
     if direction == "up":
         return actual >= plan
     if direction == "down":
         return actual < plan
-    return plan > 0 and abs(actual - plan) / plan <= NEUTRAL_BAND
+    return plan > 0 and abs(actual - plan) / plan <= tolerance
 
 
 def resolve(supported: bool, probability: float) -> str:
@@ -64,14 +75,20 @@ async def resolve_month(
 
     provider = get_decision_provider()
     names = await user_names(db)
+    settings = await get_app_settings(db)
+    tolerance = settings.claim_neutral_tolerance_pct / 100
     resolved: list[ResolvedClaimOut] = []
     for entry, claim, actual, plan, segment in rows:
-        supported = numeric_support(claim.direction, actual.qty_ks, plan.qty_ks)
+        supported = numeric_support(
+            claim.direction, actual.qty_ks, plan.qty_ks, entry.value, settings.claim_baseline, tolerance
+        )
         change = (actual.qty_ks - plan.qty_ks) / plan.qty_ks if plan.qty_ks else 0.0
         evidence = (
             f"{MONTH_NAMES[month - 1]} actual sales {actual.qty_ks:,.0f} KS vs plan {plan.qty_ks:,.0f} KS "
             f"({change:+.1%}). Rep entered {entry.value:,.0f} KS (range {entry.low:,.0f}-{entry.high:,.0f})."
         )
+        if settings.claim_baseline == "rep_number":
+            evidence += f" Scored against the rep's own number within {tolerance:.0%}."
         claim_text = claim.summary or entry.justification or f"Demand {claim.direction} vs plan"
         probability, used = await provider.verify_claim(claim_text, evidence, supported, policy)
         in_range = entry.low <= actual.qty_ks <= entry.high
@@ -84,6 +101,7 @@ async def resolve_month(
             "errorPct": (entry.value - actual.qty_ks) / actual.qty_ks if actual.qty_ks else None,
             "supportedProbability": probability,
             "numericSupport": supported,
+            "baseline": settings.claim_baseline,
             "provider": used,
             "evidence": evidence,
         }

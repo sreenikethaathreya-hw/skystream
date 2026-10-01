@@ -5,11 +5,17 @@ from sqlalchemy import delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import (
+    AppSetting,
+    ChatAction,
     Claim,
     CompetitorShare,
+    Country,
     DemandEntry,
     DemoClock,
+    EntryNote,
+    FxRate,
     GrowerPotential,
+    IbpForecast,
     LeadRule,
     MarketYear,
     MonthlyActual,
@@ -18,6 +24,7 @@ from app.models import (
     RepTrackRecord,
     Seasonality,
     Segment,
+    VarietyMap,
 )
 from app.services.cube_builder import Reference
 
@@ -80,7 +87,7 @@ def reference_from_seed(seed_dir: Path) -> Reference:
                 segment_id=p["segmentId"],
                 year=p["year"],
                 qty_ks=p["qtyKs"],
-                value_eur=p["valueEur"],
+                value_usd=p["valueUsd"],
                 net_price=p["netPrice"],
                 fpi_qty_ks=p["fpiQtyKs"],
                 comment=p["comment"],
@@ -105,7 +112,7 @@ def reference_from_seed(seed_dir: Path) -> Reference:
                 year=r["year"],
                 month=r["month"],
                 qty_ks=r["qtyKs"],
-                value_eur=r["valueEur"],
+                value_usd=r["valueUsd"],
             )
             for r in rows("monthly_actuals")
         ],
@@ -116,7 +123,7 @@ def reference_from_seed(seed_dir: Path) -> Reference:
                 competitor=c["competitor"],
                 year=c["year"],
                 share_pct=c["sharePct"],
-                value_eur=c["valueEur"],
+                value_usd=c["valueUsd"],
                 trend=c["trend"],
             )
             for c in rows("competitor_shares")
@@ -175,12 +182,18 @@ async def seed_database(db: AsyncSession, seed_dir: Path) -> None:
     from app.services.track_record_service import recompute_track_records
 
     for model in (
+        AppSetting,
         Seasonality,
+        ChatAction,
+        EntryNote,
         LeadRule,
         Claim,
         DemandEntry,
         RepTrackRecord,
         DemoClock,
+        FxRate,
+        IbpForecast,
+        VarietyMap,
         MonthlyActual,
         MonthlyPlan,
         PlanYear,
@@ -199,6 +212,35 @@ async def seed_database(db: AsyncSession, seed_dir: Path) -> None:
 
     meta = read_seed(seed_dir, "meta")
     db.add(DemoClock(id=1, year=meta["currentYear"], month=meta["clockStartMonth"]))
+    if await db.get(Country, DEMO_COUNTRY) is None:
+        db.add(Country(code=DEMO_COUNTRY, name=meta["country"], aliases=[meta["country"].upper()], currency="EUR"))
+    # Synthetic IBP snapshot: reference only until an admin switches the demand source to IBP.
+    if (seed_dir / "ibp_forecasts.json").exists():
+        db.add_all(
+            IbpForecast(
+                country_code=DEMO_COUNTRY,
+                segment_id=f["segmentId"],
+                variety=f["variety"],
+                year=f["year"],
+                month=f["month"],
+                snapshot=f["snapshot"],
+                qty_ks=f["qtyKs"],
+                value_usd=f.get("valueUsd"),
+                planner_id=f.get("plannerId"),
+            )
+            for f in read_seed(seed_dir, "ibp_forecasts")
+        )
+    # Rounded demo rates, not the finance file (that one is internal and stays in data/raw/).
+    if (seed_dir / "budget_rates.json").exists():
+        db.add_all(
+            FxRate(
+                budget_year=r["budgetYear"],
+                currency=r["currency"],
+                currency_name=r["currencyName"],
+                per_usd=r["perUsd"],
+            )
+            for r in read_seed(seed_dir, "budget_rates")
+        )
 
     for entry, claim in _history_rows(seed_dir):
         db.add(entry)

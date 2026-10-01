@@ -10,42 +10,48 @@
    "density": 25.0,
    "priceExseed": 382.0,
    "planQtyKs": 6807.0,
-   "planValueEur": 2627564.62,
+   "planValueUsd": 2627564.62,
    "planNetPrice": 386.01,
    "lastYearQtyKs": 8427.0,
-   "lastYearValueEur": 3321025.41,
+   "lastYearValueUsd": 3321025.41,
    "marketHistory": [
     {
      "year": 2024,
      "hectares": 833.96,
-     "qtyKs": 20849.0
+     "qtyKs": 20849.0,
+     "basis": null
     },
     {
      "year": 2025,
      "hectares": 825.62,
-     "qtyKs": 20640.5
+     "qtyKs": 20640.5,
+     "basis": null
     },
     {
      "year": 2026,
      "hectares": 1347.0,
-     "qtyKs": 33675.0
+     "qtyKs": 33675.0,
+     "basis": null
     }
    ],
    "planQtyHistory": [
     {
      "year": 2024,
      "hectares": 0.0,
-     "qtyKs": 8319.0
+     "qtyKs": 8319.0,
+     "basis": "actual"
     },
     {
      "year": 2025,
      "hectares": 0.0,
-     "qtyKs": 8427.0
+     "qtyKs": 8427.0,
+     "basis": "actual"
     },
     {
      "year": 2026,
      "hectares": 0.0,
-     "qtyKs": 6807.0
+     "qtyKs": 6807.0,
+     "basis": "plan"
     }
    ],
    "netPriceHistory": [
@@ -133,8 +139,8 @@
    "marketTrendNote": "The auctions are getting more relevance compeared with cooperatives",
    "mega": {
     "name": "SWEET PEPPER BLOCKY PGH",
-    "marketValueEur": 90405811.0,
-    "syngentaValueEur": 26600738.95,
+    "marketValueUsd": 90405811.0,
+    "syngentaValueUsd": 26600738.95,
     "syngentaSharePct": 29.4,
     "competitors": [
      {
@@ -266,42 +272,48 @@
    "density": 21.0,
    "priceExseed": 420.0,
    "planQtyKs": 43191.0,
-   "planValueEur": 19540342.81,
+   "planValueUsd": 19540342.81,
    "planNetPrice": 452.42,
    "lastYearQtyKs": 46849.0,
-   "lastYearValueEur": 20004023.41,
+   "lastYearValueUsd": 20004023.41,
    "marketHistory": [
     {
      "year": 2024,
      "hectares": 2750.0,
-     "qtyKs": 57750.0
+     "qtyKs": 57750.0,
+     "basis": null
     },
     {
      "year": 2025,
      "hectares": 2753.0,
-     "qtyKs": 57813.0
+     "qtyKs": 57813.0,
+     "basis": null
     },
     {
      "year": 2026,
      "hectares": 3316.0,
-     "qtyKs": 69636.0
+     "qtyKs": 69636.0,
+     "basis": null
     }
    ],
    "planQtyHistory": [
     {
      "year": 2024,
      "hectares": 0.0,
-     "qtyKs": 46572.0
+     "qtyKs": 46572.0,
+     "basis": "actual"
     },
     {
      "year": 2025,
      "hectares": 0.0,
-     "qtyKs": 46849.0
+     "qtyKs": 46849.0,
+     "basis": "actual"
     },
     {
      "year": 2026,
      "hectares": 0.0,
-     "qtyKs": 43191.0
+     "qtyKs": 43191.0,
+     "basis": "plan"
     }
    ],
    "netPriceHistory": [
@@ -389,8 +401,8 @@
    "marketTrendNote": "High uncertainly due to the T. parvispinus. Posibilities that the Late cycle will grow, compared with early and medium cyle",
    "mega": {
     "name": "SWEET PEPPER BLOCKY PGH",
-    "marketValueEur": 90405811.0,
-    "syngentaValueEur": 26600738.95,
+    "marketValueUsd": 90405811.0,
+    "syngentaValueUsd": 26600738.95,
     "syngentaSharePct": 29.4,
     "competitors": [
      {

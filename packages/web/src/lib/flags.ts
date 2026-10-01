@@ -129,8 +129,8 @@ export function evaluateFlags(
       code: "price_carrying",
       severity: "warning",
       message:
-        `Price is carrying this number: volume is down EUR ${num(-revenue.volumeEffect)} vs last year ` +
-        `and price adds EUR ${num(revenue.priceEffect)} (${pct(revenue.priceShareOfChange)} of the revenue movement).`,
+        `Price is carrying this number: volume is down USD ${num(-revenue.volumeEffect)} vs last year ` +
+        `and price adds USD ${num(revenue.priceEffect)} (${pct(revenue.priceShareOfChange)} of the revenue movement).`,
     });
   }
 
@@ -161,7 +161,7 @@ export function evaluateFlags(
       flags.push({
         code: "price_outside_history",
         severity: "warning",
-        message: `Net price EUR ${num(entry.price)}/KS is outside the historical band EUR ${num(low)}-${num(high)}.`,
+        message: `Net price USD ${num(entry.price)}/KS is outside the historical band USD ${num(low)}-${num(high)}.`,
       });
     }
   }

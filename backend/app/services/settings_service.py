@@ -1,4 +1,5 @@
 from datetime import date
+from typing import Literal
 
 from pydantic import Field
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -11,6 +12,14 @@ from app.schemas.demand_math import Thresholds
 SETTINGS_KEY = "app"
 
 
+DisplayCurrency = Literal["USD", "EUR", "LOCAL"]
+PriceSource = Literal["value_over_qty", "avg_net_price"]
+MarketZeroMeans = Literal["no_market", "missing"]
+FxRateYearRule = Literal["same_year", "current_budget"]
+ClaimBaseline = Literal["plan", "rep_number"]
+DemandSource = Literal["ibp", "manual"]
+
+
 class AppSettings(CamelModel):
     current_year: int
     thresholds: Thresholds = Field(default_factory=Thresholds)
@@ -18,7 +27,18 @@ class AppSettings(CamelModel):
     jev_score_confidence_threshold: float = Field(ge=0, le=1)
     grower_ha_cap: float = Field(gt=0)
     external_ai_allowed: bool
-    currency: str = Field(min_length=3, max_length=3)
+    chat_writes_allowed: bool = False
+    # Money is stored as net USD at the Syngenta budget rate; other currencies are display-only.
+    reporting_currency: Literal["USD"] = "USD"
+    default_display_currency: DisplayCurrency = "USD"
+    # Assumptions awaiting SME confirmation (see README "Open data assumptions").
+    price_source: PriceSource = "value_over_qty"
+    market_zero_means: MarketZeroMeans = "no_market"
+    actuals_hold_days: int = Field(default=0, ge=0, le=120)
+    fx_rate_year_rule: FxRateYearRule = "same_year"
+    claim_baseline: ClaimBaseline = "plan"
+    claim_neutral_tolerance_pct: float = Field(default=5.0, ge=0, le=50)
+    demand_source: DemandSource = "manual"
 
 
 class AppSettingsPatch(CamelModel):
@@ -28,7 +48,15 @@ class AppSettingsPatch(CamelModel):
     jev_score_confidence_threshold: float | None = Field(default=None, ge=0, le=1)
     grower_ha_cap: float | None = Field(default=None, gt=0)
     external_ai_allowed: bool | None = None
-    currency: str | None = Field(default=None, min_length=3, max_length=3)
+    chat_writes_allowed: bool | None = None
+    default_display_currency: DisplayCurrency | None = None
+    price_source: PriceSource | None = None
+    market_zero_means: MarketZeroMeans | None = None
+    actuals_hold_days: int | None = Field(default=None, ge=0, le=120)
+    fx_rate_year_rule: FxRateYearRule | None = None
+    claim_baseline: ClaimBaseline | None = None
+    claim_neutral_tolerance_pct: float | None = Field(default=None, ge=0, le=50)
+    demand_source: DemandSource | None = None
 
 
 async def _default_year(db: AsyncSession) -> int:
@@ -49,7 +77,10 @@ async def get_app_settings(db: AsyncSession) -> AppSettings:
         grower_ha_cap=env.grower_ha_cap,
         # Demo data is synthetic, so the external-AI gate only applies to real figures.
         external_ai_allowed=env.external_ai_allowed or env.is_demo,
-        currency=env.currency,
+        chat_writes_allowed=env.chat_writes_allowed or env.is_demo,
+        default_display_currency=env.default_display_currency,
+        # Real reps commit demand in IBP; the demo keeps typed entry so the demo script still works.
+        demand_source="manual" if env.is_demo else "ibp",
     )
     row = await db.get(AppSetting, SETTINGS_KEY)
     if row is None:

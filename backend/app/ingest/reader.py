@@ -24,7 +24,9 @@ def read_upload(content: bytes, filename: str, preferred_sheets: list[str]) -> p
             sheets = pd.read_excel(io.BytesIO(content), sheet_name=None)
             by_lower = {str(k).strip().lower(): k for k in sheets}
             chosen = next((by_lower[s.lower()] for s in preferred_sheets if s.lower() in by_lower), None)
-            frame = sheets[chosen if chosen is not None else next(iter(sheets))]
+            sheet = chosen if chosen is not None else next(iter(sheets))
+            frame = sheets[sheet]
+            frame.attrs["sheet"] = str(sheet)
         else:
             raise ImportFailure("Upload a .xlsx or .csv file")
     except ImportFailure:

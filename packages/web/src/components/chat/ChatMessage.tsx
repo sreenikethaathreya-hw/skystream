@@ -1,4 +1,5 @@
 import { ShieldAlert } from "lucide-react";
+import { ActionReceipt, DownloadLink } from "@/components/chat/ActionReceipt";
 import { ChatSources } from "@/components/chat/ChatSources";
 import { Badge } from "@/components/ui/badge";
 import type { ChatMessage as ChatMessageData } from "@/lib/types";
@@ -26,7 +27,13 @@ export function ChatMessage({ message }: { message: ChatMessageData }) {
                 Numbers the data could not confirm were removed. See the tables for the figures.
               </p>
             )}
+            {(message.actions ?? []).map((action, index) => (
+              <ActionReceipt key={`${action.kind}-${action.targetId}-${index}`} action={action} />
+            ))}
             <ChatSources sources={message.sources} links={message.links} />
+            {(message.downloads ?? []).map((download) => (
+              <DownloadLink key={download.href} download={download} />
+            ))}
             {message.provider && (
               <Badge className="mt-2" tone="neutral">
                 {message.provider}

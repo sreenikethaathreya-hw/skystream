@@ -54,9 +54,15 @@ async def meta(db: AsyncSession = Depends(get_db), user: CurrentUser = Depends(g
         me=UserOut(id=user.id, name=user.name, role=user.role, title=user.title),
         users=[UserOut.model_validate(u) for u in DEMO_USERS.values()] if settings.is_demo else [],
         clock=ClockOut(year=clock.year, month=clock.month) if clock else None,
-        ai={**status, **chat, "externalAiAllowed": app_settings.external_ai_allowed},
+        ai={
+            **status,
+            **chat,
+            "externalAiAllowed": app_settings.external_ai_allowed,
+            "chatWritesAllowed": app_settings.chat_writes_allowed and chat["chatMode"] == "agent",
+        },
         thresholds=app_settings.thresholds,
-        currency=app_settings.currency,
+        reporting_currency=app_settings.reporting_currency,
+        default_display_currency=app_settings.default_display_currency,
     )
 
 

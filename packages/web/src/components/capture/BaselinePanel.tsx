@@ -17,18 +17,23 @@ function ShareHistory({ ctx, impact }: { ctx: SegmentContext; impact: Impact }) 
   const markets = new Map(ctx.marketHistory.map((p) => [p.year, p.qtyKs]));
   const years = ctx.planQtyHistory
     .filter((p) => markets.has(p.year))
-    .map((p) => ({ year: p.year, share: markets.get(p.year) ? p.qtyKs / markets.get(p.year)! : 0 }));
+    .map((p) => ({
+      year: p.year,
+      basis: p.basis ?? (p.year < ctx.year ? "actual" : "plan"),
+      share: markets.get(p.year) ? p.qtyKs / markets.get(p.year)! : 0,
+    }));
   const top = Math.max(impact.volumeShare, ...years.map((y) => y.share), 0.01);
   const bars = [
-    ...years.map((y) => ({ label: y.year === ctx.year ? `${y.year} plan` : String(y.year), share: y.share, live: false })),
+    ...years.map((y) => ({ label: `${y.year} ${y.basis}`, share: y.share, live: false })),
     { label: "This entry", share: impact.volumeShare, live: true },
   ];
   return (
     <div data-testid="baseline-share-history">
       <p className="text-[11px] font-medium uppercase tracking-wide text-muted">Syngenta volume share by year</p>
+      <p className="text-[11px] text-muted">Past years are actual sales; the planning year is plan.</p>
       <div className="mt-2 flex flex-col gap-1.5">
         {bars.map((b) => (
-          <div key={b.label} className="grid grid-cols-[72px_1fr_48px] items-center gap-2 text-xs">
+          <div key={b.label} className="grid grid-cols-[84px_1fr_48px] items-center gap-2 text-xs">
             <span className={cn("text-muted", b.live && "font-medium text-ink")}>{b.label}</span>
             <div className="h-2 overflow-hidden rounded-full bg-line">
               <div

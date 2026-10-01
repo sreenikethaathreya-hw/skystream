@@ -1,0 +1,488 @@
+[
+ {
+  "segmentId": 2432,
+  "variety": "Bokken",
+  "year": 2026,
+  "month": 10,
+  "snapshot": "2026-09-28",
+  "qtyKs": 4254.0,
+  "plannerId": "rep-b"
+ },
+ {
+  "segmentId": 2432,
+  "variety": "Kaamos",
+  "year": 2026,
+  "month": 10,
+  "snapshot": "2026-09-28",
+  "qtyKs": 2836.0,
+  "plannerId": "rep-b"
+ },
+ {
+  "segmentId": 2432,
+  "variety": "Bokken",
+  "year": 2026,
+  "month": 11,
+  "snapshot": "2026-09-28",
+  "qtyKs": 1286.0,
+  "plannerId": "rep-b"
+ },
+ {
+  "segmentId": 2432,
+  "variety": "Kaamos",
+  "year": 2026,
+  "month": 11,
+  "snapshot": "2026-09-28",
+  "qtyKs": 858.0,
+  "plannerId": "rep-b"
+ },
+ {
+  "segmentId": 2432,
+  "variety": "Bokken",
+  "year": 2026,
+  "month": 12,
+  "snapshot": "2026-09-28",
+  "qtyKs": 551.0,
+  "plannerId": "rep-b"
+ },
+ {
+  "segmentId": 2432,
+  "variety": "Kaamos",
+  "year": 2026,
+  "month": 12,
+  "snapshot": "2026-09-28",
+  "qtyKs": 368.0,
+  "plannerId": "rep-b"
+ },
+ {
+  "segmentId": 2433,
+  "variety": "Bokken",
+  "year": 2026,
+  "month": 10,
+  "snapshot": "2026-09-28",
+  "qtyKs": 175.0,
+  "plannerId": "rep-b"
+ },
+ {
+  "segmentId": 2433,
+  "variety": "Kaamos",
+  "year": 2026,
+  "month": 10,
+  "snapshot": "2026-09-28",
+  "qtyKs": 117.0,
+  "plannerId": "rep-b"
+ },
+ {
+  "segmentId": 2433,
+  "variety": "Bokken",
+  "year": 2026,
+  "month": 11,
+  "snapshot": "2026-09-28",
+  "qtyKs": 173.0,
+  "plannerId": "rep-b"
+ },
+ {
+  "segmentId": 2433,
+  "variety": "Kaamos",
+  "year": 2026,
+  "month": 11,
+  "snapshot": "2026-09-28",
+  "qtyKs": 115.0,
+  "plannerId": "rep-b"
+ },
+ {
+  "segmentId": 2433,
+  "variety": "Bokken",
+  "year": 2026,
+  "month": 12,
+  "snapshot": "2026-09-28",
+  "qtyKs": 74.0,
+  "plannerId": "rep-b"
+ },
+ {
+  "segmentId": 2433,
+  "variety": "Kaamos",
+  "year": 2026,
+  "month": 12,
+  "snapshot": "2026-09-28",
+  "qtyKs": 49.0,
+  "plannerId": "rep-b"
+ },
+ {
+  "segmentId": 2446,
+  "variety": "Leontes",
+  "year": 2026,
+  "month": 10,
+  "snapshot": "2026-09-28",
+  "qtyKs": 1.0,
+  "plannerId": "rep-b"
+ },
+ {
+  "segmentId": 2446,
+  "variety": "Hokkaido",
+  "year": 2026,
+  "month": 10,
+  "snapshot": "2026-09-28",
+  "qtyKs": 0.0,
+  "plannerId": "rep-b"
+ },
+ {
+  "segmentId": 2446,
+  "variety": "Leontes",
+  "year": 2026,
+  "month": 11,
+  "snapshot": "2026-09-28",
+  "qtyKs": 1.0,
+  "plannerId": "rep-b"
+ },
+ {
+  "segmentId": 2446,
+  "variety": "Hokkaido",
+  "year": 2026,
+  "month": 11,
+  "snapshot": "2026-09-28",
+  "qtyKs": 0.0,
+  "plannerId": "rep-b"
+ },
+ {
+  "segmentId": 2446,
+  "variety": "Leontes",
+  "year": 2026,
+  "month": 12,
+  "snapshot": "2026-09-28",
+  "qtyKs": 1.0,
+  "plannerId": "rep-b"
+ },
+ {
+  "segmentId": 2446,
+  "variety": "Hokkaido",
+  "year": 2026,
+  "month": 12,
+  "snapshot": "2026-09-28",
+  "qtyKs": 0.0,
+  "plannerId": "rep-b"
+ },
+ {
+  "segmentId": 2448,
+  "variety": "Leontes",
+  "year": 2026,
+  "month": 10,
+  "snapshot": "2026-09-28",
+  "qtyKs": 38.0,
+  "plannerId": "rep-b"
+ },
+ {
+  "segmentId": 2448,
+  "variety": "Hokkaido",
+  "year": 2026,
+  "month": 10,
+  "snapshot": "2026-09-28",
+  "qtyKs": 25.0,
+  "plannerId": "rep-b"
+ },
+ {
+  "segmentId": 2448,
+  "variety": "Leontes",
+  "year": 2026,
+  "month": 11,
+  "snapshot": "2026-09-28",
+  "qtyKs": 38.0,
+  "plannerId": "rep-b"
+ },
+ {
+  "segmentId": 2448,
+  "variety": "Hokkaido",
+  "year": 2026,
+  "month": 11,
+  "snapshot": "2026-09-28",
+  "qtyKs": 25.0,
+  "plannerId": "rep-b"
+ },
+ {
+  "segmentId": 2448,
+  "variety": "Leontes",
+  "year": 2026,
+  "month": 12,
+  "snapshot": "2026-09-28",
+  "qtyKs": 38.0,
+  "plannerId": "rep-b"
+ },
+ {
+  "segmentId": 2448,
+  "variety": "Hokkaido",
+  "year": 2026,
+  "month": 12,
+  "snapshot": "2026-09-28",
+  "qtyKs": 25.0,
+  "plannerId": "rep-b"
+ },
+ {
+  "segmentId": 2449,
+  "variety": "Leontes",
+  "year": 2026,
+  "month": 10,
+  "snapshot": "2026-09-28",
+  "qtyKs": 5.0,
+  "plannerId": "rep-b"
+ },
+ {
+  "segmentId": 2449,
+  "variety": "Hokkaido",
+  "year": 2026,
+  "month": 10,
+  "snapshot": "2026-09-28",
+  "qtyKs": 4.0,
+  "plannerId": "rep-b"
+ },
+ {
+  "segmentId": 2449,
+  "variety": "Leontes",
+  "year": 2026,
+  "month": 11,
+  "snapshot": "2026-09-28",
+  "qtyKs": 5.0,
+  "plannerId": "rep-b"
+ },
+ {
+  "segmentId": 2449,
+  "variety": "Hokkaido",
+  "year": 2026,
+  "month": 11,
+  "snapshot": "2026-09-28",
+  "qtyKs": 4.0,
+  "plannerId": "rep-b"
+ },
+ {
+  "segmentId": 2449,
+  "variety": "Leontes",
+  "year": 2026,
+  "month": 12,
+  "snapshot": "2026-09-28",
+  "qtyKs": 5.0,
+  "plannerId": "rep-b"
+ },
+ {
+  "segmentId": 2449,
+  "variety": "Hokkaido",
+  "year": 2026,
+  "month": 12,
+  "snapshot": "2026-09-28",
+  "qtyKs": 4.0,
+  "plannerId": "rep-b"
+ },
+ {
+  "segmentId": 2481,
+  "variety": "Leontes",
+  "year": 2026,
+  "month": 10,
+  "snapshot": "2026-09-28",
+  "qtyKs": 29.0,
+  "plannerId": "rep-a"
+ },
+ {
+  "segmentId": 2481,
+  "variety": "Hokkaido",
+  "year": 2026,
+  "month": 10,
+  "snapshot": "2026-09-28",
+  "qtyKs": 20.0,
+  "plannerId": "rep-a"
+ },
+ {
+  "segmentId": 2481,
+  "variety": "Leontes",
+  "year": 2026,
+  "month": 11,
+  "snapshot": "2026-09-28",
+  "qtyKs": 29.0,
+  "plannerId": "rep-a"
+ },
+ {
+  "segmentId": 2481,
+  "variety": "Hokkaido",
+  "year": 2026,
+  "month": 11,
+  "snapshot": "2026-09-28",
+  "qtyKs": 20.0,
+  "plannerId": "rep-a"
+ },
+ {
+  "segmentId": 2481,
+  "variety": "Leontes",
+  "year": 2026,
+  "month": 12,
+  "snapshot": "2026-09-28",
+  "qtyKs": 29.0,
+  "plannerId": "rep-a"
+ },
+ {
+  "segmentId": 2481,
+  "variety": "Hokkaido",
+  "year": 2026,
+  "month": 12,
+  "snapshot": "2026-09-28",
+  "qtyKs": 20.0,
+  "plannerId": "rep-a"
+ },
+ {
+  "segmentId": 2482,
+  "variety": "Leontes",
+  "year": 2026,
+  "month": 10,
+  "snapshot": "2026-09-28",
+  "qtyKs": 2369.0,
+  "plannerId": "rep-a"
+ },
+ {
+  "segmentId": 2482,
+  "variety": "Hokkaido",
+  "year": 2026,
+  "month": 10,
+  "snapshot": "2026-09-28",
+  "qtyKs": 1579.0,
+  "plannerId": "rep-a"
+ },
+ {
+  "segmentId": 2482,
+  "variety": "Leontes",
+  "year": 2026,
+  "month": 11,
+  "snapshot": "2026-09-28",
+  "qtyKs": 5400.0,
+  "plannerId": "rep-a"
+ },
+ {
+  "segmentId": 2482,
+  "variety": "Hokkaido",
+  "year": 2026,
+  "month": 11,
+  "snapshot": "2026-09-28",
+  "qtyKs": 3600.0,
+  "plannerId": "rep-a"
+ },
+ {
+  "segmentId": 2482,
+  "variety": "Leontes",
+  "year": 2026,
+  "month": 12,
+  "snapshot": "2026-09-28",
+  "qtyKs": 374.0,
+  "plannerId": "rep-a"
+ },
+ {
+  "segmentId": 2482,
+  "variety": "Hokkaido",
+  "year": 2026,
+  "month": 12,
+  "snapshot": "2026-09-28",
+  "qtyKs": 249.0,
+  "plannerId": "rep-a"
+ },
+ {
+  "segmentId": 2483,
+  "variety": "Leontes",
+  "year": 2026,
+  "month": 10,
+  "snapshot": "2026-09-28",
+  "qtyKs": 12.0,
+  "plannerId": "rep-a"
+ },
+ {
+  "segmentId": 2483,
+  "variety": "Hokkaido",
+  "year": 2026,
+  "month": 10,
+  "snapshot": "2026-09-28",
+  "qtyKs": 8.0,
+  "plannerId": "rep-a"
+ },
+ {
+  "segmentId": 2483,
+  "variety": "Leontes",
+  "year": 2026,
+  "month": 11,
+  "snapshot": "2026-09-28",
+  "qtyKs": 12.0,
+  "plannerId": "rep-a"
+ },
+ {
+  "segmentId": 2483,
+  "variety": "Hokkaido",
+  "year": 2026,
+  "month": 11,
+  "snapshot": "2026-09-28",
+  "qtyKs": 8.0,
+  "plannerId": "rep-a"
+ },
+ {
+  "segmentId": 2483,
+  "variety": "Leontes",
+  "year": 2026,
+  "month": 12,
+  "snapshot": "2026-09-28",
+  "qtyKs": 12.0,
+  "plannerId": "rep-a"
+ },
+ {
+  "segmentId": 2483,
+  "variety": "Hokkaido",
+  "year": 2026,
+  "month": 12,
+  "snapshot": "2026-09-28",
+  "qtyKs": 8.0,
+  "plannerId": "rep-a"
+ },
+ {
+  "segmentId": 2484,
+  "variety": "Leontes",
+  "year": 2026,
+  "month": 10,
+  "snapshot": "2026-09-28",
+  "qtyKs": 26.0,
+  "plannerId": "rep-a"
+ },
+ {
+  "segmentId": 2484,
+  "variety": "Hokkaido",
+  "year": 2026,
+  "month": 10,
+  "snapshot": "2026-09-28",
+  "qtyKs": 18.0,
+  "plannerId": "rep-a"
+ },
+ {
+  "segmentId": 2484,
+  "variety": "Leontes",
+  "year": 2026,
+  "month": 11,
+  "snapshot": "2026-09-28",
+  "qtyKs": 4.0,
+  "plannerId": "rep-a"
+ },
+ {
+  "segmentId": 2484,
+  "variety": "Hokkaido",
+  "year": 2026,
+  "month": 11,
+  "snapshot": "2026-09-28",
+  "qtyKs": 3.0,
+  "plannerId": "rep-a"
+ },
+ {
+  "segmentId": 2484,
+  "variety": "Leontes",
+  "year": 2026,
+  "month": 12,
+  "snapshot": "2026-09-28",
+  "qtyKs": 4.0,
+  "plannerId": "rep-a"
+ },
+ {
+  "segmentId": 2484,
+  "variety": "Hokkaido",
+  "year": 2026,
+  "month": 12,
+  "snapshot": "2026-09-28",
+  "qtyKs": 3.0,
+  "plannerId": "rep-a"
+ }
+]

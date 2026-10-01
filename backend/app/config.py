@@ -50,6 +50,10 @@ class Settings(BaseSettings):
     chat_history_events: int = 40
     chat_temperature: float = 0.1
     chat_app_name: str = "skystream-data-chat"
+    # Lets the agent submit, justify, decide and author rules through guarded write tools. Demo is always on;
+    # in real mode the admin setting chatWritesAllowed decides.
+    chat_writes_allowed: bool = False
+    chat_turns_per_minute: int = 20
 
     firebase_project_id: str | None = None
     firebase_web_api_key: str | None = None
@@ -58,7 +62,8 @@ class Settings(BaseSettings):
     bootstrap_admin_emails: str = ""
 
     grower_ha_cap: float = 500.0
-    currency: str = "EUR"
+    # Money is stored in USD; this is only the initial display currency (USD, EUR or LOCAL).
+    default_display_currency: Literal["USD", "EUR", "LOCAL"] = "USD"
 
     @property
     def is_production(self) -> bool:

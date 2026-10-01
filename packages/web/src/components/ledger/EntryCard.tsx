@@ -1,15 +1,41 @@
-import type { ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { ClaimTags } from "@/components/claims/ClaimTags";
+import { EntryNotes } from "@/components/ledger/EntryNotes";
+import { cn } from "@/lib/utils";
 import { Badge, StatusBadge } from "@/components/ui/badge";
 import { Card, CardBody } from "@/components/ui/card";
 import { fmtKs, fmtNum, fmtPct, monthName } from "@/lib/format";
+import { useMoney } from "@/hooks/useMoney";
+import { fmtPrice } from "@/lib/money";
 import type { Entry } from "@/lib/types";
 
-export function EntryCard({ entry, children }: { entry: Entry; children?: ReactNode }) {
+export function EntryCard({
+  entry,
+  children,
+  highlight = false,
+  canNote = false,
+  ask,
+}: {
+  entry: Entry;
+  children?: ReactNode;
+  highlight?: boolean;
+  canNote?: boolean;
+  ask?: ReactNode;
+}) {
+  const money = useMoney();
   const claim = entry.claim;
   const detail = claim?.resolutionDetail;
+  const card = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (highlight) card.current?.scrollIntoView?.({ block: "center", behavior: "smooth" });
+  }, [highlight]);
   return (
-    <Card data-testid="entry-card">
+    <Card
+      ref={card}
+      data-testid="entry-card"
+      data-entry-id={entry.id}
+      className={cn(highlight && "ring-2 ring-brand-500/60")}
+    >
       <CardBody className="flex flex-col gap-2 pt-4">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex flex-wrap items-center gap-2">
@@ -19,10 +45,16 @@ export function EntryCard({ entry, children }: { entry: Entry; children?: ReactN
             </span>
             <StatusBadge status={entry.status} />
             {entry.source === "history" && <Badge>history</Badge>}
+            {entry.source === "ibp" && (
+              <Badge tone="info" title={entry.snapshot ? `IBP snapshot ${entry.snapshot}` : undefined}>
+                IBP
+              </Badge>
+            )}
             {claim && <StatusBadge status={claim.resolution} />}
           </div>
-          <span className="text-xs text-muted">
+          <span className="flex items-center gap-1 text-xs text-muted">
             {entry.userName} · {new Date(entry.createdAt).toLocaleString()}
+            {ask}
           </span>
         </div>
 
@@ -31,7 +63,7 @@ export function EntryCard({ entry, children }: { entry: Entry; children?: ReactN
           <span className="text-muted">
             range {fmtNum(entry.low)} to {fmtNum(entry.high)}
           </span>
-          {entry.price != null && <span className="text-muted">EUR {fmtNum(entry.price)}/KS</span>}
+          {entry.price != null && <span className="text-muted">{fmtPrice(entry.price, money)}</span>}
           {entry.impact && (
             <span className="text-muted">
               full year {fmtKs(entry.impact.fyEstimate)} · share {fmtPct(entry.impact.volumeShare)}
@@ -67,6 +99,9 @@ export function EntryCard({ entry, children }: { entry: Entry; children?: ReactN
           <p className="text-xs text-muted">
             Will be checked against {monthName(claim.checkMonth)} {claim.checkYear} {claim.signal.replace(/_/g, " ")}.
           </p>
+        )}
+        {entry.source !== "history" && (
+          <EntryNotes entryId={entry.id} notes={entry.notes ?? []} canWrite={canNote} />
         )}
         {children}
       </CardBody>

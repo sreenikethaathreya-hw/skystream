@@ -1,8 +1,11 @@
+import { AskButton } from "@/components/chat/AskButton";
 import { EntryCard } from "@/components/ledger/EntryCard";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardBody, CardHeader } from "@/components/ui/card";
 import { ProbBar } from "@/components/ui/prob-bar";
 import { useEntries, useReps } from "@/hooks/queries";
+import { usePageContext } from "@/hooks/useChat";
+import { useSession } from "@/hooks/useSession";
 import { fmtPct } from "@/lib/format";
 import type { TrackRecord } from "@/lib/types";
 
@@ -17,7 +20,7 @@ function Metric({ label, value, hint, bar }: { label: string; value: string; hin
   );
 }
 
-function RepCard({ record }: { record: TrackRecord }) {
+function RepCard({ record, mine, askable }: { record: TrackRecord; mine: boolean; askable: boolean }) {
   const { data: recent } = useEntries({ userId: record.user.id });
   const resolved = recent?.filter((e) => e.claim && e.claim.resolution !== "pending").slice(0, 3) ?? [];
   return (
@@ -25,7 +28,21 @@ function RepCard({ record }: { record: TrackRecord }) {
       <CardHeader
         title={record.user.name}
         subtitle={`${record.user.title} · ${record.entriesResolved} resolved entries`}
-        action={record.weak ? <Badge tone="warn">Weak record: entries go to consensus</Badge> : <Badge tone="brand">Reliable</Badge>}
+        action={
+          <span className="flex items-center gap-1">
+            {askable && (
+              <AskButton
+                question={
+                  mine
+                    ? "How have my last months gone: bias, range coverage and claims by month?"
+                    : `How has ${record.user.name}'s accuracy changed by month?`
+                }
+                context={{ page: "reps" }}
+              />
+            )}
+            {record.weak ? <Badge tone="warn">Weak record: entries go to consensus</Badge> : <Badge tone="brand">Reliable</Badge>}
+          </span>
+        }
       />
       <CardBody className="flex flex-col gap-4">
         <div className="grid grid-cols-3 gap-3">
@@ -62,6 +79,9 @@ function RepCard({ record }: { record: TrackRecord }) {
 
 export function TrackRecordPage() {
   const { data } = useReps();
+  const { user } = useSession();
+  usePageContext({ page: "reps" });
+  const canAsk = (id: string) => user?.role !== "rep" || user.id === id;
   return (
     <div className="flex flex-col gap-4">
       <div>
@@ -71,7 +91,9 @@ export function TrackRecordPage() {
           decide what the consensus meeting discusses.
         </p>
       </div>
-      <div className="grid gap-4 xl:grid-cols-2">{data?.map((r) => <RepCard key={r.user.id} record={r} />)}</div>
+      <div className="grid gap-4 xl:grid-cols-2">
+        {data?.map((r) => <RepCard key={r.user.id} record={r} mine={user?.id === r.user.id} askable={canAsk(r.user.id)} />)}
+      </div>
     </div>
   );
 }

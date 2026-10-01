@@ -26,7 +26,10 @@ def validate_actuals(frame: pd.DataFrame, ctx: ImportContext) -> tuple[list[dict
             to_int(r.get("month")),
         )
         qty = to_float(r.get("sales_qty_ks"))
-        value = to_float(r.get("sales_value_eur"))
+        # sales_value_eur is the pre-USD header, still accepted for one release.
+        value = to_float(r.get("sales_value_usd", r.get("sales_value_eur")))
+        currency = (to_text(r.get("currency")) or "USD").upper()
+        usd = value if value is None or currency == "USD" else ctx.fx.to_usd(value, currency, year)
         if country is None:
             report.reject(row_no, f"Unknown country '{r.get('country_code')}'")
         elif segment_id not in ctx.segment_ids:
@@ -37,19 +40,24 @@ def validate_actuals(frame: pd.DataFrame, ctx: ImportContext) -> tuple[list[dict
             report.reject(row_no, "year must be a whole number and month 1-12")
         elif qty is None or qty < 0 or (value is not None and value < 0):
             report.reject(row_no, "sales_qty_ks is required and amounts cannot be negative")
+        elif value is not None and usd is None:
+            report.reject(row_no, f"No budget rate for {currency} in {year}; upload the budget rates first")
         else:
+            if value is not None and currency != "USD":
+                report.warn(f"sales_value converted from {currency} to USD at the budget rate")
+            value = usd
             key = (country, segment_id, year, month)
             if key in rows:
                 report.warn("Duplicate country/micro-segment/month; the last row wins")
             if value is None:
-                report.warn("Blank sales_value_eur filled from the plan net price")
+                report.warn("Blank sales_value_usd filled from the plan net price")
             rows[key] = {
                 "countryCode": country,
                 "segmentId": segment_id,
                 "year": year,
                 "month": month,
                 "qtyKs": qty,
-                "valueEur": value,
+                "valueUsd": value,
             }
     report.accepted = len(rows)
     report.info = {

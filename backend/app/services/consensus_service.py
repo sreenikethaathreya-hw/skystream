@@ -7,13 +7,14 @@ from app.constants.demo import MONTH_NAMES
 from app.models import Claim, CompetitorShare, DemandEntry, MarketYear, PlanYear, Segment
 from app.models.base import utcnow
 from app.schemas.api import EntryOut, QueueItemOut, QueueOut, RtbOut
-from app.services.context_service import current_period, segment_label
+from app.services.context_service import COMMITTED_SOURCES, current_period, segment_label
 from app.services.entry_service import scope_filter, to_out
+from app.services.note_service import attach_notes
 from app.services.rep_service import is_weak, track_records
 from app.services.settings_service import get_app_settings
-from app.services.user_service import CurrentUser, user_names
+from app.services.user_service import UNASSIGNED, CurrentUser, user_names
 
-OPEN_STATUSES = ("submitted", "discuss", "challenged")
+OPEN_STATUSES = ("submitted", "discuss", "challenged", "needs_justification")
 DECISION_STATUS = {"approve": "approved", "discuss": "discuss", "challenge": "challenged"}
 
 
@@ -26,6 +27,10 @@ def exception_reasons(entry: DemandEntry, claim: Claim | None, weak_rep: bool, r
             reasons.append("Justification is vague")
         if claim.addresses_flags is not None and claim.addresses_flags < 0.5:
             reasons.append("Justification does not address the flags")
+    if entry.status == "needs_justification":
+        reasons.append("Flagged IBP number waiting for the rep's justification")
+    if entry.user_id == UNASSIGNED:
+        reasons.append("IBP number with no rep assigned to this segment")
     if entry.status == "discuss":
         reasons.append("Marked for discussion")
     if entry.status == "challenged":
@@ -37,7 +42,7 @@ async def _open_entries(db: AsyncSession, country: str | None, mega: str | None)
     query = (
         select(DemandEntry, Claim)
         .outerjoin(Claim, Claim.entry_id == DemandEntry.id)
-        .where(DemandEntry.source == "live", DemandEntry.status.in_(OPEN_STATUSES))
+        .where(DemandEntry.source.in_(COMMITTED_SOURCES), DemandEntry.status.in_(OPEN_STATUSES))
         .order_by(DemandEntry.country_code, DemandEntry.segment_id, DemandEntry.month)
     )
     return [(entry, claim) for entry, claim in (await db.execute(scope_filter(query, country, mega))).all()]
@@ -75,6 +80,7 @@ async def build_queue(db: AsyncSession, country: str | None = None, mega: str | 
             entry.triage = decision.model_dump(by_alias=True)
         exceptions.append(QueueItemOut(entry=to_out(entry, claim, segments, names), reasons=reasons))
     await db.commit()
+    await attach_notes(db, [item.entry for item in exceptions] + routine)
     return QueueOut(exceptions=exceptions, routine=routine)
 
 
@@ -93,7 +99,7 @@ async def bulk_approve(
 
 async def decide(db: AsyncSession, user: CurrentUser, entry_id: str, decision: str) -> None:
     entry = await db.get(DemandEntry, entry_id)
-    if entry is None or entry.source != "live":
+    if entry is None or entry.source not in COMMITTED_SOURCES:
         raise HTTPException(status_code=404, detail="Entry not found")
     if entry.status == "superseded":
         raise HTTPException(status_code=409, detail="A newer entry replaced this one")

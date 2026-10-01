@@ -37,12 +37,15 @@ same countries replaces it. Upload in this order:
 |---|---|---|---|---|
 | 1 | Product hierarchy | `.xlsx` (tab `prod hierarchy`) or `.csv` | `f_specie`, `f_megaSegment`, `f_megaSegmentDesc`, `f_microSegment`, `f_microSegmentDesc` | Optional `Cycle`, `Color`, `Ecology Desc`. Everything else is keyed on these IDs. |
 | 2 | Market (i-MAPS MAPSHistData export) | as exported | `Country`, `Micro Segment`, `Year`, `Market Planted Area (HA)`, `Market Qty (KS)`, `Market Avg Plant Density`, `Market AvgPrice (ExSeed)` | Optional farmgate price, the six POV note columns, `Modified` (latest wins on duplicates). |
-| 3 | Syngenta plan (i-MAPS Syngenta5YrsSales export) | as exported | `Title` (year), `Country`, `Microsegment ID`, `Sales Qty`, `Sales Value` | Missing IDs are recovered from `Microsegment Description`. Optional `FPI Qty`, `Qualitative Comments`. |
+| 3 | Syngenta sales (i-MAPS Syngenta5YrsSales export) | as exported | `Title` (year), `Country`, `Microsegment ID`, `Sales Qty`, `Sales Value` | Years before the planning year are **actual sales**, the planning year onward is **plan** (SME answer). Missing IDs are recovered from `Microsegment Description`. Optional `FPI Qty`, `Qualitative Comments`, `Avg Net Price` (the preview warns when it differs from value / qty by more than 5%), `Currency` (non-USD values are converted at the budget rate). |
 | 4 | Competitor shares (i-MAPS CompetitorMktShare export) | as exported | `Forecast Customer Country_D`, `Mega_Segment_Id`, `CompetitorDesc`, `YYYY%` columns | Optional `YYYY` values, `CompetitorTrend`. |
-| 5 | Monthly actuals | template (CSV/XLSX) | `country_code`, `micro_segment_id`, `year`, `month`, `sales_qty_ks` | Optional `sales_value_eur` (else plan net price). Committing closes those months and resolves due claims. |
-| 6 | Rep assignments | template | `email`, `name`, `role` (admin/lead/rep), `country_code`, `scope_type` (mega/micro), `scope_ids` (`;`-separated) | Also editable in **Admin: users**. |
-| 7 | Grower potential (CRM export) | as exported | `Country Name`, `Crop Local`, `Hecatres Info.` | Optional. Rows above the hectare cap (default 500) are capped. |
-| 8 | Seasonality | template | `country_code`, `micro_segment_id` or `mega_segment_id`, `month`, `weight` | Optional. Otherwise the plan is split by the last two complete years of actuals, else flat. |
+| 5 | SAC sales and IBP forecast (SAC GPC Sales, query `MDL_LC_FP_Q050`) | as exported, or the template | country, micro-segment ID **or** variety, period, actual/forecast measure (or separate actual and forecast quantity columns), quantity in KS | Optional net sales USD, snapshot date, planner email, currency. Actual rows close their months like the actuals upload; forecast rows become the reps' entries (see "Demand from IBP"). Columns are matched by alias until a real export is available (`backend/app/ingest/sac.py`). |
+| 6 | Variety to micro-segment | template | `country_code`, `variety`, `micro_segment_id` | Only needed when the SAC export carries the variety but not the micro-segment. |
+| 7 | Monthly actuals | template (CSV/XLSX) | `country_code`, `micro_segment_id`, `year`, `month`, `sales_qty_ks` | Fallback when the SAC export is not used. Optional `sales_value_usd` (else plan net price; `sales_value_eur` is still accepted) and `currency`. Committing closes those months and resolves due claims. |
+| 8 | Rep assignments | template | `email`, `name`, `role` (admin/lead/rep), `country_code`, `scope_type` (mega/micro), `scope_ids` (`;`-separated) | Also editable in **Admin: users**. |
+| 9 | Budget FX rates | finance `BUD <year>` workbook as delivered, or the template | rate per 1 USD per currency | Optional. Used to show figures in EUR or local currency and to convert local-currency uploads. The finance file is internal: keep it in `data/raw/` (gitignored). |
+| 10 | Grower potential (CRM export) | as exported | `Country Name`, `Crop Local`, `Hecatres Info.` | Optional. Rows above the hectare cap (default 500) are capped. |
+| 11 | Seasonality | template | `country_code`, `micro_segment_id` or `mega_segment_id`, `month`, `weight` | Optional. Otherwise the plan is split by the last two complete years of actuals, else flat. |
 
 Countries can be ISO codes or names (`Spain`, `SPAIN`, `ES`). **Every kind has a downloadable CSV template** on
 the Data screen (or `GET /api/admin/templates/<kind>.csv`). The export-based templates use the exact i-MAPS / CRM
@@ -53,7 +56,43 @@ Reps enter, per micro-segment and open month: demand in thousand seeds, a low/hi
 and a justification of up to 600 characters (required when a flag fires). Before typing, the **Baseline** panel
 shows share by year (average and high), the month's plan, last year and historical average, and market potential
 (planted area, implied hectares, CRM grower potential). Admins set the planning year, thresholds (including the
-share-jump limit), hectare cap, currency and the Jev switch under **Admin: settings**.
+share-jump limit; agree these with the consensus lead), hectare cap, default display currency, the demand source
+and the Jev switch under **Admin: settings**.
+
+## Money: net USD at the budget rate
+
+Every value is stored and computed as **net USD at the Syngenta budget rate** (SME answer). The header's **Show in**
+picker displays figures in USD, EUR or the scope country's local currency using the uploaded budget rates; the
+conversion happens in the browser, so typing still makes no network call. A net price the rep types is in the
+display currency and converted to USD before the math. Flag messages are worded in USD. When feeds later arrive in
+local currency, add a `Currency` column and they are converted to USD at the budget rate on upload.
+
+## Demand from IBP
+
+Reps commit demand by variety in IBP, revised monthly, and it reaches SAC (SME answer). With the demand source set
+to **IBP** (the real-mode default; the demo starts on **Typed in Capture**):
+
+- Each SAC upload's forecast is rolled up per micro-segment and month, and becomes the rep's entry (`source=ibp`,
+  with its snapshot). The owner is the planner named in the file when they are a registered rep, else the only rep
+  covering the segment, else **unassigned** (leads see these in the queue). An unchanged number makes no new entry.
+- The same flags and lead rules as Capture run on the server. Clean numbers go to consensus as routine; flagged ones
+  wait as **needs justification**.
+- In **Capture** the month shows "Committed in IBP" with the variety breakdown. The rep adds a range and a
+  justification and clicks **Submit justification**; the number box is a what-if only. Typed entries are refused.
+- Switching the demo to IBP under **Admin: settings** turns the seeded synthetic snapshot into entries (2432 October
+  carries the storyboard's 7,090 KS, so it is flagged).
+
+## Open data assumptions
+
+These are admin settings with defaults until the SMEs confirm them:
+
+| Setting | Default | Alternative |
+|---|---|---|
+| Plan net price | Sales Value / Sales Qty | the export's `Avg Net Price` |
+| Zero hectares in the market file | no market (segment hidden) | data missing (segment shown, share checks off) |
+| Days before new actuals resolve claims | 0 (real mode only) | hold N days after month-end; deferred months resolve at a later actuals upload |
+| Budget rate for past years | each year's own rate (else the latest) | the current budget rate |
+| Score claims against | the plan (direction vs plan, 5% for "no change") | the rep's own number within the tolerance |
 
 ## Lead rules
 
@@ -77,19 +116,48 @@ for any segment unless the rep names a competitor move."*
 
 ## Ask the data
 
-Every signed-in user has an **Ask the data** button in the header. It opens a chat that answers questions
-about the figures in the selected country and mega-segment: share, plan, year-to-go, hectares, monthly
-actuals, rep entries and flags, claims and track records, competitor shares and lead rules.
+Every signed-in user has an **Ask the data** button in the header, and pages add **Ask** buttons next to the
+thing they are about (a flag, the IBP panel, a justification, an exception card, a ledger entry, a rule, a track
+record). The drawer knows which page, segment, month and entry you are on, shows it as an "About: ..." chip you can
+clear, and keeps the conversation while it is closed. Answers stream tool progress, then the checked answer.
 
-- A Google ADK agent on Gemini (Vertex) answers by calling read-only tools in `backend/app/ai/data_agent/tools.py`.
-  The server writes the caller's scope into ADK state on each turn; tools and `ScopeGuardPlugin` refuse segments
-  outside it, and only leads and admins can see open exceptions.
+What it can do, by role:
+
+- **Reps**: a briefing of what needs attention (open months with no entry, IBP numbers waiting for a reason,
+  challenged entries with the lead's note, pending and recently resolved claims); why an entry was flagged and the
+  limit each check uses; a what-if for a number they type (nothing is saved); market notes, grower potential and
+  the variety-to-segment map; a check of their draft justification; their claims, portfolio gap to plan, month
+  close recap, own track record against the team average, data freshness and a glossary of terms and how-tos.
+  With changes on, they can submit their own number (manual demand source) or justify an IBP number.
+- **Consensus leads**: everything above for all segments, plus coverage for a month ("is October ready to
+  close?"), a walkthrough of any entry with Jev's triage probabilities, rep accuracy by month, rankings (entry vs
+  plan, last year or IBP, range width, gap to plan), claim themes, an entry's full history including changes made
+  through the chat, an RTB draft and the supply CSV. With changes on, they can approve, discuss or challenge an
+  entry, bulk-approve routine entries, leave a note for the rep, and compile, activate or retire a lead rule.
+- **Admins**: upload status, who covers which segment, settings and the thresholds behind each flag, data quality.
+  Uploads, users and settings themselves stay on the admin pages.
+
+How it is kept honest:
+
+- A Google ADK agent on Gemini (Vertex) answers through tools in `backend/app/ai/data_agent/` (`tools.py`,
+  `rep_tools.py`, `lead_tools.py`, `admin_tools.py` read; `actions.py` writes). The server writes the caller's
+  scope and page into ADK state on each turn; tools and `ScopeGuardPlugin` refuse segments outside it, and lead and
+  admin tools are role-gated.
 - **No invented numbers.** `NumberGuardPlugin` checks every number in the answer against the tool results and
   the question, and replaces any it cannot match with "(see table)". The tool tables are shown under each answer.
+- **The model never authors a number or a claim.** `WriteGuardPlugin` lets a number into a what-if or a write only
+  if the user typed it in that message, and a justification, note or rule sentence only if it quotes the user. Writes
+  also need the right role, the `chatWritesAllowed` setting (Admin: settings; always on in demo) and are limited to
+  one per message. Every write goes through the same service the UI uses and is logged in `chat_actions`; the UI
+  shows a receipt and refreshes the affected pages.
 - **No forecasting.** A question asking for a prediction is classified first (Jev when allowed, otherwise a
   keyword decider) and gets a fixed refusal.
-- Without Gemini, a template fallback answers the same intents from one tool each, so the demo works offline.
+- Without Gemini, a template fallback answers the read intents from one tool each (using the page context for
+  "this entry"), and change requests point to the page that makes them, so the demo works offline.
 - Conversations are stored per user in ADK's `DatabaseSessionService` on the app database; demo reset clears them.
+  Each user is limited to `CHAT_TURNS_PER_MINUTE` questions per minute.
+- Entry notes (`entry_notes`) carry the lead's question and the rep's answer on an entry; they show on Capture,
+  Ledger and Consensus and in the rep's briefing.
 
 Local debugging with ADK's own tools (needs Gemini and a seeded database):
 
@@ -140,7 +208,11 @@ EXTERNAL_AI_ALLOWED=true   # real mode only, after clearance (also switchable in
 8. As the lead, Ledger > **Missed claims only** > **Turn this miss into a rule**; check, read the backtest, activate.
    Back as Rep A the rule fires as you type.
 9. **Ask the data**: as Rep A ask *"What is the share for 2482 in October?"*; the answer quotes the baseline
-   figures and shows the table. Ask it to forecast October and it declines.
+   figures and shows the table. Ask it to forecast October and it declines. Click **Why?** on a flag after
+   submitting and it explains the check and its limit.
+10. With Gemini on, as Rep A ask *"Please submit 4000 KS for 2482 in October, range 3800 to 4200, because ..."*:
+    a receipt appears and Capture updates. As the lead ask *"Is October ready to close?"*, then *"Challenge
+    Rep B's October entry for 2432: which distributor?"*; Rep B sees the note in Capture and in their briefing.
 
 ## Tests
 

@@ -75,7 +75,7 @@ def _orm(row: dict) -> dict:
         "density": "density",
         "priceExseed": "price_exseed",
         "priceFarmgate": "price_farmgate",
-        "valueEur": "value_eur",
+        "valueUsd": "value_usd",
         "netPrice": "net_price",
         "fpiQtyKs": "fpi_qty_ks",
         "comment": "comment",

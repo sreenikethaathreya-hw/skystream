@@ -195,7 +195,7 @@ def segment_rows() -> list[list[str]]:
 
 def competitor_rows() -> list[list[str]]:
     rows = [c for c in seed("competitor_shares") if c["year"] == 2026]
-    return [[c["competitor"], f"{c['sharePct']:.1f}%", f"EUR {c['valueEur'] / 1e6:.2f}M", c["trend"] or "-"]
+    return [[c["competitor"], f"{c['sharePct']:.1f}%", f"USD {c['valueUsd'] / 1e6:.2f}M", c["trend"] or "-"]
             for c in sorted(rows, key=lambda c: -c["sharePct"])]
 
 

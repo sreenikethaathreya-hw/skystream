@@ -12,6 +12,8 @@ from app.models.base import utcnow
 from app.schemas.api import ScopeIn, UserAdminOut
 
 DEMO_COUNTRY = "ES"
+# Owner of an IBP number when no single rep covers its segment; leads see these in the consensus queue.
+UNASSIGNED = "unassigned"
 
 
 @dataclass(frozen=True)
@@ -106,6 +108,31 @@ async def owners_by_segment(
                 for sc in mine
             ):
                 out[s.id].append(user.name)
+    return out
+
+
+async def rep_ids_covering(db: AsyncSession, country_code: str, segments: list[Segment]) -> dict[int, list[str]]:
+    """Ids of the reps who own each segment (demo: the seeded owner; real: active reps whose scopes cover it)."""
+    if get_settings().is_demo:
+        return {s.id: [s.owner_id] if s.owner_id and country_code == DEMO_COUNTRY else [] for s in segments}
+    reps = {
+        u.id
+        for u in (
+            await db.execute(select(AppUser).where(AppUser.role == "rep", AppUser.active.is_(True)))
+        ).scalars()
+    }
+    scopes = (
+        (await db.execute(select(UserScope).where(UserScope.country_code == country_code))).scalars().all()
+    )
+    out: dict[int, list[str]] = {s.id: [] for s in segments}
+    for s in segments:
+        for sc in scopes:
+            if sc.user_id in reps and (
+                (sc.scope_type == "micro" and sc.scope_id == str(s.id))
+                or (sc.scope_type == "mega" and sc.scope_id == s.mega_segment_id)
+            ):
+                out[s.id].append(sc.user_id)
+        out[s.id] = sorted(set(out[s.id]))
     return out
 
 

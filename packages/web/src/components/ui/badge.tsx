@@ -27,6 +27,7 @@ export function Badge({ tone = "neutral", className, ...props }: HTMLAttributes<
 
 const STATUS_TONES: Record<string, Tone> = {
   submitted: "info",
+  needs_justification: "warn",
   approved: "brand",
   discuss: "warn",
   challenged: "crit",
@@ -38,5 +39,5 @@ const STATUS_TONES: Record<string, Tone> = {
 };
 
 export function StatusBadge({ status }: { status: string }) {
-  return <Badge tone={STATUS_TONES[status] ?? "neutral"}>{status}</Badge>;
+  return <Badge tone={STATUS_TONES[status] ?? "neutral"}>{status.replace(/_/g, " ")}</Badge>;
 }

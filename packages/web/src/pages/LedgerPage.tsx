@@ -1,11 +1,15 @@
 import { Gavel } from "lucide-react";
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { AskButton } from "@/components/chat/AskButton";
 import { EntryCard } from "@/components/ledger/EntryCard";
 import { RuleComposer } from "@/components/rules/RuleComposer";
 import { Button } from "@/components/ui/button";
 import { useCube, useEntries, useReps } from "@/hooks/queries";
+import { usePageContext } from "@/hooks/useChat";
 import { useScope } from "@/hooks/useScope";
 import { useSession } from "@/hooks/useSession";
+import { monthName } from "@/lib/format";
 import type { Entry, Scope } from "@/lib/types";
 
 function MissedClaimRule({ entry, scope }: { entry: Entry; scope: Scope }) {
@@ -41,6 +45,14 @@ export function LedgerPage() {
   const { data: entries, isLoading } = useEntries({ scope, segmentId, userId });
   const author = user?.role === "lead" || user?.role === "admin";
   const shown = missedOnly ? entries?.filter((e) => e.claim?.resolution === "contradicted") : entries;
+  const [params] = useSearchParams();
+  const linked = params.get("entry");
+  usePageContext({ page: "ledger", segmentId: segmentId ?? null, entryId: linked });
+  const ownsEntry = (e: Entry) => user?.role === "rep" && e.userId === user.id;
+  const askAbout = (e: Entry) =>
+    e.claim?.resolution === "contradicted"
+      ? `Why was the claim on this ${monthName(e.month)} entry for micro-segment ${e.segmentId} contradicted?`
+      : `Walk me through this ${monthName(e.month)} entry for micro-segment ${e.segmentId}.`;
 
   return (
     <div className="flex flex-col gap-4">
@@ -87,7 +99,20 @@ export function LedgerPage() {
       {isLoading && <p className="text-sm text-muted">Loading...</p>}
       <div className="flex flex-col gap-3" data-testid="ledger-list">
         {shown?.map((e) => (
-          <EntryCard key={e.id} entry={e}>
+          <EntryCard
+            key={e.id}
+            entry={e}
+            highlight={e.id === linked}
+            canNote={author || ownsEntry(e)}
+            ask={
+              e.source !== "history" && (author || ownsEntry(e)) ? (
+                <AskButton
+                  question={askAbout(e)}
+                  context={{ page: "ledger", segmentId: e.segmentId, month: e.month, entryId: e.id }}
+                />
+              ) : undefined
+            }
+          >
             {author && scope && e.claim?.resolution === "contradicted" && <MissedClaimRule entry={e} scope={scope} />}
           </EntryCard>
         ))}

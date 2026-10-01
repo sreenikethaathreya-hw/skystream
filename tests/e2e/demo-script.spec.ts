@@ -180,6 +180,127 @@ test("rep asks the data a question and gets a sourced answer", async ({ page, re
   await page.screenshot({ path: `${SHOTS}/12-ask-the-data.png`, fullPage: true });
 });
 
+test("rep asks why a flag fired from the flags tile", async ({ page, request }) => {
+  expect((await request.post("http://localhost:8000/api/demo/reset")).status()).toBe(204);
+  await page.goto("/capture?segment=2482");
+  await page.evaluate(() => localStorage.setItem("skystream.demoUser", "rep-a"));
+  await page.reload();
+
+  await expect(page.getByTestId("segment-title")).toContainText("2482");
+  await page.getByTestId("demand-input").fill("14500");
+  await expect(page.getByTestId("flag-price_carrying")).toBeVisible();
+  await page.getByTestId("justification-input").fill(SENTENCE);
+  await page.getByTestId("submit-entry").click();
+  await expect(page.getByText(/Submitted 14,500 KS/)).toBeVisible();
+
+  await page.getByTestId("ask-flag-price_carrying").click();
+  const dialog = page.getByRole("dialog", { name: "Ask the data" });
+  await expect(dialog.getByTestId("chat-context")).toContainText("2482");
+  await expect(dialog.getByTestId("chat-message-assistant")).toBeVisible({ timeout: 60_000 });
+  await expect(dialog.getByTestId("chat-source").first()).toContainText("Flags on");
+  await expect(dialog.getByTestId("chat-source").filter({ hasText: "price_carrying" })).toHaveCount(1);
+  await page.screenshot({ path: `${SHOTS}/14-ask-why-flagged.png`, fullPage: true });
+});
+
+test("lead asks about an exception and leaves a note the rep sees", async ({ page, request }) => {
+  expect((await request.post("http://localhost:8000/api/demo/reset")).status()).toBe(204);
+  await page.goto("/capture?segment=2432&month=10");
+  await page.evaluate(() => localStorage.setItem("skystream.demoUser", "rep-b"));
+  await page.reload();
+  await expect(page.getByTestId("segment-title")).toContainText("2432");
+  await page.getByTestId("demand-input").fill("2700");
+  await page.getByTestId("justification-input").fill("Distributor expects more spring planting this year.");
+  await page.getByTestId("submit-entry").click();
+  await expect(page.getByText(/Submitted 2,700 KS/)).toBeVisible();
+
+  await actAs(page, "lead");
+  await page.goto("/consensus");
+  const card = page.getByTestId("exceptions").getByTestId("entry-card").filter({ hasText: "2432" }).first();
+  await expect(card).toBeVisible();
+  await card.getByTestId("ask-exception").click();
+  const dialog = page.getByRole("dialog", { name: "Ask the data" });
+  await expect(dialog.getByTestId("chat-message-assistant")).toBeVisible({ timeout: 60_000 });
+  await expect(dialog.getByTestId("chat-context")).toContainText("2432");
+  await expect(dialog.getByTestId("chat-message-assistant").last()).toContainText("Rep B");
+  await expect(dialog.getByTestId("chat-source").first()).toContainText("Entry 2432");
+  await page.screenshot({ path: `${SHOTS}/15-ask-about-exception.png`, fullPage: true });
+  await dialog.getByRole("button", { name: "Close" }).click();
+
+  await card.getByLabel("Add a note").fill("Which distributor, and how many hectares?");
+  await card.getByRole("button", { name: "Add note" }).click();
+  await expect(card.getByTestId("entry-note")).toContainText("Which distributor");
+
+  await actAs(page, "rep-b");
+  await page.goto("/capture?segment=2432&month=10");
+  await expect(page.getByTestId("entry-notes")).toContainText("Which distributor, and how many hectares?");
+});
+
+test("assistant makes changes with Gemini on: IBP justification and a lead decision", async ({ page, request }) => {
+  test.skip(!process.env.E2E_GEMINI, "needs the live Gemini agent (set E2E_GEMINI=1 with GEMINI_ENABLED=true)");
+  expect((await request.post("http://localhost:8000/api/demo/reset")).status()).toBe(204);
+  const admin = { "X-Demo-User": "admin" };
+  const settings = "http://localhost:8000/api/admin/settings";
+  expect((await request.put(settings, { headers: admin, data: { demandSource: "ibp" } })).status()).toBe(200);
+  try {
+    await page.goto("/capture?segment=2432&month=10");
+    await page.evaluate(() => localStorage.setItem("skystream.demoUser", "rep-b"));
+    await page.reload();
+    await page.getByTestId("ask-the-data").click();
+    const dialog = page.getByRole("dialog", { name: "Ask the data" });
+    await dialog
+      .getByLabel("Ask a question about the data")
+      .fill("Justify my October IBP number for 2432: Distributor confirmed two large spring bookings for October.");
+    await dialog.getByRole("button", { name: "Send" }).click();
+    await expect(dialog.getByTestId("chat-action")).toContainText("Justified the IBP number", { timeout: 90_000 });
+    await dialog.getByRole("button", { name: "Close" }).click();
+
+    await actAs(page, "lead");
+    await page.goto("/consensus");
+    await page.getByTestId("ask-the-data").click();
+    await dialog.getByLabel("Ask a question about the data").fill("Approve Rep B's October entry for 2432.");
+    await dialog.getByRole("button", { name: "Send" }).click();
+    await expect(dialog.getByTestId("chat-action")).toContainText("Approved", { timeout: 90_000 });
+    await page.screenshot({ path: `${SHOTS}/16-assistant-change.png`, fullPage: true });
+  } finally {
+    await request.put(settings, { headers: admin, data: { demandSource: "manual" } });
+  }
+});
+
+test("IBP mode: the rep justifies a flagged IBP number and the lead sees it", async ({ page, request }) => {
+  expect((await request.post("http://localhost:8000/api/demo/reset")).status()).toBe(204);
+  const admin = { "X-Demo-User": "admin" };
+  const settings = "http://localhost:8000/api/admin/settings";
+  expect((await request.put(settings, { headers: admin, data: { demandSource: "ibp" } })).status()).toBe(200);
+  try {
+    await page.goto("/capture");
+    await page.evaluate(() => localStorage.setItem("skystream.demoUser", "rep-b"));
+    await page.reload();
+
+    await page.getByTestId("segment-2432").click();
+    await page.getByRole("button", { name: "Oct", exact: true }).click();
+    await expect(page.getByTestId("ibp-panel")).toContainText("Committed in IBP: 7,090 KS");
+    await expect(page.getByTestId("ibp-varieties")).toContainText("Bokken");
+    await expect(page.getByTestId("flag-share_jump")).toBeVisible();
+    await expect(page.getByTestId("justify-entry")).toBeDisabled();
+
+    // A what-if changes the live math but cannot be submitted; the number belongs to IBP.
+    await page.getByTestId("demand-input").fill("3000");
+    await expect(page.getByTestId("what-if-note")).toBeVisible();
+    await page.getByRole("button", { name: "Back to the IBP number" }).click();
+
+    await page.getByTestId("justification-input").fill("Distributor confirmed two large spring bookings for October.");
+    await page.getByTestId("justify-entry").click();
+    await expect(page.getByText(/Justified 7,090 KS/)).toBeVisible();
+    await page.screenshot({ path: `${SHOTS}/13-ibp-justify.png`, fullPage: true });
+
+    await actAs(page, "lead");
+    await page.goto("/ledger");
+    await expect(page.getByTestId("ledger-list")).toContainText("IBP");
+  } finally {
+    await request.put(settings, { headers: admin, data: { demandSource: "manual" } });
+  }
+});
+
 test("admin uploads monthly actuals and the rep's claim resolves", async ({ page, request }) => {
   expect((await request.post("http://localhost:8000/api/demo/reset")).status()).toBe(204);
   await page.goto("/capture");

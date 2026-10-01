@@ -73,6 +73,9 @@ async def load_everything(c: AsyncClient) -> None:
         ("actuals", "actuals_2025.csv"),
     ]:
         await upload(c, kind, filename)
+    # Real mode defaults to IBP-imported demand; these tests exercise numbers typed in Capture.
+    saved = await c.put("/api/admin/settings", json={"demandSource": "manual"}, headers=ADMIN)
+    assert saved.status_code == 200, saved.text
 
 
 async def test_auth_guards(client: AsyncClient) -> None:
@@ -146,7 +149,7 @@ async def test_monthly_plan_basis_follows_uploads(client: AsyncClient) -> None:
     await load_everything(client)
     es = (await client.get("/api/segments/cube?country=ES&mega=SP01", headers=ADMIN)).json()
     basis = {s["id"]: (s["planBasis"], s["lastYearBasis"]) for s in es["segments"]}
-    assert basis == {2482: ("actuals_profile", "actuals"), 2432: ("flat", "plan")}
+    assert basis == {2482: ("actuals_profile", "actuals"), 2432: ("flat", "annual_actuals")}
     ctx = next(s for s in es["segments"] if s["id"] == 2482)["context"]
     assert ctx["monthlyPlan"][8] > ctx["monthlyPlan"][0] * 10
     await upload(client, "seasonality", "seasonality.csv")

@@ -41,7 +41,7 @@ def build_mega(ref: Reference, year: int) -> MegaContext:
         if m:
             market_value += m.qty_ks * m.price_exseed
         if p:
-            syngenta_value += p.value_eur
+            syngenta_value += p.value_usd
             if m and m.density:
                 implied_ha += p.qty_ks / m.density
     rows = [c for c in ref.competitors if c.year == year]
@@ -49,8 +49,8 @@ def build_mega(ref: Reference, year: int) -> MegaContext:
     first = ref.segments[0] if ref.segments else None
     return MegaContext(
         name=getattr(first, "mega_segment_desc", "") or "",
-        market_value_eur=market_value,
-        syngenta_value_eur=syngenta_value,
+        market_value_usd=market_value,
+        syngenta_value_usd=syngenta_value,
         syngenta_share_pct=syngenta.share_pct if syngenta else 0.0,
         competitors=[
             Competitor(name=c.competitor, share_pct=c.share_pct)
@@ -62,16 +62,21 @@ def build_mega(ref: Reference, year: int) -> MegaContext:
     )
 
 
+def plan_row_basis(row_year: int, planning_year: int) -> str:
+    """Syngenta5YrsSales rows before the planning year are actual sales; the planning year onward is plan."""
+    return "actual" if row_year < planning_year else "plan"
+
+
 def last_year_basis(ref: Reference, segment_id: int, year: int) -> str:
-    """'actuals' when all 12 months of last year's actuals are loaded, else 'plan' (or 'none')."""
+    """'actuals' with all 12 monthly actuals, else 'annual_actuals' from the 5-year sales file, else 'none'."""
     rows = _monthly(ref.monthly_actuals, year - 1).get(segment_id)
     if rows and all(r is not None for r in rows):
         return "actuals"
-    return "plan" if (segment_id, year - 1) in _index(ref.plan) else "none"
+    return "annual_actuals" if (segment_id, year - 1) in _index(ref.plan) else "none"
 
 
 def monthly_history(ref: Reference, segment_id: int, year: int) -> list[YearMonthly]:
-    """Each earlier year's monthly volume: full actuals when all 12 months are loaded, else phased plan."""
+    """Each earlier year's monthly volume: full monthly actuals, else the annual actual phased by the curve."""
     years = sorted(
         {r.year for r in ref.monthly_actuals if r.segment_id == segment_id and r.year < year}
         | {r.year for r in ref.monthly_plan if r.segment_id == segment_id and r.year < year}
@@ -84,7 +89,9 @@ def monthly_history(ref: Reference, segment_id: int, year: int) -> list[YearMont
             continue
         plan_rows = _monthly(ref.monthly_plan, y).get(segment_id)
         if plan_rows and any(r is not None for r in plan_rows):
-            out.append(YearMonthly(year=y, basis="plan", qty_ks=[r.qty_ks if r else 0.0 for r in plan_rows]))
+            out.append(
+                YearMonthly(year=y, basis="annual_actuals", qty_ks=[r.qty_ks if r else 0.0 for r in plan_rows])
+            )
     return out
 
 
@@ -107,7 +114,7 @@ def build_segment_context(
     use_actuals = last_year_basis(ref, segment_id, year) == "actuals"
     last_rows = last_actuals if use_actuals else _monthly(ref.monthly_plan, year - 1)[segment_id]
     last_qty = sum(r.qty_ks for r in last_actuals) if use_actuals else (last.qty_ks if last else 0.0)
-    last_value = sum(r.value_eur for r in last_actuals) if use_actuals else (last.value_eur if last else 0.0)
+    last_value = sum(r.value_usd for r in last_actuals) if use_actuals else (last.value_usd if last else 0.0)
 
     revealed = [r if r is not None and r.month < clock_month else None for r in actual_rows]
     years = sorted({r.year for r in ref.market if r.segment_id == segment_id})
@@ -121,10 +128,10 @@ def build_segment_context(
         density=m.density,
         price_exseed=m.price_exseed,
         plan_qty_ks=p.qty_ks if p else 0.0,
-        plan_value_eur=p.value_eur if p else 0.0,
+        plan_value_usd=p.value_usd if p else 0.0,
         plan_net_price=p.net_price if p else 0.0,
         last_year_qty_ks=last_qty,
-        last_year_value_eur=last_value,
+        last_year_value_usd=last_value,
         market_history=[
             MarketPoint(
                 year=y,
@@ -135,7 +142,7 @@ def build_segment_context(
             if y <= year
         ],
         plan_qty_history=[
-            MarketPoint(year=y, hectares=0.0, qty_ks=plan[(segment_id, y)].qty_ks)
+            MarketPoint(year=y, hectares=0.0, qty_ks=plan[(segment_id, y)].qty_ks, basis=plan_row_basis(y, year))
             for y in plan_years
             if y <= year
         ],
@@ -146,7 +153,7 @@ def build_segment_context(
         ],
         monthly_plan=[r.qty_ks if r else 0.0 for r in monthly_plan],
         monthly_actual=[r.qty_ks if r else None for r in revealed],
-        monthly_actual_value=[r.value_eur if r else None for r in revealed],
+        monthly_actual_value=[r.value_usd if r else None for r in revealed],
         last_year_monthly=[r.qty_ks if r else 0.0 for r in last_rows],
         monthly_history=monthly_history(ref, segment_id, year),
         submitted={str(month): value for month, value in submitted.items() if month >= clock_month},

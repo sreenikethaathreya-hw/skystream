@@ -25,6 +25,29 @@ class Link:
 
 
 @dataclass
+class Action:
+    kind: str
+    target_type: str
+    target_id: str
+    summary: str
+    link: str | None = None
+
+
+@dataclass
+class Download:
+    label: str
+    href: str
+
+
+@dataclass
+class TurnParts:
+    sources: list[Source] = field(default_factory=list)
+    links: list[Link] = field(default_factory=list)
+    actions: list[Action] = field(default_factory=list)
+    downloads: list[Download] = field(default_factory=list)
+
+
+@dataclass
 class HistoryMessage:
     role: str
     text: str
@@ -33,11 +56,41 @@ class HistoryMessage:
     provider: str | None = None
     sources: list[Source] = field(default_factory=list)
     links: list[Link] = field(default_factory=list)
+    actions: list[Action] = field(default_factory=list)
+    downloads: list[Download] = field(default_factory=list)
 
 
 def _label(key: str) -> str:
     words = key.replace("_pct", " (%)").replace("_ks", " (KS)").replace("_ha", " (ha)").replace("_", " ")
     return words[:1].upper() + words[1:]
+
+
+def _internal(path: object) -> bool:
+    return isinstance(path, str) and path.startswith("/") and not path.startswith("//")
+
+
+def turn_parts(results: list[tuple[str, dict]]) -> TurnParts:
+    sources, links = sources_and_links(results)
+    actions: list[Action] = []
+    downloads: dict[str, Download] = {}
+    for _, result in results:
+        if result.get("status") != "success":
+            continue
+        action = result.get("action")
+        if isinstance(action, dict) and action.get("kind"):
+            actions.append(
+                Action(
+                    kind=str(action["kind"]),
+                    target_type=str(action.get("target_type", "")),
+                    target_id=str(action.get("target_id", "")),
+                    summary=str(action.get("summary", "")),
+                    link=action.get("link") if _internal(action.get("link")) else None,
+                )
+            )
+        download = result.get("download")
+        if isinstance(download, dict) and str(download.get("href", "")).startswith("/export/"):
+            downloads[download["href"]] = Download(label=str(download.get("label", "Download")), href=download["href"])
+    return TurnParts(sources=sources, links=links, actions=actions, downloads=list(downloads.values()))
 
 
 def sources_and_links(results: list[tuple[str, dict]]) -> tuple[list[Source], list[Link]]:
@@ -60,7 +113,7 @@ def sources_and_links(results: list[tuple[str, dict]]) -> tuple[list[Source], li
                 Source(tool=tool, label=str(result.get("source", tool)), columns=result["columns"], rows=result["rows"])
             )
         link = result.get("link")
-        if isinstance(link, dict) and str(link.get("to", "")).startswith("/"):
+        if isinstance(link, dict) and _internal(link.get("to")):
             links[link["to"]] = Link(label=str(link.get("label", link["to"])), to=link["to"])
     return sources, list(links.values())
 
@@ -120,7 +173,7 @@ def to_messages(session) -> list[HistoryMessage]:
             continue
         meta = event.custom_metadata or {}
         results = pending + [(r[0], r[1]) for r in meta.get("results", []) if len(r) == 2]
-        sources, links = sources_and_links(results)
+        parts = turn_parts(results)
         messages.append(
             HistoryMessage(
                 role="assistant",
@@ -128,8 +181,10 @@ def to_messages(session) -> list[HistoryMessage]:
                 created_at=created,
                 numbers_redacted=bool(meta.get("numbers_redacted")),
                 provider=meta.get("provider"),
-                sources=sources,
-                links=links,
+                sources=parts.sources,
+                links=parts.links,
+                actions=parts.actions,
+                downloads=parts.downloads,
             )
         )
         pending = []

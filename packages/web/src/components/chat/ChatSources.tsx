@@ -2,9 +2,9 @@ import { NavLink } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import type { ChatCell, ChatLink, ChatSource } from "@/lib/types";
 
-function cell(value: ChatCell): string {
+function cell(value: ChatCell, isYear = false): string {
   if (value === null) return "–";
-  if (typeof value === "number") return value.toLocaleString("en-US");
+  if (typeof value === "number") return isYear ? String(value) : value.toLocaleString("en-US");
   if (typeof value === "boolean") return value ? "yes" : "no";
   return value;
 }
@@ -37,7 +37,7 @@ export function ChatSources({ sources, links }: { sources: ChatSource[]; links: 
                   <tr key={r} className="border-b border-line/60 last:border-0">
                     {row.map((value, c) => (
                       <td key={c} className="py-1 pr-3 align-top tabular-nums text-ink">
-                        {cell(value)}
+                        {cell(value, source.columns[c] === "Year" || row[0] === "Year")}
                       </td>
                     ))}
                   </tr>

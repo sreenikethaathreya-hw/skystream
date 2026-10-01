@@ -8,7 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.config import get_settings
 from app.constants.demo import MONTH_NAMES
 from app.models import DemandEntry, Segment
-from app.services.context_service import segment_label
+from app.services.context_service import COMMITTED_SOURCES, segment_label
 from app.services.entry_service import scope_filter
 from app.services.rep_service import is_weak, track_records
 from app.services.upload_service import data_quality_sections
@@ -27,6 +27,7 @@ HEADER = [
     "build_ks",
     "rep",
     "reason",
+    "source",
 ]
 
 
@@ -36,7 +37,7 @@ async def supply_csv(db: AsyncSession, country: str | None = None, mega: str | N
     names = await user_names(db)
     query = (
         select(DemandEntry)
-        .where(DemandEntry.source == "live", DemandEntry.status == "approved")
+        .where(DemandEntry.source.in_(COMMITTED_SOURCES), DemandEntry.status == "approved")
         .order_by(DemandEntry.country_code, DemandEntry.segment_id, DemandEntry.year, DemandEntry.month)
     )
     entries = (await db.execute(scope_filter(query, country, mega))).scalars()
@@ -63,6 +64,7 @@ async def supply_csv(db: AsyncSession, country: str | None = None, mega: str | N
                 round(e.low if build_to == "low" else e.value),
                 names.get(e.user_id, e.user_id),
                 reason,
+                "IBP" if e.source == "ibp" else "Skystream",
             ]
         )
     return buffer.getvalue()
