@@ -21,6 +21,8 @@ from app.models.seasonality import Seasonality
 from app.models.segment import Segment
 from app.models.upload_batch import UploadBatch
 from app.models.user_scope import UserScope
+from app.models.user_widget import UserWidget
+from app.models.user_widget_pref import UserWidgetPref
 from app.models.variety_map import VarietyMap
 
 __all__ = [
@@ -47,5 +49,7 @@ __all__ = [
     "Segment",
     "UploadBatch",
     "UserScope",
+    "UserWidget",
+    "UserWidgetPref",
     "VarietyMap",
 ]

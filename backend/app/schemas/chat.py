@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Any
 
 from pydantic import Field
 
@@ -29,6 +30,9 @@ class ChatSourceOut(CamelModel):
     label: str
     columns: list[str]
     rows: list[list[Cell]]
+    # The call's arguments, so the UI can pin this table as a widget that re-runs the same tool.
+    args: dict[str, Any] | None = None
+    pinnable: bool = False
 
 
 class ChatLinkOut(CamelModel):

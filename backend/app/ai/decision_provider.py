@@ -425,9 +425,11 @@ class DecisionProvider:
         from google.adk.sessions.base_session_service import GetSessionConfig
         from google.genai import types
 
+        from app.ai.data_agent.history import with_call_args
         from app.ai.data_agent.policy import POLICY_KEY
 
         answer, redacted, results = "", False, []
+        calls: dict[str, dict] = {}
         async for event in runtime.runner.run_async(
             user_id=chat_policy.user_id,
             session_id=session_id,
@@ -438,11 +440,13 @@ class DecisionProvider:
                 get_session_config=GetSessionConfig(num_recent_events=self._settings.chat_history_events),
             ),
         ):
-            if on_event is not None:
-                for call in event.get_function_calls():
+            for call in event.get_function_calls():
+                if call.id:
+                    calls[call.id] = dict(call.args or {})
+                if on_event is not None:
                     await on_event("tool_started", {"tool": call.name})
             for response in event.get_function_responses():
-                results.append((response.name, dict(response.response or {})))
+                results.append((response.name, with_call_args(dict(response.response or {}), calls.get(response.id or ""))))
                 if on_event is not None:
                     await on_event(
                         "tool_done", {"tool": response.name, "status": (response.response or {}).get("status", "?")}

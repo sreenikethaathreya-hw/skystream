@@ -1,8 +1,19 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type APIRequestContext, type Page } from "@playwright/test";
 
 const SHOTS = "screenshots";
 const SENTENCE =
   "Two Almeria cooperatives are switching from Sur Seeds to Leontes because of T. parvispinus tolerance.";
+
+// Capture widgets start hidden; the scripts that read the tiles add them for the user first.
+const ALL_WIDGETS = ["baseline", "share", "ytg", "hectares", "volume_price", "track_record"];
+
+async function showWidgets(request: APIRequestContext, userId: string) {
+  const res = await request.put("http://localhost:8000/api/me/widgets/prefs", {
+    data: { visible: ALL_WIDGETS },
+    headers: { "X-Demo-User": userId },
+  });
+  expect(res.status()).toBe(200);
+}
 
 async function actAs(page: Page, userId: string) {
   await page.getByLabel("Acting as").selectOption(userId);
@@ -19,6 +30,7 @@ async function openResolvedRow(page: Page) {
 
 test("demo script: capture, flag, structure, submit, consensus, advance, track record", async ({ page, request }) => {
   expect((await request.post("http://localhost:8000/api/demo/reset")).status()).toBe(204);
+  await showWidgets(request, "rep-a");
   await page.goto("/capture");
   await page.evaluate(() => localStorage.setItem("skystream.demoUser", "rep-a"));
   await page.reload();
@@ -112,6 +124,7 @@ test("demo script: capture, flag, structure, submit, consensus, advance, track r
 
 test("storyboard: baseline benchmarks and the share-jump copilot message", async ({ page, request }) => {
   expect((await request.post("http://localhost:8000/api/demo/reset")).status()).toBe(204);
+  await showWidgets(request, "rep-b");
   await page.goto("/capture");
   await page.evaluate(() => localStorage.setItem("skystream.demoUser", "rep-b"));
   await page.reload();

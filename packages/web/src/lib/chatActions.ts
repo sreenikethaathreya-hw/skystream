@@ -37,6 +37,7 @@ const TOOL_LABELS: Record<string, string> = {
   list_lead_rules: "Reading lead rules",
   list_open_exceptions: "Reading the consensus queue",
   sum_segment_figures: "Adding up figures",
+  top_segments: "Ranking the top segments",
   get_my_briefing: "Checking what needs attention",
   explain_entry_flags: "Explaining the flags",
   preview_entry_impact: "Running the what-if (not saved)",
