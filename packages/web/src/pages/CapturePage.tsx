@@ -8,6 +8,7 @@ import { IbpPanel } from "@/components/capture/IbpPanel";
 import { JustificationBox } from "@/components/capture/JustificationBox";
 import { MonthGrid } from "@/components/capture/MonthGrid";
 import { SegmentList } from "@/components/capture/SegmentList";
+import { SubmitBar, type SubmitAction } from "@/components/capture/SubmitBar";
 import { SubmitReceipt } from "@/components/capture/SubmitReceipt";
 import { VolumePriceBar } from "@/components/capture/VolumePriceBar";
 import { AskButton } from "@/components/chat/AskButton";
@@ -235,6 +236,27 @@ export function CapturePage() {
       onError: (e) => toast({ tone: "error", title: "Submit failed", body: `${e.message} Your number is still here; try again.` }),
     });
 
+  const action: SubmitAction = ibpMode
+    ? {
+        label: justify.isPending
+          ? "Saving…"
+          : ibpEntry
+            ? `Submit ${monthName(month)} justification`
+            : `No IBP number for ${monthName(month)}`,
+        onClick: () => void onJustify(),
+        disabled: !canJustify,
+        testId: "justify-entry",
+      }
+    : {
+        label: submit.isPending ? "Submitting…" : `Submit ${monthName(month)} demand`,
+        onClick: onSubmit,
+        disabled: !canSubmit,
+        testId: "submit-entry",
+      };
+  const reasonMissing = ibpMode ? needsJustification && !justification.trim() : missingReason;
+  const blocker = whatIf ? "What-if only: go back to the IBP number to submit" : reasonMissing ? "Add a reason to submit a flagged number" : null;
+  const onFixBlocker = reasonMissing && !whatIf ? () => document.getElementById("justification")?.focus() : undefined;
+
   return (
     <div className="grid gap-6 lg:grid-cols-[260px_1fr]">
       <aside className="flex flex-col gap-4">
@@ -242,7 +264,14 @@ export function CapturePage() {
         {user?.role === "rep" && <TrackRecordInline userId={user.id} />}
       </aside>
 
-      <section className="flex min-w-0 flex-col gap-4">
+      <section
+        className="flex min-w-0 flex-col gap-4"
+        onKeyDown={(e) => {
+          if (e.key !== "Enter" || !(e.ctrlKey || e.metaKey) || action.disabled) return;
+          e.preventDefault();
+          action.onClick();
+        }}
+      >
         <Card>
           <CardBody className="flex flex-col gap-4 pt-5">
             <div className="flex flex-wrap items-start justify-between gap-3">
@@ -357,24 +386,6 @@ export function CapturePage() {
           <EntryNotes entryId={current.id} notes={notes.data ?? []} canWrite={owns || ownsIbp} />
         ) : null}
 
-        <div className="flex items-center justify-end gap-3">
-          <p role="status" className="text-xs text-crit-700">
-            {missingReason && !whatIf ? "Add a reason to submit a flagged number." : ""}
-          </p>
-          {ibpMode ? (
-            <Button onClick={onJustify} disabled={!canJustify} data-testid="justify-entry">
-              {justify.isPending
-                ? "Saving…"
-                : ibpEntry
-                  ? `Submit ${monthName(month)} justification`
-                  : `No IBP number for ${monthName(month)}`}
-            </Button>
-          ) : (
-            <Button onClick={onSubmit} disabled={!canSubmit} data-testid="submit-entry">
-              {submit.isPending ? "Submitting…" : `Submit ${monthName(month)} demand`}
-            </Button>
-          )}
-        </div>
         {receipt && <SubmitReceipt entry={receipt} />}
 
         <section aria-labelledby="impact-title" className="mt-4 flex flex-col gap-4">
@@ -388,6 +399,17 @@ export function CapturePage() {
           </div>
           <VolumePriceBar revenue={live.impact.revenue} money={money} />
         </section>
+
+        {(owns || ownsIbp) && (
+          <SubmitBar
+            entry={entry}
+            onValueChange={(value) => setDraft({ ...draft, value })}
+            flags={live.flags}
+            blocker={blocker}
+            onFixBlocker={onFixBlocker}
+            action={action}
+          />
+        )}
       </section>
     </div>
   );

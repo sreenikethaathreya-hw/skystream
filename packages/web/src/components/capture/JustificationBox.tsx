@@ -57,6 +57,7 @@ export function JustificationBox({
               onChange={(e) => onChange(e.target.value)}
               rows={2}
               maxLength={MAX_LENGTH}
+              id="justification"
               name="justification"
               aria-label="Why this number"
               data-testid="justification-input"

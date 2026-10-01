@@ -1,6 +1,9 @@
 import { useState } from "react";
-import { fmtNum, monthName, parseWhole } from "@/lib/format";
+import { ArrowUp } from "lucide-react";
+import { DemandField } from "@/components/capture/DemandField";
+import { fmtNum, monthName } from "@/lib/format";
 import { USD, type Money } from "@/lib/money";
+import { cn } from "@/lib/utils";
 
 export interface DraftNumbers {
   value: number;
@@ -15,7 +18,7 @@ const parsePrice = (text: string) => {
   return text.trim() === "" || !Number.isFinite(n) ? null : Math.max(0, n);
 };
 
-const INPUT = "tabular h-11 rounded-md border border-line bg-surface px-3";
+const INPUT = "tabular h-11 w-full min-w-0 rounded-md border border-line bg-surface px-3";
 
 export function EntryPanel({
   month,
@@ -35,10 +38,7 @@ export function EntryPanel({
   /** IBP mode: the number box becomes a what-if; the committed number lives in IBP. */
   committedInIbp?: number | null;
 }) {
-  const [demandText, setDemandText] = useState("");
   const [priceText, setPriceText] = useState("");
-  // Show what the rep typed while it still matches the draft; otherwise the draft changed elsewhere (new cell).
-  const demandShown = parseWhole(demandText) === draft.value ? demandText : fmtNum(draft.value);
   const displayPrice = draft.price == null ? null : Number(money.fromUsd(draft.price).toFixed(2));
   const priceShown = parsePrice(priceText) === displayPrice ? priceText : (displayPrice?.toString() ?? "");
   const low = draft.value * (1 - draft.lowPct);
@@ -49,26 +49,24 @@ export function EntryPanel({
       : `What if (not submitted) · ${committedInIbp === null ? "no IBP number yet" : `IBP ${fmtNum(committedInIbp)}`} · plan ${fmtNum(planMonth)}`;
 
   return (
-    <div className="grid gap-x-8 gap-y-4 md:grid-cols-[1.4fr_1fr_0.8fr] md:items-end">
-      <label className="flex flex-col gap-1">
-        <span className="eyebrow">{demandLabel}</span>
-        <input
-          type="text"
-          inputMode="numeric"
-          name="demand"
-          autoComplete="off"
-          spellCheck={false}
-          placeholder="0"
-          data-testid="demand-input"
-          value={demandShown}
-          onChange={(e) => {
-            setDemandText(e.target.value);
-            onChange({ ...draft, value: parseWhole(e.target.value) });
-          }}
-          onBlur={() => setDemandText(draft.value ? fmtNum(draft.value) : "")}
-          className="font-num tabular w-full border-0 border-b-2 border-ink bg-transparent px-0 pb-1 text-6xl font-semibold leading-tight tracking-tight placeholder:text-line focus-visible:border-brand-600 focus-visible:outline-none"
-        />
-      </label>
+    <div className="grid gap-x-8 gap-y-4 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_minmax(0,0.8fr)] md:items-start">
+      <div className="flex flex-col gap-1">
+        <label className="flex flex-col gap-1">
+          <span className="eyebrow">{demandLabel}</span>
+          <DemandField value={draft.value} onChange={(value) => onChange({ ...draft, value })} testId="demand-input" />
+        </label>
+        <span
+          className={cn(
+            "flex items-center gap-1.5 text-sm font-semibold",
+            committedInIbp === undefined ? "text-brand-700" : "text-warn-700",
+          )}
+        >
+          <ArrowUp aria-hidden className="size-4 shrink-0" />
+          {committedInIbp === undefined
+            ? "Type your number in thousand seeds (KS)"
+            : "Try a number to see its effect; it is not submitted"}
+        </span>
+      </div>
 
       <div className="flex flex-col gap-1" role="group" aria-label="Range">
         <span className="eyebrow tabular">

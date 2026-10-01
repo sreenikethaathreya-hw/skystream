@@ -34,6 +34,12 @@ test("demo script: capture, flag, structure, submit, consensus, advance, track r
   await demand.fill("16000");
   await expect(page.getByTestId("share-value")).not.toHaveText(baselineShare ?? "");
 
+  // The submit bar edits the same number as the main box.
+  const barDemand = page.getByTestId("bar-demand-input");
+  await expect(barDemand).toHaveValue("16,000");
+  await barDemand.fill("16500");
+  await expect(demand).toHaveValue("16,500");
+
   // 3. An unrealistic number trips the critical flags and makes the justification required.
   await demand.fill("40000");
   await expect(page.getByTestId("flag-share_over_100")).toBeVisible();
