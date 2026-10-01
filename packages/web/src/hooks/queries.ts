@@ -17,6 +17,8 @@ import type {
   ScopeOption,
   TrackRecord,
   UploadBatch,
+  WidgetRun,
+  WidgetsState,
   UploadKind,
 } from "@/lib/types";
 
@@ -95,3 +97,16 @@ export const useEntryNotes = (entryId: string | null | undefined) =>
 
 export const useAdminSettings = () =>
   useQuery({ queryKey: ["/admin/settings"], queryFn: () => api.get<AppSettings>("/admin/settings") });
+
+export const WIDGETS_KEY = ["me", "widgets"] as const;
+
+export const useWidgets = () =>
+  useQuery({ queryKey: WIDGETS_KEY, queryFn: () => api.get<WidgetsState>("/me/widgets"), staleTime: Infinity });
+
+/** Re-runs a pinned widget's tool on the server; nothing about its figures is stored. */
+export const useWidgetRun = (id: number) =>
+  useQuery({
+    queryKey: [...WIDGETS_KEY, "run", id],
+    queryFn: () => api.get<WidgetRun>(`/me/widgets/${id}/run`),
+    staleTime: 60_000,
+  });

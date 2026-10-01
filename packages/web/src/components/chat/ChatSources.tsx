@@ -1,16 +1,71 @@
+import { useState, type FormEvent } from "react";
 import { NavLink } from "react-router-dom";
-import { ArrowUpRight } from "lucide-react";
-import { fmtDecimal } from "@/lib/format";
-import type { ChatCell, ChatLink, ChatSource } from "@/lib/types";
+import { ArrowUpRight, Pin } from "lucide-react";
+import { SourceTable } from "@/components/chat/SourceTable";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/toast";
+import { usePinWidget } from "@/hooks/mutations";
+import { useScope } from "@/hooks/useScope";
+import type { ChatLink, ChatSource } from "@/lib/types";
 
-// Identifiers and years read wrong with thousands separators ("2,432").
-const PLAIN_COLUMN = /(year|segment|id)$/i;
+/** Saves a table as a Capture widget: the tool and its arguments, re-run fresh on every view. */
+function PinControl({ source }: { source: ChatSource }) {
+  const { scope } = useScope();
+  const pin = usePinWidget();
+  const toast = useToast();
+  const [title, setTitle] = useState<string | null>(null);
+  if (!scope || !source.args) return null;
 
-function cell(value: ChatCell, column: string): string {
-  if (value === null) return "–";
-  if (typeof value === "number") return PLAIN_COLUMN.test(column) ? String(value) : fmtDecimal(value);
-  if (typeof value === "boolean") return value ? "yes" : "no";
-  return value;
+  if (pin.isSuccess) {
+    return <span className="text-[11px] font-medium text-brand-700">Pinned to Capture</span>;
+  }
+  if (title === null) {
+    return (
+      <button
+        type="button"
+        onClick={() => setTitle(source.label)}
+        className="inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-[11px] font-medium text-brand-700 hover:bg-brand-50"
+        data-testid="pin-source"
+      >
+        <Pin size={12} aria-hidden="true" />
+        Pin as widget
+      </button>
+    );
+  }
+
+  const save = (event: FormEvent) => {
+    event.preventDefault();
+    if (!title.trim() || !source.args) return;
+    pin.mutate(
+      { title: title.trim(), tool: source.tool, args: source.args, ...scope },
+      {
+        onSuccess: () => toast({ tone: "success", title: "Pinned to Capture", body: "It shows under My widgets." }),
+        onError: (e) => toast({ tone: "error", title: "Could not pin the table", body: e.message }),
+      },
+    );
+  };
+
+  return (
+    <form onSubmit={save} className="flex items-center gap-1.5" data-testid="pin-form">
+      <label className="sr-only" htmlFor={`pin-${source.tool}`}>
+        Widget title
+      </label>
+      <input
+        id={`pin-${source.tool}`}
+        value={title}
+        maxLength={120}
+        onChange={(e) => setTitle(e.target.value)}
+        className="h-7 w-48 rounded border border-line bg-surface px-2 text-xs text-ink"
+        data-autofocus
+      />
+      <Button size="sm" type="submit" className="h-7" disabled={!title.trim() || pin.isPending}>
+        {pin.isPending ? "Pinning…" : "Pin"}
+      </Button>
+      <Button size="sm" variant="ghost" type="button" className="h-7" onClick={() => setTitle(null)}>
+        Cancel
+      </Button>
+    </form>
+  );
 }
 
 export function ChatSources({ sources, links }: { sources: ChatSource[]; links: ChatLink[] }) {
@@ -26,29 +81,13 @@ export function ChatSources({ sources, links }: { sources: ChatSource[]; links: 
         >
           <summary className="cursor-pointer px-3 py-1.5 text-xs font-medium text-ink">{source.label}</summary>
           <div className="max-h-64 overflow-auto px-3 pb-2">
-            <table className="w-full text-left text-xs">
-              <thead>
-                <tr>
-                  {source.columns.map((column) => (
-                    <th key={column} className="whitespace-nowrap border-b border-line py-1 pr-3 font-medium text-muted">
-                      {column}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {source.rows.map((row, r) => (
-                  <tr key={r} className="border-b border-line/60 last:border-0">
-                    {row.map((value, c) => (
-                      <td key={c} className="py-1 pr-3 align-top tabular-nums text-ink">
-                        {cell(value, source.columns[c] ?? "")}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <SourceTable source={source} />
           </div>
+          {source.pinnable && (
+            <div className="border-t border-line/60 px-3 py-1.5">
+              <PinControl source={source} />
+            </div>
+          )}
         </details>
       ))}
       {links.length > 0 && (

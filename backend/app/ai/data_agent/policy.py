@@ -25,7 +25,34 @@ LEAD_ONLY_TOOLS = frozenset(
 )
 ADMIN_ONLY_TOOLS = frozenset({"get_upload_status", "list_user_scopes", "get_data_quality"})
 
-REP_WRITE_TOOLS = frozenset({"submit_demand_entry", "justify_ibp_entry"})
+# Read tools whose table a user may pin as a dashboard widget. A widget re-runs the tool with the stored arguments
+# under the viewer's current policy, so no figure is ever stored; tools that take user numbers or prose stay out.
+PINNABLE_TOOLS = frozenset(
+    {
+        "list_segments",
+        "get_monthly_series",
+        "list_demand_entries",
+        "get_ibp_forecast",
+        "get_competitor_shares",
+        "get_rep_track_records",
+        "list_lead_rules",
+        "list_open_exceptions",
+        "sum_segment_figures",
+        "top_segments",
+        "get_grower_potential",
+        "list_claims",
+        "get_portfolio_summary",
+        "get_month_close_summary",
+        "get_submission_coverage",
+        "get_rep_accuracy_history",
+        "rank_segments",
+        "summarize_claims",
+        "get_upload_status",
+        "get_data_quality",
+    }
+)
+
+REP_WRITE_TOOLS =frozenset({"submit_demand_entry", "justify_ibp_entry"})
 LEAD_WRITE_TOOLS = frozenset({"decide_entry", "bulk_approve_routine", "activate_lead_rule", "retire_lead_rule"})
 SHARED_WRITE_TOOLS = frozenset({"add_entry_note"})
 WRITE_TOOLS = REP_WRITE_TOOLS | LEAD_WRITE_TOOLS | SHARED_WRITE_TOOLS

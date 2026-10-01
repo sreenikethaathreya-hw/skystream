@@ -35,6 +35,13 @@ from app.services.settings_service import get_app_settings
 from app.services.user_service import user_names
 
 SUM_METRICS = ("plan_ks", "actual_ks", "last_year_ks", "latest_entry_ks", "approved_ks", "low_ks", "high_ks")
+TOP_METRICS = {
+    "actual_ytd_ks": "Actual sales YTD",
+    "plan_ks": "Full-year plan",
+    "last_year_ks": "Last year",
+    "market_ks": "Market size",
+    "market_ha": "Market area",
+}
 
 __all__ = ["MAX_ROWS", "Result"]
 
@@ -571,6 +578,54 @@ async def sum_segment_figures(metric: str, segment_ids: list[int], months: list[
     return await _with_policy(ctx, body)
 
 
+async def top_segments(metric: str, limit: int, ctx: Context) -> Result:
+    """Ranks the micro-segments in scope by a yearly volume, largest first, with each one's share of the total.
+
+    Use this for "which segments or seeds sell the most", "our biggest segments by plan" or "the largest
+    markets". The ranking and shares are computed here; never work them out yourself.
+
+    Args:
+      metric: One of actual_ytd_ks (actual sales so far this year), plan_ks (full-year plan), last_year_ks,
+        market_ks (market size in KS) or market_ha (market planted hectares).
+      limit: How many rows, 1 to 25; 0 means 10.
+
+    Returns:
+      On success: {'status': 'success', 'total': n, 'columns': [...], 'rows': [[segment, value, share_pct], ...]}.
+      On failure: {'status': 'error', 'error_message': ...}.
+    """
+
+    async def body(policy: ChatPolicy) -> Result:
+        if metric not in TOP_METRICS:
+            return _error(f"metric must be one of {', '.join(TOP_METRICS)}")
+        async with async_session() as db:
+            _, contexts = await segment_contexts(
+                db, policy.country_code, policy.mega_segment_id, policy.visible_segment_ids
+            )
+
+        def value(c: SegmentContext) -> float:
+            if metric == "actual_ytd_ks":
+                return sum(v or 0.0 for v in c.monthly_actual)
+            return {
+                "plan_ks": c.plan_qty_ks,
+                "last_year_ks": c.last_year_qty_ks,
+                "market_ks": c.market_qty_ks,
+                "market_ha": c.market_hectares,
+            }[metric]
+
+        scored = sorted(((seg, value(c)) for seg, c in contexts.values()), key=lambda s: s[1], reverse=True)
+        total = sum(v for _, v in scored)
+        n = max(1, min(limit or 10, MAX_ROWS))
+        unit = "ha" if metric == "market_ha" else "KS"
+        return _table(
+            f"Top segments by {metric}",
+            ["Segment", f"{TOP_METRICS[metric]} ({unit})", "Share of total (%)"],
+            [[segment_label(seg), _ks(v), _pct(v / total) if total else None] for seg, v in scored[:n]],
+            total=_ks(total),
+        )
+
+    return await _with_policy(ctx, body)
+
+
 TOOLS = [
     list_segments,
     get_segment_baseline,
@@ -582,4 +637,5 @@ TOOLS = [
     list_lead_rules,
     list_open_exceptions,
     sum_segment_figures,
+    top_segments,
 ]
