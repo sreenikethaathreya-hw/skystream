@@ -1,6 +1,6 @@
 import { lazy, Suspense, useCallback, useState, type ReactNode } from "react";
 import { NavLink } from "react-router-dom";
-import { LogOut, MessageSquare, Sprout } from "lucide-react";
+import { LogOut, MessageSquare } from "lucide-react";
 import { DemoControls } from "@/components/layout/DemoControls";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -140,9 +140,35 @@ export function AppShell({ children }: { children: ReactNode }) {
       <header className="border-b border-line bg-surface">
         <div className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-3 px-6 pt-3">
           <div className="flex items-center gap-3">
-            <div className="flex size-8 items-center justify-center rounded-lg bg-brand-600 text-white">
-              <Sprout size={18} />
-            </div>
+            <svg className="size-12 rounded-lg" viewBox="0 0 32 32" aria-hidden="true">
+              <defs>
+                <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stopColor="#7dd3fc" />
+                  <stop offset=".4" stopColor="#fef3c7" />
+                  <stop offset=".7" stopColor="#fbbf24" />
+                  <stop offset="1" stopColor="#f59e0b" />
+                </linearGradient>
+                <linearGradient id="mtn" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stopColor="#22c55e" />
+                  <stop offset="1" stopColor="#14532d" />
+                </linearGradient>
+                <clipPath id="clip">
+                  <circle cx="16" cy="16" r="14" />
+                </clipPath>
+              </defs>
+              <circle cx="16" cy="16" r="15" fill="#14532d" />
+              <circle cx="16" cy="16" r="14" fill="url(#sky)" />
+              <g clipPath="url(#clip)">
+                <path d="M2 30 L2 19 L7 21 L12 15 L17 18 L22 11 L27 14 L32 8 L32 30Z" fill="url(#mtn)" />
+                <line x1="22" y1="12" x2="22" y2="30" stroke="#fff" strokeWidth="2" />
+                <line x1="22" y1="12" x2="22" y2="30" stroke="#7dd3fc" strokeWidth="1" />
+                <polyline points="2,19 7,21 12,15 17,18 22,11 27,14 32,8" fill="none" stroke="#fff" strokeWidth="1.5" />
+                <circle cx="12" cy="15" r="2" fill="#f97316" stroke="#fff" strokeWidth="1" />
+                <circle cx="22" cy="11" r="2" fill="#f97316" stroke="#fff" strokeWidth="1" />
+                <circle cx="27" cy="14" r="2" fill="#f97316" stroke="#fff" strokeWidth="1" />
+                <path d="M22 6 L22.5 9 L25.5 11 L22.5 13 L22 16 L21.5 13 L18.5 11 L21.5 9Z" fill="#fbbf24" />
+              </g>
+            </svg>
             <div className="flex flex-col gap-1">
               <p className="whitespace-nowrap text-sm font-semibold leading-tight">
                 Defensible Demand Ledger

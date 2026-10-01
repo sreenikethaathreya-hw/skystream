@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <!-- Sky gradient - golden dawn with blue at top -->
+    <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7dd3fc"/>
+      <stop offset="40%" stop-color="#fef3c7"/>
+      <stop offset="70%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    
+    <!-- Mountain gradient - green -->
+    <linearGradient id="mountainGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#22c55e"/>
+      <stop offset="100%" stop-color="#14532d"/>
+    </linearGradient>
+    
+    <!-- Glow filter for AI sparkles -->
+    <filter id="sparkleGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Clip path for icon circle -->
+    <clipPath id="iconClip">
+      <circle cx="256" cy="256" r="200"/>
+    </clipPath>
+  </defs>
+  
+  <!-- Badge border -->
+  <circle cx="256" cy="256" r="208" fill="#14532d"/>
+  
+  <!-- Badge background with sky gradient -->
+  <circle cx="256" cy="256" r="200" fill="url(#skyGradient)"/>
+  
+  <!-- Sun glow effect at horizon -->
+  <ellipse cx="256" cy="304" rx="140" ry="60" fill="#fbbf24" opacity="0.4"/>
+  
+  <!-- Mountain/Chart with clipping -->
+  <g clip-path="url(#iconClip)">
+    <!-- Mountain fill - ascending trend -->
+    <path d="M56 460 
+             L56 226 
+             L116 266 
+             L176 186 
+             L236 236 
+             L296 136 
+             L356 176 
+             L416 66 
+             L456 106
+             L456 460 Z" 
+          fill="url(#mountainGradient)"/>
+    
+    <!-- Projection line - Light blue with white outline -->
+    <line x1="356" y1="186" x2="356" y2="460" stroke="#ffffff" stroke-width="16" stroke-linecap="round"/>
+    <line x1="356" y1="186" x2="356" y2="460" stroke="#7dd3fc" stroke-width="8" stroke-linecap="round"/>
+    
+    <!-- Trend line on mountain peaks -->
+    <polyline points="56,226 116,266 176,186 236,236 296,136 356,176 416,66 456,106" 
+              fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    
+    <!-- Regular data points - orange -->
+    <circle cx="56" cy="226" r="12" fill="#f97316" stroke="#ffffff" stroke-width="4"/>
+    <circle cx="116" cy="266" r="12" fill="#f97316" stroke="#ffffff" stroke-width="4"/>
+    <circle cx="176" cy="186" r="12" fill="#f97316" stroke="#ffffff" stroke-width="4"/>
+    <circle cx="356" cy="176" r="12" fill="#f97316" stroke="#ffffff" stroke-width="4"/>
+    <circle cx="456" cy="106" r="12" fill="#f97316" stroke="#ffffff" stroke-width="4"/>
+    
+    <!-- AI-ENHANCED data points with sparkles -->
+    <circle cx="236" cy="236" r="14" fill="#f97316" stroke="#ffffff" stroke-width="4"/>
+    <g transform="translate(236, 236)" filter="url(#sparkleGlow)">
+      <path d="M0,-36 L6,-10 L32,0 L6,10 L0,36 L-6,10 L-32,0 L-6,-10 Z" fill="#fbbf24"/>
+      <path d="M0,-20 L3,-6 L16,0 L3,6 L0,20 L-3,6 L-16,0 L-3,-6 Z" fill="#ffffff"/>
+    </g>
+    
+    <circle cx="296" cy="136" r="14" fill="#f97316" stroke="#ffffff" stroke-width="4"/>
+    <g transform="translate(296, 136)" filter="url(#sparkleGlow)">
+      <path d="M0,-40 L7,-12 L36,0 L7,12 L0,40 L-7,12 L-36,0 L-7,-12 Z" fill="#fbbf24"/>
+      <path d="M0,-22 L4,-7 L18,0 L4,7 L0,22 L-4,7 L-18,0 L-4,-7 Z" fill="#ffffff"/>
+    </g>
+    
+    <circle cx="416" cy="66" r="16" fill="#f97316" stroke="#ffffff" stroke-width="4"/>
+    <g transform="translate(416, 66)" filter="url(#sparkleGlow)">
+      <path d="M0,-48 L8,-14 L44,0 L8,14 L0,48 L-8,14 L-44,0 L-8,-14 Z" fill="#fbbf24"/>
+      <path d="M0,-28 L5,-9 L24,0 L5,9 L0,28 L-5,9 L-24,0 L-5,-9 Z" fill="#ffffff"/>
+    </g>
+  </g>
+  
+  <!-- Inner highlight ring -->
+  <circle cx="256" cy="256" r="200" fill="none" stroke="#fef3c7" stroke-width="3" opacity="0.4"/>
+</svg>

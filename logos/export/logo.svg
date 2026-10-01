@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 512">
+  <defs>
+    <!-- Sky gradient - golden dawn with blue at top -->
+    <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7dd3fc"/>
+      <stop offset="40%" stop-color="#fef3c7"/>
+      <stop offset="70%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    
+    <!-- Mountain gradient - green -->
+    <linearGradient id="mountainGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#22c55e"/>
+      <stop offset="100%" stop-color="#14532d"/>
+    </linearGradient>
+    
+    <!-- Glow filter for AI sparkles -->
+    <filter id="sparkleGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Clip path for icon circle -->
+    <clipPath id="iconClip">
+      <circle cx="140" cy="256" r="100"/>
+    </clipPath>
+  </defs>
+  
+  <!-- Icon Group -->
+  <g id="icon">
+    <!-- Badge border -->
+    <circle cx="140" cy="256" r="104" fill="#14532d"/>
+    
+    <!-- Badge background with proper sky gradient -->
+    <circle cx="140" cy="256" r="100" fill="url(#skyGradient)"/>
+    
+    <!-- Sun glow effect at horizon -->
+    <ellipse cx="140" cy="280" rx="70" ry="30" fill="#fbbf24" opacity="0.4"/>
+    
+    <!-- Mountain/Chart with clipping -->
+    <g clip-path="url(#iconClip)">
+      <!-- Mountain fill - ascending trend -->
+      <path d="M40 360 
+               L40 290 
+               L70 310 
+               L100 250 
+               L130 275 
+               L160 210 
+               L190 235 
+               L220 175 
+               L240 195
+               L240 360 Z" 
+            fill="url(#mountainGradient)"/>
+      
+      <!-- Projection line - Light blue with white outline -->
+      <line x1="190" y1="240" x2="190" y2="360" stroke="#ffffff" stroke-width="8" stroke-linecap="round"/>
+      <line x1="190" y1="240" x2="190" y2="360" stroke="#7dd3fc" stroke-width="4" stroke-linecap="round"/>
+      
+      <!-- Trend line on mountain peaks -->
+      <polyline points="40,290 70,310 100,250 130,275 160,210 190,235 220,175 240,195" 
+                fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      
+      <!-- Regular data points - orange -->
+      <circle cx="40" cy="290" r="6" fill="#f97316" stroke="#ffffff" stroke-width="2"/>
+      <circle cx="70" cy="310" r="6" fill="#f97316" stroke="#ffffff" stroke-width="2"/>
+      <circle cx="100" cy="250" r="6" fill="#f97316" stroke="#ffffff" stroke-width="2"/>
+      <circle cx="190" cy="235" r="6" fill="#f97316" stroke="#ffffff" stroke-width="2"/>
+      <circle cx="240" cy="195" r="6" fill="#f97316" stroke="#ffffff" stroke-width="2"/>
+      
+      <!-- AI-ENHANCED data points with sparkles -->
+      <circle cx="130" cy="275" r="7" fill="#f97316" stroke="#ffffff" stroke-width="2"/>
+      <g transform="translate(130, 275)" filter="url(#sparkleGlow)">
+        <path d="M0,-18 L3,-5 L16,0 L3,5 L0,18 L-3,5 L-16,0 L-3,-5 Z" fill="#fbbf24"/>
+        <path d="M0,-10 L1.5,-3 L8,0 L1.5,3 L0,10 L-1.5,3 L-8,0 L-1.5,-3 Z" fill="#ffffff"/>
+      </g>
+      
+      <circle cx="160" cy="210" r="7" fill="#f97316" stroke="#ffffff" stroke-width="2"/>
+      <g transform="translate(160, 210)" filter="url(#sparkleGlow)">
+        <path d="M0,-20 L3.5,-6 L18,0 L3.5,6 L0,20 L-3.5,6 L-18,0 L-3.5,-6 Z" fill="#fbbf24"/>
+        <path d="M0,-11 L2,-3.5 L9,0 L2,3.5 L0,11 L-2,3.5 L-9,0 L-2,-3.5 Z" fill="#ffffff"/>
+      </g>
+      
+      <circle cx="220" cy="175" r="8" fill="#f97316" stroke="#ffffff" stroke-width="2"/>
+      <g transform="translate(220, 175)" filter="url(#sparkleGlow)">
+        <path d="M0,-24 L4,-7 L22,0 L4,7 L0,24 L-4,7 L-22,0 L-4,-7 Z" fill="#fbbf24"/>
+        <path d="M0,-14 L2.5,-4.5 L12,0 L2.5,4.5 L0,14 L-2.5,4.5 L-12,0 L-2.5,-4.5 Z" fill="#ffffff"/>
+      </g>
+    </g>
+    
+    <!-- Inner highlight ring -->
+    <circle cx="140" cy="256" r="100" fill="none" stroke="#fef3c7" stroke-width="1.5" opacity="0.4"/>
+  </g>
+  
+  <!-- Wordmark Group -->
+  <g id="wordmark">
+    <text x="280" y="270" font-family="Helvetica, Arial, sans-serif" font-weight="600" font-size="72">
+      <tspan fill="#0284c7">Sky</tspan><tspan fill="#1e293b">stream</tspan>
+    </text>
+  </g>
+</svg>
