@@ -19,5 +19,5 @@ class CompetitorShare(Base):
     competitor: Mapped[str] = mapped_column(String(80))
     year: Mapped[int] = mapped_column(Integer)
     share_pct: Mapped[float] = mapped_column(Float)
-    value_eur: Mapped[float] = mapped_column(Float)
+    value_usd: Mapped[float] = mapped_column(Float)
     trend: Mapped[str | None] = mapped_column(String(30))

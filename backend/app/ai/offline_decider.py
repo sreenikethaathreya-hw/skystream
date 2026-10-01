@@ -169,6 +169,19 @@ CHAT_INTENT_KEYWORDS: list[tuple[str, tuple[str, ...]]] = [
         ("forecast", "predict", "projection", "will demand", "what should i enter", "suggest a number",
          "estimate for", "how much will", "next year's demand"),
     ),
+    ("what_if", ("what if", "what would happen", "if i enter", "if i put", "if i submit", "preview")),
+    ("explain_flag", ("why is my", "why was my", "why did my", "why is this", "why was this", "explain the flag",
+                      "explain this flag", "which flag", "what flag")),
+    ("how_to", ("how do i", "how can i", "what does", "meaning of", "what is range coverage", "glossary",
+                "define ")),
+    ("briefing", ("needs my attention", "need my attention", "attention", "catch me up", "briefing", "to do",
+                  "todo", "ready to close", "what should i do", "overview")),
+    ("rule_authoring", ("make a rule", "create a rule", "add a rule", "new rule", "draft a rule", "write a rule",
+                        "activate", "retire rule", "retire the rule")),
+    ("review_decision", ("approve ", "approve all", "bulk approve", "challenge ", "challenge it", "for discussion",
+                         "mark it", "send it back")),
+    ("submit_or_justify", ("submit ", "please enter", "enter my", "record my", "justify my", "justify the",
+                           "justify it")),
     ("consensus", ("exception", "open entries", "waiting for review", "consensus", "to review", "queue")),
     ("rules", ("rule",)),
     ("competitors", ("competitor", "rijk", "enza", "sur seeds", "limagrain", "panora", "who leads")),
@@ -181,7 +194,8 @@ CHAT_INTENT_KEYWORDS: list[tuple[str, tuple[str, ...]]] = [
 ]
 CHAT_INTENT_KEYS = (
     "baseline_share", "plan_vs_actual", "entries_flags", "claims_track_record", "competitors", "rules",
-    "consensus", "forecast_request", "other",
+    "consensus", "briefing", "explain_flag", "what_if", "submit_or_justify", "review_decision",
+    "rule_authoring", "how_to", "forecast_request", "other",
 )
 
 

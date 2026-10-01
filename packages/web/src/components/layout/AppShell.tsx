@@ -1,11 +1,14 @@
-import { lazy, Suspense, useCallback, useState, type ReactNode } from "react";
+import { lazy, Suspense, useEffect, type ReactNode } from "react";
 import { NavLink } from "react-router-dom";
 import { LogOut, MessageSquare } from "lucide-react";
 import { DemoControls } from "@/components/layout/DemoControls";
 import { Button } from "@/components/ui/button";
 import { Sheet } from "@/components/ui/sheet";
-import { useMeta } from "@/hooks/queries";
+import { useCube, useMeta } from "@/hooks/queries";
+import { useChat } from "@/hooks/useChat";
+import { useDisplayCurrency } from "@/hooks/useMoney";
 import { useScope } from "@/hooks/useScope";
+import type { DisplayCurrency } from "@/lib/types";
 import { useSession } from "@/hooks/useSession";
 import { cn } from "@/lib/utils";
 
@@ -76,6 +79,33 @@ function ScopePicker() {
   );
 }
 
+function CurrencyPicker() {
+  const { choice, setChoice } = useDisplayCurrency();
+  const { scope } = useScope();
+  const { data: cube } = useCube(scope);
+  const local = cube?.localCurrency;
+  const missing = (code: string | undefined) => !!cube && !!code && code !== "USD" && !cube.fx.rates[code];
+  return (
+    <label className="flex items-center gap-1 whitespace-nowrap text-xs text-muted" title="Figures are stored in net USD at the budget rate">
+      Show in
+      <select
+        aria-label="Display currency"
+        data-testid="currency-picker"
+        className="h-8 rounded-lg border border-line bg-surface px-2 text-xs text-ink"
+        value={choice}
+        onChange={(e) => setChoice(e.target.value as DisplayCurrency)}
+      >
+        <option value="USD">USD</option>
+        <option value="EUR" disabled={missing("EUR")}>EUR{missing("EUR") ? " (no rate)" : ""}</option>
+        <option value="LOCAL" disabled={missing(local)}>
+          Local{local ? ` (${local})` : ""}
+          {missing(local) ? " (no rate)" : ""}
+        </option>
+      </select>
+    </label>
+  );
+}
+
 function RoleSwitcher() {
   const { user, users, setUserId } = useSession();
   return (
@@ -98,18 +128,23 @@ function RoleSwitcher() {
 }
 
 function AskTheData() {
-  const [open, setOpen] = useState(false);
-  const close = useCallback(() => setOpen(false), []);
+  const chat = useChat();
   const { user } = useSession();
   const { scope } = useScope();
   const { data: meta } = useMeta();
+  const { data: cube } = useCube(scope);
+  const { setSessionId, setEnabled } = chat;
+  const enabled = !!user && !!meta?.ai.chatEnabled;
+  useEffect(() => setSessionId(null), [user?.id, setSessionId]);
+  useEffect(() => setEnabled(enabled), [enabled, setEnabled]);
   if (!user || !meta?.ai.chatEnabled) return null;
+  const segmentLabel = (id: number) => cube?.segments.find((s) => s.id === id)?.label;
   return (
     <>
       <Button
         size="sm"
         variant="secondary"
-        onClick={() => setOpen(true)}
+        onClick={() => chat.openChat()}
         onPointerEnter={() => void loadChat()}
         onFocus={() => void loadChat()}
         data-testid="ask-the-data"
@@ -117,9 +152,21 @@ function AskTheData() {
         <MessageSquare size={14} aria-hidden="true" />
         Ask the data
       </Button>
-      <Sheet open={open} onClose={close} title="Ask the data">
+      <Sheet open={chat.open} onClose={chat.closeChat} title="Ask the data">
         <Suspense fallback={<p className="p-4 text-sm text-muted">Loading…</p>}>
-          <ChatPanel key={user.id} role={user.role} scope={scope} offline={meta.ai.chatMode !== "agent"} />
+          <ChatPanel
+            key={user.id}
+            role={user.role}
+            scope={scope}
+            offline={meta.ai.chatMode !== "agent"}
+            writesAllowed={meta.ai.chatWritesAllowed}
+            pageContext={chat.pageContext}
+            request={chat.request}
+            onRequestHandled={chat.consumeRequest}
+            segmentLabel={segmentLabel}
+            sessionId={chat.sessionId}
+            onSessionChange={chat.setSessionId}
+          />
         </Suspense>
       </Sheet>
     </>
@@ -195,6 +242,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           </div>
           <div className="flex flex-wrap items-center gap-3">
             <AskTheData />
+            <CurrencyPicker />
             {dataMode !== "demo" && <UserMenu />}
           </div>
         </div>

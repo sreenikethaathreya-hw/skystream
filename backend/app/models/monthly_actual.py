@@ -16,4 +16,4 @@ class MonthlyActual(Base):
     year: Mapped[int] = mapped_column(Integer)
     month: Mapped[int] = mapped_column(Integer)
     qty_ks: Mapped[float] = mapped_column(Float)
-    value_eur: Mapped[float] = mapped_column(Float)
+    value_usd: Mapped[float] = mapped_column(Float)

@@ -140,8 +140,8 @@ def evaluate_flags(
                 code="price_carrying",
                 severity="warning",
                 message=(
-                    f"Price is carrying this number: volume is down EUR {_num(-revenue.volume_effect)} "
-                    f"vs last year and price adds EUR {_num(revenue.price_effect)} "
+                    f"Price is carrying this number: volume is down USD {_num(-revenue.volume_effect)} "
+                    f"vs last year and price adds USD {_num(revenue.price_effect)} "
                     f"({_pct(revenue.price_share_of_change)} of the revenue movement)."
                 ),
             )
@@ -181,8 +181,8 @@ def evaluate_flags(
                     code="price_outside_history",
                     severity="warning",
                     message=(
-                        f"Net price EUR {entry.price:,.0f}/KS is outside the historical band "
-                        f"EUR {low:,.0f}-{high:,.0f}."
+                        f"Net price USD {entry.price:,.0f}/KS is outside the historical band "
+                        f"USD {low:,.0f}-{high:,.0f}."
                     ),
                 )
             )

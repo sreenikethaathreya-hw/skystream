@@ -51,7 +51,7 @@ def validate_competitors(frame: pd.DataFrame, ctx: ImportContext) -> tuple[list[
                 "competitor": name,
                 "year": year,
                 "sharePct": pct,
-                "valueEur": to_float(r.get(str(year))) or 0.0,
+                "valueUsd": to_float(r.get(str(year))) or 0.0,
                 "trend": to_text(r.get("CompetitorTrend")),
             }
             produced = True

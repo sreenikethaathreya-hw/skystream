@@ -13,7 +13,7 @@ class PlanYear(Base):
     segment_id: Mapped[int] = mapped_column(ForeignKey("segments.id"), index=True)
     year: Mapped[int] = mapped_column(Integer)
     qty_ks: Mapped[float] = mapped_column(Float)
-    value_eur: Mapped[float] = mapped_column(Float)
+    value_usd: Mapped[float] = mapped_column(Float)
     net_price: Mapped[float] = mapped_column(Float)
     fpi_qty_ks: Mapped[float] = mapped_column(Float, default=0.0)
     comment: Mapped[str | None] = mapped_column(Text)

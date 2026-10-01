@@ -76,7 +76,7 @@ def test_actuals_validate_month_and_country(ctx: ImportContext) -> None:
     rows, report = run("actuals", "actuals_2025.csv", ctx)
     assert len(rows) == 18
     assert report.rejected == 2
-    assert any(r["valueEur"] is None for r in rows)
+    assert any(r["valueUsd"] is None for r in rows)
 
 
 def test_assignments_reject_bad_roles(ctx: ImportContext) -> None:

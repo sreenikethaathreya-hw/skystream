@@ -15,19 +15,32 @@ from app.models import (
     DemandEntry,
     DemoClock,
     GrowerPotential,
+    IbpForecast,
     MarketYear,
     MonthlyActual,
     MonthlyPlan,
     PlanYear,
     Segment,
 )
-from app.schemas.api import CompetitorOut, CubeOut, MonthEntryOut, ScopeOptionOut, SegmentCubeOut
+from app.schemas.api import (
+    CompetitorOut,
+    CubeOut,
+    FxOut,
+    IbpMonthOut,
+    IbpVarietyOut,
+    MonthEntryOut,
+    ScopeOptionOut,
+    SegmentCubeOut,
+)
 from app.schemas.demand_math import SegmentContext
 from app.services.cube_builder import Reference, build_mega, build_segment_context, last_year_basis
+from app.services.fx_service import load_budget_rates
 from app.services.settings_service import get_app_settings
 from app.services.user_service import CurrentUser, can_submit, owners_by_segment
 
-LIVE_STATUSES = ("submitted", "approved", "discuss", "challenged")
+LIVE_STATUSES = ("submitted", "approved", "discuss", "challenged", "needs_justification")
+# Entries that are a rep's committed number: typed in Capture, or imported from the rep's IBP forecast.
+COMMITTED_SOURCES = ("live", "ibp")
 
 
 def segment_label(segment: Segment) -> str:
@@ -63,6 +76,13 @@ async def current_period(db: AsyncSession, country_code: str) -> Period:
     return Period(year, (last or 0) + 1)
 
 
+async def _market_filter(db: AsyncSession):
+    """Zero hectares mean 'no market' (segment hidden) unless the admin says they mean 'data missing'."""
+    if (await get_app_settings(db)).market_zero_means == "missing":
+        return MarketYear.hectares >= 0
+    return MarketYear.hectares > 0
+
+
 async def _active_segments(db: AsyncSession, country_code: str, mega: str, year: int) -> list[Segment]:
     rows = await db.execute(
         select(Segment)
@@ -71,7 +91,7 @@ async def _active_segments(db: AsyncSession, country_code: str, mega: str, year:
             Segment.mega_segment_id == mega,
             MarketYear.country_code == country_code,
             MarketYear.year == year,
-            MarketYear.hectares > 0,
+            await _market_filter(db),
         )
         .order_by(Segment.id)
     )
@@ -140,7 +160,7 @@ async def scope_options(db: AsyncSession, user: CurrentUser) -> list[ScopeOption
                 Segment.id,
             )
             .join(Segment, Segment.id == MarketYear.segment_id)
-            .where(MarketYear.year == year, MarketYear.hectares > 0)
+            .where(MarketYear.year == year, await _market_filter(db))
         )
     ).all()
     names = {c.code: c.name for c in (await db.execute(select(Country))).scalars()}
@@ -223,7 +243,7 @@ async def build_context(
         )
     ref = await load_reference(db, country_code, segments)
     latest = await latest_entries(db, country_code, period.year, [segment_id])
-    submitted = {m: e.value for (_, m), e in latest.items() if e.source == "live"}
+    submitted = {m: e.value for (_, m), e in latest.items() if e.source in COMMITTED_SOURCES}
     mega = build_mega(ref, period.year)
     ctx = build_segment_context(ref, segment_id, period.year, period.clock_month, submitted, mega)
     return ctx, segment, ref
@@ -243,12 +263,50 @@ async def segment_contexts(
     latest = await latest_entries(db, country_code, period.year, [s.id for s in wanted])
     out = {}
     for seg in wanted:
-        submitted = {m: e.value for (s, m), e in latest.items() if s == seg.id and e.source == "live"}
+        submitted = {m: e.value for (s, m), e in latest.items() if s == seg.id and e.source in COMMITTED_SOURCES}
         out[seg.id] = (
             seg,
             build_segment_context(ref, seg.id, period.year, period.clock_month, submitted, mega_ctx),
         )
     return period, out
+
+
+async def ibp_months(
+    db: AsyncSession, country_code: str, year: int, segment_ids: list[int]
+) -> dict[int, list[IbpMonthOut]]:
+    """Latest IBP snapshot per segment and month, with the variety breakdown, for Capture and the chat."""
+    rows = (
+        await db.execute(
+            select(IbpForecast).where(
+                IbpForecast.country_code == country_code,
+                IbpForecast.year == year,
+                IbpForecast.segment_id.in_(segment_ids),
+            )
+        )
+    ).scalars().all()
+    newest: dict[tuple[int, int], str] = {}
+    for r in rows:
+        key = (r.segment_id, r.month)
+        if key not in newest or r.snapshot > newest[key]:
+            newest[key] = r.snapshot
+    grouped: dict[tuple[int, int], list] = {}
+    for r in rows:
+        if newest[(r.segment_id, r.month)] == r.snapshot:
+            grouped.setdefault((r.segment_id, r.month), []).append(r)
+    out: dict[int, list[IbpMonthOut]] = {}
+    for (segment_id, month), items in sorted(grouped.items()):
+        out.setdefault(segment_id, []).append(
+            IbpMonthOut(
+                month=month,
+                snapshot=items[0].snapshot,
+                qty_ks=sum(i.qty_ks for i in items),
+                varieties=[
+                    IbpVarietyOut(variety=i.variety, qty_ks=i.qty_ks)
+                    for i in sorted(items, key=lambda i: -i.qty_ks)
+                ],
+            )
+        )
+    return out
 
 
 async def build_cube(
@@ -267,11 +325,12 @@ async def build_cube(
     market_by_key = {(m.segment_id, m.year): m for m in ref.market}
     plan_by_key = {(p.segment_id, p.year): p for p in ref.plan}
     plan_basis = {m.segment_id: m.basis for m in ref.monthly_plan if m.year == period.year}
+    ibp = await ibp_months(db, country_code, period.year, [s.id for s in segments])
 
     out_segments = []
     for seg in segments:
         seg_entries = [e for (s, _), e in latest.items() if s == seg.id]
-        submitted = {e.month: e.value for e in seg_entries if e.source == "live"}
+        submitted = {e.month: e.value for e in seg_entries if e.source in COMMITTED_SOURCES}
         plan = plan_by_key.get((seg.id, period.year))
         out_segments.append(
             SegmentCubeOut(
@@ -296,8 +355,23 @@ async def build_cube(
                         high=e.high,
                         status=e.status,
                         user_id=e.user_id,
+                        source=e.source,
+                        justification=e.justification,
                     )
                     for e in sorted(seg_entries, key=lambda e: e.month)
+                ],
+                ibp=[
+                    month.model_copy(
+                        update={
+                            "entry_id": latest[(seg.id, month.month)].id
+                            if (seg.id, month.month) in latest and latest[(seg.id, month.month)].source == "ibp"
+                            else None,
+                            "entry_status": latest[(seg.id, month.month)].status
+                            if (seg.id, month.month) in latest and latest[(seg.id, month.month)].source == "ibp"
+                            else None,
+                        }
+                    )
+                    for month in ibp.get(seg.id, [])
                 ],
             )
         )
@@ -305,16 +379,25 @@ async def build_cube(
     country_row = await db.get(Country, country_code)
     competitors = [c for c in ref.competitors if c.year == period.year]
     first = segments[0] if segments else None
+    local = country_row.currency if country_row else app_settings.reporting_currency
+    fx = await load_budget_rates(db, app_settings.fx_rate_year_rule, app_settings.current_year)
+    budget_year, rates = fx.rates(period.year)
     return CubeOut(
         country_code=country_code,
         country_name=country_row.name if country_row else country_code,
         mega_segment_id=mega_id,
         mega_segment_desc=first.mega_segment_desc if first else mega_id,
         species=first.species if first else None,
-        currency=country_row.currency if country_row else app_settings.currency,
+        reporting_currency=app_settings.reporting_currency,
+        local_currency=local,
+        fx=FxOut(
+            budget_year=budget_year,
+            rates={c: r for c, r in rates.items() if c in {"USD", "EUR", local}},
+        ),
         year=period.year,
         clock_month=period.clock_month,
         year_closed=period.closed,
+        demand_source=app_settings.demand_source,
         thresholds=app_settings.thresholds,
         rules=await active_specs(db, country_code, mega_id),
         competitors=[

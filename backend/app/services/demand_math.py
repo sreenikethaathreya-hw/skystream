@@ -83,8 +83,8 @@ def compute_impact(ctx: SegmentContext, entry: EntryInput, thresholds: Threshold
 
     market_value = ctx.market_qty_ks * ctx.price_exseed
     mega = ctx.mega
-    mega_base = _div(mega.syngenta_value_eur, mega.market_value_eur)
-    mega_new = _div(mega.syngenta_value_eur - ctx.plan_value_eur + fy_value, mega.market_value_eur)
+    mega_base = _div(mega.syngenta_value_usd, mega.market_value_usd)
+    mega_new = _div(mega.syngenta_value_usd - ctx.plan_value_usd + fy_value, mega.market_value_usd)
     scale = max(0.0, _div(100 - mega_new * 100, 100 - mega_base * 100))
     competitors = [
         CompetitorImpact(
@@ -96,14 +96,14 @@ def compute_impact(ctx: SegmentContext, entry: EntryInput, thresholds: Threshold
         for c in mega.competitors
     ]
 
-    last_year_price = _div(ctx.last_year_value_eur, ctx.last_year_qty_ks)
+    last_year_price = _div(ctx.last_year_value_usd, ctx.last_year_qty_ks)
     volume_effect = (fy - ctx.last_year_qty_ks) * last_year_price
     avg_price = _div(fy_value, fy)
     price_effect = (avg_price - last_year_price) * fy
     revenue = RevenueSplit(
-        last_year=ctx.last_year_value_eur,
+        last_year=ctx.last_year_value_usd,
         estimate=fy_value,
-        change=fy_value - ctx.last_year_value_eur,
+        change=fy_value - ctx.last_year_value_usd,
         volume_effect=volume_effect,
         price_effect=price_effect,
         price_share_of_change=_div(price_effect, abs(volume_effect) + abs(price_effect)),
@@ -141,7 +141,7 @@ def compute_impact(ctx: SegmentContext, entry: EntryInput, thresholds: Threshold
         month_vs_avg_pct=_div(entry.value - month_avg, month_avg),
         fy_value=fy_value,
         value_share=_div(fy_value, market_value),
-        plan_value_share=_div(ctx.plan_value_eur, market_value),
+        plan_value_share=_div(ctx.plan_value_usd, market_value),
         mega_share_baseline=mega_base,
         mega_share=mega_new,
         competitors=competitors,

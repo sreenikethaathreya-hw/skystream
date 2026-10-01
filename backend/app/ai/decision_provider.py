@@ -2,7 +2,7 @@
 
 import logging
 import time
-from collections.abc import Callable
+from collections.abc import Awaitable, Callable
 from dataclasses import dataclass
 from functools import lru_cache
 
@@ -370,10 +370,17 @@ class DecisionProvider:
         chat_policy,
         policy: DecisionPolicy | None = None,
         state_delta: dict | None = None,
+        on_event: Callable[[str, dict], Awaitable[None]] | None = None,
+        page_context=None,
     ) -> DataAnswer:
-        """One "Ask the data" turn. The agent runs only on Gemini; otherwise a template answers from one tool."""
+        """One "Ask the data" turn. The agent runs only on Gemini; otherwise a template answers from one tool.
+
+        `on_event` hears tool progress (never answer text, which is only final once NumberGuard has checked it).
+        `page_context` is what the user is looking at; it reaches the agent as per-turn state only.
+        """
         from app.ai import offline_chat
         from app.ai.data_agent import history
+        from app.ai.data_agent.policy import ALLOWED_NUMBERS_KEY, PAGE_CONTEXT_KEY
         from app.ai.data_agent.runtime import get_runtime
 
         runtime = get_runtime()
@@ -382,15 +389,22 @@ class DecisionProvider:
         intent, intent_provider = await self.classify_chat_intent(text, policy)
 
         if intent != "forecast_request" and self._gemini.available:
+            turn_state = dict(state_delta or {})
+            if page_context is not None:
+                turn_state[PAGE_CONTEXT_KEY] = page_context.model_dump()
+                # Ids the instruction names may be quoted back without a tool returning them.
+                turn_state[ALLOWED_NUMBERS_KEY] = [
+                    float(v) for v in (page_context.segment_id, page_context.rule_id) if v
+                ]
             try:
-                return await self._run_agent(runtime, session_id, text, chat_policy, intent, state_delta or {})
+                return await self._run_agent(runtime, session_id, text, chat_policy, intent, turn_state, on_event)
             except Exception as exc:  # Vertex and ADK raise several transport-specific types
                 logger.warning("Data agent failed, answering from a template: %s", exc)
-                fallback = await offline_chat.answer(intent, text, chat_policy)
+                fallback = await offline_chat.answer(intent, text, chat_policy, page_context)
                 await history.append_turn(runtime, chat_policy.user_id, session_id, None, fallback, intent)
                 return DataAnswer(fallback.text, intent, "template (gemini failed)", False, fallback.results)
 
-        offline = await offline_chat.answer(intent, text, chat_policy)
+        offline = await offline_chat.answer(intent, text, chat_policy, page_context)
         await history.append_turn(
             runtime, chat_policy.user_id, session_id, text, offline, intent, state_delta=state_delta
         )
@@ -398,7 +412,14 @@ class DecisionProvider:
         return DataAnswer(offline.text, intent, provider, False, offline.results)
 
     async def _run_agent(
-        self, runtime, session_id: str, text: str, chat_policy, intent: str, state_delta: dict
+        self,
+        runtime,
+        session_id: str,
+        text: str,
+        chat_policy,
+        intent: str,
+        state_delta: dict,
+        on_event: Callable[[str, dict], Awaitable[None]] | None = None,
     ) -> DataAnswer:
         from google.adk.agents.run_config import RunConfig
         from google.adk.sessions.base_session_service import GetSessionConfig
@@ -417,8 +438,15 @@ class DecisionProvider:
                 get_session_config=GetSessionConfig(num_recent_events=self._settings.chat_history_events),
             ),
         ):
+            if on_event is not None:
+                for call in event.get_function_calls():
+                    await on_event("tool_started", {"tool": call.name})
             for response in event.get_function_responses():
                 results.append((response.name, dict(response.response or {})))
+                if on_event is not None:
+                    await on_event(
+                        "tool_done", {"tool": response.name, "status": (response.response or {}).get("status", "?")}
+                    )
             if event.is_final_response() and event.content:
                 answer = "".join(p.text or "" for p in event.content.parts or [] if not p.thought).strip()
                 redacted = bool((event.custom_metadata or {}).get("numbers_redacted"))

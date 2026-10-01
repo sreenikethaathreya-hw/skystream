@@ -8,6 +8,7 @@ os.environ["AUTO_SEED"] = "false"
 os.environ["AI_MODE"] = "replay"
 os.environ["JEV_API_KEY"] = ""
 os.environ["GEMINI_ENABLED"] = "false"
+os.environ["CHAT_TURNS_PER_MINUTE"] = "1000"
 
 import pytest  # noqa: E402
 from httpx import ASGITransport, AsyncClient  # noqa: E402

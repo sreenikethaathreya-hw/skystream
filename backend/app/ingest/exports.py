@@ -18,6 +18,8 @@ NOTE_COLUMNS = {
     "technology": "TechnologyAdapt",
 }
 QTY_TOLERANCE = 0.01
+# Preview warns when the export's Avg Net Price and Sales Value / Sales Qty disagree by more than this.
+PRICE_MISMATCH = 0.05
 
 
 def validate_hierarchy(frame: pd.DataFrame, ctx: ImportContext) -> tuple[list[dict], ImportReport]:
@@ -170,6 +172,15 @@ def validate_plan(frame: pd.DataFrame, ctx: ImportContext) -> tuple[list[dict], 
         if (qty or 0) < 0 or (value or 0) < 0:
             report.reject(row_no, "Sales Qty and Sales Value cannot be negative")
             continue
+        currency = to_text(r.get("Currency"))
+        if value is not None and currency and currency.upper() != "USD":
+            converted = ctx.fx.to_usd(value, currency, year)
+            if converted is None:
+                report.reject(row_no, f"No budget rate for {currency.upper()} in {year}; upload the budget rates first")
+                continue
+            report.warn(f"Sales Value converted from {currency.upper()} to USD at the budget rate")
+            value = converted
+        avg_price = to_float(r.get("Avg Net Price"))
         key = (country, segment_id, year)
         row = grouped.setdefault(
             key,
@@ -178,24 +189,48 @@ def validate_plan(frame: pd.DataFrame, ctx: ImportContext) -> tuple[list[dict], 
                 "segmentId": segment_id,
                 "year": year,
                 "qtyKs": 0.0,
-                "valueEur": 0.0,
+                "valueUsd": 0.0,
                 "fpiQtyKs": 0.0,
                 "comment": None,
+                "_avgPriceQty": 0.0,
             },
         )
-        if row["qtyKs"] or row["valueEur"]:
+        if row["qtyKs"] or row["valueUsd"]:
             report.warn("Several rows for the same country/micro-segment/year were summed")
         row["qtyKs"] += qty or 0.0
-        row["valueEur"] += value or 0.0
+        row["valueUsd"] += value or 0.0
+        if avg_price is not None and qty:
+            row["_avgPriceQty"] += avg_price * qty
         row["fpiQtyKs"] += to_float(r.get("FPI Qty")) or 0.0
         row["comment"] = row["comment"] or to_text(r.get("Qualitative Comments"))
     rows = list(grouped.values())
+    mismatched = []
     for row in rows:
-        row["netPrice"] = round(row["valueEur"] / row["qtyKs"], 4) if row["qtyKs"] else 0.0
+        computed = row["valueUsd"] / row["qtyKs"] if row["qtyKs"] else 0.0
+        stated = row.pop("_avgPriceQty") / row["qtyKs"] if row["qtyKs"] else 0.0
+        if stated and computed and abs(stated - computed) / computed > PRICE_MISMATCH:
+            mismatched.append(f"{row['countryCode']} {row['segmentId']} {row['year']}")
+        use_stated = ctx.price_source == "avg_net_price" and stated > 0
+        row["netPrice"] = round(stated if use_stated else computed, 4)
+    if mismatched:
+        report.warn(
+            f"Avg Net Price differs from Sales Value / Sales Qty by more than {PRICE_MISMATCH:.0%}", len(mismatched)
+        )
+    planning_year = ctx.current_year
     report.accepted = len(rows)
     report.info = {
         "countries": sorted({r["countryCode"] for r in rows}),
         "years": sorted({r["year"] for r in rows}),
         "idsRecoveredFromDescription": recovered,
+        "priceSource": ctx.price_source,
+        "priceMismatches": mismatched[:20],
+        **(
+            {
+                "actualYears": sorted({r["year"] for r in rows if r["year"] < planning_year}),
+                "planYears": sorted({r["year"] for r in rows if r["year"] >= planning_year}),
+            }
+            if planning_year
+            else {}
+        ),
     }
     return rows, report

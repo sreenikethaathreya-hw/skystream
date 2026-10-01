@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { fmtNum, monthName, parseWhole } from "@/lib/format";
+import { USD, type Money } from "@/lib/money";
 
 export interface DraftNumbers {
   value: number;
   lowPct: number;
   highPct: number;
+  /** Net price in USD per KS; the input shows and accepts the display currency. */
   price: number | null;
 }
 
@@ -21,27 +23,35 @@ export function EntryPanel({
   planNetPrice,
   draft,
   onChange,
+  money = USD,
+  committedInIbp,
 }: {
   month: number;
   planMonth: number;
   planNetPrice: number;
   draft: DraftNumbers;
   onChange: (next: DraftNumbers) => void;
+  money?: Money;
+  /** IBP mode: the number box becomes a what-if; the committed number lives in IBP. */
+  committedInIbp?: number | null;
 }) {
   const [demandText, setDemandText] = useState("");
   const [priceText, setPriceText] = useState("");
   // Show what the rep typed while it still matches the draft; otherwise the draft changed elsewhere (new cell).
   const demandShown = parseWhole(demandText) === draft.value ? demandText : fmtNum(draft.value);
-  const priceShown = parsePrice(priceText) === draft.price ? priceText : (draft.price?.toString() ?? "");
+  const displayPrice = draft.price == null ? null : Number(money.fromUsd(draft.price).toFixed(2));
+  const priceShown = parsePrice(priceText) === displayPrice ? priceText : (displayPrice?.toString() ?? "");
   const low = draft.value * (1 - draft.lowPct);
   const high = draft.value * (1 + draft.highPct);
+  const demandLabel =
+    committedInIbp === undefined
+      ? `${monthName(month)} demand · thousand seeds · plan ${fmtNum(planMonth)}`
+      : `What if (not submitted) · ${committedInIbp === null ? "no IBP number yet" : `IBP ${fmtNum(committedInIbp)}`} · plan ${fmtNum(planMonth)}`;
 
   return (
     <div className="grid gap-x-8 gap-y-4 md:grid-cols-[1.4fr_1fr_0.8fr] md:items-end">
       <label className="flex flex-col gap-1">
-        <span className="eyebrow">
-          {monthName(month)} demand · thousand seeds · plan {fmtNum(planMonth)}
-        </span>
+        <span className="eyebrow">{demandLabel}</span>
         <input
           type="text"
           inputMode="numeric"
@@ -71,19 +81,20 @@ export function EntryPanel({
       </div>
 
       <label className="flex flex-col gap-1">
-        <span className="eyebrow">Net price EUR/KS · optional</span>
+        <span className="eyebrow">Net price {money.code}/KS · optional</span>
         <input
           type="text"
           inputMode="decimal"
           name="net-price"
           autoComplete="off"
           spellCheck={false}
-          placeholder={`plan ${fmtNum(planNetPrice)}…`}
+          placeholder={`plan ${fmtNum(money.fromUsd(planNetPrice))}…`}
           data-testid="price-input"
           value={priceShown}
           onChange={(e) => {
             setPriceText(e.target.value);
-            onChange({ ...draft, price: parsePrice(e.target.value) });
+            const parsed = parsePrice(e.target.value);
+            onChange({ ...draft, price: parsed == null ? null : money.toUsd(parsed) });
           }}
           className={`${INPUT} text-lg`}
         />

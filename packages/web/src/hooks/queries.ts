@@ -9,6 +9,7 @@ import type {
   Cube,
   DataQuality,
   Entry,
+  EntryNote,
   LeadRule,
   Meta,
   Queue,
@@ -83,6 +84,13 @@ export const useChatSession = (id: string | null) =>
     queryKey: ["chat", "session", id],
     queryFn: () => api.get<ChatHistory>(`/chat/sessions/${id}`),
     enabled: id !== null,
+  });
+
+export const useEntryNotes = (entryId: string | null | undefined) =>
+  useQuery({
+    queryKey: ["entry-notes", entryId],
+    queryFn: () => api.get<EntryNote[]>(`/entries/${entryId}/notes`),
+    enabled: !!entryId,
   });
 
 export const useAdminSettings = () =>

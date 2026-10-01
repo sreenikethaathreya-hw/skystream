@@ -124,7 +124,7 @@ def build_plan(sales: pd.DataFrame, segment_ids: set[int], anon: Anonymizer) -> 
                 "segmentId": int(row["Microsegment ID"]),
                 "year": int(row["Year"]),
                 "qtyKs": qty,
-                "valueEur": value,
+                "valueUsd": value,
                 "netPrice": round(value / qty, 2) if qty else 0.0,
                 "fpiQtyKs": _num(row["fpi"]),
                 "comment": _text(row["comment"]),
@@ -137,7 +137,7 @@ def build_competitors(comp: pd.DataFrame, plan: list[dict], market: list[dict]) 
     rows = []
     for year in YEARS:
         market_value = sum(m["qtyKs"] * m["priceExseed"] for m in market if m["year"] == year)
-        syn_value = sum(p["valueEur"] for p in plan if p["year"] == year)
+        syn_value = sum(p["valueUsd"] for p in plan if p["year"] == year)
         syn_pct = round(100 * syn_value / market_value, 1) if market_value else 0.0
         others = comp[comp["CompetitorDesc"] != "Syngenta"]
         other_total = float(others[f"{year}%"].sum()) or 1.0
@@ -147,7 +147,7 @@ def build_competitors(comp: pd.DataFrame, plan: list[dict], market: list[dict]) 
                 "competitor": "Syngenta",
                 "year": year,
                 "sharePct": syn_pct,
-                "valueEur": round(syn_value, 2),
+                "valueUsd": round(syn_value, 2),
                 "trend": _text(comp[comp["CompetitorDesc"] == "Syngenta"]["CompetitorTrend"].iloc[0]),
             }
         )
@@ -159,7 +159,7 @@ def build_competitors(comp: pd.DataFrame, plan: list[dict], market: list[dict]) 
                     "competitor": str(row["CompetitorDesc"]),
                     "year": year,
                     "sharePct": pct,
-                    "valueEur": round(market_value * pct / 100, 2),
+                    "valueUsd": round(market_value * pct / 100, 2),
                     "trend": _text(row["CompetitorTrend"]),
                 }
             )
@@ -201,7 +201,7 @@ def build_monthly(
                         "year": year,
                         "month": month,
                         "qtyKs": qty,
-                        "valueEur": round(qty * price * (1 + float(rng.normal(0, 0.01))), 2),
+                        "valueUsd": round(qty * price * (1 + float(rng.normal(0, 0.01))), 2),
                     }
                 )
     return plan_rows, actual_rows, plan_2026, actual_2026

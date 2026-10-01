@@ -7,6 +7,8 @@ class MarketPoint(CamelModel):
     year: int
     hectares: float
     qty_ks: float
+    # Labels only (the math ignores it): "actual" or "plan" for Syngenta history points.
+    basis: str | None = None
 
 
 class Competitor(CamelModel):
@@ -22,8 +24,8 @@ class YearMonthly(CamelModel):
 
 class MegaContext(CamelModel):
     name: str = ""
-    market_value_eur: float
-    syngenta_value_eur: float
+    market_value_usd: float
+    syngenta_value_usd: float
     syngenta_share_pct: float
     competitors: list[Competitor]
     implied_ha_baseline: float
@@ -38,10 +40,10 @@ class SegmentContext(CamelModel):
     density: float
     price_exseed: float
     plan_qty_ks: float
-    plan_value_eur: float
+    plan_value_usd: float
     plan_net_price: float
     last_year_qty_ks: float
-    last_year_value_eur: float
+    last_year_value_usd: float
     market_history: list[MarketPoint]
     plan_qty_history: list[MarketPoint]
     net_price_history: list[float]

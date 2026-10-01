@@ -1,0 +1,4 @@
+[
+ {"budgetYear": 2026, "currency": "USD", "currencyName": "US Dollar", "perUsd": 1.0},
+ {"budgetYear": 2026, "currency": "EUR", "currencyName": "Euro", "perUsd": 0.85}
+]

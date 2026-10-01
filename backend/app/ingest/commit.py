@@ -7,12 +7,15 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import (
     CompetitorShare,
+    FxRate,
     GrowerPotential,
+    IbpForecast,
     MarketYear,
     MonthlyActual,
     PlanYear,
     Seasonality,
     Segment,
+    VarietyMap,
 )
 from app.schemas.api import ScopeIn
 from app.services.user_service import upsert_user
@@ -89,7 +92,7 @@ async def commit_plan(db: AsyncSession, rows: list[dict]) -> dict:
             segment_id=r["segmentId"],
             year=r["year"],
             qty_ks=r["qtyKs"],
-            value_eur=r["valueEur"],
+            value_usd=r["valueUsd"],
             net_price=r["netPrice"],
             fpi_qty_ks=r["fpiQtyKs"],
             comment=r["comment"],
@@ -115,7 +118,7 @@ async def commit_competitors(db: AsyncSession, rows: list[dict]) -> dict:
             competitor=r["competitor"],
             year=r["year"],
             share_pct=r["sharePct"],
-            value_eur=r["valueEur"],
+            value_usd=r["valueUsd"],
             trend=r["trend"],
         )
         for r in rows
@@ -166,13 +169,13 @@ async def commit_actuals(db: AsyncSession, rows: list[dict]) -> dict:
             for a in (await db.execute(select(MonthlyActual).where(or_(*conditions)))).scalars()
         }
         for r in group:
-            value = r["valueEur"]
+            value = r["valueUsd"]
             if value is None:
                 value = r["qtyKs"] * net_price.get((r["countryCode"], r["segmentId"], r["year"]), 0.0)
                 filled += 1
             key = (r["countryCode"], r["segmentId"], r["year"], r["month"])
             if key in existing:
-                existing[key].qty_ks, existing[key].value_eur = r["qtyKs"], value
+                existing[key].qty_ks, existing[key].value_usd = r["qtyKs"], value
             else:
                 db.add(
                     MonthlyActual(
@@ -181,7 +184,7 @@ async def commit_actuals(db: AsyncSession, rows: list[dict]) -> dict:
                         year=key[2],
                         month=key[3],
                         qty_ks=r["qtyKs"],
-                        value_eur=value,
+                        value_usd=value,
                     )
                 )
     return {"written": len(rows), "valuesFilledFromPlanPrice": filled}
@@ -219,6 +222,57 @@ async def commit_seasonality(db: AsyncSession, rows: list[dict]) -> dict:
     return {"keys": len({(r["countryCode"], r["scopeType"], r["scopeId"]) for r in rows})}
 
 
+async def commit_budget_rates(db: AsyncSession, rows: list[dict]) -> dict:
+    years = sorted({r["budgetYear"] for r in rows})
+    await db.execute(delete(FxRate).where(FxRate.budget_year.in_(years)))
+    db.add_all(
+        FxRate(
+            budget_year=r["budgetYear"],
+            currency=r["currency"],
+            currency_name=r["currencyName"],
+            per_usd=r["perUsd"],
+        )
+        for r in rows
+    )
+    return {"budgetYears": years, "currencies": len(rows)}
+
+
+async def commit_sac_sales(db: AsyncSession, rows: list[dict]) -> dict:
+    actual_rows = [r for r in rows if r["measure"] == "actual"]
+    forecast_rows = [r for r in rows if r["measure"] == "forecast"]
+    summary = {"actualRows": len(actual_rows), "forecastRows": len(forecast_rows)}
+    if actual_rows:
+        summary["actuals"] = await commit_actuals(db, actual_rows)
+    for country, snapshot in {(r["countryCode"], r["snapshot"]) for r in forecast_rows}:
+        await db.execute(
+            delete(IbpForecast).where(IbpForecast.country_code == country, IbpForecast.snapshot == snapshot)
+        )
+    db.add_all(
+        IbpForecast(
+            country_code=r["countryCode"],
+            segment_id=r["segmentId"],
+            variety=r["variety"],
+            year=r["year"],
+            month=r["month"],
+            snapshot=r["snapshot"],
+            qty_ks=r["qtyKs"],
+            value_usd=r["valueUsd"],
+            planner_id=r["plannerId"],
+        )
+        for r in forecast_rows
+    )
+    return summary
+
+
+async def commit_variety_map(db: AsyncSession, rows: list[dict]) -> dict:
+    for country in {r["countryCode"] for r in rows}:
+        await db.execute(delete(VarietyMap).where(VarietyMap.country_code == country))
+    db.add_all(
+        VarietyMap(country_code=r["countryCode"], variety=r["variety"], segment_id=r["segmentId"]) for r in rows
+    )
+    return {"varieties": len(rows)}
+
+
 COMMITTERS = {
     "hierarchy": commit_hierarchy,
     "market": commit_market,
@@ -228,4 +282,7 @@ COMMITTERS = {
     "actuals": commit_actuals,
     "assignments": commit_assignments,
     "seasonality": commit_seasonality,
+    "budget_rates": commit_budget_rates,
+    "variety_map": commit_variety_map,
+    "sac_sales": commit_sac_sales,
 }

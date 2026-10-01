@@ -79,8 +79,8 @@ export function computeImpact(
 
   const marketValue = ctx.marketQtyKs * ctx.priceExseed;
   const mega = ctx.mega;
-  const megaBase = div(mega.syngentaValueEur, mega.marketValueEur);
-  const megaNew = div(mega.syngentaValueEur - ctx.planValueEur + fyValue, mega.marketValueEur);
+  const megaBase = div(mega.syngentaValueUsd, mega.marketValueUsd);
+  const megaNew = div(mega.syngentaValueUsd - ctx.planValueUsd + fyValue, mega.marketValueUsd);
   const scale = Math.max(0, div(100 - megaNew * 100, 100 - megaBase * 100));
   const competitors = mega.competitors.map((c) => ({
     name: c.name,
@@ -89,7 +89,7 @@ export function computeImpact(
     deltaPts: c.sharePct * scale - c.sharePct,
   }));
 
-  const lastYearPrice = div(ctx.lastYearValueEur, ctx.lastYearQtyKs);
+  const lastYearPrice = div(ctx.lastYearValueUsd, ctx.lastYearQtyKs);
   const volumeEffect = (fy - ctx.lastYearQtyKs) * lastYearPrice;
   const avgPrice = div(fyValue, fy);
   const priceEffect = (avgPrice - lastYearPrice) * fy;
@@ -124,7 +124,7 @@ export function computeImpact(
     monthVsAvgPct: div(entry.value - monthAvg, monthAvg),
     fyValue,
     valueShare: div(fyValue, marketValue),
-    planValueShare: div(ctx.planValueEur, marketValue),
+    planValueShare: div(ctx.planValueUsd, marketValue),
     megaShareBaseline: megaBase,
     megaShare: megaNew,
     competitors,
@@ -134,9 +134,9 @@ export function computeImpact(
     marketHa: ctx.marketHectares,
     megaImpliedHa: mega.impliedHaBaseline - div(ctx.planQtyKs, density) + div(fy, density),
     revenue: {
-      lastYear: ctx.lastYearValueEur,
+      lastYear: ctx.lastYearValueUsd,
       estimate: fyValue,
-      change: fyValue - ctx.lastYearValueEur,
+      change: fyValue - ctx.lastYearValueUsd,
       volumeEffect,
       priceEffect,
       priceShareOfChange: div(priceEffect, Math.abs(volumeEffect) + Math.abs(priceEffect)),

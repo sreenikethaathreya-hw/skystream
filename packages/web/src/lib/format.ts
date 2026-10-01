@@ -4,10 +4,6 @@ export const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "
 const LOCALE = "en-US";
 const integer = new Intl.NumberFormat(LOCALE, { maximumFractionDigits: 0 });
 const decimal = new Intl.NumberFormat(LOCALE, { maximumFractionDigits: 2 });
-const eur = (maximumFractionDigits: number) =>
-  new Intl.NumberFormat(LOCALE, { style: "currency", currency: "EUR", currencyDisplay: "code", notation: "compact", maximumFractionDigits });
-const eurMillions = eur(2);
-const eurSmall = eur(0);
 const dateFormat = new Intl.DateTimeFormat(LOCALE, { dateStyle: "medium" });
 const dateTimeFormat = new Intl.DateTimeFormat(LOCALE, { dateStyle: "medium", timeStyle: "short" });
 
@@ -23,8 +19,6 @@ export const fmtPct = (value: number, digits = 1) => `${(value * 100).toFixed(di
 
 export const fmtPts = (value: number, digits = 1) =>
   `${value >= 0 ? "+" : ""}${value.toFixed(digits)} pts`;
-
-export const fmtEur = (value: number) => (Math.abs(value) >= 1_000_000 ? eurMillions : eurSmall).format(value);
 
 export const fmtDate = (iso: string) => dateFormat.format(new Date(iso));
 

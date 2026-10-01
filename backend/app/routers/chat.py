@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends
+from fastapi.responses import StreamingResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.database import get_db
@@ -33,6 +34,22 @@ async def send_message(
     user: CurrentUser = Depends(get_current_user),
 ) -> ChatTurnOut:
     return await chat_service.send_message(db, user, session_id, body)
+
+
+@router.post("/sessions/{session_id}/messages/stream")
+async def stream_message(
+    session_id: str,
+    body: ChatMessageIn,
+    db: AsyncSession = Depends(get_db),
+    user: CurrentUser = Depends(get_current_user),
+) -> StreamingResponse:
+    """Same turn as /messages, sent as server-sent events: tool_started and tool_done, then final (or error)."""
+    turn = await chat_service.prepare_turn(db, user, session_id, body)
+    return StreamingResponse(
+        chat_service.stream_turn(user, turn),
+        media_type="text/event-stream",
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+    )
 
 
 @router.delete("/sessions/{session_id}", status_code=204)

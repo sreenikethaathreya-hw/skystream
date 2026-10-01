@@ -1,3 +1,6 @@
+import { useEffect, useRef } from "react";
+import { useSearchParams } from "react-router-dom";
+import { AskButton } from "@/components/chat/AskButton";
 import { RuleComposer } from "@/components/rules/RuleComposer";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardBody, CardHeader } from "@/components/ui/card";
@@ -6,17 +9,27 @@ import { PageHeader } from "@/components/ui/page-header";
 import { useToast } from "@/components/ui/toast";
 import { useRetireRule } from "@/hooks/mutations";
 import { useRules } from "@/hooks/queries";
+import { usePageContext } from "@/hooks/useChat";
 import { useScope } from "@/hooks/useScope";
 import { useSession } from "@/hooks/useSession";
 import { fmtDate } from "@/lib/format";
 import type { LeadRule } from "@/lib/types";
+import { cn } from "@/lib/utils";
 
-function RuleCard({ rule, canRetire }: { rule: LeadRule; canRetire: boolean }) {
+function RuleCard({ rule, canRetire, highlight }: { rule: LeadRule; canRetire: boolean; highlight: boolean }) {
   const retire = useRetireRule();
   const toast = useToast();
   const s = rule.stats;
+  const card = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (highlight) card.current?.scrollIntoView?.({ block: "center", behavior: "smooth" });
+  }, [highlight]);
   return (
-    <Card data-testid="rule-card" className={rule.active ? "" : "opacity-70"}>
+    <Card
+      ref={card}
+      data-testid="rule-card"
+      className={cn(!rule.active && "opacity-70", highlight && "ring-2 ring-brand-500/60")}
+    >
       <CardBody className="flex flex-col gap-2 pt-4">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex flex-wrap items-center gap-2">
@@ -26,6 +39,10 @@ function RuleCard({ rule, canRetire }: { rule: LeadRule; canRetire: boolean }) {
               #{rule.id} by {rule.createdByName} · {fmtDate(rule.createdAt)}
               {rule.retiredAt && ` · retired by ${rule.retiredByName} ${fmtDate(rule.retiredAt)}`}
             </span>
+            <AskButton
+              question={`How has lead rule ${rule.id} performed: how often did it fire and were those entries right?`}
+              context={{ page: "rules", ruleId: rule.id }}
+            />
           </div>
           {rule.active && canRetire && (
             <ConfirmButton
@@ -62,6 +79,9 @@ export function RulesPage() {
   const { user } = useSession();
   const { data: rules, isLoading } = useRules(scope);
   const author = user?.role === "lead" || user?.role === "admin";
+  const [params] = useSearchParams();
+  const linked = Number(params.get("rule")) || null;
+  usePageContext({ page: "rules", ruleId: linked });
 
   return (
     <div className="flex flex-col gap-4">
@@ -81,7 +101,7 @@ export function RulesPage() {
 
       {isLoading && <p className="text-sm text-muted">Loading…</p>}
       <div className="flex flex-col gap-3" data-testid="rule-list">
-        {rules?.map((r) => <RuleCard key={r.id} rule={r} canRetire={author} />)}
+        {rules?.map((r) => <RuleCard key={r.id} rule={r} canRetire={author} highlight={r.id === linked} />)}
         {rules?.length === 0 && <p className="text-sm text-muted">No lead rules for this scope yet.</p>}
       </div>
     </div>

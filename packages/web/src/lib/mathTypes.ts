@@ -4,6 +4,8 @@ export interface MarketPoint {
   year: number;
   hectares: number;
   qtyKs: number;
+  /** Labels only (the math ignores it): "actual" or "plan" for Syngenta history points. */
+  basis?: string | null;
 }
 
 export interface Competitor {
@@ -19,8 +21,8 @@ export interface YearMonthly {
 
 export interface MegaContext {
   name?: string;
-  marketValueEur: number;
-  syngentaValueEur: number;
+  marketValueUsd: number;
+  syngentaValueUsd: number;
   syngentaSharePct: number;
   competitors: Competitor[];
   impliedHaBaseline: number;
@@ -35,10 +37,10 @@ export interface SegmentContext {
   density: number;
   priceExseed: number;
   planQtyKs: number;
-  planValueEur: number;
+  planValueUsd: number;
   planNetPrice: number;
   lastYearQtyKs: number;
-  lastYearValueEur: number;
+  lastYearValueUsd: number;
   marketHistory: MarketPoint[];
   planQtyHistory: MarketPoint[];
   netPriceHistory: number[];

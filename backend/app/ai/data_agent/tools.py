@@ -4,20 +4,29 @@ Each tool reads the caller's policy from `temp:policy`, refuses segments outside
 session and never writes. Values are rounded the way the UI shows them so the model can quote them verbatim.
 """
 
-from collections.abc import Awaitable, Callable
-from typing import Any
-
-from fastapi import HTTPException
 from google.adk import Context
 from sqlalchemy import select
 
-from app.ai.data_agent.policy import ChatPolicy, read_policy
-from app.constants.demo import MONTH_NAMES
+from app.ai.data_agent.policy import ChatPolicy
+from app.ai.data_agent.tool_support import MAX_ROWS, Result, capture_link
+from app.ai.data_agent.tool_support import error as _error
+from app.ai.data_agent.tool_support import ks as _ks
+from app.ai.data_agent.tool_support import month_name as _month_name
+from app.ai.data_agent.tool_support import out_of_scope as _out_of_scope
+from app.ai.data_agent.tool_support import pct as _pct
+from app.ai.data_agent.tool_support import table as _table
+from app.ai.data_agent.tool_support import with_policy as _with_policy
 from app.database import async_session
 from app.models import Claim, CompetitorShare, DemandEntry
 from app.schemas.demand_math import EntryInput, SegmentContext
 from app.services.consensus_service import OPEN_STATUSES, exception_reasons
-from app.services.context_service import latest_entries, segment_contexts, segment_label
+from app.services.context_service import (
+    COMMITTED_SOURCES,
+    ibp_months,
+    latest_entries,
+    segment_contexts,
+    segment_label,
+)
 from app.services.demand_math import compute_impact
 from app.services.entry_service import list_entries, scope_filter
 from app.services.rep_service import is_weak, list_track_records, track_records
@@ -25,51 +34,9 @@ from app.services.rule_service import list_rules
 from app.services.settings_service import get_app_settings
 from app.services.user_service import user_names
 
-MAX_ROWS = 25
-SUM_METRICS = ("plan_ks", "actual_ks", "last_year_ks", "latest_entry_ks")
+SUM_METRICS = ("plan_ks", "actual_ks", "last_year_ks", "latest_entry_ks", "approved_ks", "low_ks", "high_ks")
 
-Result = dict[str, Any]
-
-
-def _ks(value: float | None) -> int | None:
-    return None if value is None else round(value)
-
-
-def _pct(fraction: float | None) -> float | None:
-    return None if fraction is None else round(fraction * 100, 1)
-
-
-def _error(message: str) -> Result:
-    return {"status": "error", "error_message": message}
-
-
-def _table(source: str, columns: list[str], rows: list[list], link: tuple[str, str] | None = None, **extra) -> Result:
-    out: Result = {"status": "success", "source": source, "columns": columns, "rows": rows, **extra}
-    if link:
-        out["link"] = {"label": link[0], "to": link[1]}
-    return out
-
-
-def _month_name(month: int) -> str:
-    return MONTH_NAMES[month - 1]
-
-
-def _policy(ctx: Context) -> ChatPolicy | None:
-    return read_policy(ctx.state)
-
-
-def _out_of_scope(segment_id: int) -> Result:
-    return _error(f"Micro-segment {segment_id} is not in your scope or has no market this year.")
-
-
-async def _with_policy(ctx: Context, body: Callable[[ChatPolicy], Awaitable[Result]]) -> Result:
-    policy = _policy(ctx)
-    if policy is None:
-        return _error("No access policy was set for this conversation.")
-    try:
-        return await body(policy)
-    except HTTPException as exc:
-        return _error(str(exc.detail))
+__all__ = ["MAX_ROWS", "Result"]
 
 
 async def list_segments(ctx: Context) -> Result:
@@ -119,8 +86,9 @@ async def get_segment_baseline(segment_id: int, month: int, ctx: Context) -> Res
         month is used.
 
     Returns:
-      On success: {'status': 'success', 'figures': {...}, 'columns': [...], 'rows': [[year, syngenta_ks,
-      market_ks, share_pct], ...]}. Shares are percentages, quantities are thousand seeds (KS).
+      On success: {'status': 'success', 'figures': {...}, 'columns': [...], 'rows': [[year, basis,
+      syngenta_ks, market_ks, share_pct], ...]}. Years before the planning year are actual sales; the planning
+      year is plan. Shares are percentages, quantities are thousand seeds (KS).
       On failure: {'status': 'error', 'error_message': ...}.
     """
 
@@ -142,7 +110,13 @@ async def get_segment_baseline(segment_id: int, month: int, ctx: Context) -> Res
         )
         market = {p.year: p.qty_ks for p in c.market_history}
         rows = [
-            [p.year, _ks(p.qty_ks), _ks(market[p.year]), _pct(p.qty_ks / market[p.year]) if market[p.year] else None]
+            [
+                p.year,
+                "actual sales" if p.basis == "actual" else "plan",
+                _ks(p.qty_ks),
+                _ks(market[p.year]),
+                _pct(p.qty_ks / market[p.year]) if market[p.year] else None,
+            ]
             for p in sorted(c.plan_qty_history, key=lambda p: p.year)
             if p.year in market
         ]
@@ -167,15 +141,20 @@ async def get_segment_baseline(segment_id: int, month: int, ctx: Context) -> Res
             "month_last_year_ks": _ks(c.last_year_monthly[asked - 1]),
             "month_historical_avg_ks": _ks(_month_history_avg(c, asked)),
             "month_submitted_ks": _ks(c.submitted.get(str(asked))),
+            "last_year_from": (
+                "monthly actuals"
+                if any(h.year == c.year - 1 and h.basis == "actuals" for h in c.monthly_history)
+                else "annual actual sales, phased by month"
+            ),
             "market_ha": _ks(impact.market_ha),
             "implied_ha": _ks(impact.implied_ha),
             "market_qty_ks": _ks(c.market_qty_ks),
         }
         return _table(
             f"Baseline for {segment_label(seg)}, {c.year}",
-            ["Year", "Syngenta (KS)", "Market (KS)", "Share (%)"],
+            ["Year", "Basis", "Syngenta (KS)", "Market (KS)", "Share (%)"],
             rows,
-            link=("Open in Capture", "/capture"),
+            link=("Open in Capture", capture_link(segment_id, asked)),
             figures=figures,
         )
 
@@ -240,12 +219,14 @@ async def list_demand_entries(segment_id: int, month: int, status: str, rep_name
     Args:
       segment_id: A micro-segment number, or 0 for every segment in scope.
       month: A month 1 to 12, or 0 for every month.
-      status: One of submitted, approved, discuss, challenged, or an empty string for any status.
+      status: One of submitted, needs_justification, approved, discuss, challenged, or an empty string for any.
       rep_name: Part of a rep's name, for example "Rep A", or an empty string for every rep.
 
     Returns:
       On success: {'status': 'success', 'columns': [...], 'rows': [[segment, month, rep, value_ks, low_ks,
-      high_ks, status, flags, claim, resolution], ...], 'total_matching': n}. At most 25 rows, newest first.
+      high_ks, status, flags, claim, resolution, source], ...], 'total_matching': n}. Source says whether the
+      number came from the rep's IBP forecast (with its snapshot) or was typed in Skystream. At most 25 rows,
+      newest first.
       On failure: {'status': 'error', 'error_message': ...}.
     """
 
@@ -277,15 +258,58 @@ async def list_demand_entries(segment_id: int, month: int, status: str, rep_name
                 "; ".join(f.message for f in e.flags) or "none",
                 (e.claim.summary if e.claim else None) or "none",
                 e.claim.resolution if e.claim else "no claim",
+                f"IBP {e.snapshot}" if e.source == "ibp" else "typed in Skystream" if e.source == "live" else e.source,
             ]
             for e in matching[:MAX_ROWS]
         ]
         return _table(
             "Demand entries",
-            ["Segment", "Month", "Rep", "Value (KS)", "Low (KS)", "High (KS)", "Status", "Flags", "Claim", "Resolution"],
+            ["Segment", "Month", "Rep", "Value (KS)", "Low (KS)", "High (KS)", "Status", "Flags", "Claim", "Resolution",
+             "Source"],
             rows,
             link=("Open in Ledger", "/ledger"),
             total_matching=len(matching),
+        )
+
+    return await _with_policy(ctx, body)
+
+
+async def get_ibp_forecast(segment_id: int, ctx: Context) -> Result:
+    """Gets the rep's committed IBP numbers for one micro-segment, month by month and by variety.
+
+    Use this for questions about what was committed in IBP, which varieties make up a month, or which snapshot
+    the numbers come from. The numbers are the reps' own; the app does not forecast.
+
+    Args:
+      segment_id: The micro-segment number, for example 2482.
+
+    Returns:
+      On success: {'status': 'success', 'columns': [...], 'rows': [[month, variety, qty_ks, snapshot,
+      entry_status], ...]}. An empty table means no IBP snapshot has been uploaded for this segment.
+      On failure: {'status': 'error', 'error_message': ...}.
+    """
+
+    async def body(policy: ChatPolicy) -> Result:
+        if not policy.can_see(segment_id):
+            return _out_of_scope(segment_id)
+        async with async_session() as db:
+            period, contexts = await segment_contexts(db, policy.country_code, policy.mega_segment_id, [segment_id])
+            months = (await ibp_months(db, policy.country_code, period.year, [segment_id])).get(segment_id, [])
+            entries = await latest_entries(db, policy.country_code, period.year, [segment_id])
+        if segment_id not in contexts:
+            return _out_of_scope(segment_id)
+        seg, c = contexts[segment_id]
+        rows = []
+        for m in months:
+            entry = entries.get((segment_id, m.month))
+            status = entry.status if entry is not None and entry.source == "ibp" else "reference only"
+            rows += [[_month_name(m.month), v.variety, _ks(v.qty_ks), m.snapshot, status] for v in m.varieties]
+        return _table(
+            f"IBP forecast for {segment_label(seg)}, {c.year}",
+            ["Month", "Variety", "Qty (KS)", "Snapshot", "Entry status"],
+            rows[: MAX_ROWS * 2],
+            link=("Open in Capture", capture_link(segment_id)),
+            month_totals_ks={_month_name(m.month): _ks(m.qty_ks) for m in months},
         )
 
     return await _with_policy(ctx, body)
@@ -323,11 +347,28 @@ async def get_competitor_shares(ctx: Context) -> Result:
     return await _with_policy(ctx, body)
 
 
+def _team_average(records) -> list:
+    def mean(values: list[float | None]) -> float | None:
+        present = [v for v in values if v is not None]
+        return sum(present) / len(present) if present else None
+
+    return [
+        "Team average",
+        sum(r.entries_resolved for r in records),
+        _pct(mean([r.bias_pct for r in records])),
+        _pct(mean([r.claim_hit_rate for r in records])),
+        _pct(mean([r.range_coverage for r in records])),
+        sum(r.confirmed for r in records),
+        sum(r.contradicted for r in records),
+        "n/a",
+    ]
+
+
 async def get_rep_track_records(rep_name: str, ctx: Context) -> Result:
     """Gets reps' track records: forecast bias, claim hit rate and range coverage from resolved entries.
 
     Use this for questions about how accurate a rep has been, whose claims were confirmed or contradicted,
-    or which reps have a weak record.
+    or which reps have a weak record. A rep sees their own record and the team average, not other reps.
 
     Args:
       rep_name: Part of a rep's name, for example "Rep B", or an empty string for every rep.
@@ -341,8 +382,9 @@ async def get_rep_track_records(rep_name: str, ctx: Context) -> Result:
     async def body(policy: ChatPolicy) -> Result:
         async with async_session() as db:
             records = await list_track_records(db)
-        rows = [
-            [
+
+        def row(r) -> list:
+            return [
                 r.user.name,
                 r.entries_resolved,
                 _pct(r.bias_pct),
@@ -352,9 +394,12 @@ async def get_rep_track_records(rep_name: str, ctx: Context) -> Result:
                 r.contradicted,
                 "yes" if r.weak else "no",
             ]
-            for r in records
-            if not rep_name or rep_name.strip().lower() in r.user.name.lower()
-        ]
+
+        if policy.role == "rep":
+            rows = [row(r) for r in records if r.user.id == policy.user_id]
+            rows.append(_team_average(records))
+        else:
+            rows = [row(r) for r in records if not rep_name or rep_name.strip().lower() in r.user.name.lower()]
         return _table(
             "Rep track records",
             ["Rep", "Entries resolved", "Bias (%)", "Claim hit rate (%)", "Range coverage (%)", "Confirmed",
@@ -419,7 +464,7 @@ async def list_open_exceptions(ctx: Context) -> Result:
             query = (
                 select(DemandEntry, Claim)
                 .outerjoin(Claim, Claim.entry_id == DemandEntry.id)
-                .where(DemandEntry.source == "live", DemandEntry.status.in_(OPEN_STATUSES))
+                .where(DemandEntry.source.in_(COMMITTED_SOURCES), DemandEntry.status.in_(OPEN_STATUSES))
                 .order_by(DemandEntry.segment_id, DemandEntry.month)
             )
             pairs = (await db.execute(scope_filter(query, policy.country_code, policy.mega_segment_id))).all()
@@ -465,7 +510,9 @@ async def sum_segment_figures(metric: str, segment_ids: list[int], months: list[
     Use this whenever the user asks for a total, sum or average across several segments or months.
 
     Args:
-      metric: One of plan_ks, actual_ks, last_year_ks or latest_entry_ks (the rep's latest entry, else plan).
+      metric: One of plan_ks, actual_ks, last_year_ks, latest_entry_ks (the rep's latest entry, else plan),
+        approved_ks (latest entry only where the lead approved it, else 0), low_ks or high_ks (the latest
+        entry's range ends, else plan).
       segment_ids: Micro-segment numbers to include; an empty list means every segment in scope.
       months: Months 1 to 12 to include; an empty list means all twelve.
 
@@ -486,19 +533,30 @@ async def sum_segment_figures(metric: str, segment_ids: list[int], months: list[
         ids = segment_ids or policy.visible_segment_ids
         chosen = months or list(range(1, 13))
         async with async_session() as db:
-            _, contexts = await segment_contexts(db, policy.country_code, policy.mega_segment_id, ids)
+            period, contexts = await segment_contexts(db, policy.country_code, policy.mega_segment_id, ids)
+            entries = await latest_entries(db, policy.country_code, period.year, list(contexts))
 
-        def value(c: SegmentContext, m: int) -> float:
+        def value(seg_id: int, c: SegmentContext, m: int) -> float:
+            plan = c.monthly_plan[m - 1]
+            entry = entries.get((seg_id, m))
+            committed = entry if entry is not None and entry.source in COMMITTED_SOURCES else None
             if metric == "plan_ks":
-                return c.monthly_plan[m - 1]
+                return plan
             if metric == "actual_ks":
                 return c.monthly_actual[m - 1] or 0.0
             if metric == "last_year_ks":
                 return c.last_year_monthly[m - 1]
-            return c.submitted.get(str(m), c.monthly_plan[m - 1])
+            if metric == "approved_ks":
+                return committed.value if committed and committed.status == "approved" else 0.0
+            if metric == "low_ks":
+                return committed.low if committed else plan
+            if metric == "high_ks":
+                return committed.high if committed else plan
+            return c.submitted.get(str(m), plan)
 
         per_segment = [
-            (seg, sum(value(c, m) for m in chosen)) for seg, c in sorted(contexts.values(), key=lambda p: p[0].id)
+            (seg, sum(value(seg.id, c, m) for m in chosen))
+            for seg, c in sorted(contexts.values(), key=lambda p: p[0].id)
         ]
         total = sum(v for _, v in per_segment)
         return _table(
@@ -518,6 +576,7 @@ TOOLS = [
     get_segment_baseline,
     get_monthly_series,
     list_demand_entries,
+    get_ibp_forecast,
     get_competitor_shares,
     get_rep_track_records,
     list_lead_rules,
