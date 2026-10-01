@@ -37,7 +37,8 @@ class MetaOut(CamelModel):
     clock: ClockOut | None
     ai: dict[str, str | bool]
     thresholds: Thresholds
-    currency: str
+    reporting_currency: str
+    default_display_currency: str
 
 
 class ScopeOptionOut(CamelModel):
@@ -63,6 +64,24 @@ class MonthEntryOut(CamelModel):
     high: float
     status: str
     user_id: str
+    source: str = "live"
+    justification: str | None = None
+
+
+class IbpVarietyOut(CamelModel):
+    variety: str
+    qty_ks: float
+
+
+class IbpMonthOut(CamelModel):
+    """The rep's committed IBP number for one month (latest snapshot), with its variety breakdown."""
+
+    month: int
+    snapshot: str
+    qty_ks: float
+    varieties: list[IbpVarietyOut]
+    entry_id: str | None = None
+    entry_status: str | None = None
 
 
 class SegmentCubeOut(CamelModel):
@@ -79,6 +98,14 @@ class SegmentCubeOut(CamelModel):
     market_notes: dict[str, str | None]
     context: SegmentContext
     latest_entries: list[MonthEntryOut]
+    ibp: list[IbpMonthOut] = []
+
+
+class FxOut(CamelModel):
+    """Budget rates the browser uses to show USD figures in another currency. No network call while typing."""
+
+    budget_year: int | None
+    rates: dict[str, float]
 
 
 class CubeOut(CamelModel):
@@ -87,10 +114,13 @@ class CubeOut(CamelModel):
     mega_segment_id: str
     mega_segment_desc: str
     species: str | None
-    currency: str
+    reporting_currency: str
+    local_currency: str
+    fx: FxOut
     year: int
     clock_month: int
     year_closed: bool
+    demand_source: str = "manual"
     thresholds: Thresholds
     rules: list[LeadRuleSpec] = []
     competitors: list[CompetitorOut]
@@ -114,6 +144,14 @@ class EntryIn(CamelModel):
             raise ValueError("low <= value <= high is required")
         self.country_code = self.country_code.upper()
         return self
+
+
+class JustifyIn(CamelModel):
+    """A rep's justification for a number committed in IBP; the number itself is not editable here."""
+
+    justification: str | None = Field(default=None, max_length=600)
+    low: float | None = Field(default=None, ge=0)
+    high: float | None = Field(default=None, ge=0)
 
 
 class AnalyzeOut(CamelModel):
@@ -143,6 +181,20 @@ class ClaimOut(CamelModel):
     decisions: dict[str, DecisionAnswer]
 
 
+class NoteIn(CamelModel):
+    body: str = Field(min_length=1, max_length=600)
+
+
+class NoteOut(CamelModel):
+    id: int
+    entry_id: str
+    user_id: str
+    user_name: str
+    body: str
+    via: str
+    created_at: datetime
+
+
 class EntryOut(CamelModel):
     id: str
     user_id: str
@@ -161,10 +213,12 @@ class EntryOut(CamelModel):
     flags: list[Flag]
     status: str
     source: str
+    snapshot: str | None = None
     triage: TriageDecision | None
     reviewed_by: str | None
     created_at: datetime
     claim: ClaimOut | None
+    notes: list[NoteOut] = []
 
 
 class TrackRecordOut(CamelModel):

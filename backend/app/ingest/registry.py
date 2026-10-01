@@ -5,8 +5,10 @@ import pandas as pd
 
 from app.ingest.exports import validate_hierarchy, validate_market, validate_plan
 from app.ingest.exports_share import validate_competitors, validate_grower
+from app.ingest.fx import validate_budget_rates
 from app.ingest.lookups import ImportContext
 from app.ingest.report import ImportReport
+from app.ingest.sac import validate_sac_sales, validate_variety_map
 from app.ingest.templates import validate_actuals, validate_assignments, validate_seasonality
 
 Validator = Callable[[pd.DataFrame, ImportContext], tuple[list[dict], ImportReport]]
@@ -73,6 +75,27 @@ UPLOAD_KINDS: dict[str, UploadKind] = {
             "Monthly weights in the template format",
             False,
             validate_seasonality,
+        ),
+        UploadKind(
+            "variety_map",
+            "Variety to micro-segment",
+            "Which micro-segment each variety belongs to, for SAC exports without one (template format)",
+            False,
+            validate_variety_map,
+        ),
+        UploadKind(
+            "sac_sales",
+            "SAC sales and IBP forecast",
+            "SAC GPC Sales query MDL_LC_FP_Q050: monthly actuals and the reps' IBP forecast by variety",
+            False,
+            validate_sac_sales,
+        ),
+        UploadKind(
+            "budget_rates",
+            "Budget FX rates",
+            "Finance 'BUD <year>' workbook (rates per 1 USD), or the template",
+            False,
+            validate_budget_rates,
         ),
     )
 }

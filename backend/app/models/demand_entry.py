@@ -25,6 +25,8 @@ class DemandEntry(Base):
     flags: Mapped[list] = mapped_column(JSON, default=list)
     status: Mapped[str] = mapped_column(String(20), default="submitted", index=True)
     source: Mapped[str] = mapped_column(String(20), default="live")
+    # IBP entries: the SAC snapshot the number came from.
+    snapshot: Mapped[str | None] = mapped_column(String(40))
     triage: Mapped[dict | None] = mapped_column(JSON)
     reviewed_by: Mapped[str | None] = mapped_column(String(200))
     reviewed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))

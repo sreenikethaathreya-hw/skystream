@@ -25,6 +25,8 @@ function message(overrides: Partial<ChatMessageData> = {}): ChatMessageData {
       { label: "Open in Capture", to: "/capture" },
       { label: "Elsewhere", to: "https://example.com" },
     ],
+    actions: [],
+    downloads: [],
     ...overrides,
   };
 }
@@ -42,6 +44,7 @@ describe("ChatMessage", () => {
     renderMessage(message());
     expect(screen.getByTestId("chat-source")).toHaveTextContent("Baseline for 2482");
     expect(screen.getByText("18.4")).toBeInTheDocument();
+    expect(screen.getByText("2025")).toBeInTheDocument();
     expect(screen.getByText("–")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /Open in Capture/ })).toHaveAttribute("href", "/capture");
     expect(screen.queryByRole("link", { name: /Elsewhere/ })).not.toBeInTheDocument();
@@ -51,6 +54,41 @@ describe("ChatMessage", () => {
   it("shows the redaction note when numbers were removed", () => {
     renderMessage(message({ numbersRedacted: true, text: "Plan is (see table)." }));
     expect(screen.getByTestId("chat-redacted")).toHaveTextContent("could not confirm");
+  });
+
+  it("shows a receipt for each change with an internal link only", () => {
+    renderMessage(
+      message({
+        actions: [
+          {
+            kind: "entry_submitted",
+            targetType: "entry",
+            targetId: "e1",
+            summary: "Submitted 4,000 KS for 2482, Oct",
+            link: "/capture?segment=2482&month=10",
+          },
+          { kind: "note_added", targetType: "entry", targetId: "e2", summary: "Note added", link: "//evil.example" },
+        ],
+      }),
+    );
+    const receipts = screen.getAllByTestId("chat-action");
+    expect(receipts).toHaveLength(2);
+    expect(receipts[0]).toHaveTextContent("Done: Submitted 4,000 KS for 2482, Oct");
+    expect(screen.getAllByRole("link", { name: /See it/ })).toHaveLength(1);
+    expect(screen.getByRole("link", { name: /See it/ })).toHaveAttribute("href", "/capture?segment=2482&month=10");
+  });
+
+  it("offers only export downloads", () => {
+    renderMessage(
+      message({
+        downloads: [
+          { label: "Download supply handoff CSV", href: "/export/supply.csv?country=ES&mega=SP01" },
+          { label: "Bad", href: "/admin/users" },
+        ],
+      }),
+    );
+    expect(screen.getAllByTestId("chat-download")).toHaveLength(1);
+    expect(screen.getByTestId("chat-download")).toHaveTextContent("Download supply handoff CSV");
   });
 
   it("never interprets answer text as HTML", () => {

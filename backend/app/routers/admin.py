@@ -6,7 +6,7 @@ from app.database import get_db
 from app.ingest.template_files import TEMPLATES, template_csv
 from app.middleware.auth import get_current_user, require_role
 from app.schemas.api import BatchOut, UploadKindOut, UserAdminIn, UserAdminOut
-from app.services import upload_service, user_service
+from app.services import ibp_service, upload_service, user_service
 from app.services.settings_service import AppSettings, AppSettingsPatch, get_app_settings, update_app_settings
 from app.services.user_service import CurrentUser
 
@@ -84,4 +84,9 @@ async def settings(db: AsyncSession = Depends(get_db), _: CurrentUser = Depends(
 async def save_settings(
     body: AppSettingsPatch, db: AsyncSession = Depends(get_db), user: CurrentUser = Depends(admin_user)
 ) -> AppSettings:
-    return await update_app_settings(db, body, user.id)
+    before = (await get_app_settings(db)).demand_source
+    saved = await update_app_settings(db, body, user.id)
+    if saved.demand_source == "ibp" and before != "ibp":
+        await ibp_service.apply_latest_stored(db)
+        await db.commit()
+    return saved

@@ -1,3 +1,5 @@
+import { parseSseBlock, splitSse, type SseEvent } from "@/lib/sse";
+
 const USER_KEY = "skystream.demoUser";
 
 type TokenProvider = () => Promise<string | null>;
@@ -57,7 +59,28 @@ async function request<T>(method: string, path: string, body?: unknown): Promise
   return (type.includes("application/json") ? response.json() : response.text()) as Promise<T>;
 }
 
+async function stream(path: string, body: unknown, onEvent: (event: SseEvent) => void): Promise<void> {
+  const response = await send("POST", path, JSON.stringify(body));
+  const reader = response.body?.getReader();
+  if (!reader) throw new ApiError(500, "This browser cannot read streamed answers");
+  const decoder = new TextDecoder();
+  let buffer = "";
+  for (;;) {
+    const { value, done } = await reader.read();
+    buffer += decoder.decode(value, { stream: !done });
+    const { blocks, rest } = splitSse(done ? `${buffer}\n\n` : buffer);
+    buffer = rest;
+    for (const block of blocks) {
+      const event = parseSseBlock(block);
+      if (event) onEvent(event);
+    }
+    if (done) return;
+  }
+}
+
 export const api = {
+  /** POST that answers with server-sent events, read through fetch so it can carry the auth header. */
+  stream,
   get: <T>(path: string) => request<T>("GET", path),
   post: <T>(path: string, body?: unknown) => request<T>("POST", path, body),
   put: <T>(path: string, body?: unknown) => request<T>("PUT", path, body),

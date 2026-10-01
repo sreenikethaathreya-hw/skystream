@@ -1,9 +1,12 @@
 import { AlertTriangle, ChevronDown } from "lucide-react";
-import { type ReactNode, useId, useState } from "react";
+import { type ReactNode, useEffect, useId, useRef, useState } from "react";
 import { ClaimReceipt, ClaimStamp } from "@/components/claims/ClaimReceipt";
 import { ClaimTags } from "@/components/claims/ClaimTags";
+import { EntryNotes } from "@/components/ledger/EntryNotes";
 import { Badge, StatusBadge } from "@/components/ui/badge";
+import { useMoney } from "@/hooks/useMoney";
 import { fmtDateTime, fmtKs, fmtNum, fmtPct, monthName } from "@/lib/format";
+import { fmtPrice } from "@/lib/money";
 import type { Entry } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -23,13 +26,34 @@ export function LedgerHeader() {
   );
 }
 
-export function LedgerRow({ entry, children }: { entry: Entry; children?: ReactNode }) {
-  const [open, setOpen] = useState(false);
+export function LedgerRow({
+  entry,
+  children,
+  highlight = false,
+  canNote = false,
+  ask,
+}: {
+  entry: Entry;
+  children?: ReactNode;
+  highlight?: boolean;
+  canNote?: boolean;
+  ask?: ReactNode;
+}) {
+  const [open, setOpen] = useState(highlight);
   const panelId = useId();
+  const money = useMoney();
+  const row = useRef<HTMLLIElement>(null);
   const claim = entry.claim;
   const actual = claim?.resolutionDetail?.actual;
+  useEffect(() => {
+    if (highlight) row.current?.scrollIntoView?.({ block: "center", behavior: "smooth" });
+  }, [highlight]);
   return (
-    <li className="border-t border-line first:border-t-0" data-testid="ledger-row">
+    <li
+      ref={row}
+      className={cn("border-t border-line first:border-t-0", highlight && "bg-brand-50/40")}
+      data-testid="ledger-row"
+    >
       <button
         type="button"
         aria-expanded={open}
@@ -61,6 +85,11 @@ export function LedgerRow({ entry, children }: { entry: Entry; children?: ReactN
         <span className="flex flex-col text-xs">
           <span className="truncate">{entry.userName}</span>
           <StatusBadge status={entry.status} />
+          {entry.source === "ibp" && (
+            <Badge tone="info" title={entry.snapshot ? `IBP snapshot ${entry.snapshot}` : undefined}>
+              IBP
+            </Badge>
+          )}
         </span>
         <span className="font-num tabular text-lg font-semibold md:text-right">{fmtNum(entry.value)}</span>
         <span className="tabular text-xs text-muted">
@@ -90,14 +119,16 @@ export function LedgerRow({ entry, children }: { entry: Entry; children?: ReactN
           <ClaimReceipt entry={entry} />
           <p className="tabular text-xs text-muted">
             {entry.impact && `Full year ${fmtKs(entry.impact.fyEstimate)} · share ${fmtPct(entry.impact.volumeShare)} · `}
-            {entry.price != null && `EUR ${fmtNum(entry.price)}/KS · `}
+            {entry.price != null && `${fmtPrice(entry.price, money)} · `}
             Entered {fmtDateTime(entry.createdAt)}
             {entry.source === "history" && (
               <Badge className="ml-2" tone="neutral">
                 history
               </Badge>
             )}
+            {ask && <span className="ml-2">{ask}</span>}
           </p>
+          {entry.source !== "history" && <EntryNotes entryId={entry.id} notes={entry.notes ?? []} canWrite={canNote} />}
           {children}
         </div>
       )}

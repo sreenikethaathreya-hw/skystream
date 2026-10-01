@@ -1,14 +1,17 @@
 import { Gavel } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { AskButton } from "@/components/chat/AskButton";
 import { LedgerHeader, LedgerRow, groupByMonth } from "@/components/ledger/LedgerRows";
 import { RuleComposer } from "@/components/rules/RuleComposer";
 import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/ui/page-header";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useCube, useEntries, useReps } from "@/hooks/queries";
+import { usePageContext } from "@/hooks/useChat";
 import { useScope } from "@/hooks/useScope";
 import { useSession } from "@/hooks/useSession";
+import { monthName } from "@/lib/format";
 import type { Entry, Scope } from "@/lib/types";
 
 function MissedClaimRule({ entry, scope }: { entry: Entry; scope: Scope }) {
@@ -38,6 +41,7 @@ export function LedgerPage() {
   const segmentId = Number(params.get("segment")) || undefined;
   const userId = params.get("rep") ?? undefined;
   const missedOnly = params.get("missed") === "1";
+  const linked = params.get("entry");
   const setFilter = (name: string, value: string | undefined) =>
     setParams(
       (current) => {
@@ -56,6 +60,12 @@ export function LedgerPage() {
   const author = user?.role === "lead" || user?.role === "admin";
   const shown = missedOnly ? entries?.filter((e) => e.claim?.resolution === "contradicted") : entries;
   const groups = useMemo(() => groupByMonth(shown ?? []), [shown]);
+  usePageContext({ page: "ledger", segmentId: segmentId ?? null, entryId: linked });
+  const ownsEntry = (e: Entry) => user?.role === "rep" && e.userId === user.id;
+  const askAbout = (e: Entry) =>
+    e.claim?.resolution === "contradicted"
+      ? `Why was the claim on this ${monthName(e.month)} entry for micro-segment ${e.segmentId} contradicted?`
+      : `Walk me through this ${monthName(e.month)} entry for micro-segment ${e.segmentId}.`;
 
   return (
     <div className="flex flex-col gap-4">
@@ -65,7 +75,12 @@ export function LedgerPage() {
         actions={
           <>
             <label className="flex items-center gap-1.5 text-sm text-muted">
-              <input type="checkbox" defaultChecked={missedOnly} onChange={(e) => setFilter("missed", e.target.checked ? "1" : undefined)} />
+              <input
+                type="checkbox"
+                checked={missedOnly}
+                onChange={(e) => setFilter("missed", e.target.checked ? "1" : undefined)}
+                aria-label="Missed claims only"
+              />
               Missed claims only
             </label>
             <select
@@ -119,7 +134,20 @@ export function LedgerPage() {
             <LedgerHeader />
             <ol className="rounded-lg border border-line bg-surface">
               {g.entries.map((e) => (
-                <LedgerRow key={e.id} entry={e}>
+                <LedgerRow
+                  key={e.id}
+                  entry={e}
+                  highlight={e.id === linked}
+                  canNote={author || ownsEntry(e)}
+                  ask={
+                    e.source !== "history" && (author || ownsEntry(e)) ? (
+                      <AskButton
+                        question={askAbout(e)}
+                        context={{ page: "ledger", segmentId: e.segmentId, month: e.month, entryId: e.id }}
+                      />
+                    ) : undefined
+                  }
+                >
                   {author && scope && e.claim?.resolution === "contradicted" && <MissedClaimRule entry={e} scope={scope} />}
                 </LedgerRow>
               ))}

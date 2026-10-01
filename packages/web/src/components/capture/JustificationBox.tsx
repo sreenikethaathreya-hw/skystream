@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { Sparkles } from "lucide-react";
 import { ClaimTags } from "@/components/claims/ClaimTags";
 import { Button } from "@/components/ui/button";
@@ -24,6 +25,7 @@ export function JustificationBox({
   analyzing,
   onChange,
   onAnalyze,
+  ask,
 }: {
   text: string;
   required: boolean;
@@ -32,6 +34,7 @@ export function JustificationBox({
   analyzing: boolean;
   onChange: (text: string) => void;
   onAnalyze: () => void;
+  ask?: ReactNode;
 }) {
   const weakAddress = claim?.addressesFlags != null && claim.addressesFlags < 0.5;
   return (
@@ -44,6 +47,7 @@ export function JustificationBox({
         }
         subtitle="One sentence. It is checked against next month's actuals."
         icon={<Sparkles size={15} />}
+        action={ask}
       />
       <CardBody className="flex flex-col gap-3">
         <div className="flex gap-2">

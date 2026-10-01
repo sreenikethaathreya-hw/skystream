@@ -16,6 +16,16 @@ QUESTIONS = [
     "Which lead rules are active?",
     "Which exceptions are still open?",
     "Can you forecast October demand for 2482?",
+    "What needs my attention?",
+    "Is October ready to close?",
+    "Why is my October entry for 2482 flagged?",
+    "What if I enter 4000 KS for 2482 in October?",
+    "Please submit 4000 KS for 2482 in October, range 3800 to 4200, because Corteva dropped its blocky variety",
+    "Justify my October IBP number for 2432: two cooperatives confirmed bookings",
+    "Approve Rep A's October entry for 2482",
+    "Make a rule: do not accept autumn increases above 20% over last year unless the rep names a competitor move",
+    "What is range coverage?",
+    "How do I justify an IBP entry?",
 ]
 
 

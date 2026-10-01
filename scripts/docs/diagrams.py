@@ -202,7 +202,7 @@ def lineage(out: Path) -> None:
     src = [
         ("MV360 Market", "Micro Segment, Year, Planted Area (HA),\nQty (KS), Plant Density, ExSeed/Farmgate\nprice, 6 POV notes, Modified", 7.5),
         ("MV360 Sales", "Title (year), Microsegment ID + Desc,\nSales Qty, Sales Value, FPI Qty,\nQualitative Comments, Country", 6.0),
-        ("MV360 Competitors", "Mega_Segment_Id, CompetitorDesc,\n2024%-2030%, 2024-2030 EUR,\nCompetitorTrend", 4.5),
+        ("MV360 Competitors", "Mega_Segment_Id, CompetitorDesc,\n2024%-2030%, 2024-2030 USD,\nCompetitorTrend", 4.5),
         ("Grower Potential ES", "Crop Local, Variety, Competitor,\nHecatres Info., Density, Region,\nCountry Picklist (check)", 3.0),
         ("Prod Hierarchy", "f_microSegment, f_microSegmentDesc,\nf_megaSegmentDesc, Cycle, Color,\nEcology Desc", 1.5),
         ("Spain Geo", "State, Address (Postal Code)\n(data-quality checks only)", 0.0),

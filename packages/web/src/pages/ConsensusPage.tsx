@@ -1,4 +1,6 @@
 import { CheckCheck, Download } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
+import { AskButton } from "@/components/chat/AskButton";
 import { RtbPanel } from "@/components/consensus/RtbPanel";
 import { EntryCard } from "@/components/ledger/EntryCard";
 import { Badge } from "@/components/ui/badge";
@@ -10,6 +12,7 @@ import { ProbBar } from "@/components/ui/prob-bar";
 import { useToast } from "@/components/ui/toast";
 import { useBulkApprove, useDecide } from "@/hooks/mutations";
 import { useCube, useQueue } from "@/hooks/queries";
+import { usePageContext } from "@/hooks/useChat";
 import { useScope } from "@/hooks/useScope";
 import { useSession } from "@/hooks/useSession";
 import { api, scopeQuery } from "@/lib/api";
@@ -18,17 +21,31 @@ import type { QueueItem } from "@/lib/types";
 
 const TRIAGE_TONE = { approve: "brand", discuss: "warn", challenge: "crit" } as const;
 
-function ExceptionCard({ item, canDecide }: { item: QueueItem; canDecide: boolean }) {
+function ExceptionCard({ item, canDecide, highlight }: { item: QueueItem; canDecide: boolean; highlight: boolean }) {
   const decide = useDecide();
   const toast = useToast();
   const triage = item.entry.triage;
+  const e = item.entry;
   const act = (decision: string) =>
     decide.mutate(
       { entryId: item.entry.id, decision },
       { onError: (e) => toast({ tone: "error", title: "Decision failed", body: e.message }) },
     );
   return (
-    <EntryCard entry={item.entry}>
+    <EntryCard
+      entry={item.entry}
+      highlight={highlight}
+      canNote={canDecide}
+      ask={
+        <AskButton
+          question={`Walk me through ${e.userName}'s ${monthName(e.month)} entry for micro-segment ${e.segmentId}${
+            triage ? ` and why Jev suggests ${triage.choice}` : ""
+          }.`}
+          context={{ page: "consensus", segmentId: e.segmentId, month: e.month, entryId: e.id }}
+          testId="ask-exception"
+        />
+      }
+    >
       <div className="rounded-lg border border-warn-500/30 bg-warn-50 px-3 py-2 text-xs text-warn-700">
         <p className="font-medium">Why this is on the agenda</p>
         <ul className="ml-4 list-disc">
@@ -78,6 +95,9 @@ export function ConsensusPage() {
   const bulk = useBulkApprove();
   const toast = useToast();
   const isLead = user?.role === "lead" || user?.role === "admin";
+  const [params] = useSearchParams();
+  const linked = params.get("entry");
+  usePageContext({ page: "consensus", month: cube && cube.clockMonth <= 12 ? cube.clockMonth : null, entryId: linked });
   const exportCsv = () =>
     api
       .download(`/export/supply.csv?${scopeQuery(scope)}`, `supply-${scope?.countryCode}-${scope?.megaSegmentId}.csv`)
@@ -96,7 +116,9 @@ export function ConsensusPage() {
         </PageHeader>
         {isLoading && <p className="text-sm text-muted">Loading queue…</p>}
         <div className="flex flex-col gap-3" data-testid="exceptions">
-          {queue?.exceptions.map((item) => <ExceptionCard key={item.entry.id} item={item} canDecide={isLead} />)}
+          {queue?.exceptions.map((item) => (
+            <ExceptionCard key={item.entry.id} item={item} canDecide={isLead} highlight={item.entry.id === linked} />
+          ))}
           {queue && queue.exceptions.length === 0 && (
             <Card>
               <CardBody className="pt-4 text-sm text-muted">No exceptions. Nothing needs discussion this cycle.</CardBody>

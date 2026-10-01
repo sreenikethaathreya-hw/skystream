@@ -4,7 +4,7 @@
   "competitor": "Syngenta",
   "year": 2024,
   "sharePct": 37.9,
-  "valueEur": 26941510.32,
+  "valueUsd": 26941510.32,
   "trend": "Growing"
  },
  {
@@ -12,7 +12,7 @@
   "competitor": "Enza Zaden",
   "year": 2024,
   "sharePct": 2.1,
-  "valueEur": 1491888.27,
+  "valueUsd": 1491888.27,
   "trend": "Declining"
  },
  {
@@ -20,7 +20,7 @@
   "competitor": "Limagrain",
   "year": 2024,
   "sharePct": 27.4,
-  "valueEur": 19465589.76,
+  "valueUsd": 19465589.76,
   "trend": "Growing"
  },
  {
@@ -28,7 +28,7 @@
   "competitor": "Nunhems/BASF",
   "year": 2024,
   "sharePct": 2.1,
-  "valueEur": 1491888.27,
+  "valueUsd": 1491888.27,
   "trend": "Growing"
  },
  {
@@ -36,7 +36,7 @@
   "competitor": "Others",
   "year": 2024,
   "sharePct": 5.1,
-  "valueEur": 3623157.22,
+  "valueUsd": 3623157.22,
   "trend": "Declining"
  },
  {
@@ -44,7 +44,7 @@
   "competitor": "Rijk Zwaan",
   "year": 2024,
   "sharePct": 4.2,
-  "valueEur": 2983776.53,
+  "valueUsd": 2983776.53,
   "trend": "Growing"
  },
  {
@@ -52,7 +52,7 @@
   "competitor": "Semillas Fito",
   "year": 2024,
   "sharePct": 1.1,
-  "valueEur": 781465.28,
+  "valueUsd": 781465.28,
   "trend": "Declining"
  },
  {
@@ -60,7 +60,7 @@
   "competitor": "Sur Seeds",
   "year": 2024,
   "sharePct": 12.7,
-  "valueEur": 9022371.9,
+  "valueUsd": 9022371.9,
   "trend": "Growing"
  },
  {
@@ -68,7 +68,7 @@
   "competitor": "Panora Seeds",
   "year": 2024,
   "sharePct": 7.4,
-  "valueEur": 5257130.08,
+  "valueUsd": 5257130.08,
   "trend": "Growing"
  },
  {
@@ -76,7 +76,7 @@
   "competitor": "Syngenta",
   "year": 2025,
   "sharePct": 39.6,
-  "valueEur": 27726908.64,
+  "valueUsd": 27726908.64,
   "trend": "Growing"
  },
  {
@@ -84,7 +84,7 @@
   "competitor": "Enza Zaden",
   "year": 2025,
   "sharePct": 2.0,
-  "valueEur": 1401916.25,
+  "valueUsd": 1401916.25,
   "trend": "Declining"
  },
  {
@@ -92,7 +92,7 @@
   "competitor": "Limagrain",
   "year": 2025,
   "sharePct": 25.6,
-  "valueEur": 17944528.0,
+  "valueUsd": 17944528.0,
   "trend": "Growing"
  },
  {
@@ -100,7 +100,7 @@
   "competitor": "Nunhems/BASF",
   "year": 2025,
   "sharePct": 3.0,
-  "valueEur": 2102874.37,
+  "valueUsd": 2102874.37,
   "trend": "Growing"
  },
  {
@@ -108,7 +108,7 @@
   "competitor": "Others",
   "year": 2025,
   "sharePct": 7.2,
-  "valueEur": 5046898.5,
+  "valueUsd": 5046898.5,
   "trend": "Declining"
  },
  {
@@ -116,7 +116,7 @@
   "competitor": "Rijk Zwaan",
   "year": 2025,
   "sharePct": 3.9,
-  "valueEur": 2733736.69,
+  "valueUsd": 2733736.69,
   "trend": "Growing"
  },
  {
@@ -124,7 +124,7 @@
   "competitor": "Semillas Fito",
   "year": 2025,
   "sharePct": 1.0,
-  "valueEur": 700958.12,
+  "valueUsd": 700958.12,
   "trend": "Declining"
  },
  {
@@ -132,7 +132,7 @@
   "competitor": "Sur Seeds",
   "year": 2025,
   "sharePct": 11.8,
-  "valueEur": 8271305.87,
+  "valueUsd": 8271305.87,
   "trend": "Growing"
  },
  {
@@ -140,7 +140,7 @@
   "competitor": "Panora Seeds",
   "year": 2025,
   "sharePct": 5.9,
-  "valueEur": 4135652.94,
+  "valueUsd": 4135652.94,
   "trend": "Growing"
  },
  {
@@ -148,7 +148,7 @@
   "competitor": "Syngenta",
   "year": 2026,
   "sharePct": 29.4,
-  "valueEur": 26600738.95,
+  "valueUsd": 26600738.95,
   "trend": "Growing"
  },
  {
@@ -156,7 +156,7 @@
   "competitor": "Enza Zaden",
   "year": 2026,
   "sharePct": 4.1,
-  "valueEur": 3706638.25,
+  "valueUsd": 3706638.25,
   "trend": "Declining"
  },
  {
@@ -164,7 +164,7 @@
   "competitor": "Limagrain",
   "year": 2026,
   "sharePct": 22.5,
-  "valueEur": 20341307.48,
+  "valueUsd": 20341307.48,
   "trend": "Growing"
  },
  {
@@ -172,7 +172,7 @@
   "competitor": "Nunhems/BASF",
   "year": 2026,
   "sharePct": 3.1,
-  "valueEur": 2802580.14,
+  "valueUsd": 2802580.14,
   "trend": "Growing"
  },
  {
@@ -180,7 +180,7 @@
   "competitor": "Others",
   "year": 2026,
   "sharePct": 14.3,
-  "valueEur": 12928030.97,
+  "valueUsd": 12928030.97,
   "trend": "Declining"
  },
  {
@@ -188,7 +188,7 @@
   "competitor": "Rijk Zwaan",
   "year": 2026,
   "sharePct": 6.1,
-  "valueEur": 5514754.47,
+  "valueUsd": 5514754.47,
   "trend": "Growing"
  },
  {
@@ -196,7 +196,7 @@
   "competitor": "Semillas Fito",
   "year": 2026,
   "sharePct": 3.1,
-  "valueEur": 2802580.14,
+  "valueUsd": 2802580.14,
   "trend": "Declining"
  },
  {
@@ -204,7 +204,7 @@
   "competitor": "Sur Seeds",
   "year": 2026,
   "sharePct": 14.3,
-  "valueEur": 12928030.97,
+  "valueUsd": 12928030.97,
   "trend": "Growing"
  },
  {
@@ -212,7 +212,7 @@
   "competitor": "Panora Seeds",
   "year": 2026,
   "sharePct": 3.1,
-  "valueEur": 2802580.14,
+  "valueUsd": 2802580.14,
   "trend": "Growing"
  },
  {
@@ -220,7 +220,7 @@
   "competitor": "Syngenta",
   "year": 2027,
   "sharePct": 30.2,
-  "valueEur": 27544000.8,
+  "valueUsd": 27544000.8,
   "trend": "Growing"
  },
  {
@@ -228,7 +228,7 @@
   "competitor": "Enza Zaden",
   "year": 2027,
   "sharePct": 2.3,
-  "valueEur": 2094537.85,
+  "valueUsd": 2094537.85,
   "trend": "Declining"
  },
  {
@@ -236,7 +236,7 @@
   "competitor": "Limagrain",
   "year": 2027,
   "sharePct": 29.7,
-  "valueEur": 27046858.31,
+  "valueUsd": 27046858.31,
   "trend": "Growing"
  },
  {
@@ -244,7 +244,7 @@
   "competitor": "Nunhems/BASF",
   "year": 2027,
   "sharePct": 4.6,
-  "valueEur": 4189075.7,
+  "valueUsd": 4189075.7,
   "trend": "Growing"
  },
  {
@@ -252,7 +252,7 @@
   "competitor": "Others",
   "year": 2027,
   "sharePct": 8.0,
-  "valueEur": 7285349.04,
+  "valueUsd": 7285349.04,
   "trend": "Declining"
  },
  {
@@ -260,7 +260,7 @@
   "competitor": "Rijk Zwaan",
   "year": 2027,
   "sharePct": 4.6,
-  "valueEur": 4189075.7,
+  "valueUsd": 4189075.7,
   "trend": "Growing"
  },
  {
@@ -268,7 +268,7 @@
   "competitor": "Semillas Fito",
   "year": 2027,
   "sharePct": 1.1,
-  "valueEur": 1001735.49,
+  "valueUsd": 1001735.49,
   "trend": "Declining"
  },
  {
@@ -276,7 +276,7 @@
   "competitor": "Sur Seeds",
   "year": 2027,
   "sharePct": 13.7,
-  "valueEur": 12476160.23,
+  "valueUsd": 12476160.23,
   "trend": "Growing"
  },
  {
@@ -284,7 +284,7 @@
   "competitor": "Panora Seeds",
   "year": 2027,
   "sharePct": 5.7,
-  "valueEur": 5190811.19,
+  "valueUsd": 5190811.19,
   "trend": "Growing"
  },
  {
@@ -292,7 +292,7 @@
   "competitor": "Syngenta",
   "year": 2028,
   "sharePct": 27.8,
-  "valueEur": 25840849.32,
+  "valueUsd": 25840849.32,
   "trend": "Growing"
  },
  {
@@ -300,7 +300,7 @@
   "competitor": "Enza Zaden",
   "year": 2028,
   "sharePct": 3.5,
-  "valueEur": 3253768.88,
+  "valueUsd": 3253768.88,
   "trend": "Declining"
  },
  {
@@ -308,7 +308,7 @@
   "competitor": "Limagrain",
   "year": 2028,
   "sharePct": 30.7,
-  "valueEur": 28540201.27,
+  "valueUsd": 28540201.27,
   "trend": "Growing"
  },
  {
@@ -316,7 +316,7 @@
   "competitor": "Nunhems/BASF",
   "year": 2028,
   "sharePct": 4.7,
-  "valueEur": 4369346.78,
+  "valueUsd": 4369346.78,
   "trend": "Growing"
  },
  {
@@ -324,7 +324,7 @@
   "competitor": "Others",
   "year": 2028,
   "sharePct": 7.2,
-  "valueEur": 6693467.4,
+  "valueUsd": 6693467.4,
   "trend": "Declining"
  },
  {
@@ -332,7 +332,7 @@
   "competitor": "Rijk Zwaan",
   "year": 2028,
   "sharePct": 4.7,
-  "valueEur": 4369346.78,
+  "valueUsd": 4369346.78,
   "trend": "Growing"
  },
  {
@@ -340,7 +340,7 @@
   "competitor": "Semillas Fito",
   "year": 2028,
   "sharePct": 1.2,
-  "valueEur": 1115577.9,
+  "valueUsd": 1115577.9,
   "trend": "Declining"
  },
  {
@@ -348,7 +348,7 @@
   "competitor": "Sur Seeds",
   "year": 2028,
   "sharePct": 14.2,
-  "valueEur": 13201005.15,
+  "valueUsd": 13201005.15,
   "trend": "Growing"
  },
  {
@@ -356,7 +356,7 @@
   "competitor": "Panora Seeds",
   "year": 2028,
   "sharePct": 5.9,
-  "valueEur": 5484924.67,
+  "valueUsd": 5484924.67,
   "trend": "Growing"
  },
  {
@@ -364,7 +364,7 @@
   "competitor": "Syngenta",
   "year": 2029,
   "sharePct": 27.1,
-  "valueEur": 25705903.98,
+  "valueUsd": 25705903.98,
   "trend": "Growing"
  },
  {
@@ -372,7 +372,7 @@
   "competitor": "Enza Zaden",
   "year": 2029,
   "sharePct": 3.7,
-  "valueEur": 3515437.3,
+  "valueUsd": 3515437.3,
   "trend": "Declining"
  },
  {
@@ -380,7 +380,7 @@
   "competitor": "Limagrain",
   "year": 2029,
   "sharePct": 31.9,
-  "valueEur": 30308770.26,
+  "valueUsd": 30308770.26,
   "trend": "Growing"
  },
  {
@@ -388,7 +388,7 @@
   "competitor": "Nunhems/BASF",
   "year": 2029,
   "sharePct": 3.7,
-  "valueEur": 3515437.3,
+  "valueUsd": 3515437.3,
   "trend": "Growing"
  },
  {
@@ -396,7 +396,7 @@
   "competitor": "Others",
   "year": 2029,
   "sharePct": 6.7,
-  "valueEur": 6365791.87,
+  "valueUsd": 6365791.87,
   "trend": "Declining"
  },
  {
@@ -404,7 +404,7 @@
   "competitor": "Rijk Zwaan",
   "year": 2029,
   "sharePct": 4.9,
-  "valueEur": 4655579.13,
+  "valueUsd": 4655579.13,
   "trend": "Growing"
  },
  {
@@ -412,7 +412,7 @@
   "competitor": "Semillas Fito",
   "year": 2029,
   "sharePct": 1.2,
-  "valueEur": 1140141.83,
+  "valueUsd": 1140141.83,
   "trend": "Declining"
  },
  {
@@ -420,7 +420,7 @@
   "competitor": "Sur Seeds",
   "year": 2029,
   "sharePct": 14.7,
-  "valueEur": 13966737.39,
+  "valueUsd": 13966737.39,
   "trend": "Growing"
  },
  {
@@ -428,7 +428,7 @@
   "competitor": "Panora Seeds",
   "year": 2029,
   "sharePct": 6.1,
-  "valueEur": 5795720.96,
+  "valueUsd": 5795720.96,
   "trend": "Growing"
  },
  {
@@ -436,7 +436,7 @@
   "competitor": "Syngenta",
   "year": 2030,
   "sharePct": 28.8,
-  "valueEur": 28072472.0,
+  "valueUsd": 28072472.0,
   "trend": "Growing"
  },
  {
@@ -444,7 +444,7 @@
   "competitor": "Enza Zaden",
   "year": 2030,
   "sharePct": 1.4,
-  "valueEur": 1363951.74,
+  "valueUsd": 1363951.74,
   "trend": "Declining"
  },
  {
@@ -452,7 +452,7 @@
   "competitor": "Limagrain",
   "year": 2030,
   "sharePct": 12.0,
-  "valueEur": 11691014.88,
+  "valueUsd": 11691014.88,
   "trend": "Growing"
  },
  {
@@ -460,7 +460,7 @@
   "competitor": "Nunhems/BASF",
   "year": 2030,
   "sharePct": 1.4,
-  "valueEur": 1363951.74,
+  "valueUsd": 1363951.74,
   "trend": "Growing"
  },
  {
@@ -468,7 +468,7 @@
   "competitor": "Others",
   "year": 2030,
   "sharePct": 46.2,
-  "valueEur": 45010407.29,
+  "valueUsd": 45010407.29,
   "trend": "Declining"
  },
  {
@@ -476,7 +476,7 @@
   "competitor": "Rijk Zwaan",
   "year": 2030,
   "sharePct": 1.8,
-  "valueEur": 1753652.23,
+  "valueUsd": 1753652.23,
   "trend": "Growing"
  },
  {
@@ -484,7 +484,7 @@
   "competitor": "Semillas Fito",
   "year": 2030,
   "sharePct": 0.5,
-  "valueEur": 487125.62,
+  "valueUsd": 487125.62,
   "trend": "Declining"
  },
  {
@@ -492,7 +492,7 @@
   "competitor": "Sur Seeds",
   "year": 2030,
   "sharePct": 5.5,
-  "valueEur": 5358381.82,
+  "valueUsd": 5358381.82,
   "trend": "Growing"
  },
  {
@@ -500,7 +500,7 @@
   "competitor": "Panora Seeds",
   "year": 2030,
   "sharePct": 2.3,
-  "valueEur": 2240777.85,
+  "valueUsd": 2240777.85,
   "trend": "Growing"
  }
 ]

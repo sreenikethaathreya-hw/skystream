@@ -1,0 +1,11 @@
+Country,Micro Segment ID,Variety,Fiscal Year,Fiscal Period,Key Figure,Quantity (KS),Net Sales USD,Snapshot Date,Planner Email,Currency
+Spain,2482,Leontes,2026,2026/008,Actual Sales,9000,4050000,,,USD
+Spain,2482,Hokkaido,2026,2026/008,Actual Sales,3900,1755000,,,USD
+Spain,2482,Leontes,2026,2026/010,IBP Forecast,2000,900000,2026-09-28,ana.rep@example.com,USD
+Spain,2482,Hokkaido,2026,2026/010,IBP Forecast,1871,841950,2026-09-28,ana.rep@example.com,USD
+Spain,2482,Leontes,2026,2026/011,IBP Forecast,40000,17000000,2026-09-28,ana.rep@example.com,EUR
+Spain,2482,Leontes,2026,2026/008,IBP Forecast,500,,2026-09-28,ana.rep@example.com,USD
+Spain,,Bokken,2026,2026/010,IBP Forecast,800,,2026-09-28,ana.rep@example.com,USD
+Atlantis,2482,Leontes,2026,2026/010,IBP Forecast,1,,2026-09-28,,USD
+Spain,2482,Leontes,2026,13/2026,IBP Forecast,1,,2026-09-28,,USD
+Spain,2482,Leontes,2026,2026/012,Budget,1,,2026-09-28,,USD

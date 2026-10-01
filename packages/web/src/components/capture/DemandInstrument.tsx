@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { CheckCircle2 } from "lucide-react";
 import { fmtNum, fmtPct, fmtPts } from "@/lib/format";
 import type { EntryInput, Flag, Impact } from "@/lib/mathTypes";
@@ -134,7 +135,7 @@ export function DemandInstrument({ impact, entry, flags }: { impact: Impact; ent
 }
 
 /** Every check, right under the number while typing: the most serious first and largest. */
-export function Checks({ flags }: { flags: Flag[] }) {
+export function Checks({ flags, ask }: { flags: Flag[]; ask?: (flag: Flag) => ReactNode }) {
   const ordered = [...flags].sort((a, b) => Number(b.severity === "critical") - Number(a.severity === "critical"));
   const lead = ordered[0];
   const critical = lead?.severity === "critical";
@@ -156,16 +157,18 @@ export function Checks({ flags }: { flags: Flag[] }) {
           )}
         >
           {ordered.map((f, i) => (
-            <p
-              key={f.code}
-              data-testid={`flag-${f.code}`}
-              className={cn(
-                i === 0 ? "text-sm" : "text-xs",
-                f.severity === "critical" ? "text-crit-700" : "text-warn-700",
-              )}
-            >
-              {f.message}
-            </p>
+            <div key={f.code} className="flex flex-col gap-1">
+              <p
+                data-testid={`flag-${f.code}`}
+                className={cn(
+                  i === 0 ? "text-sm" : "text-xs",
+                  f.severity === "critical" ? "text-crit-700" : "text-warn-700",
+                )}
+              >
+                {f.message}
+              </p>
+              {ask && <div className="flex justify-end">{ask(f)}</div>}
+            </div>
           ))}
         </div>
       )}

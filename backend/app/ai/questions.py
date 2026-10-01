@@ -202,6 +202,13 @@ CHAT_INTENTS = {
     "competitors": "Competitor market shares or competitor moves",
     "rules": "The consensus lead's rules and how often they fired",
     "consensus": "Open exceptions waiting for the consensus lead",
+    "briefing": "What needs the user's attention now, a catch-up, or whether the month is ready to close",
+    "explain_flag": "Why an entry was flagged, or what a flag or rule that fired means",
+    "what_if": "What a number the user names would do to share, year-to-go or flags, without saving it",
+    "submit_or_justify": "Asks to submit or enter the user's own number, or to justify an IBP number",
+    "review_decision": "Asks to approve, challenge or mark an entry for discussion, or to bulk-approve",
+    "rule_authoring": "Asks to create, draft, activate or retire a lead rule",
+    "how_to": "What a term means or how to do something in the app",
     "forecast_request": "Asks the app to forecast, predict, estimate or suggest a future demand number",
     "other": "Anything else",
 }

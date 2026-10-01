@@ -182,7 +182,7 @@ GROWER = (
 )
 
 ACTUALS = (
-    ["country_code", "micro_segment_id", "year", "month", "sales_qty_ks", "sales_value_eur"],
+    ["country_code", "micro_segment_id", "year", "month", "sales_qty_ks", "sales_value_usd"],
     [["ES", "2482", "2026", "9", "13250", "5994000"], ["ES", "2432", "2026", "9", "1180", ""]],
 )
 
@@ -203,6 +203,43 @@ SEASONALITY = (
     ],
 )
 
+BUDGET_RATES = (
+    ["budget_year", "currency", "currency_name", "per_usd"],
+    [
+        ["2026", "USD", "US Dollar", "1"],
+        ["2026", "EUR", "Euro", "0.85"],
+        ["2026", "GBP", "Pound Sterling", "0.73"],
+        ["2026", "MXN", "Mexican Peso", "18.9"],
+    ],
+)
+
+SAC_SALES = (
+    [
+        "country_code",
+        "micro_segment_id",
+        "variety",
+        "year",
+        "month",
+        "measure",
+        "qty_ks",
+        "net_sales_usd",
+        "snapshot",
+        "planner_email",
+        "currency",
+    ],
+    [
+        ["ES", "2482", "Leontes", "2026", "9", "Actual", "9100", "4095000", "", "", "USD"],
+        ["ES", "2482", "Hokkaido", "2026", "9", "Actual", "4150", "1867500", "", "", "USD"],
+        ["ES", "2482", "Leontes", "2026", "10", "Forecast", "2600", "1170000", "2026-09-28", "ana.rep@example.com", "USD"],
+        ["ES", "2482", "Hokkaido", "2026", "10", "Forecast", "1300", "585000", "2026-09-28", "ana.rep@example.com", "USD"],
+    ],
+)
+
+VARIETY_MAP = (
+    ["country_code", "variety", "micro_segment_id"],
+    [["ES", "Leontes", "2482"], ["ES", "Hokkaido", "2482"], ["ES", "Bokken", "2481"]],
+)
+
 TEMPLATES: dict[str, tuple[list[str], list[list[str]]]] = {
     "hierarchy": HIERARCHY,
     "market": MARKET,
@@ -212,6 +249,9 @@ TEMPLATES: dict[str, tuple[list[str], list[list[str]]]] = {
     "assignments": ASSIGNMENTS,
     "grower": GROWER,
     "seasonality": SEASONALITY,
+    "budget_rates": BUDGET_RATES,
+    "variety_map": VARIETY_MAP,
+    "sac_sales": SAC_SALES,
 }
 
 

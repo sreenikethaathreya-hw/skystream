@@ -35,6 +35,30 @@ export interface ChatLink {
   to: string;
 }
 
+/** A change the assistant made through a guarded write tool. */
+export interface ChatAction {
+  kind: string;
+  targetType: string;
+  targetId: string;
+  summary: string;
+  link: string | null;
+}
+
+/** An authenticated file under /api, e.g. the supply handoff CSV. */
+export interface ChatDownload {
+  label: string;
+  href: string;
+}
+
+/** What the user is looking at when they ask. Ids only, never figures. */
+export interface PageContext {
+  page: string;
+  segmentId?: number | null;
+  month?: number | null;
+  entryId?: string | null;
+  ruleId?: number | null;
+}
+
 export interface ChatMessage {
   role: "user" | "assistant";
   text: string;
@@ -43,6 +67,8 @@ export interface ChatMessage {
   provider: string | null;
   sources: ChatSource[];
   links: ChatLink[];
+  actions: ChatAction[];
+  downloads: ChatDownload[];
 }
 
 export interface ChatSession {
@@ -64,6 +90,8 @@ export interface ChatTurn {
   numbersRedacted: boolean;
   sources: ChatSource[];
   links: ChatLink[];
+  actions: ChatAction[];
+  downloads: ChatDownload[];
 }
 
 export interface AppConfig {
@@ -76,9 +104,18 @@ export interface Meta {
   me: DemoUser;
   users: DemoUser[];
   clock: { year: number; month: number } | null;
-  ai: AiStatus & { externalAiAllowed: boolean };
+  ai: AiStatus & { externalAiAllowed: boolean; chatWritesAllowed: boolean };
   thresholds: Thresholds;
-  currency: string;
+  reportingCurrency: string;
+  defaultDisplayCurrency: DisplayCurrency;
+}
+
+export type DisplayCurrency = "USD" | "EUR" | "LOCAL";
+
+/** Budget rates as units of each currency per 1 USD; money is stored and computed in USD. */
+export interface Fx {
+  budgetYear: number | null;
+  rates: Record<string, number>;
 }
 
 export interface ScopeOption {
@@ -103,6 +140,17 @@ export interface MonthEntry {
   high: number;
   status: string;
   userId: string;
+  source: "live" | "ibp" | "history";
+  justification: string | null;
+}
+
+export interface IbpMonth {
+  month: number;
+  snapshot: string;
+  qtyKs: number;
+  varieties: { variety: string; qtyKs: number }[];
+  entryId: string | null;
+  entryStatus: string | null;
 }
 
 export interface SegmentCube {
@@ -119,6 +167,7 @@ export interface SegmentCube {
   marketNotes: Record<string, string | null>;
   context: SegmentContext;
   latestEntries: MonthEntry[];
+  ibp: IbpMonth[];
 }
 
 export interface CompetitorRow {
@@ -133,10 +182,14 @@ export interface Cube {
   megaSegmentId: string;
   megaSegmentDesc: string;
   species: string | null;
-  currency: string;
+  reportingCurrency: string;
+  localCurrency: string;
+  fx: Fx;
   year: number;
   clockMonth: number;
   yearClosed: boolean;
+  /** "ibp": reps' numbers come from the SAC/IBP upload and are justified here; "manual": typed in Capture. */
+  demandSource: "ibp" | "manual";
   thresholds: Thresholds;
   rules?: LeadRuleSpec[];
   competitors: CompetitorRow[];
@@ -237,11 +290,23 @@ export interface Entry {
   impact: Impact | null;
   flags: Flag[];
   status: string;
-  source: "live" | "history";
+  source: "live" | "ibp" | "history";
+  snapshot: string | null;
   triage: TriageDecision | null;
   reviewedBy: string | null;
   createdAt: string;
   claim: ClaimOut | null;
+  notes?: EntryNote[];
+}
+
+export interface EntryNote {
+  id: number;
+  entryId: string;
+  userId: string;
+  userName: string;
+  body: string;
+  via: "app" | "chat";
+  createdAt: string;
 }
 
 export interface EntryPayload {
@@ -434,5 +499,14 @@ export interface AppSettings {
   jevScoreConfidenceThreshold: number;
   growerHaCap: number;
   externalAiAllowed: boolean;
-  currency: string;
+  chatWritesAllowed: boolean;
+  reportingCurrency: "USD";
+  defaultDisplayCurrency: DisplayCurrency;
+  priceSource: "value_over_qty" | "avg_net_price";
+  marketZeroMeans: "no_market" | "missing";
+  actualsHoldDays: number;
+  fxRateYearRule: "same_year" | "current_budget";
+  claimBaseline: "plan" | "rep_number";
+  claimNeutralTolerancePct: number;
+  demandSource: "ibp" | "manual";
 }
