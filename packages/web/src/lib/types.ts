@@ -28,6 +28,39 @@ export interface ChatSource {
   label: string;
   columns: string[];
   rows: ChatCell[][];
+  /** The tool call's arguments; with `pinnable`, the table can be saved as a widget that re-runs the call. */
+  args?: Record<string, unknown> | null;
+  pinnable?: boolean;
+}
+
+export interface UserWidget {
+  id: number;
+  title: string;
+  tool: string;
+  args: Record<string, unknown>;
+  countryCode: string;
+  megaSegmentId: string;
+  position: number;
+  createdAt: string;
+}
+
+export interface WidgetsState {
+  prefs: { visible: string[] };
+  custom: UserWidget[];
+}
+
+export interface WidgetRun {
+  status: "success" | "error";
+  error: string | null;
+  sources: ChatSource[];
+}
+
+export interface PinWidgetRequest {
+  title: string;
+  tool: string;
+  args: Record<string, unknown>;
+  countryCode: string;
+  megaSegmentId: string;
 }
 
 export interface ChatLink {

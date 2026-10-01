@@ -1,27 +1,27 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { BaselinePanel } from "@/components/capture/BaselinePanel";
+import { LayoutGrid, Plus } from "lucide-react";
 import { Checks, DemandInstrument } from "@/components/capture/DemandInstrument";
 import { EntryPanel } from "@/components/capture/EntryPanel";
-import { HectaresTile, ShareTile, YtgTile } from "@/components/capture/ImpactTiles";
 import { IbpPanel } from "@/components/capture/IbpPanel";
 import { JustificationBox } from "@/components/capture/JustificationBox";
-import { MonthGrid } from "@/components/capture/MonthGrid";
+import { MonthView } from "@/components/capture/MonthView";
 import { SegmentList } from "@/components/capture/SegmentList";
 import { SubmitBar, type SubmitAction } from "@/components/capture/SubmitBar";
 import { SubmitReceipt } from "@/components/capture/SubmitReceipt";
-import { VolumePriceBar } from "@/components/capture/VolumePriceBar";
 import { AskButton } from "@/components/chat/AskButton";
 import { EntryNotes } from "@/components/ledger/EntryNotes";
-import { TrackRecordInline } from "@/components/reps/TrackRecordInline";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardBody } from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/components/ui/toast";
+import { CustomizeSheet } from "@/components/widgets/CustomizeSheet";
+import { MyWidgets } from "@/components/widgets/MyWidgets";
+import { type CaptureWidgetProps, visibleIn } from "@/components/widgets/registry";
 import { useAnalyze, useJustifyEntry, useSubmitEntry } from "@/hooks/mutations";
-import { useCube, useEntryNotes } from "@/hooks/queries";
+import { useCube, useEntryNotes, useWidgets } from "@/hooks/queries";
 import { useCaptureDraft } from "@/hooks/useCaptureDraft";
 import { usePageContext } from "@/hooks/useChat";
 import { useMoney } from "@/hooks/useMoney";
@@ -97,6 +97,9 @@ export function CapturePage() {
   const [justification, setJustification] = useState("");
   const [claim, setClaim] = useState<{ key: string; claim: StructuredClaim } | null>(null);
   const [saved, setSaved] = useState<{ key: string; entry: Entry } | null>(null);
+  const [customizing, setCustomizing] = useState(false);
+  const closeCustomize = useCallback(() => setCustomizing(false), []);
+  const { data: widgetState } = useWidgets();
   const analyze = useAnalyze();
   const submit = useSubmitEntry();
   const justify = useJustifyEntry();
@@ -198,6 +201,22 @@ export function CapturePage() {
   const where = `micro-segment ${segment.id} in ${monthName(month)}`;
   const savedMatches = !!current && Math.round(current.value) === Math.round(entry.value);
 
+  const visible = widgetState?.prefs.visible ?? [];
+  const custom = widgetState?.custom ?? [];
+  const widgetProps: CaptureWidgetProps = {
+    cube,
+    segment,
+    impact: live.impact,
+    month,
+    value: entry.value,
+    money,
+    userId: user?.id ?? "",
+  };
+  const asideWidgets = visibleIn("aside", visible, user?.role);
+  const contextWidgets = visibleIn("context", visible, user?.role);
+  const impactWidgets = visibleIn("impact", visible, user?.role);
+  const noWidgets = !asideWidgets.length && !contextWidgets.length && !impactWidgets.length && !custom.length;
+
   const onJustify = () =>
     ibpEntry &&
     justify.mutate(
@@ -261,7 +280,9 @@ export function CapturePage() {
     <div className="grid gap-6 lg:grid-cols-[260px_1fr]">
       <aside className="flex flex-col gap-4">
         <SegmentList segments={cube.segments} selectedId={segment.id} onSelect={selectSegment} />
-        {user?.role === "rep" && <TrackRecordInline userId={user.id} />}
+        {asideWidgets.map((w) => (
+          <div key={w.id}>{w.render(widgetProps)}</div>
+        ))}
       </aside>
 
       <section
@@ -288,15 +309,21 @@ export function CapturePage() {
                   </p>
                 )}
               </div>
-              {!owns && (
-                <Badge tone="warn">
-                  {user?.role === "rep"
-                    ? `View only: ${segment.ownerNames.join(", ") || "no rep assigned"}`
-                    : "View only: only assigned reps submit"}
-                </Badge>
-              )}
+              <div className="flex items-center gap-2">
+                {!owns && (
+                  <Badge tone="warn">
+                    {user?.role === "rep"
+                      ? `View only: ${segment.ownerNames.join(", ") || "no rep assigned"}`
+                      : "View only: only assigned reps submit"}
+                  </Badge>
+                )}
+                <Button size="sm" variant="secondary" onClick={() => setCustomizing(true)} data-testid="customize-widgets">
+                  <LayoutGrid size={14} aria-hidden="true" />
+                  Customize
+                </Button>
+              </div>
             </div>
-            <MonthGrid segment={segment} selectedMonth={month} draftValue={entry.value} onSelect={setMonth} />
+            <MonthView segment={segment} selectedMonth={month} draftValue={entry.value} onSelect={setMonth} />
           </CardBody>
         </Card>
 
@@ -316,13 +343,9 @@ export function CapturePage() {
           />
         )}
 
-        <BaselinePanel
-          ctx={segment.context}
-          impact={live.impact}
-          month={month}
-          value={entry.value}
-          megaName={cube.megaSegmentDesc}
-        />
+        {contextWidgets.map((w) => (
+          <div key={w.id}>{w.render(widgetProps)}</div>
+        ))}
 
         <Card className="border-ink/15 shadow-[0_1px_2px_rgb(22_33_26/0.05),0_12px_32px_-16px_rgb(22_33_26/0.25)]">
           <CardBody className="flex flex-col gap-5 pt-5">
@@ -388,17 +411,34 @@ export function CapturePage() {
 
         {receipt && <SubmitReceipt entry={receipt} />}
 
-        <section aria-labelledby="impact-title" className="mt-4 flex flex-col gap-4">
-          <h2 id="impact-title" className="eyebrow">
-            What this number means
-          </h2>
-          <div className="grid gap-4 md:grid-cols-3">
-            <ShareTile impact={live.impact} megaName={cube.megaSegmentDesc} />
-            <YtgTile impact={live.impact} />
-            <HectaresTile impact={live.impact} />
-          </div>
-          <VolumePriceBar revenue={live.impact.revenue} money={money} />
-        </section>
+        {impactWidgets.length > 0 && (
+          <section aria-labelledby="impact-title" className="mt-4 flex flex-col gap-4">
+            <h2 id="impact-title" className="eyebrow">
+              What this number means
+            </h2>
+            <div className="grid gap-4 md:grid-cols-3">
+              {impactWidgets.map((w) => (
+                <div key={w.id} className={w.wide ? "md:col-span-3" : undefined}>
+                  {w.render(widgetProps)}
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <MyWidgets widgets={custom} scope={scope} />
+
+        {noWidgets && widgetState && (
+          <button
+            type="button"
+            onClick={() => setCustomizing(true)}
+            className="mt-4 flex items-center justify-center gap-2 rounded-lg border border-dashed border-line px-4 py-6 text-sm text-muted hover:border-brand-500 hover:text-brand-700"
+            data-testid="add-widgets"
+          >
+            <Plus size={16} aria-hidden="true" />
+            Add widgets: market share, year to go, baseline, or tables you pin from the assistant
+          </button>
+        )}
 
         {(owns || ownsIbp) && (
           <SubmitBar
@@ -411,6 +451,14 @@ export function CapturePage() {
           />
         )}
       </section>
+
+      <CustomizeSheet
+        open={customizing}
+        onClose={closeCustomize}
+        role={user?.role}
+        visible={visible}
+        custom={custom}
+      />
     </div>
   );
 }

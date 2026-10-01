@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { Loader2, MapPin, MessageSquarePlus, Send, Trash2, X } from "lucide-react";
+import { Loader2, MapPin, MessageSquarePlus, Mic, Send, Square, Trash2, X } from "lucide-react";
 import { ChatMessage } from "@/components/chat/ChatMessage";
 import { Button } from "@/components/ui/button";
 import { ConfirmButton } from "@/components/ui/confirm-button";
 import { useCreateChatSession, useDeleteChatSession, useSendChatMessage } from "@/hooks/mutations";
+import { useSpeechToText } from "@/hooks/useSpeechToText";
 import { useChatSession, useChatSessions } from "@/hooks/queries";
 import { describeContext, type ChatRequest } from "@/hooks/useChat";
 import { toolLabel } from "@/lib/chatActions";
@@ -102,6 +103,7 @@ export function ChatPanel({
   const deleteSession = useDeleteChatSession();
   const bottom = useRef<HTMLDivElement>(null);
   const input = useRef<HTMLTextAreaElement>(null);
+  const speech = useSpeechToText((text) => setDraft(text.slice(0, MAX_LENGTH)));
 
   const messages: ChatMessageData[] = history.data?.messages ?? [];
   const busy = sendMessage.isPending || createSession.isPending;
@@ -167,6 +169,7 @@ export function ChatPanel({
 
   function onSubmit(event: FormEvent) {
     event.preventDefault();
+    speech.stop();
     void ask(draft);
   }
 
@@ -309,20 +312,47 @@ export function ChatPanel({
           className="min-h-10 flex-1 resize-none rounded-lg border border-line bg-surface px-3 py-2 text-sm text-ink"
           rows={2}
           maxLength={MAX_LENGTH}
-          placeholder={role === "rep" ? "e.g. What needs my attention?" : "e.g. Is this month ready to close?"}
+          placeholder={
+            speech.listening
+              ? "Listening… speak your question"
+              : role === "rep"
+                ? "e.g. What needs my attention?"
+                : "e.g. Is this month ready to close?"
+          }
           value={draft}
           onChange={(e) => setDraft(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter" && !e.shiftKey && !e.nativeEvent.isComposing) {
               e.preventDefault();
+              speech.stop();
               void ask(draft);
             }
           }}
         />
+        {speech.supported && (
+          <Button
+            type="button"
+            variant={speech.listening ? "danger" : "secondary"}
+            aria-label={speech.listening ? "Stop dictation" : "Dictate a question"}
+            aria-pressed={speech.listening}
+            title={speech.listening ? "Stop dictation" : "Dictate a question"}
+            onClick={() => (speech.listening ? speech.stop() : speech.start(draft))}
+            disabled={busy}
+            className={cn(speech.listening && "animate-pulse")}
+            data-testid="chat-mic"
+          >
+            {speech.listening ? <Square size={14} fill="currentColor" /> : <Mic size={16} />}
+          </Button>
+        )}
         <Button type="submit" disabled={busy || !draft.trim()} aria-label="Send">
           {busy ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
         </Button>
       </form>
+      {speech.error && (
+        <p role="status" className="px-4 pb-2 text-xs text-crit-700" data-testid="chat-mic-error">
+          {speech.error}
+        </p>
+      )}
     </div>
   );
 }

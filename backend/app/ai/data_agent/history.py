@@ -7,7 +7,15 @@ from datetime import UTC, datetime
 from google.adk.events import Event, EventActions
 from google.genai import types
 
+from app.ai.data_agent.policy import PINNABLE_TOOLS
+
 AGENT_AUTHOR = "data_analyst"
+# The arguments a tool was called with, attached to its result for the UI only (the model never sees this copy).
+CALL_ARGS_KEY = "_call_args"
+
+
+def with_call_args(result: dict, args: dict | None) -> dict:
+    return {**result, CALL_ARGS_KEY: dict(args or {})}
 
 
 @dataclass
@@ -16,6 +24,8 @@ class Source:
     label: str
     columns: list[str]
     rows: list[list]
+    args: dict | None = None
+    pinnable: bool = False
 
 
 @dataclass
@@ -99,19 +109,33 @@ def sources_and_links(results: list[tuple[str, dict]]) -> tuple[list[Source], li
     for tool, result in results:
         if result.get("status") != "success":
             continue
+        args = result.get(CALL_ARGS_KEY)
+        args = args if isinstance(args, dict) else None
+        found: list[Source] = []
         if isinstance(result.get("figures"), dict):
-            sources.append(
+            found.append(
                 Source(
                     tool=tool,
                     label=f"{result.get('source', tool)}: key figures",
                     columns=["Figure", "Value"],
                     rows=[[_label(k), v] for k, v in result["figures"].items() if v is not None],
+                    args=args,
                 )
             )
         if result.get("columns") and result.get("rows"):
-            sources.append(
-                Source(tool=tool, label=str(result.get("source", tool)), columns=result["columns"], rows=result["rows"])
+            found.append(
+                Source(
+                    tool=tool,
+                    label=str(result.get("source", tool)),
+                    columns=result["columns"],
+                    rows=result["rows"],
+                    args=args,
+                )
             )
+        # One pin per tool call: a widget re-runs the whole call, so its last (main) table carries the pin.
+        if found and args is not None and tool in PINNABLE_TOOLS:
+            found[-1].pinnable = True
+        sources.extend(found)
         link = result.get("link")
         if isinstance(link, dict) and _internal(link.get("to")):
             links[link["to"]] = Link(label=str(link.get("label", link["to"])), to=link["to"])
@@ -156,7 +180,11 @@ async def append_turn(
 def to_messages(session) -> list[HistoryMessage]:
     messages: list[HistoryMessage] = []
     pending: list[tuple[str, dict]] = []
+    calls: dict[str, dict] = {}
     for event in session.events:
+        for call in event.get_function_calls():
+            if call.id:
+                calls[call.id] = dict(call.args or {})
         created = datetime.fromtimestamp(event.timestamp, tz=UTC)
         if event.author == "user":
             text = "".join(p.text or "" for p in (event.content.parts if event.content else None) or [])
@@ -165,7 +193,7 @@ def to_messages(session) -> list[HistoryMessage]:
                 pending = []
             continue
         for response in event.get_function_responses():
-            pending.append((response.name, dict(response.response or {})))
+            pending.append((response.name, with_call_args(dict(response.response or {}), calls.get(response.id or ""))))
         if event.get_function_calls() or not event.content:
             continue
         text = "".join(p.text or "" for p in event.content.parts or [] if not p.thought).strip()

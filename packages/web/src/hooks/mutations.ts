@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ApiError, api, scopeQuery } from "@/lib/api";
 import { queryKeysFor } from "@/lib/chatActions";
+import { WIDGETS_KEY } from "@/hooks/queries";
 import type {
   AdminUser,
   AdvanceResult,
@@ -13,12 +14,15 @@ import type {
   EntryPayload,
   LeadRule,
   PageContext,
+  PinWidgetRequest,
   Rtb,
   RuleDraft,
   RuleRequest,
   RuleSlots,
   Scope,
   UploadBatch,
+  UserWidget,
+  WidgetsState,
 } from "@/lib/types";
 
 function useInvalidateAll() {
@@ -201,5 +205,47 @@ export function useSaveSettings() {
   return useMutation({
     mutationFn: (patch: Partial<AppSettings>) => api.put<AppSettings>("/admin/settings", patch),
     onSuccess: invalidate,
+  });
+}
+
+/** Saves which built-in widgets show, optimistically: the page updates before the server answers. */
+export function useSaveWidgetPrefs() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (visible: string[]) => api.put<{ visible: string[] }>("/me/widgets/prefs", { visible }),
+    onMutate: async (visible) => {
+      await queryClient.cancelQueries({ queryKey: WIDGETS_KEY, exact: true });
+      const previous = queryClient.getQueryData<WidgetsState>(WIDGETS_KEY);
+      if (previous) queryClient.setQueryData<WidgetsState>(WIDGETS_KEY, { ...previous, prefs: { visible } });
+      return { previous };
+    },
+    onError: (_error, _visible, context) => {
+      if (context?.previous) queryClient.setQueryData(WIDGETS_KEY, context.previous);
+    },
+    onSettled: () => queryClient.invalidateQueries({ queryKey: WIDGETS_KEY, exact: true }),
+  });
+}
+
+export function usePinWidget() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (body: PinWidgetRequest) => api.post<UserWidget>("/me/widgets", body),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: WIDGETS_KEY, exact: true }),
+  });
+}
+
+export function useRenameWidget() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, title }: { id: number; title: string }) => api.put<UserWidget>(`/me/widgets/${id}`, { title }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: WIDGETS_KEY, exact: true }),
+  });
+}
+
+export function useDeleteWidget() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: number) => api.delete<void>(`/me/widgets/${id}`),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: WIDGETS_KEY, exact: true }),
   });
 }

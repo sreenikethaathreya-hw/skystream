@@ -158,6 +158,8 @@ async def test_agent_turn_redacts_invented_numbers(chat: AsyncClient, gemini_on:
     assert body["numbersRedacted"] is True
     assert "37.5" not in body["answer"] and REDACTED in body["answer"]
     assert any(s["tool"] == "get_segment_baseline" for s in body["sources"])
+    # The call's arguments travel with the table, so a pinnable one can be re-run as a widget.
+    assert all(s["args"] == {"segment_id": 2482, "month": 10} for s in body["sources"])
 
     history = (await chat.get(f"/api/chat/sessions/{session_id}", headers=REP_A)).json()
     assistant = history["messages"][-1]

@@ -3,11 +3,13 @@
 Every number in an answer is copied from the tool result, so the same rule as the agent holds.
 """
 
+import inspect
 import re
 from dataclasses import dataclass, field
 from typing import Any
 
 from app.ai.data_agent import lead_tools, rep_tools, tools
+from app.ai.data_agent.history import with_call_args
 from app.ai.data_agent.policy import POLICY_KEY, ChatPolicy, PageContext
 from app.services.rule_service import parse_months
 
@@ -77,7 +79,8 @@ async def answer(intent: str, text: str, policy: ChatPolicy, page: PageContext |
 
     async def call(fn, *args) -> dict:
         result = await fn(*args, ctx)
-        results.append((fn.__name__, result))
+        bound = inspect.signature(fn).bind_partial(*args).arguments
+        results.append((fn.__name__, with_call_args(result, bound)))
         return result
 
     if intent == "forecast_request":

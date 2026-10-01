@@ -87,6 +87,10 @@ setting `externalAiAllowed` is on (env `EXTERNAL_AI_ALLOWED`); otherwise fixture
 - `SessionProvider` (mode, sign-in, current user) and `ScopeProvider` (country + mega-segment) wrap the app.
 - `ChatProvider` (`src/hooks/useChat.tsx`) owns the assistant drawer: pages call `usePageContext` (ids only,
   never figures) and place `AskButton`s; assistant changes invalidate queries via `src/lib/chatActions.ts`.
+- Capture widgets: built-ins live in `src/components/widgets/registry.tsx` and start hidden; each user's choice is
+  saved in `user_widget_prefs`. Tables from `PINNABLE_TOOLS` (`policy.py`) can be pinned from the chat into
+  `user_widgets`, which store only the tool and its arguments; `widget_service.run_widget` re-runs the tool under
+  the viewer's current policy, never the model.
 - Data fetching through TanStack Query hooks in `src/hooks/queries.ts` and `src/hooks/mutations.ts`.
 - The keystroke path must stay client-side: no network call while typing a number.
 - `@/` maps to `packages/web/src/`. Strict TypeScript, no `any`.
