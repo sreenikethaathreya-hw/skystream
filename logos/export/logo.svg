@@ -63,16 +63,16 @@
       <polyline points="40,290 70,310 100,250 130,275 160,210 190,235 220,175 240,195" 
                 fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
       
-      <!-- Regular data points - orange -->
+      <!-- Regular dots on VALLEYS (minimums) and endpoints -->
       <circle cx="40" cy="290" r="6" fill="#f97316" stroke="#ffffff" stroke-width="2"/>
       <circle cx="70" cy="310" r="6" fill="#f97316" stroke="#ffffff" stroke-width="2"/>
-      <circle cx="100" cy="250" r="6" fill="#f97316" stroke="#ffffff" stroke-width="2"/>
+      <circle cx="130" cy="275" r="6" fill="#f97316" stroke="#ffffff" stroke-width="2"/>
       <circle cx="190" cy="235" r="6" fill="#f97316" stroke="#ffffff" stroke-width="2"/>
       <circle cx="240" cy="195" r="6" fill="#f97316" stroke="#ffffff" stroke-width="2"/>
       
-      <!-- AI-ENHANCED data points with sparkles -->
-      <circle cx="130" cy="275" r="7" fill="#f97316" stroke="#ffffff" stroke-width="2"/>
-      <g transform="translate(130, 275)" filter="url(#sparkleGlow)">
+      <!-- AI STARS on PEAKS (maximums) -->
+      <circle cx="100" cy="250" r="7" fill="#f97316" stroke="#ffffff" stroke-width="2"/>
+      <g transform="translate(100, 250)" filter="url(#sparkleGlow)">
         <path d="M0,-18 L3,-5 L16,0 L3,5 L0,18 L-3,5 L-16,0 L-3,-5 Z" fill="#fbbf24"/>
         <path d="M0,-10 L1.5,-3 L8,0 L1.5,3 L0,10 L-1.5,3 L-8,0 L-1.5,-3 Z" fill="#ffffff"/>
       </g>

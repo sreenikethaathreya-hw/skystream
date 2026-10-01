@@ -227,9 +227,14 @@ export function AppShell({ children }: { children: ReactNode }) {
                 <line x1="22" y1="12" x2="22" y2="30" stroke="#fff" strokeWidth="2" />
                 <line x1="22" y1="12" x2="22" y2="30" stroke="#87CEEB" strokeWidth="1" />
                 <polyline points="2,19 7,21 12,15 17,18 22,11 27,14 32,8" fill="none" stroke="#fff" strokeWidth="1.5" />
+                {/* Dots on VALLEYS (minimums) */}
+                <circle cx="7" cy="21" r="1.5" fill="#f97316" stroke="#fff" strokeWidth="0.8" />
+                <circle cx="17" cy="18" r="1.5" fill="#f97316" stroke="#fff" strokeWidth="0.8" />
+                <circle cx="27" cy="14" r="1.5" fill="#f97316" stroke="#fff" strokeWidth="0.8" />
+                {/* Stars on PEAKS (maximums) */}
                 <circle cx="12" cy="15" r="2" fill="#f97316" stroke="#fff" strokeWidth="1" />
+                <path d="M12 10 L12.4 13 L15.4 15 L12.4 17 L12 20 L11.6 17 L8.6 15 L11.6 13Z" fill="#fbbf24" />
                 <circle cx="22" cy="11" r="2" fill="#f97316" stroke="#fff" strokeWidth="1" />
-                <circle cx="27" cy="14" r="2" fill="#f97316" stroke="#fff" strokeWidth="1" />
                 <path d="M22 6 L22.5 9 L25.5 11 L22.5 13 L22 16 L21.5 13 L18.5 11 L21.5 9Z" fill="#fbbf24" />
               </g>
             </svg>
