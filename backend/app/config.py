@@ -44,6 +44,13 @@ class Settings(BaseSettings):
     gemini_model: str = "gemini-3.8-flash"
     gemini_fallback_timeout_seconds: float = 5.0
 
+    # "Ask the data": an ADK agent on Gemini that answers questions through read-only, scope-checked tools.
+    chat_enabled: bool = True
+    chat_max_llm_calls: int = 8
+    chat_history_events: int = 40
+    chat_temperature: float = 0.1
+    chat_app_name: str = "skystream-data-chat"
+
     firebase_project_id: str | None = None
     firebase_web_api_key: str | None = None
     firebase_auth_domain: str | None = None

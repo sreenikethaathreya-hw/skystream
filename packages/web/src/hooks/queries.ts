@@ -4,6 +4,8 @@ import type {
   AdminUser,
   AppConfig,
   AppSettings,
+  ChatHistory,
+  ChatSession,
   Cube,
   DataQuality,
   Entry,
@@ -72,6 +74,16 @@ export const useUploads = () =>
 
 export const useAdminUsers = () =>
   useQuery({ queryKey: ["/admin/users"], queryFn: () => api.get<AdminUser[]>("/admin/users") });
+
+export const useChatSessions = (enabled = true) =>
+  useQuery({ queryKey: ["chat", "sessions"], queryFn: () => api.get<ChatSession[]>("/chat/sessions"), enabled });
+
+export const useChatSession = (id: string | null) =>
+  useQuery({
+    queryKey: ["chat", "session", id],
+    queryFn: () => api.get<ChatHistory>(`/chat/sessions/${id}`),
+    enabled: id !== null,
+  });
 
 export const useAdminSettings = () =>
   useQuery({ queryKey: ["/admin/settings"], queryFn: () => api.get<AppSettings>("/admin/settings") });

@@ -163,6 +163,32 @@ def answer_triage(has_critical: bool, has_warning: bool, weak_record: bool, spec
 
 DIRECTIONS_KEYS = ("up", "down", "neutral")
 
+CHAT_INTENT_KEYWORDS: list[tuple[str, tuple[str, ...]]] = [
+    (
+        "forecast_request",
+        ("forecast", "predict", "projection", "will demand", "what should i enter", "suggest a number",
+         "estimate for", "how much will", "next year's demand"),
+    ),
+    ("consensus", ("exception", "open entries", "waiting for review", "consensus", "to review", "queue")),
+    ("rules", ("rule",)),
+    ("competitors", ("competitor", "rijk", "enza", "sur seeds", "limagrain", "panora", "who leads")),
+    ("claims_track_record", ("track record", "accurate", "accuracy", "hit rate", "bias", "contradicted",
+                             "confirmed", "claim")),
+    ("entries_flags", ("entry", "entries", "entered", "flag", "justification", "submitted")),
+    ("plan_vs_actual", ("actual", "vs plan", "versus plan", "tracking", "monthly", "month by month")),
+    ("baseline_share", ("share", "plan", "year-to-go", "year to go", "ytg", "hectare", "baseline",
+                        "last year", "history", "average", "market")),
+]
+CHAT_INTENT_KEYS = (
+    "baseline_share", "plan_vs_actual", "entries_flags", "claims_track_record", "competitors", "rules",
+    "consensus", "forecast_request", "other",
+)
+
+
+def answer_chat_intent(text: str) -> dict:
+    intent = _first_match(text.lower(), CHAT_INTENT_KEYWORDS)
+    return {"intent": _choice(intent or "other", list(CHAT_INTENT_KEYS), 0.8 if intent else 0.5)}
+
 RULE_METRIC_KEYWORDS: list[tuple[str, tuple[str, ...]]] = [
     ("range_width_pct", ("range", "spread", "low-high", "low and high")),
     ("price_vs_plan_pct", ("price", "discount")),

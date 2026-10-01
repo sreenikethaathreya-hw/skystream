@@ -194,6 +194,15 @@ async def resolve_scope(
     return country.upper(), mega
 
 
+async def visible_segments(db: AsyncSession, user: CurrentUser, country_code: str, mega: str) -> list[Segment]:
+    """Micro-segments the caller may read in a resolved scope: all of them for leads, admins and demo users."""
+    period = await current_period(db, country_code)
+    segments = await _active_segments(db, country_code, mega, period.year)
+    if user.role in ("lead", "admin") or get_settings().is_demo:
+        return segments
+    return [s for s in segments if user.covers(country_code, s)]
+
+
 def variety_options(ref: Reference) -> list[str]:
     counts = Counter(g.variety for g in ref.grower if g.owner == "syngenta" and g.variety)
     top = [v.title() for v, _ in counts.most_common(MAX_VARIETY_OPTIONS)]
@@ -218,6 +227,28 @@ async def build_context(
     mega = build_mega(ref, period.year)
     ctx = build_segment_context(ref, segment_id, period.year, period.clock_month, submitted, mega)
     return ctx, segment, ref
+
+
+async def segment_contexts(
+    db: AsyncSession, country_code: str, mega: str, segment_ids: list[int]
+) -> tuple[Period, dict[int, tuple[Segment, SegmentContext]]]:
+    """Contexts for several micro-segments of one mega-segment, sharing one reference load."""
+    period = await current_period(db, country_code)
+    segments = await _active_segments(db, country_code, mega, period.year)
+    wanted = [s for s in segments if s.id in set(segment_ids)]
+    if not wanted:
+        return period, {}
+    ref = await load_reference(db, country_code, segments)
+    mega_ctx = build_mega(ref, period.year)
+    latest = await latest_entries(db, country_code, period.year, [s.id for s in wanted])
+    out = {}
+    for seg in wanted:
+        submitted = {m: e.value for (s, m), e in latest.items() if s == seg.id and e.source == "live"}
+        out[seg.id] = (
+            seg,
+            build_segment_context(ref, seg.id, period.year, period.clock_month, submitted, mega_ctx),
+        )
+    return period, out
 
 
 async def build_cube(

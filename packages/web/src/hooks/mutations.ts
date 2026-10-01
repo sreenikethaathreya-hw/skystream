@@ -5,6 +5,8 @@ import type {
   AdvanceResult,
   AnalyzeResult,
   AppSettings,
+  ChatSession,
+  ChatTurn,
   Entry,
   EntryPayload,
   LeadRule,
@@ -110,6 +112,34 @@ export function useCreateRule() {
 export function useRetireRule() {
   const invalidate = useInvalidateAll();
   return useMutation({ mutationFn: (id: number) => api.post<void>(`/rules/${id}/retire`), onSuccess: invalidate });
+}
+
+function useInvalidateChat() {
+  const queryClient = useQueryClient();
+  return () => queryClient.invalidateQueries({ queryKey: ["chat"] });
+}
+
+export function useCreateChatSession() {
+  const invalidate = useInvalidateChat();
+  return useMutation({ mutationFn: () => api.post<ChatSession>("/chat/sessions"), onSuccess: invalidate });
+}
+
+export function useSendChatMessage() {
+  const invalidate = useInvalidateChat();
+  return useMutation({
+    mutationFn: ({ sessionId, text, scope }: { sessionId: string; text: string; scope: Scope | null }) =>
+      api.post<ChatTurn>(`/chat/sessions/${sessionId}/messages`, {
+        text,
+        countryCode: scope?.countryCode,
+        megaSegmentId: scope?.megaSegmentId,
+      }),
+    onSuccess: invalidate,
+  });
+}
+
+export function useDeleteChatSession() {
+  const invalidate = useInvalidateChat();
+  return useMutation({ mutationFn: (id: string) => api.delete<void>(`/chat/sessions/${id}`), onSuccess: invalidate });
 }
 
 export function useSaveSettings() {

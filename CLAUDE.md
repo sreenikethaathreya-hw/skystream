@@ -12,6 +12,7 @@ role switcher, simulated clock) and `DATA_MODE=real` (admin uploads, Firebase si
 |------|-------|---------|
 | `backend/` | Python 3.12, FastAPI, SQLAlchemy async, Alembic, uv | API server (Cloud Run) |
 | `backend/app/ingest/` | pandas | Upload validators (one per file kind), preview reports, commit strategies |
+| `backend/app/ai/data_agent/` | Google ADK, Gemini | "Ask the data" agent: read-only tools, guard plugins, ADK sessions |
 | `packages/web/` | React 19, Vite, TypeScript, TanStack Query, Tailwind v4, Firebase Auth | SPA |
 | `scripts/ingest/` | pandas | Builds the anonymized demo seed in `data/seed/` from `data/raw/` |
 | `data/seed/` | JSON | Committed, anonymized demo seed. `data/raw/` is gitignored |
@@ -31,6 +32,7 @@ npm test -w packages/web                 # frontend tests
 npm run lint -w packages/web             # frontend type check
 npm run test:e2e                         # Playwright (starts both servers)
 cd backend && uv run python scripts/gen_golden.py   # regenerate shared math golden cases
+cd backend && RUN_LIVE_EVAL=1 GEMINI_ENABLED=true GCP_PROJECT=... uv run pytest tests/eval   # live ADK evalset
 ```
 
 AI modes (`AI_MODE`): `auto`, `live`, `record`, `replay`. In real mode Jev is only called when the admin
@@ -51,6 +53,12 @@ setting `externalAiAllowed` is on (env `EXTERNAL_AI_ALLOWED`); otherwise fixture
 5. **Figures only enter real mode through uploads** (`app/ingest`), which validate into a preview batch before
    an admin commits. Never seed or hand-write figures in real mode.
 6. **Postgres identifiers stay under 63 characters**; name long constraints explicitly.
+9. **Ask the data** (`app/ai/data_agent/`) is a Google ADK agent on Gemini, reached only through
+ `DecisionProvider.answer_data_question`. Its tools are read-only and enforce the per-turn `temp:policy` the
+ server writes into ADK state (scope, role, visible segments); `ScopeGuardPlugin` re-checks arguments. Every
+ number in an answer must appear in a tool result or the question, enforced by `NumberGuardPlugin`; it never
+ forecasts. ADK owns its session tables (`sessions`, `events`, `app_states`, `user_states`,
+ `adk_internal_metadata`), which `alembic/env.py` excludes; do not model them in `app/models`.
 7. **Secrets** (`JEV_API_KEY`, `DATABASE_URL`) live in `.env` locally and Secret Manager in GCP.
 
 ## Backend conventions

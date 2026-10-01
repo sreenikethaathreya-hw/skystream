@@ -1,9 +1,11 @@
-import type { ReactNode } from "react";
+import { useCallback, useState, type ReactNode } from "react";
 import { NavLink } from "react-router-dom";
-import { LogOut, Sprout } from "lucide-react";
+import { LogOut, MessageSquare, Sprout } from "lucide-react";
+import { ChatPanel } from "@/components/chat/ChatPanel";
 import { DemoControls } from "@/components/layout/DemoControls";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Sheet } from "@/components/ui/sheet";
 import { useMeta } from "@/hooks/queries";
 import { useScope } from "@/hooks/useScope";
 import { useSession } from "@/hooks/useSession";
@@ -77,6 +79,26 @@ function RoleSwitcher() {
   );
 }
 
+function AskTheData() {
+  const [open, setOpen] = useState(false);
+  const close = useCallback(() => setOpen(false), []);
+  const { user } = useSession();
+  const { scope } = useScope();
+  const { data: meta } = useMeta();
+  if (!user || !meta?.ai.chatEnabled) return null;
+  return (
+    <>
+      <Button size="sm" variant="secondary" onClick={() => setOpen(true)} data-testid="ask-the-data">
+        <MessageSquare size={14} />
+        Ask the data
+      </Button>
+      <Sheet open={open} onClose={close} title="Ask the data">
+        <ChatPanel key={user.id} role={user.role} scope={scope} offline={meta.ai.chatMode !== "agent"} />
+      </Sheet>
+    </>
+  );
+}
+
 function UserMenu() {
   const { user, email, signOut } = useSession();
   return (
@@ -113,6 +135,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-3">
+            <AskTheData />
             <AiStatusBadge />
             {dataMode === "demo" ? (
               <>

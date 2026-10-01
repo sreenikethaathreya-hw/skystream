@@ -1,0 +1,109 @@
+{
+  "eval_set_id": "data_agent_core",
+  "name": "Ask the data: core questions",
+  "description": "Checks that the data agent picks the right read-only tool and arguments on the demo seed. Live Gemini only.",
+  "eval_cases": [
+    {
+      "eval_id": "baseline_share_2482_october",
+      "conversation": [
+        {
+          "invocation_id": "inv-baseline",
+          "user_content": {"role": "user", "parts": [{"text": "What is the market share for 2482 in October?"}]},
+          "final_response": {"role": "model", "parts": [{"text": "2482 is at the share shown in the baseline table for October."}]},
+          "intermediate_data": {
+            "tool_uses": [{"name": "get_segment_baseline", "args": {"segment_id": 2482, "month": 10}}],
+            "intermediate_responses": []
+          }
+        }
+      ],
+      "session_input": {
+        "app_name": "skystream-data-chat",
+        "user_id": "rep-a",
+        "state": {
+          "eval_policy": {
+            "user_id": "rep-a", "user_name": "Rep A", "role": "rep", "scopes": [], "country_code": "ES",
+            "mega_segment_id": "SP01", "visible_segment_ids": [2432, 2433, 2446, 2448, 2449, 2481, 2482, 2483, 2484],
+            "is_demo": true
+          }
+        }
+      }
+    },
+    {
+      "eval_id": "plan_vs_actual_2432",
+      "conversation": [
+        {
+          "invocation_id": "inv-series",
+          "user_content": {"role": "user", "parts": [{"text": "How is 2432 tracking against plan month by month?"}]},
+          "final_response": {"role": "model", "parts": [{"text": "The monthly table shows plan and actuals for 2432."}]},
+          "intermediate_data": {
+            "tool_uses": [{"name": "get_monthly_series", "args": {"segment_id": 2432}}],
+            "intermediate_responses": []
+          }
+        }
+      ],
+      "session_input": {
+        "app_name": "skystream-data-chat",
+        "user_id": "rep-b",
+        "state": {
+          "eval_policy": {
+            "user_id": "rep-b", "user_name": "Rep B", "role": "rep", "scopes": [], "country_code": "ES",
+            "mega_segment_id": "SP01", "visible_segment_ids": [2432, 2433, 2446, 2448, 2449, 2481, 2482, 2483, 2484],
+            "is_demo": true
+          }
+        }
+      }
+    },
+    {
+      "eval_id": "total_plan_autumn_late",
+      "conversation": [
+        {
+          "invocation_id": "inv-sum",
+          "user_content": {"role": "user", "parts": [{"text": "What is the total plan for 2482 and 2484 in October and November?"}]},
+          "final_response": {"role": "model", "parts": [{"text": "The total plan for 2482 and 2484 over October and November is in the table."}]},
+          "intermediate_data": {
+            "tool_uses": [
+              {"name": "sum_segment_figures", "args": {"metric": "plan_ks", "segment_ids": [2482, 2484], "months": [10, 11]}}
+            ],
+            "intermediate_responses": []
+          }
+        }
+      ],
+      "session_input": {
+        "app_name": "skystream-data-chat",
+        "user_id": "lead",
+        "state": {
+          "eval_policy": {
+            "user_id": "lead", "user_name": "Consensus lead", "role": "lead", "scopes": [], "country_code": "ES",
+            "mega_segment_id": "SP01", "visible_segment_ids": [2432, 2433, 2446, 2448, 2449, 2481, 2482, 2483, 2484],
+            "is_demo": true
+          }
+        }
+      }
+    },
+    {
+      "eval_id": "competitor_leader",
+      "conversation": [
+        {
+          "invocation_id": "inv-competitors",
+          "user_content": {"role": "user", "parts": [{"text": "Which competitor has the largest share?"}]},
+          "final_response": {"role": "model", "parts": [{"text": "The competitor table shows the largest share."}]},
+          "intermediate_data": {
+            "tool_uses": [{"name": "get_competitor_shares", "args": {}}],
+            "intermediate_responses": []
+          }
+        }
+      ],
+      "session_input": {
+        "app_name": "skystream-data-chat",
+        "user_id": "lead",
+        "state": {
+          "eval_policy": {
+            "user_id": "lead", "user_name": "Consensus lead", "role": "lead", "scopes": [], "country_code": "ES",
+            "mega_segment_id": "SP01", "visible_segment_ids": [2432, 2433, 2446, 2448, 2449, 2481, 2482, 2483, 2484],
+            "is_demo": true
+          }
+        }
+      }
+    }
+  ]
+}

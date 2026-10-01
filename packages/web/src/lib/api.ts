@@ -61,6 +61,7 @@ export const api = {
   get: <T>(path: string) => request<T>("GET", path),
   post: <T>(path: string, body?: unknown) => request<T>("POST", path, body),
   put: <T>(path: string, body?: unknown) => request<T>("PUT", path, body),
+  delete: <T>(path: string) => request<T>("DELETE", path),
   upload: async <T>(path: string, form: FormData): Promise<T> => (await send("POST", path, form, false)).json(),
   /** Authenticated file download (a plain link cannot carry the bearer token). */
   download: async (path: string, filename: string): Promise<void> => {

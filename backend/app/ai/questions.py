@@ -194,6 +194,29 @@ def verification_question() -> dict[str, dict]:
     }
 
 
+CHAT_INTENTS = {
+    "baseline_share": "Market share, plan, year-to-go, hectares or history of a segment",
+    "plan_vs_actual": "Monthly plan versus actual sales, or how a segment is tracking through the year",
+    "entries_flags": "What reps entered, which entries were flagged, or their justifications",
+    "claims_track_record": "Whether claims were confirmed or contradicted, or how accurate a rep has been",
+    "competitors": "Competitor market shares or competitor moves",
+    "rules": "The consensus lead's rules and how often they fired",
+    "consensus": "Open exceptions waiting for the consensus lead",
+    "forecast_request": "Asks the app to forecast, predict, estimate or suggest a future demand number",
+    "other": "Anything else",
+}
+
+
+def chat_intent_question() -> dict[str, dict]:
+    return {
+        "intent": {
+            "type": "choice",
+            "instructions": "What is the user asking the demand data assistant for in the QUESTION line?",
+            "criteria": CHAT_INTENTS,
+        }
+    }
+
+
 def triage_question() -> dict[str, dict]:
     return {
         "triage": {

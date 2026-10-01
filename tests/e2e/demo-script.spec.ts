@@ -158,6 +158,28 @@ test("lead turns a missed claim into a rule that reps meet on the next keystroke
   await expect(page.getByTestId("rule-card")).toContainText("retired");
 });
 
+test("rep asks the data a question and gets a sourced answer", async ({ page, request }) => {
+  expect((await request.post("http://localhost:8000/api/demo/reset")).status()).toBe(204);
+  await page.goto("/capture");
+  await page.evaluate(() => localStorage.setItem("skystream.demoUser", "rep-a"));
+  await page.reload();
+
+  await page.getByTestId("ask-the-data").click();
+  const dialog = page.getByRole("dialog", { name: "Ask the data" });
+  await dialog.getByRole("button", { name: "Which segments can I ask about?" }).click();
+  // Gemini answers when enabled (slower); the template fallback is instant.
+  await expect(dialog.getByTestId("chat-message-assistant")).toBeVisible({ timeout: 60_000 });
+  await expect(dialog.getByTestId("chat-source").first()).toContainText("Segments in scope");
+  await expect(dialog.getByTestId("chat-source").first()).toContainText("2482");
+
+  await dialog.getByLabel("Ask a question about the data").fill("Can you forecast October demand for 2482?");
+  await dialog.getByRole("button", { name: "Send" }).click();
+  await expect(dialog.getByTestId("chat-message-assistant").last()).toContainText("can't forecast", {
+    timeout: 60_000,
+  });
+  await page.screenshot({ path: `${SHOTS}/12-ask-the-data.png`, fullPage: true });
+});
+
 test("admin uploads monthly actuals and the rep's claim resolves", async ({ page, request }) => {
   expect((await request.post("http://localhost:8000/api/demo/reset")).status()).toBe(204);
   await page.goto("/capture");

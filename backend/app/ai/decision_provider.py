@@ -15,6 +15,7 @@ from app.ai.questions import (
     EVIDENCE_LABELS,
     MAGNITUDE_LEVELS,
     SPECIFICITY_LEVELS,
+    chat_intent_question,
     justification_questions,
     rule_questions,
     triage_question,
@@ -75,6 +76,15 @@ class RuleDecision:
     provider: str
     model: str | None
     low_confidence_fields: list[str]
+
+
+@dataclass
+class DataAnswer:
+    text: str
+    intent: str
+    provider: str
+    numbers_redacted: bool
+    results: list[tuple[str, dict]]
 
 
 @dataclass
@@ -342,6 +352,79 @@ class DecisionProvider:
             model=decision.model,
             low_confidence_fields=[f for f in low if "gemini" not in provider],
         )
+
+    async def classify_chat_intent(self, text: str, policy: DecisionPolicy | None = None) -> tuple[str, str]:
+        decision = await self._decide(
+            "chat_intent",
+            f"QUESTION: {text}",
+            chat_intent_question(),
+            lambda: offline_decider.answer_chat_intent(text),
+            policy or default_policy(),
+        )
+        return decision.answers["intent"]["choice"], decision.provider
+
+    async def answer_data_question(
+        self,
+        session_id: str,
+        text: str,
+        chat_policy,
+        policy: DecisionPolicy | None = None,
+        state_delta: dict | None = None,
+    ) -> DataAnswer:
+        """One "Ask the data" turn. The agent runs only on Gemini; otherwise a template answers from one tool."""
+        from app.ai import offline_chat
+        from app.ai.data_agent import history
+        from app.ai.data_agent.runtime import get_runtime
+
+        runtime = get_runtime()
+        if runtime is None:
+            raise RuntimeError("The data chat runtime is not initialised")
+        intent, intent_provider = await self.classify_chat_intent(text, policy)
+
+        if intent != "forecast_request" and self._gemini.available:
+            try:
+                return await self._run_agent(runtime, session_id, text, chat_policy, intent, state_delta or {})
+            except Exception as exc:  # Vertex and ADK raise several transport-specific types
+                logger.warning("Data agent failed, answering from a template: %s", exc)
+                fallback = await offline_chat.answer(intent, text, chat_policy)
+                await history.append_turn(runtime, chat_policy.user_id, session_id, None, fallback, intent)
+                return DataAnswer(fallback.text, intent, "template (gemini failed)", False, fallback.results)
+
+        offline = await offline_chat.answer(intent, text, chat_policy)
+        await history.append_turn(
+            runtime, chat_policy.user_id, session_id, text, offline, intent, state_delta=state_delta
+        )
+        provider = "refusal" if intent == "forecast_request" else f"template ({intent_provider} intent)"
+        return DataAnswer(offline.text, intent, provider, False, offline.results)
+
+    async def _run_agent(
+        self, runtime, session_id: str, text: str, chat_policy, intent: str, state_delta: dict
+    ) -> DataAnswer:
+        from google.adk.agents.run_config import RunConfig
+        from google.adk.sessions.base_session_service import GetSessionConfig
+        from google.genai import types
+
+        from app.ai.data_agent.policy import POLICY_KEY
+
+        answer, redacted, results = "", False, []
+        async for event in runtime.runner.run_async(
+            user_id=chat_policy.user_id,
+            session_id=session_id,
+            new_message=types.Content(role="user", parts=[types.Part(text=text)]),
+            state_delta={**state_delta, POLICY_KEY: chat_policy.model_dump()},
+            run_config=RunConfig(
+                max_llm_calls=self._settings.chat_max_llm_calls,
+                get_session_config=GetSessionConfig(num_recent_events=self._settings.chat_history_events),
+            ),
+        ):
+            for response in event.get_function_responses():
+                results.append((response.name, dict(response.response or {})))
+            if event.is_final_response() and event.content:
+                answer = "".join(p.text or "" for p in event.content.parts or [] if not p.thought).strip()
+                redacted = bool((event.custom_metadata or {}).get("numbers_redacted"))
+        if not answer:
+            answer = "I could not find an answer in the data for that question."
+        return DataAnswer(answer, intent, f"gemini ({self._settings.gemini_model}) via ADK", redacted, results)
 
     async def write_prose(self, prompt: str, fallback: str, max_words: int = 160) -> tuple[str, str]:
         if not self._gemini.available:

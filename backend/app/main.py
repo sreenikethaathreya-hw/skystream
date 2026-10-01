@@ -10,7 +10,7 @@ from sqlalchemy import select
 from app.config import get_settings
 from app.database import async_session
 from app.models import DemoClock
-from app.routers import admin, consensus, demo, entries, meta, rules, segments
+from app.routers import admin, chat, consensus, demo, entries, meta, rules, segments
 from app.services.seed_service import seed_database
 
 settings = get_settings()
@@ -25,6 +25,10 @@ async def lifespan(_app: FastAPI):
             if (await db.execute(select(DemoClock))).scalar_one_or_none() is None:
                 logger.info("Seeding demo data from %s", settings.seed_dir)
                 await seed_database(db, settings.seed_dir)
+    if settings.chat_enabled:
+        from app.ai.data_agent.runtime import init_data_agent
+
+        await init_data_agent()
     yield
 
 
@@ -39,11 +43,11 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[settings.cors_origin],
-    allow_methods=["GET", "POST", "PUT"],
+    allow_methods=["GET", "POST", "PUT", "DELETE"],
     allow_headers=["Content-Type", "X-Demo-User", "Authorization"],
 )
 
-for module in (meta, segments, entries, demo, consensus, rules, admin):
+for module in (meta, segments, entries, demo, consensus, rules, admin, chat):
     app.include_router(module.router)
 
 if (settings.static_dir / "index.html").exists():

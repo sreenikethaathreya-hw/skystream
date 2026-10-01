@@ -75,6 +75,31 @@ for any segment unless the rep names a competitor move."*
 - Each rule records its author, original sentence, source entry and provider; the Rules page shows how often it
   fired and how those entries resolved, and leads can retire it.
 
+## Ask the data
+
+Every signed-in user has an **Ask the data** button in the header. It opens a chat that answers questions
+about the figures in the selected country and mega-segment: share, plan, year-to-go, hectares, monthly
+actuals, rep entries and flags, claims and track records, competitor shares and lead rules.
+
+- A Google ADK agent on Gemini (Vertex) answers by calling read-only tools in `backend/app/ai/data_agent/tools.py`.
+  The server writes the caller's scope into ADK state on each turn; tools and `ScopeGuardPlugin` refuse segments
+  outside it, and only leads and admins can see open exceptions.
+- **No invented numbers.** `NumberGuardPlugin` checks every number in the answer against the tool results and
+  the question, and replaces any it cannot match with "(see table)". The tool tables are shown under each answer.
+- **No forecasting.** A question asking for a prediction is classified first (Jev when allowed, otherwise a
+  keyword decider) and gets a fixed refusal.
+- Without Gemini, a template fallback answers the same intents from one tool each, so the demo works offline.
+- Conversations are stored per user in ADK's `DatabaseSessionService` on the app database; demo reset clears them.
+
+Local debugging with ADK's own tools (needs Gemini and a seeded database):
+
+```bash
+cd backend
+GEMINI_ENABLED=true GCP_PROJECT=skystream-510015 uv run adk web app/ai
+RUN_LIVE_EVAL=1 GEMINI_ENABLED=true GCP_PROJECT=skystream-510015 uv run pytest tests/eval
+JEV_API_KEY=... AI_MODE=record uv run python scripts/record_chat_intents.py   # record chat-intent fixtures
+```
+
 ## Quick start (local)
 
 ```bash
@@ -114,6 +139,8 @@ EXTERNAL_AI_ALLOWED=true   # real mode only, after clearance (also switchable in
    20.2% to 35.0% (+14.8 pts)."*
 8. As the lead, Ledger > **Missed claims only** > **Turn this miss into a rule**; check, read the backtest, activate.
    Back as Rep A the rule fires as you type.
+9. **Ask the data**: as Rep A ask *"What is the share for 2482 in October?"*; the answer quotes the baseline
+   figures and shows the table. Ask it to forecast October and it declines.
 
 ## Tests
 
@@ -126,7 +153,8 @@ npm run test:e2e
 Backend tests cover the math golden cases, flags, claim checks, AI provider and gate, every upload validator
 (fixtures in `tests/fixtures/uploads/`), and real mode end to end (sign-in guards, preview/commit/supersede,
 two countries, scopes, actuals closing a month, settings) and lead rules (parsing, read-back, backtest, lifecycle,
-unmet driver). The math, flag wording and lead-rule evaluation are implemented in Python and TypeScript and both
+unmet driver), and the data chat (tools, scope and number guards, sessions, a scripted fake model for the
+agent loop, plus an opt-in live ADK evalset in `backend/tests/eval`). The math, flag wording and lead-rule evaluation are implemented in Python and TypeScript and both
 are held to `tests/fixtures/demand_math_cases.json` and `tests/fixtures/lead_rule_cases.json`.
 
 ## Deploy

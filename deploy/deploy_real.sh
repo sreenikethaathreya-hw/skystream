@@ -61,10 +61,12 @@ fi
 
 echo "==> Cloud Run (${SERVICE}, ${REGION})"
 # The API enforces Firebase sign-in on every data route; the service is public so the SPA can load.
+# DB_USER runs `alembic upgrade head` at container start, so it can also create ADK's chat session tables
+# (sessions, events, app_states, user_states, adk_internal_metadata) when the data chat starts.
 gcloud run deploy "$SERVICE" --image "$IMAGE" --region "$REGION" --project "$PROJECT" \
   --service-account "$SA" --allow-unauthenticated --add-cloudsql-instances "$CONNECTION" \
   --min-instances 0 --max-instances 3 --memory 1Gi --port 8080 \
-  --set-env-vars "^|^DATA_MODE=real|AUTO_SEED=false|NODE_ENV=production|AI_MODE=live|GEMINI_ENABLED=true|GCP_PROJECT=${PROJECT}|GCP_LOCATION=global|FIREBASE_PROJECT_ID=${PROJECT}|FIREBASE_AUTH_DOMAIN=${PROJECT}.firebaseapp.com|FIREBASE_WEB_API_KEY=${FIREBASE_WEB_API_KEY}|BOOTSTRAP_ADMIN_EMAILS=${BOOTSTRAP_ADMINS}" \
+  --set-env-vars "^|^DATA_MODE=real|AUTO_SEED=false|NODE_ENV=production|AI_MODE=live|GEMINI_ENABLED=true|GCP_PROJECT=${PROJECT}|GCP_LOCATION=global|GOOGLE_CLOUD_PROJECT=${PROJECT}|GOOGLE_CLOUD_LOCATION=global|GOOGLE_GENAI_USE_ENTERPRISE=True|FIREBASE_PROJECT_ID=${PROJECT}|FIREBASE_AUTH_DOMAIN=${PROJECT}.firebaseapp.com|FIREBASE_WEB_API_KEY=${FIREBASE_WEB_API_KEY}|BOOTSTRAP_ADMIN_EMAILS=${BOOTSTRAP_ADMINS}" \
   --set-secrets "$SECRETS"
 
 URL="$(gcloud run services describe "$SERVICE" --region "$REGION" --project "$PROJECT" --format='value(status.url)')"

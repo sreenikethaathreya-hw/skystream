@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.ai.data_agent.runtime import get_runtime
 from app.ai.decision_provider import get_decision_provider
 from app.config import get_settings
 from app.constants.demo import DEMO_USERS
@@ -42,12 +43,18 @@ async def meta(db: AsyncSession = Depends(get_db), user: CurrentUser = Depends(g
     clock = await db.get(DemoClock, 1) if settings.is_demo else None
     if not settings.is_demo:
         await touch(db, user.id)
+    provider = get_decision_provider()
+    status = provider.status()
+    chat = {
+        "chatEnabled": settings.chat_enabled and get_runtime() is not None,
+        "chatMode": "agent" if status["geminiConfigured"] else "templates",
+    }
     return MetaOut(
         data_mode=settings.data_mode,
         me=UserOut(id=user.id, name=user.name, role=user.role, title=user.title),
         users=[UserOut.model_validate(u) for u in DEMO_USERS.values()] if settings.is_demo else [],
         clock=ClockOut(year=clock.year, month=clock.month) if clock else None,
-        ai={**get_decision_provider().status(), "externalAiAllowed": app_settings.external_ai_allowed},
+        ai={**status, **chat, "externalAiAllowed": app_settings.external_ai_allowed},
         thresholds=app_settings.thresholds,
         currency=app_settings.currency,
     )

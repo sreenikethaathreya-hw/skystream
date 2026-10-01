@@ -15,9 +15,56 @@ export interface AiStatus {
   jevModel: string;
   geminiConfigured: boolean;
   geminiModel: string;
+  chatEnabled: boolean;
+  chatMode: "agent" | "templates";
 }
 
 export type DataMode = "demo" | "real";
+
+export type ChatCell = string | number | boolean | null;
+
+export interface ChatSource {
+  tool: string;
+  label: string;
+  columns: string[];
+  rows: ChatCell[][];
+}
+
+export interface ChatLink {
+  label: string;
+  to: string;
+}
+
+export interface ChatMessage {
+  role: "user" | "assistant";
+  text: string;
+  createdAt: string;
+  numbersRedacted: boolean;
+  provider: string | null;
+  sources: ChatSource[];
+  links: ChatLink[];
+}
+
+export interface ChatSession {
+  id: string;
+  title: string;
+  updatedAt: string;
+}
+
+export interface ChatHistory {
+  session: ChatSession;
+  messages: ChatMessage[];
+}
+
+export interface ChatTurn {
+  sessionId: string;
+  answer: string;
+  intent: string;
+  provider: string;
+  numbersRedacted: boolean;
+  sources: ChatSource[];
+  links: ChatLink[];
+}
 
 export interface AppConfig {
   dataMode: DataMode;

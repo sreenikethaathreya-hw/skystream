@@ -78,6 +78,8 @@ async def load_everything(c: AsyncClient) -> None:
 async def test_auth_guards(client: AsyncClient) -> None:
     assert (await client.get("/api/config")).json()["dataMode"] == "real"
     assert (await client.get("/api/meta")).status_code == 401
+    assert (await client.get("/api/chat/sessions")).status_code == 401
+    assert (await client.post("/api/chat/sessions/x/messages", json={"text": "hi"})).status_code == 401
     assert (await client.get("/api/meta", headers={"Authorization": "Bearer expired"})).status_code == 401
     assert (
         await client.get("/api/meta", headers={"Authorization": "Bearer stranger@example.com"})

@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.database import get_db
 from app.middleware.auth import get_current_user
 from app.schemas.api import AdvanceOut, TrackRecordOut
-from app.services import clock_service, rep_service
+from app.services import chat_service, clock_service, rep_service
 
 router = APIRouter(prefix="/api", tags=["demo"], dependencies=[Depends(get_current_user)])
 
@@ -17,6 +17,7 @@ async def advance(db: AsyncSession = Depends(get_db)) -> AdvanceOut:
 @router.post("/demo/reset", status_code=204)
 async def reset(db: AsyncSession = Depends(get_db)) -> None:
     await clock_service.reset_demo(db)
+    await chat_service.delete_all_sessions()
 
 
 @router.get("/reps", response_model=list[TrackRecordOut])

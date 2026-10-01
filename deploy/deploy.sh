@@ -41,7 +41,7 @@ echo "==> Deploying Cloud Run service (AI_MODE=${AI_MODE})"
 gcloud run deploy "$SERVICE" --image "$IMAGE" --region "$REGION" --project "$PROJECT" \
   --service-account "$SA" --allow-unauthenticated --max-instances 1 --min-instances 0 \
   --memory 1Gi --port 8080 \
-  --set-env-vars "AI_MODE=${AI_MODE},GEMINI_ENABLED=true,GCP_PROJECT=${PROJECT},GCP_LOCATION=global" \
+  --set-env-vars "AI_MODE=${AI_MODE},GEMINI_ENABLED=true,GCP_PROJECT=${PROJECT},GCP_LOCATION=global,GOOGLE_CLOUD_PROJECT=${PROJECT},GOOGLE_CLOUD_LOCATION=global,GOOGLE_GENAI_USE_ENTERPRISE=True" \
   "${SECRET_FLAGS[@]}"
 
 echo "==> Building and deploying the SPA to Firebase Hosting"

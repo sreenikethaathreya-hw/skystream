@@ -17,6 +17,17 @@ target_metadata = Base.metadata
 
 config.set_main_option("sqlalchemy.url", get_settings().database_url)
 
+# Google ADK's DatabaseSessionService owns these tables and creates them itself (prepare_tables at startup).
+ADK_TABLES = frozenset({"sessions", "events", "app_states", "user_states", "adk_internal_metadata"})
+
+
+def include_name(name, type_, parent_names) -> bool:
+    if type_ == "table":
+        return name not in ADK_TABLES
+    if type_ in ("index", "unique_constraint", "foreign_key_constraint", "column"):
+        return parent_names.get("table_name") not in ADK_TABLES
+    return True
+
 
 def run_migrations_offline() -> None:
     context.configure(
@@ -24,13 +35,19 @@ def run_migrations_offline() -> None:
         target_metadata=target_metadata,
         literal_binds=True,
         render_as_batch=True,
+        include_name=include_name,
     )
     with context.begin_transaction():
         context.run_migrations()
 
 
 def do_run_migrations(connection) -> None:
-    context.configure(connection=connection, target_metadata=target_metadata, render_as_batch=True)
+    context.configure(
+        connection=connection,
+        target_metadata=target_metadata,
+        render_as_batch=True,
+        include_name=include_name,
+    )
     with context.begin_transaction():
         context.run_migrations()
 
