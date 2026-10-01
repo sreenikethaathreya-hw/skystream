@@ -101,6 +101,63 @@ test("demo script: capture, flag, structure, submit, consensus, advance, track r
   expect(csv).toContain("2482");
 });
 
+test("storyboard: baseline benchmarks and the share-jump copilot message", async ({ page, request }) => {
+  expect((await request.post("http://localhost:8000/api/demo/reset")).status()).toBe(204);
+  await page.goto("/capture");
+  await page.evaluate(() => localStorage.setItem("skystream.demoUser", "rep-b"));
+  await page.reload();
+
+  await page.getByTestId("segment-2432").click();
+  await page.getByRole("button", { name: "Oct", exact: true }).click();
+  await expect(page.getByTestId("baseline-panel")).toContainText("Syngenta volume share by year");
+  await expect(page.getByTestId("baseline-grower-potential")).toContainText("CRM grower potential");
+  await page.getByTestId("demand-input").fill("7090");
+  await expect(page.getByTestId("share-value")).toHaveText("35.0%");
+  await expect(page.getByTestId("ytg-gap")).toContainText("+");
+  await expect(page.getByTestId("flag-share_jump")).toContainText(/above the historical October average/);
+  await expect(page.getByTestId("flag-share_jump")).toContainText("lifts share from 20.2% to 35.0%");
+  await page.screenshot({ path: `${SHOTS}/09-storyboard-share-jump.png`, fullPage: true });
+});
+
+test("lead turns a missed claim into a rule that reps meet on the next keystroke", async ({ page, request }) => {
+  expect((await request.post("http://localhost:8000/api/demo/reset")).status()).toBe(204);
+  await page.goto("/ledger");
+  await page.evaluate(() => localStorage.setItem("skystream.demoUser", "lead"));
+  await page.reload();
+
+  await page.getByLabel("Missed claims only").check();
+  await page.getByTestId("add-rule-from-miss").first().click();
+  await page
+    .getByLabel("Rule in plain language")
+    .fill("Do not accept any month more than 15% above last year in every segment unless the rep names a confirmed customer order.");
+  await page.getByTestId("check-rule").click();
+  await expect(page.getByTestId("rule-description")).toContainText("above +15%");
+  await expect(page.getByTestId("rule-description")).toContainText("must cite a customer win or loss");
+  await expect(page.getByTestId("rule-preview")).toContainText("Backtest");
+  await page.screenshot({ path: `${SHOTS}/10-lead-rule-draft.png`, fullPage: true });
+  await page.getByTestId("activate-rule").click();
+  await expect(page.getByText("Rule is live")).toBeVisible();
+
+  await page.goto("/rules");
+  await expect(page.getByTestId("rule-card")).toContainText("Written after the miss on");
+
+  await actAs(page, "rep-a");
+  await page.goto("/capture");
+  await page.getByTestId("segment-2482").click();
+  await page.getByTestId("demand-input").fill("17500");
+  const ruleFlag = page.locator('[data-testid^="flag-lead_rule_"]');
+  await expect(ruleFlag).toContainText("Lead rule (Consensus lead)");
+  await page.getByTestId("justification-input").fill("Our price is lower this season so growers will buy more.");
+  await page.getByTestId("structure-button").click();
+  await expect(page.getByText(/needs a justification citing a customer win or loss/)).toBeVisible();
+  await page.screenshot({ path: `${SHOTS}/11-lead-rule-in-capture.png`, fullPage: true });
+
+  await actAs(page, "lead");
+  await page.goto("/rules");
+  await page.getByRole("button", { name: "Retire" }).click();
+  await expect(page.getByTestId("rule-card")).toContainText("retired");
+});
+
 test("admin uploads monthly actuals and the rep's claim resolves", async ({ page, request }) => {
   expect((await request.post("http://localhost:8000/api/demo/reset")).status()).toBe(204);
   await page.goto("/capture");

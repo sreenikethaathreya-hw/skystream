@@ -7,7 +7,11 @@ import type {
   AppSettings,
   Entry,
   EntryPayload,
+  LeadRule,
   Rtb,
+  RuleDraft,
+  RuleRequest,
+  RuleSlots,
   Scope,
   UploadBatch,
 } from "@/lib/types";
@@ -89,6 +93,23 @@ export function useSaveUser() {
     mutationFn: (user: Omit<AdminUser, "lastSeenAt">) => api.put<AdminUser[]>("/admin/users", user),
     onSuccess: invalidate,
   });
+}
+
+export const useCompileRule = () =>
+  useMutation({ mutationFn: (body: RuleRequest) => api.post<RuleDraft>("/rules/compile", body) });
+
+export function useCreateRule() {
+  const invalidate = useInvalidateAll();
+  return useMutation({
+    mutationFn: (body: RuleRequest & { slots: RuleSlots; provider: string; decisions: Record<string, string> }) =>
+      api.post<LeadRule>("/rules", body),
+    onSuccess: invalidate,
+  });
+}
+
+export function useRetireRule() {
+  const invalidate = useInvalidateAll();
+  return useMutation({ mutationFn: (id: number) => api.post<void>(`/rules/${id}/retire`), onSuccess: invalidate });
 }
 
 export function useSaveSettings() {

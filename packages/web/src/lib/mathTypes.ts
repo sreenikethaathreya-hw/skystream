@@ -11,7 +11,14 @@ export interface Competitor {
   sharePct: number;
 }
 
+export interface YearMonthly {
+  year: number;
+  basis: string;
+  qtyKs: number[];
+}
+
 export interface MegaContext {
+  name?: string;
   marketValueEur: number;
   syngentaValueEur: number;
   syngentaSharePct: number;
@@ -39,6 +46,7 @@ export interface SegmentContext {
   monthlyActual: (number | null)[];
   monthlyActualValue: (number | null)[];
   lastYearMonthly: number[];
+  monthlyHistory?: YearMonthly[];
   submitted: Record<string, number>;
   marketTrendNote?: string | null;
   mega: MegaContext;
@@ -88,6 +96,12 @@ export interface Impact {
   planVolumeShare: number;
   lastYearVolumeShare: number;
   maxHistoricalShare: number;
+  avgHistoricalShare: number;
+  baselineShare: number;
+  shareJumpPts: number;
+  monthHistoryAvg: number;
+  monthHistoryYears: number[];
+  monthVsAvgPct: number;
   fyValue: number;
   valueShare: number;
   planValueShare: number;
@@ -114,8 +128,22 @@ export interface Flag {
   message: string;
 }
 
+export interface LeadRuleSpec {
+  id: number;
+  segmentIds?: number[] | null;
+  months?: number[] | null;
+  metric: string;
+  comparator: "above" | "below";
+  threshold: number;
+  requiredDriver?: string | null;
+  severity: FlagSeverity;
+  description: string;
+  author: string;
+}
+
 export interface Thresholds {
   shareHistoryMarginPts: number;
+  shareJumpPts: number;
   monthSigmaMultiplier: number;
   minMonthSigmaPct: number;
   minMonthSigmaAbs: number;
@@ -127,6 +155,7 @@ export interface Thresholds {
 
 export const DEFAULT_THRESHOLDS: Thresholds = {
   shareHistoryMarginPts: 10,
+  shareJumpPts: 10,
   monthSigmaMultiplier: 2,
   minMonthSigmaPct: 0.15,
   minMonthSigmaAbs: 50,

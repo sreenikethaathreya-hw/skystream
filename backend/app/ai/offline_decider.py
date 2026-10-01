@@ -162,3 +162,48 @@ def answer_triage(has_critical: bool, has_warning: bool, weak_record: bool, spec
 
 
 DIRECTIONS_KEYS = ("up", "down", "neutral")
+
+RULE_METRIC_KEYWORDS: list[tuple[str, tuple[str, ...]]] = [
+    ("range_width_pct", ("range", "spread", "low-high", "low and high")),
+    ("price_vs_plan_pct", ("price", "discount")),
+    ("share_jump_pts", ("share jump", "share change", "share points", "share gain", "pts of share", "points of share")),
+    ("volume_share_pct", ("share",)),
+    ("month_vs_average_pct", ("average", "historical", "history")),
+    ("month_vs_last_year_pct", ("last year", "prior year", "previous year", "year on year", "yoy")),
+    ("month_vs_plan_pct", ("plan", "budget", "target")),
+]
+RULE_DOWN_WORDS = ("cut", "drop", "below", "less than", "decrease", "under", "lower", "fall", "reduc")
+RULE_MEGA_WORDS = ("all ", "every", "whole", "any segment", "any micro", "across", "mega")
+RULE_STRICT_WORDS = ("never", "block", "reject", "hard stop", "do not accept", "don't accept", "not accept", "refuse")
+RULE_METRIC_KEYS = (
+    "month_vs_last_year_pct",
+    "month_vs_plan_pct",
+    "month_vs_average_pct",
+    "share_jump_pts",
+    "volume_share_pct",
+    "range_width_pct",
+    "price_vs_plan_pct",
+    "unsupported",
+)
+
+
+def answer_rule(text: str, drivers: list[str]) -> dict:
+    lowered = text.lower()
+    metric = _first_match(lowered, RULE_METRIC_KEYWORDS)
+    if metric is None and re.search(r"\d", lowered):
+        metric = "month_vs_plan_pct"
+        metric_conf = 0.55
+    else:
+        metric_conf = 0.88 if metric else 0.7
+    comparator = "below" if any(w in lowered for w in RULE_DOWN_WORDS) else "above"
+    applies = "mega_segment" if any(w in lowered for w in RULE_MEGA_WORDS) else "micro_segment"
+    clause = re.split(r"\bunless\b|\bwithout\b|\bexcept\b|\bmust (?:name|cite|give|explain)\b", lowered, maxsplit=1)
+    driver = _first_match(clause[1], DRIVER_KEYWORDS) if len(clause) > 1 else None
+    strict = any(w in lowered for w in RULE_STRICT_WORDS)
+    return {
+        "metric": _choice(metric or "unsupported", list(RULE_METRIC_KEYS), metric_conf),
+        "comparator": _choice(comparator, ["above", "below"], 0.85),
+        "applies_to": _choice(applies, ["micro_segment", "mega_segment"], 0.8),
+        "required_driver": _choice(driver or "none", drivers, 0.85 if driver else 0.8),
+        "severity": _choice("critical" if strict else "warning", ["warning", "critical"], 0.8),
+    }

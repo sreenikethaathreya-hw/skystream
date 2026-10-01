@@ -121,6 +121,66 @@ def justification_questions(competitors: list[str], varieties: list[str], has_fl
     return questions
 
 
+RULE_METRICS = {
+    "month_vs_last_year_pct": "Compares the entered month with the same month last year",
+    "month_vs_plan_pct": "Compares the entered month with the plan for that month",
+    "month_vs_average_pct": "Compares the entered month with its historical average across years",
+    "share_jump_pts": "How many share points one entry adds or removes",
+    "volume_share_pct": "The full-year market share level",
+    "range_width_pct": "How wide the rep's low-high range is",
+    "price_vs_plan_pct": "The net price entered compared with the plan price",
+    "unsupported": "None of these; the rule is about something else (people, timing, documents, process)",
+}
+
+RULE_COMPARATORS = {
+    "above": "Flag when the measure is too high (increases, more than, above, over)",
+    "below": "Flag when the measure is too low (cuts, drops, less than, below, under)",
+}
+
+RULE_SCOPES = {
+    "micro_segment": "Only the micro-segment the lead is reviewing",
+    "mega_segment": "Every micro-segment in the mega-segment (all, every, any, whole crop)",
+}
+
+RULE_SEVERITIES = {
+    "warning": "Ask for a justification and discuss it",
+    "critical": "Treat as a hard stop to challenge before approving (never, reject, block, do not accept)",
+}
+
+RULE_ONLY = "Judge only the RULE line; the other lines are context. "
+
+
+def rule_questions() -> dict[str, dict]:
+    return {
+        "metric": {
+            "type": "choice",
+            "instructions": RULE_ONLY + "Which measure of a demand entry does the rule check?",
+            "criteria": RULE_METRICS,
+        },
+        "comparator": {
+            "type": "choice",
+            "instructions": RULE_ONLY + "Does the rule catch numbers that are too high or too low?",
+            "criteria": RULE_COMPARATORS,
+        },
+        "applies_to": {
+            "type": "choice",
+            "instructions": RULE_ONLY + "Which micro-segments should the rule cover?",
+            "criteria": RULE_SCOPES,
+        },
+        "required_driver": {
+            "type": "choice",
+            "instructions": RULE_ONLY
+            + "Which reason, if any, must the rep's justification give for the entry to be acceptable?",
+            "criteria": {**{k: v for k, v in DRIVERS.items() if k != "other"}, "none": "No particular reason is required"},
+        },
+        "severity": {
+            "type": "choice",
+            "instructions": RULE_ONLY + "How strict is the lead being?",
+            "criteria": RULE_SEVERITIES,
+        },
+    }
+
+
 def verification_question() -> dict[str, dict]:
     return {
         "supported": {

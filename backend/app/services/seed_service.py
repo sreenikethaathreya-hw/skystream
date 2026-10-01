@@ -10,6 +10,7 @@ from app.models import (
     DemandEntry,
     DemoClock,
     GrowerPotential,
+    LeadRule,
     MarketYear,
     MonthlyActual,
     MonthlyPlan,
@@ -175,6 +176,7 @@ async def seed_database(db: AsyncSession, seed_dir: Path) -> None:
 
     for model in (
         Seasonality,
+        LeadRule,
         Claim,
         DemandEntry,
         RepTrackRecord,

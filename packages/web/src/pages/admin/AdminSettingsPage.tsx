@@ -10,6 +10,7 @@ import type { Thresholds } from "@/lib/mathTypes";
 
 const THRESHOLD_FIELDS: { key: keyof Thresholds; label: string; step: number }[] = [
   { key: "shareHistoryMarginPts", label: "Share above history (pts)", step: 1 },
+  { key: "shareJumpPts", label: "Share jump from one entry (pts)", step: 1 },
   { key: "monthSigmaMultiplier", label: "Month outlier (sigma)", step: 0.5 },
   { key: "minMonthSigmaPct", label: "Minimum month sigma (share of plan)", step: 0.05 },
   { key: "minMonthSigmaAbs", label: "Minimum month sigma (KS)", step: 10 },

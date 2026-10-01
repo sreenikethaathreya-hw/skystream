@@ -39,8 +39,11 @@ setting `externalAiAllowed` is on (env `EXTERNAL_AI_ALLOWED`); otherwise fixture
 ## Non-negotiables
 
 1. **No forecasting model.** Every number and range comes from the rep. The app calculates, checks and records.
-2. **Math lives in two mirrored places**: `backend/app/services/demand_math.py` + `flags.py` and
-   `packages/web/src/lib/demandMath.ts` + `flags.ts`. Change both and regenerate the golden cases.
+2. **Math lives in two mirrored places**: `backend/app/services/demand_math.py` + `flags.py` + `lead_rules.py` and
+ `packages/web/src/lib/demandMath.ts` + `flags.ts` + `leadRules.ts`. Change both and regenerate the golden cases
+ (flag messages are compared word for word).
+8. **Lead rules** compile a lead's sentence into fixed slots (`app/services/rule_service.py`). Models only pick
+ slots; the limit and months are parsed from the text, and a rule without a number is rejected.
 3. **Models write no numbers.** Jev returns typed decisions; Gemini writes prose. Both sit behind
    `app/ai/decision_provider.py`, which takes a `DecisionPolicy`; never call a provider client from a router.
 4. **Every data route is authenticated** through `app/middleware/auth.get_current_user`. Real mode verifies

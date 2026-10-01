@@ -16,6 +16,7 @@ from app.ai.questions import (
     MAGNITUDE_LEVELS,
     SPECIFICITY_LEVELS,
     justification_questions,
+    rule_questions,
     triage_question,
     verification_question,
 )
@@ -65,6 +66,15 @@ def default_policy() -> DecisionPolicy:
         choice_threshold=settings.jev_confidence_threshold,
         score_threshold=settings.jev_score_confidence_threshold,
     )
+
+
+@dataclass
+class RuleDecision:
+    choices: dict[str, str]
+    confidences: dict[str, float]
+    provider: str
+    model: str | None
+    low_confidence_fields: list[str]
 
 
 @dataclass
@@ -290,6 +300,47 @@ class DecisionProvider:
             confidence=answer.get("confidence", 0.0),
             probabilities=answer.get("probabilities", {}),
             provider=decision.provider,
+        )
+
+    async def compile_rule(self, text: str, context: str, policy: DecisionPolicy | None = None) -> RuleDecision:
+        """Map a lead's sentence onto the fixed rule slots. Numbers and months are parsed elsewhere, never here."""
+        policy = policy or default_policy()
+        questions = rule_questions()
+        state = f"RULE: {text}\n{context}"
+        decision = await self._decide(
+            "rule",
+            state,
+            questions,
+            lambda: offline_decider.answer_rule(text, list(questions["required_driver"]["criteria"])),
+            policy,
+        )
+        answers = {k: dict(v) for k, v in decision.answers.items()}
+        provider = decision.provider
+        low = [f for f in questions if (answers.get(f, {}).get("confidence") or 0) < policy.choice_threshold]
+        if low and self._gemini.available:
+            try:
+                override = await self._gemini.extract(
+                    f"Map this consensus lead's rule onto fixed options.\n{state}",
+                    {
+                        "type": "OBJECT",
+                        "properties": {
+                            f: {"type": "STRING", "enum": list(questions[f]["criteria"])} for f in low
+                        },
+                        "required": low,
+                    },
+                    timeout_seconds=self._settings.gemini_fallback_timeout_seconds,
+                )
+                for field_name, value in override.items():
+                    answers[field_name] = {**answers[field_name], "choice": value, "confidence": 1.0}
+                provider = f"{provider} + gemini fallback"
+            except (GeminiError, ValueError) as exc:
+                logger.warning("Gemini rule fallback failed: %s", exc)
+        return RuleDecision(
+            choices={k: answers[k]["choice"] for k in questions},
+            confidences={k: float(answers[k].get("confidence") or 0) for k in questions},
+            provider=provider,
+            model=decision.model,
+            low_confidence_fields=[f for f in low if "gemini" not in provider],
         )
 
     async def write_prose(self, prompt: str, fallback: str, max_words: int = 160) -> tuple[str, str]:

@@ -33,7 +33,9 @@ def test_golden_case(case: dict) -> None:
     entry = EntryInput.model_validate(case["entry"])
     impact = compute_impact(ctx, entry)
     _assert_close(impact.model_dump(by_alias=True), case["expected"], "impact")
-    assert [f.code for f in evaluate_flags(ctx, entry, impact)] == case["expectedFlags"]
+    flags = evaluate_flags(ctx, entry, impact)
+    assert [f.code for f in flags] == case["expectedFlags"]
+    assert [f.message for f in flags] == case["expectedMessages"]
 
 
 def _ctx() -> SegmentContext:

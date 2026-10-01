@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { BaselinePanel } from "@/components/capture/BaselinePanel";
 import { EntryPanel } from "@/components/capture/EntryPanel";
 import { FlagsTile, HectaresTile, ShareTile, YtgTile } from "@/components/capture/ImpactTiles";
 import { JustificationBox } from "@/components/capture/JustificationBox";
@@ -132,8 +133,16 @@ export function CapturePage() {
           </CardBody>
         </Card>
 
+        <BaselinePanel
+          ctx={segment.context}
+          impact={live.impact}
+          month={month}
+          value={entry.value}
+          megaName={cube.megaSegmentDesc}
+        />
+
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          <ShareTile impact={live.impact} />
+          <ShareTile impact={live.impact} megaName={cube.megaSegmentDesc} />
           <YtgTile impact={live.impact} />
           <HectaresTile impact={live.impact} />
           <FlagsTile flags={live.flags} />

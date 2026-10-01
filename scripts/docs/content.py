@@ -401,6 +401,7 @@ def flags(doc) -> None:
             ["no_market", "critical", "Segment has no market quantity", "market KS <= 0", "Share cannot be checked; data-quality issue."],
             ["share_over_100", "critical", "Implied volume share above the whole market", "> 100%", "Physically impossible."],
             ["share_above_history", "warning", "Share far above anything seen", "> 2024-2026 max + 10 pts", "Unprecedented gains need evidence."],
+            ["share_jump", "warning", "One entry moves full-year share far from the current baseline (plan or submitted month)", "> 10 pts either way (Admin setting)", "The storyboard copilot message: 'This entry is X% above the historical October average ... and lifts share from 20.2% to 35.0%'."],
             ["implied_ha_over_market", "critical", "Implied Syngenta hectares exceed planted area", "> market ha", "More seed than land."],
             ["month_outlier", "warning", "Far from both plan month and last year's month", "> 2 sigma from each", "Catches typos and unexplained spikes."],
             ["against_market_trend", "warning", "Demand up while area shrinks, or down while it grows", "area change beyond +/-3% and entry beyond +/-5% of plan month", "Contradicts market dynamics (e.g. T. parvispinus); message quotes the market note."],
@@ -428,6 +429,34 @@ def flags(doc) -> None:
     )
     doc.p("Competitor shares in the re-split never go below 0%: if Syngenta's implied value would exceed the whole "
           "Blocky PGH market, every competitor shows 0% and the share tile says the number exceeds the market.")
+    doc.p("The historical average used in share_jump and month_outlier messages is the same month across earlier "
+          "years: full actuals where all 12 months are loaded, otherwise that year's phased plan. The Capture screen "
+          "shows the same benchmarks in a Baseline panel before the rep types: share by year with the average and "
+          "high, the month's plan, last year and historical average, and planted area, implied hectares and CRM "
+          "grower potential.")
+
+    doc.h("9.1 Lead rules", 2)
+    doc.p("When a claim is contradicted by actuals, the consensus lead can write a rule in plain language, from the "
+          "missed entry in the Ledger or on the Lead rules page. The rule becomes a fixed check that runs on every "
+          "keystroke next to the flags above (lead_rules.py and leadRules.ts, held to lead_rule_cases.json).")
+    doc.table(
+        ["Slot", "Filled by", "Options"],
+        [
+            ["Measure", "Jev (Gemini fallback, offline decider)", "month vs last year, vs plan, vs historical average; share level; share jump; range width; price vs plan; or unsupported (rejected)"],
+            ["Direction", "Jev", "above / below"],
+            ["Scope", "Jev", "the missed entry's micro-segment, or the whole mega-segment"],
+            ["Required reason", "Jev", "one of the justification drivers, or none"],
+            ["Severity", "Jev", "warning, or critical (hard stop)"],
+            ["Limit", "Parsed from the text", "e.g. 20%, 10 pts; a rule without a number is rejected"],
+            ["Months", "Parsed from the text", "month names, ranges (Oct-Dec), seasons, quarters; none means every month"],
+        ],
+        widths=[3.0, 4.6, 9.4], size=8, caption="How a lead's sentence becomes a rule",
+    )
+    doc.p("Before activating, the lead sees a plain read-back and a backtest over every recorded entry in scope (how "
+          "often the rule would have fired, how those claims resolved, and whether it would have caught the miss). "
+          "A fired rule with a required reason adds a critical lead_rule_<id>_unmet flag on submit when the "
+          "structured claim gives a different driver. Rules keep their author, sentence, source entry and provider; "
+          "the Rules page shows how often each fired and how those entries resolved, and leads can retire them.")
 
 
 def ai(doc, figures: dict[str, Path]) -> None:
@@ -725,6 +754,7 @@ def data_model(doc) -> None:
             ["demand_entries", "id, user_id, segment_id, year, month, value, low, high, price, justification, impact, flags, status, source, triage, reviewed_by/at, created_at", "Ledger"],
             ["claims", "entry_id, driver, direction, magnitude, competitor, variety, evidence_source, verifiable, consistent_with_notes, specificity, addresses_flags, summary, decisions, provider, signal, check_year/month, resolution, resolution_detail, resolved_at", "One per justified entry"],
             ["rep_track_records", "user_id, entries_resolved, bias_pct, claim_hit_rate, range_coverage, confirmed, contradicted", "Materialized on advance"],
+            ["lead_rules", "country_code, mega_segment_id, segment_ids, months, metric, comparator, threshold, required_driver, severity, text, description, decisions, provider, source_entry_id, created_by/at, active, retired_by/at", "Lessons from missed claims"],
             ["demo_clock", "year, month", "Single row"],
         ],
         widths=[3.2, 9.6, 4.2], size=7.8, caption="Tables (one Alembic migration)",
@@ -749,6 +779,10 @@ def api(doc) -> None:
             ["POST /api/consensus/bulk-approve", "lead", "Approve routine entries"],
             ["POST /api/consensus/entries/{id}/decision", "lead", "approve / discuss / challenge"],
             ["POST /api/consensus/rtb", "-", "Reasons-to-believe draft (Gemini or template)"],
+            ["GET /api/rules", "-", "Lead rules for a scope, with how often each fired and how those entries resolved"],
+            ["POST /api/rules/compile", "lead/admin", "Read a sentence into rule slots, read-back and backtest"],
+            ["POST /api/rules", "lead/admin", "Activate a rule (slots validated server-side)"],
+            ["POST /api/rules/{id}/retire", "lead/admin", "Retire a rule"],
             ["GET /api/export/supply.csv", "-", "Approved supply range"],
             ["GET /api/data-quality", "-", "Ingest report"],
         ],

@@ -64,6 +64,18 @@ export function computeImpact(
   const historicalShares = ctx.planQtyHistory
     .filter((p) => p.year <= ctx.year && marketByYear.has(p.year))
     .map((p) => div(p.qtyKs, marketByYear.get(p.year)!.qtyKs));
+  const pastShares = ctx.planQtyHistory
+    .filter((p) => p.year < ctx.year && marketByYear.has(p.year))
+    .map((p) => div(p.qtyKs, marketByYear.get(p.year)!.qtyKs));
+
+  const baselineMonth = ctx.submitted[String(entry.month)] ?? ctx.monthlyPlan[entry.month - 1];
+  const baselineShare = div(fy - entry.value + baselineMonth, ctx.marketQtyKs);
+
+  const monthHistory = (ctx.monthlyHistory ?? []).filter((h) => h.year < ctx.year);
+  const monthValues = monthHistory.map((h) => h.qtyKs[entry.month - 1]);
+  const monthAvg = monthValues.length
+    ? monthValues.reduce((a, b) => a + b, 0) / monthValues.length
+    : ctx.lastYearMonthly[entry.month - 1];
 
   const marketValue = ctx.marketQtyKs * ctx.priceExseed;
   const mega = ctx.mega;
@@ -104,6 +116,12 @@ export function computeImpact(
     planVolumeShare: div(ctx.planQtyKs, ctx.marketQtyKs),
     lastYearVolumeShare: div(ctx.lastYearQtyKs, lastMarket ? lastMarket.qtyKs : 0),
     maxHistoricalShare: historicalShares.length ? Math.max(...historicalShares) : 0,
+    avgHistoricalShare: div(pastShares.reduce((a, b) => a + b, 0), pastShares.length),
+    baselineShare,
+    shareJumpPts: (div(fy, ctx.marketQtyKs) - baselineShare) * 100,
+    monthHistoryAvg: monthAvg,
+    monthHistoryYears: monthHistory.map((h) => h.year),
+    monthVsAvgPct: div(entry.value - monthAvg, monthAvg),
     fyValue,
     valueShare: div(fyValue, marketValue),
     planValueShare: div(ctx.planValueEur, marketValue),

@@ -4,7 +4,8 @@ A demand-capture tool for **Use Case 2, Market Intelligence and Demand Capture**
 demand number for a micro-segment and immediately sees what it does to market share, year-to-go and implied
 hectares, with plausibility flags against history. The one-sentence justification becomes a structured,
 checkable claim that is resolved when the month's actual sales arrive, and feeds each rep's track record. The
-consensus meeting only sees the exceptions.
+consensus meeting only sees the exceptions, and when a number misses, the lead can turn the lesson into a
+plain-language rule that is checked on every entry from then on.
 
 The app runs in two modes from the same code:
 
@@ -49,8 +50,30 @@ column names, including the optional ones, so the real export can be uploaded un
 in by hand. Each template's example rows pass its own validator (`backend/tests/test_ingest_templates.py`).
 
 Reps enter, per micro-segment and open month: demand in thousand seeds, a low/high range, an optional net price,
-and a justification of up to 600 characters (required when a flag fires). Admins set the planning year,
-thresholds, hectare cap, currency and the Jev switch under **Admin: settings**.
+and a justification of up to 600 characters (required when a flag fires). Before typing, the **Baseline** panel
+shows share by year (average and high), the month's plan, last year and historical average, and market potential
+(planted area, implied hectares, CRM grower potential). Admins set the planning year, thresholds (including the
+share-jump limit), hectare cap, currency and the Jev switch under **Admin: settings**.
+
+## Lead rules
+
+When a claim is contradicted by actuals, the consensus lead (or an admin) clicks **Turn this miss into a rule**
+in the Ledger, or writes one under **Lead rules**, e.g. *"Do not accept autumn increases above 20% over last year
+for any segment unless the rep names a competitor move."*
+
+- Jev (Gemini fallback, offline decider without either) maps the sentence onto fixed slots only: measure (month
+  vs last year / plan / historical average, share level, share jump, range width, price vs plan), above/below,
+  this micro-segment or the whole mega-segment, a required justification driver, and warning or hard stop.
+- The **limit and months are parsed from the lead's words** (`20%`, `10 pts`, `Oct-Dec`, `autumn`, `Q4`); a rule
+  without a number is rejected rather than guessed. Unsupported ideas (process, people, timing) are rejected too.
+- Before activating, the lead sees a plain read-back and a **backtest** over every recorded entry in scope: how
+  often it would have fired, how many of those claims were later contradicted or confirmed, and whether it would
+  have caught the miss it came from.
+- Active rules ship with the cube and are evaluated on every keystroke next to the built-in flags
+  (`backend/app/services/lead_rules.py` mirrored by `packages/web/src/lib/leadRules.ts`), re-checked on submit, and
+  a fired rule that requires a driver the structured claim does not give adds a critical `_unmet` flag.
+- Each rule records its author, original sentence, source entry and provider; the Rules page shows how often it
+  fired and how those entries resolved, and leads can retire it.
 
 ## Quick start (local)
 
@@ -86,6 +109,11 @@ EXTERNAL_AI_ALLOWED=true   # real mode only, after clearance (also switchable in
 5. As the **Consensus lead**: exceptions only, Jev triage, bulk-approve, **Draft RTB**, export the CSV.
 6. **Advance month** (or, as **Data admin**, upload September actuals under **Admin: data**): claims resolve and
    track records update.
+7. Storyboard check: as Rep B, 2432 October, type `7090`. Share moves 20.2% to 35.0%, year-to-go turns green and
+   the share-jump flag reads *"This entry is 193% above the historical October average ... and lifts share from
+   20.2% to 35.0% (+14.8 pts)."*
+8. As the lead, Ledger > **Missed claims only** > **Turn this miss into a rule**; check, read the backtest, activate.
+   Back as Rep A the rule fires as you type.
 
 ## Tests
 
@@ -97,8 +125,9 @@ npm run test:e2e
 
 Backend tests cover the math golden cases, flags, claim checks, AI provider and gate, every upload validator
 (fixtures in `tests/fixtures/uploads/`), and real mode end to end (sign-in guards, preview/commit/supersede,
-two countries, scopes, actuals closing a month, settings). The math is implemented in Python and TypeScript and
-both are held to `tests/fixtures/demand_math_cases.json`, which includes a second country built from uploads.
+two countries, scopes, actuals closing a month, settings) and lead rules (parsing, read-back, backtest, lifecycle,
+unmet driver). The math, flag wording and lead-rule evaluation are implemented in Python and TypeScript and both
+are held to `tests/fixtures/demand_math_cases.json` and `tests/fixtures/lead_rule_cases.json`.
 
 ## Deploy
 

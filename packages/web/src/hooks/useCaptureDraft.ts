@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import type { DraftNumbers } from "@/components/capture/EntryPanel";
 import { computeImpact } from "@/lib/demandMath";
 import { evaluateFlags } from "@/lib/flags";
+import { evaluateRules } from "@/lib/leadRules";
 import type { EntryInput } from "@/lib/mathTypes";
 import type { Cube, SegmentCube } from "@/lib/types";
 
@@ -60,7 +61,13 @@ export function useCaptureDraft(cube: Cube | undefined, preferredSegmentId: numb
   const live = useMemo(() => {
     if (!segment || !cube) return undefined;
     const impact = computeImpact(segment.context, entry, cube.thresholds);
-    return { impact, flags: evaluateFlags(segment.context, entry, impact, cube.thresholds) };
+    return {
+      impact,
+      flags: [
+        ...evaluateFlags(segment.context, entry, impact, cube.thresholds),
+        ...evaluateRules(segment.context, segment.id, entry, impact, cube.rules ?? []),
+      ],
+    };
   }, [segment, cube, entry]);
 
   const selectSegment = useCallback((id: number) => setSegmentId(id), []);

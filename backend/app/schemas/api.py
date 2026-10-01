@@ -4,7 +4,7 @@ from pydantic import Field, model_validator
 
 from app.schemas.claims import DecisionAnswer, StructuredClaim, TriageDecision
 from app.schemas.common import CamelModel
-from app.schemas.demand_math import Flag, Impact, SegmentContext, Thresholds
+from app.schemas.demand_math import Flag, Impact, LeadRuleSpec, SegmentContext, Thresholds
 
 
 class UserOut(CamelModel):
@@ -92,6 +92,7 @@ class CubeOut(CamelModel):
     clock_month: int
     year_closed: bool
     thresholds: Thresholds
+    rules: list[LeadRuleSpec] = []
     competitors: list[CompetitorOut]
     varieties: list[str]
     segments: list[SegmentCubeOut]

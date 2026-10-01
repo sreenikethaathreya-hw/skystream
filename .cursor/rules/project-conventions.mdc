@@ -7,8 +7,9 @@ Read `CLAUDE.md` at the repo root before changing code. Key rules:
 
 - Two modes, one codebase: `DATA_MODE=demo` (seed, role switcher, demo clock) and `DATA_MODE=real`
   (admin uploads via `backend/app/ingest`, Firebase sign-in, Cloud SQL). Real figures only enter through uploads.
-- Demand math and flags are mirrored in Python (`backend/app/services/demand_math.py`, `flags.py`) and
-  TypeScript (`packages/web/src/lib/demandMath.ts`, `flags.ts`). Change both and regenerate the golden cases.
+- Demand math, flags and lead-rule evaluation are mirrored in Python (`backend/app/services/demand_math.py`,
+ `flags.py`, `lead_rules.py`) and TypeScript (`packages/web/src/lib/demandMath.ts`, `flags.ts`, `leadRules.ts`).
+ Change both and regenerate the golden cases.
 - Jev (decisions) and Gemini (prose) are only reached through `backend/app/ai/decision_provider.py`, which
   honours the `DecisionPolicy` (Jev is off in real mode until the admin setting allows it).
 - Every data route depends on `app/middleware/auth.get_current_user`; submissions check the rep's scopes.

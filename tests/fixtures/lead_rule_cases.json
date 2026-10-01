@@ -1,0 +1,495 @@
+[
+ {
+  "name": "2432 storyboard against lead rules",
+  "segmentId": 2432,
+  "context": {
+   "year": 2026,
+   "clockMonth": 9,
+   "marketHectares": 1347.0,
+   "marketQtyKs": 33675.0,
+   "density": 25.0,
+   "priceExseed": 382.0,
+   "planQtyKs": 6807.0,
+   "planValueEur": 2627564.62,
+   "planNetPrice": 386.01,
+   "lastYearQtyKs": 8427.0,
+   "lastYearValueEur": 3321025.41,
+   "marketHistory": [
+    {
+     "year": 2024,
+     "hectares": 833.96,
+     "qtyKs": 20849.0
+    },
+    {
+     "year": 2025,
+     "hectares": 825.62,
+     "qtyKs": 20640.5
+    },
+    {
+     "year": 2026,
+     "hectares": 1347.0,
+     "qtyKs": 33675.0
+    }
+   ],
+   "planQtyHistory": [
+    {
+     "year": 2024,
+     "hectares": 0.0,
+     "qtyKs": 8319.0
+    },
+    {
+     "year": 2025,
+     "hectares": 0.0,
+     "qtyKs": 8427.0
+    },
+    {
+     "year": 2026,
+     "hectares": 0.0,
+     "qtyKs": 6807.0
+    }
+   ],
+   "netPriceHistory": [
+    366.75,
+    394.09,
+    386.01
+   ],
+   "monthlyPlan": [
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    901.0,
+    2103.0,
+    2102.0,
+    901.0
+   ],
+   "monthlyActual": [
+    90.0,
+    99.0,
+    102.0,
+    104.0,
+    96.0,
+    99.0,
+    97.0,
+    105.0,
+    null,
+    null,
+    null,
+    null
+   ],
+   "monthlyActualValue": [
+    34379.15,
+    37491.16,
+    39304.79,
+    39802.93,
+    36966.32,
+    38270.67,
+    37710.5,
+    40354.4,
+    null,
+    null,
+    null,
+    null
+   ],
+   "lastYearMonthly": [
+    128.0,
+    128.0,
+    117.0,
+    120.0,
+    118.0,
+    125.0,
+    127.0,
+    127.0,
+    1171.0,
+    2421.0,
+    2641.0,
+    1204.0
+   ],
+   "monthlyHistory": [
+    {
+     "year": 2025,
+     "basis": "actuals",
+     "qtyKs": [
+      128.0,
+      128.0,
+      117.0,
+      120.0,
+      118.0,
+      125.0,
+      127.0,
+      127.0,
+      1171.0,
+      2421.0,
+      2641.0,
+      1204.0
+     ]
+    }
+   ],
+   "submitted": {},
+   "marketTrendNote": "The auctions are getting more relevance compeared with cooperatives",
+   "mega": {
+    "name": "SWEET PEPPER BLOCKY PGH",
+    "marketValueEur": 90405811.0,
+    "syngentaValueEur": 26600738.95,
+    "syngentaSharePct": 29.4,
+    "competitors": [
+     {
+      "name": "Limagrain",
+      "sharePct": 22.5
+     },
+     {
+      "name": "Others",
+      "sharePct": 14.3
+     },
+     {
+      "name": "Sur Seeds",
+      "sharePct": 14.3
+     },
+     {
+      "name": "Rijk Zwaan",
+      "sharePct": 6.1
+     },
+     {
+      "name": "Enza Zaden",
+      "sharePct": 4.1
+     },
+     {
+      "name": "Nunhems/BASF",
+      "sharePct": 3.1
+     },
+     {
+      "name": "Semillas Fito",
+      "sharePct": 3.1
+     },
+     {
+      "name": "Panora Seeds",
+      "sharePct": 3.1
+     }
+    ],
+    "impliedHaBaseline": 2831.2685714285712,
+    "growerCeilingHa": 28393.0
+   }
+  },
+  "entry": {
+   "month": 10,
+   "value": 7090.0,
+   "low": 6700.0,
+   "high": 7500.0,
+   "price": null
+  },
+  "rules": [
+   {
+    "id": 1,
+    "segmentIds": null,
+    "months": [
+     10,
+     11
+    ],
+    "metric": "month_vs_last_year_pct",
+    "comparator": "above",
+    "threshold": 20.0,
+    "requiredDriver": null,
+    "severity": "warning",
+    "description": "Rule 1.",
+    "author": "Lead"
+   },
+   {
+    "id": 2,
+    "segmentIds": [
+     2482
+    ],
+    "months": null,
+    "metric": "month_vs_last_year_pct",
+    "comparator": "above",
+    "threshold": 20.0,
+    "requiredDriver": null,
+    "severity": "warning",
+    "description": "Rule 2.",
+    "author": "Lead"
+   },
+   {
+    "id": 3,
+    "segmentIds": null,
+    "months": null,
+    "metric": "share_jump_pts",
+    "comparator": "above",
+    "threshold": 10.0,
+    "requiredDriver": null,
+    "severity": "critical",
+    "description": "Rule 3.",
+    "author": "Lead"
+   },
+   {
+    "id": 4,
+    "segmentIds": null,
+    "months": null,
+    "metric": "price_vs_plan_pct",
+    "comparator": "below",
+    "threshold": -10.0,
+    "requiredDriver": null,
+    "severity": "warning",
+    "description": "Rule 4.",
+    "author": "Lead"
+   },
+   {
+    "id": 5,
+    "segmentIds": null,
+    "months": [
+     3
+    ],
+    "metric": "month_vs_average_pct",
+    "comparator": "above",
+    "threshold": 50.0,
+    "requiredDriver": null,
+    "severity": "warning",
+    "description": "Rule 5.",
+    "author": "Lead"
+   }
+  ],
+  "expectedMessages": [
+   "Lead rule (Lead): Rule 1. This entry: +192.9%.",
+   "Lead rule (Lead): Rule 3. This entry: +14.8 pts."
+  ]
+ },
+ {
+  "name": "2482 at plan, premium price, narrow range",
+  "segmentId": 2482,
+  "context": {
+   "year": 2026,
+   "clockMonth": 9,
+   "marketHectares": 3316.0,
+   "marketQtyKs": 69636.0,
+   "density": 21.0,
+   "priceExseed": 420.0,
+   "planQtyKs": 43191.0,
+   "planValueEur": 19540342.81,
+   "planNetPrice": 452.42,
+   "lastYearQtyKs": 46849.0,
+   "lastYearValueEur": 20004023.41,
+   "marketHistory": [
+    {
+     "year": 2024,
+     "hectares": 2750.0,
+     "qtyKs": 57750.0
+    },
+    {
+     "year": 2025,
+     "hectares": 2753.0,
+     "qtyKs": 57813.0
+    },
+    {
+     "year": 2026,
+     "hectares": 3316.0,
+     "qtyKs": 69636.0
+    }
+   ],
+   "planQtyHistory": [
+    {
+     "year": 2024,
+     "hectares": 0.0,
+     "qtyKs": 46572.0
+    },
+    {
+     "year": 2025,
+     "hectares": 0.0,
+     "qtyKs": 46849.0
+    },
+    {
+     "year": 2026,
+     "hectares": 0.0,
+     "qtyKs": 43191.0
+    }
+   ],
+   "netPriceHistory": [
+    399.4,
+    425.58,
+    452.42
+   ],
+   "monthlyPlan": [
+    611.0,
+    611.0,
+    611.0,
+    611.0,
+    611.0,
+    611.0,
+    8760.0,
+    12837.0,
+    12835.0,
+    3871.0,
+    611.0,
+    611.0
+   ],
+   "monthlyActual": [
+    697.0,
+    687.0,
+    689.0,
+    678.0,
+    669.0,
+    604.0,
+    9083.0,
+    13373.0,
+    null,
+    null,
+    null,
+    null
+   ],
+   "monthlyActualValue": [
+    311826.02,
+    308599.08,
+    309425.23,
+    307347.45,
+    304768.48,
+    278554.51,
+    4133929.9,
+    5956345.7,
+    null,
+    null,
+    null,
+    null
+   ],
+   "lastYearMonthly": [
+    687.0,
+    620.0,
+    711.0,
+    698.0,
+    727.0,
+    682.0,
+    9698.0,
+    13876.0,
+    14066.0,
+    3882.0,
+    576.0,
+    626.0
+   ],
+   "monthlyHistory": [
+    {
+     "year": 2025,
+     "basis": "actuals",
+     "qtyKs": [
+      687.0,
+      620.0,
+      711.0,
+      698.0,
+      727.0,
+      682.0,
+      9698.0,
+      13876.0,
+      14066.0,
+      3882.0,
+      576.0,
+      626.0
+     ]
+    }
+   ],
+   "submitted": {},
+   "marketTrendNote": "High uncertainly due to the T. parvispinus. Posibilities that the Late cycle will grow, compared with early and medium cyle",
+   "mega": {
+    "name": "SWEET PEPPER BLOCKY PGH",
+    "marketValueEur": 90405811.0,
+    "syngentaValueEur": 26600738.95,
+    "syngentaSharePct": 29.4,
+    "competitors": [
+     {
+      "name": "Limagrain",
+      "sharePct": 22.5
+     },
+     {
+      "name": "Others",
+      "sharePct": 14.3
+     },
+     {
+      "name": "Sur Seeds",
+      "sharePct": 14.3
+     },
+     {
+      "name": "Rijk Zwaan",
+      "sharePct": 6.1
+     },
+     {
+      "name": "Enza Zaden",
+      "sharePct": 4.1
+     },
+     {
+      "name": "Nunhems/BASF",
+      "sharePct": 3.1
+     },
+     {
+      "name": "Semillas Fito",
+      "sharePct": 3.1
+     },
+     {
+      "name": "Panora Seeds",
+      "sharePct": 3.1
+     }
+    ],
+    "impliedHaBaseline": 2831.2685714285712,
+    "growerCeilingHa": 28393.0
+   }
+  },
+  "entry": {
+   "month": 9,
+   "value": 12835.0,
+   "low": 12193.25,
+   "high": 13476.75,
+   "price": 900.0
+  },
+  "rules": [
+   {
+    "id": 6,
+    "segmentIds": null,
+    "months": null,
+    "metric": "price_vs_plan_pct",
+    "comparator": "above",
+    "threshold": 5.0,
+    "requiredDriver": null,
+    "severity": "warning",
+    "description": "Rule 6.",
+    "author": "Lead"
+   },
+   {
+    "id": 7,
+    "segmentIds": null,
+    "months": null,
+    "metric": "range_width_pct",
+    "comparator": "above",
+    "threshold": 5.0,
+    "requiredDriver": null,
+    "severity": "warning",
+    "description": "Rule 7.",
+    "author": "Lead"
+   },
+   {
+    "id": 8,
+    "segmentIds": null,
+    "months": null,
+    "metric": "volume_share_pct",
+    "comparator": "below",
+    "threshold": 1.0,
+    "requiredDriver": null,
+    "severity": "warning",
+    "description": "Rule 8.",
+    "author": "Lead"
+   },
+   {
+    "id": 9,
+    "segmentIds": null,
+    "months": null,
+    "metric": "month_vs_plan_pct",
+    "comparator": "below",
+    "threshold": -5.0,
+    "requiredDriver": null,
+    "severity": "warning",
+    "description": "Rule 9.",
+    "author": "Lead"
+   }
+  ],
+  "expectedMessages": [
+   "Lead rule (Lead): Rule 6. This entry: +98.9%.",
+   "Lead rule (Lead): Rule 7. This entry: 10.0%."
+  ]
+ }
+]

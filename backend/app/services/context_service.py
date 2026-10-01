@@ -223,6 +223,8 @@ async def build_context(
 async def build_cube(
     db: AsyncSession, user: CurrentUser, country: str | None, mega_id: str | None
 ) -> CubeOut:
+    from app.services.rule_service import active_specs  # rule_service imports segment_label from here
+
     country_code, mega_id = await resolve_scope(db, user, country, mega_id)
     period = await current_period(db, country_code)
     app_settings = await get_app_settings(db)
@@ -283,6 +285,7 @@ async def build_cube(
         clock_month=period.clock_month,
         year_closed=period.closed,
         thresholds=app_settings.thresholds,
+        rules=await active_specs(db, country_code, mega_id),
         competitors=[
             CompetitorOut(name=c.competitor, share_pct=c.share_pct, trend=c.trend)
             for c in sorted(competitors, key=lambda c: -c.share_pct)

@@ -10,7 +10,7 @@ from sqlalchemy import select
 from app.config import get_settings
 from app.database import async_session
 from app.models import DemoClock
-from app.routers import admin, consensus, demo, entries, meta, segments
+from app.routers import admin, consensus, demo, entries, meta, rules, segments
 from app.services.seed_service import seed_database
 
 settings = get_settings()
@@ -43,7 +43,7 @@ app.add_middleware(
     allow_headers=["Content-Type", "X-Demo-User", "Authorization"],
 )
 
-for module in (meta, segments, entries, demo, consensus, admin):
+for module in (meta, segments, entries, demo, consensus, rules, admin):
     app.include_router(module.router)
 
 if (settings.static_dir / "index.html").exists():

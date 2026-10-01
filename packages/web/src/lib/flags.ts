@@ -12,6 +12,22 @@ const pct = (v: number) => `${(v * 100).toFixed(1)}%`;
 const num = (v: number) => Math.round(v).toLocaleString("en-US");
 const signed = (v: number, digits: number) => `${v >= 0 ? "+" : ""}${v.toFixed(digits)}`;
 
+const MONTHS = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December",
+];
+
+function vsAverage(entry: EntryInput, impact: Impact): string {
+  const years = impact.monthHistoryYears;
+  const span =
+    years.length > 1 ? `${Math.min(...years)}-${Math.max(...years)}` : years.length ? String(years[0]) : "last year";
+  const direction = impact.monthVsAvgPct >= 0 ? "above" : "below";
+  return (
+    `${(Math.abs(impact.monthVsAvgPct) * 100).toFixed(0)}% ${direction} the historical ` +
+    `${MONTHS[entry.month - 1]} average (${num(impact.monthHistoryAvg)} KS, ${span})`
+  );
+}
+
 export function evaluateFlags(
   ctx: SegmentContext,
   entry: EntryInput,
@@ -45,6 +61,20 @@ export function evaluateFlags(
     });
   }
 
+  if (Math.abs(impact.shareJumpPts) > t.shareJumpPts) {
+    const moved =
+      `${impact.shareJumpPts > 0 ? "lifts" : "cuts"} share from ${pct(impact.baselineShare)} ` +
+      `to ${pct(impact.volumeShare)} (${signed(impact.shareJumpPts, 1)} pts)`;
+    flags.push({
+      code: "share_jump",
+      severity: "warning",
+      message:
+        impact.monthHistoryAvg > 0
+          ? `This entry is ${vsAverage(entry, impact)} and ${moved}.`
+          : `This entry ${moved} in a single month.`,
+    });
+  }
+
   if (impact.impliedHa > impact.marketHa) {
     flags.push({
       code: "implied_ha_over_market",
@@ -65,7 +95,10 @@ export function evaluateFlags(
       severity: "warning",
       message:
         `${num(entry.value)} KS is ${signed(impact.monthZ, 1)} sigma from the plan for this month ` +
-        `(${num(impact.monthExpected)}) and far from last year (${num(impact.monthLastYear)}).`,
+        `(${num(impact.monthExpected)}) and far from last year (${num(impact.monthLastYear)})` +
+        (impact.monthHistoryAvg > 0 && !flags.some((f) => f.code === "share_jump")
+          ? `; ${vsAverage(entry, impact)}.`
+          : "."),
     });
   }
 
@@ -106,7 +139,7 @@ export function evaluateFlags(
       code: "above_grower_potential",
       severity: "warning",
       message:
-        `Blocky PGH would need ${num(impact.megaImpliedHa)} ha on Syngenta seed, above the ` +
+        `${ctx.mega.name || "The mega-segment"} would need ${num(impact.megaImpliedHa)} ha on Syngenta seed, above the ` +
         `${num(ctx.mega.growerCeilingHa)} ha of CRM grower potential.`,
     });
   }

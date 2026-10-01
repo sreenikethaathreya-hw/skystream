@@ -7,6 +7,7 @@ from app.models.country import Country
 from app.models.demand_entry import DemandEntry
 from app.models.demo_clock import DemoClock
 from app.models.grower_potential import GrowerPotential
+from app.models.lead_rule import LeadRule
 from app.models.market_year import MarketYear
 from app.models.monthly_actual import MonthlyActual
 from app.models.monthly_plan import MonthlyPlan
@@ -27,6 +28,7 @@ __all__ = [
     "DemandEntry",
     "DemoClock",
     "GrowerPotential",
+    "LeadRule",
     "MarketYear",
     "MonthlyActual",
     "MonthlyPlan",

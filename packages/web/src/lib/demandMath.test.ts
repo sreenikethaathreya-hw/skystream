@@ -9,6 +9,7 @@ interface GoldenCase {
   entry: EntryInput;
   expected: Impact;
   expectedFlags: string[];
+  expectedMessages: string[];
 }
 
 function expectClose(actual: unknown, expected: unknown, path: string): void {
@@ -35,9 +36,9 @@ describe.each(cases as unknown as GoldenCase[])("golden case: $name", (golden) =
 
   it("raises the same flags as Python", () => {
     const impact = computeImpact(golden.context, golden.entry);
-    expect(evaluateFlags(golden.context, golden.entry, impact).map((f) => f.code)).toEqual(
-      golden.expectedFlags,
-    );
+    const flags = evaluateFlags(golden.context, golden.entry, impact);
+    expect(flags.map((f) => f.code)).toEqual(golden.expectedFlags);
+    expect(flags.map((f) => f.message)).toEqual(golden.expectedMessages);
   });
 });
 

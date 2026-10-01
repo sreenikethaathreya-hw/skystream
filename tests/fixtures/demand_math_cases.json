@@ -108,9 +108,30 @@
     576.0,
     626.0
    ],
+   "monthlyHistory": [
+    {
+     "year": 2025,
+     "basis": "actuals",
+     "qtyKs": [
+      687.0,
+      620.0,
+      711.0,
+      698.0,
+      727.0,
+      682.0,
+      9698.0,
+      13876.0,
+      14066.0,
+      3882.0,
+      576.0,
+      626.0
+     ]
+    }
+   ],
    "submitted": {},
    "marketTrendNote": "High uncertainly due to the T. parvispinus. Posibilities that the Late cycle will grow, compared with early and medium cyle",
    "mega": {
+    "name": "SWEET PEPPER BLOCKY PGH",
     "marketValueEur": 90405811.0,
     "syngentaValueEur": 26600738.95,
     "syngentaSharePct": 29.4,
@@ -177,6 +198,14 @@
    "planVolumeShare": 0.6202395312769258,
    "lastYearVolumeShare": 0.8103540726134261,
    "maxHistoricalShare": 0.8103540726134261,
+   "avgHistoricalShare": 0.8083978155274922,
+   "baselineShare": 0.6377161238439888,
+   "shareJumpPts": 0.0,
+   "monthHistoryAvg": 14066.0,
+   "monthHistoryYears": [
+    2025
+   ],
+   "monthVsAvgPct": -0.08751599601876867,
    "fyValue": 20021782.13,
    "valueShare": 0.6845727760545312,
    "planValueShare": 0.6681116913391814,
@@ -252,7 +281,8 @@
    "monthSigma": 1925.25,
    "monthZ": 0.0
   },
-  "expectedFlags": []
+  "expectedFlags": [],
+  "expectedMessages": []
  },
  {
   "name": "2482 raised 25%",
@@ -363,9 +393,30 @@
     576.0,
     626.0
    ],
+   "monthlyHistory": [
+    {
+     "year": 2025,
+     "basis": "actuals",
+     "qtyKs": [
+      687.0,
+      620.0,
+      711.0,
+      698.0,
+      727.0,
+      682.0,
+      9698.0,
+      13876.0,
+      14066.0,
+      3882.0,
+      576.0,
+      626.0
+     ]
+    }
+   ],
    "submitted": {},
    "marketTrendNote": "High uncertainly due to the T. parvispinus. Posibilities that the Late cycle will grow, compared with early and medium cyle",
    "mega": {
+    "name": "SWEET PEPPER BLOCKY PGH",
     "marketValueEur": 90405811.0,
     "syngentaValueEur": 26600738.95,
     "syngentaSharePct": 29.4,
@@ -432,6 +483,14 @@
    "planVolumeShare": 0.6202395312769258,
    "lastYearVolumeShare": 0.8103540726134261,
    "maxHistoricalShare": 0.8103540726134261,
+   "avgHistoricalShare": 0.8083978155274922,
+   "baselineShare": 0.6377161238439888,
+   "shareJumpPts": 4.607889597334703,
+   "monthHistoryAvg": 14066.0,
+   "monthHistoryYears": [
+    2025
+   ],
+   "monthVsAvgPct": 0.14060500497653916,
    "fyValue": 21473484.805,
    "valueShare": 0.7342085239503924,
    "planValueShare": 0.6681116913391814,
@@ -507,7 +566,8 @@
    "monthSigma": 1925.25,
    "monthZ": 1.6666666666666667
   },
-  "expectedFlags": []
+  "expectedFlags": [],
+  "expectedMessages": []
  },
  {
   "name": "2482 unrealistic",
@@ -618,9 +678,30 @@
     576.0,
     626.0
    ],
+   "monthlyHistory": [
+    {
+     "year": 2025,
+     "basis": "actuals",
+     "qtyKs": [
+      687.0,
+      620.0,
+      711.0,
+      698.0,
+      727.0,
+      682.0,
+      9698.0,
+      13876.0,
+      14066.0,
+      3882.0,
+      576.0,
+      626.0
+     ]
+    }
+   ],
    "submitted": {},
    "marketTrendNote": "High uncertainly due to the T. parvispinus. Posibilities that the Late cycle will grow, compared with early and medium cyle",
    "mega": {
+    "name": "SWEET PEPPER BLOCKY PGH",
     "marketValueEur": 90405811.0,
     "syngentaValueEur": 26600738.95,
     "syngentaSharePct": 29.4,
@@ -687,6 +768,14 @@
    "planVolumeShare": 0.6202395312769258,
    "lastYearVolumeShare": 0.8103540726134261,
    "maxHistoricalShare": 0.8103540726134261,
+   "avgHistoricalShare": 0.8083978155274922,
+   "baselineShare": 0.6377161238439888,
+   "shareJumpPts": 39.0099948302602,
+   "monthHistoryAvg": 14066.0,
+   "monthHistoryYears": [
+    2025
+   ],
+   "monthVsAvgPct": 1.8437366699843594,
    "fyValue": 32311771.43,
    "valueShare": 1.1047847251284912,
    "planValueShare": 0.6681116913391814,
@@ -764,8 +853,15 @@
   },
   "expectedFlags": [
    "share_over_100",
+   "share_jump",
    "implied_ha_over_market",
    "month_outlier"
+  ],
+  "expectedMessages": [
+   "Implied share is 102.8%, above the whole market.",
+   "This entry is 184% above the historical September average (14,066 KS, 2025) and lifts share from 63.8% to 102.8% (+39.0 pts).",
+   "This volume needs 3,408 ha of Syngenta seed; the market only plants 3,316 ha.",
+   "40,000 KS is +14.1 sigma from the plan for this month (12,835) and far from last year (14,066)."
   ]
  },
  {
@@ -877,9 +973,30 @@
     576.0,
     626.0
    ],
+   "monthlyHistory": [
+    {
+     "year": 2025,
+     "basis": "actuals",
+     "qtyKs": [
+      687.0,
+      620.0,
+      711.0,
+      698.0,
+      727.0,
+      682.0,
+      9698.0,
+      13876.0,
+      14066.0,
+      3882.0,
+      576.0,
+      626.0
+     ]
+    }
+   ],
    "submitted": {},
    "marketTrendNote": "High uncertainly due to the T. parvispinus. Posibilities that the Late cycle will grow, compared with early and medium cyle",
    "mega": {
+    "name": "SWEET PEPPER BLOCKY PGH",
     "marketValueEur": 90405811.0,
     "syngentaValueEur": 26600738.95,
     "syngentaSharePct": 29.4,
@@ -946,6 +1063,14 @@
    "planVolumeShare": 0.6202395312769258,
    "lastYearVolumeShare": 0.8103540726134261,
    "maxHistoricalShare": 0.8103540726134261,
+   "avgHistoricalShare": 0.8083978155274922,
+   "baselineShare": 0.6377161238439888,
+   "shareJumpPts": 0.0,
+   "monthHistoryAvg": 14066.0,
+   "monthHistoryYears": [
+    2025
+   ],
+   "monthVsAvgPct": -0.08751599601876867,
    "fyValue": 25766471.43,
    "valueShare": 0.8809917499569189,
    "planValueShare": 0.6681116913391814,
@@ -1025,6 +1150,11 @@
    "price_carrying",
    "range_too_wide",
    "price_outside_history"
+  ],
+  "expectedMessages": [
+   "Price is carrying this number: volume is down EUR 1,042,281 vs last year and price adds EUR 6,804,729 (86.7% of the revenue movement).",
+   "The range 7,701-15,402 spans 60.0% of the number; supply planning will build to the low end.",
+   "Net price EUR 900/KS is outside the historical band EUR 359-498."
   ]
  },
  {
@@ -1136,9 +1266,30 @@
     576.0,
     626.0
    ],
+   "monthlyHistory": [
+    {
+     "year": 2025,
+     "basis": "actuals",
+     "qtyKs": [
+      687.0,
+      620.0,
+      711.0,
+      698.0,
+      727.0,
+      682.0,
+      9698.0,
+      13876.0,
+      14066.0,
+      3882.0,
+      576.0,
+      626.0
+     ]
+    }
+   ],
    "submitted": {},
    "marketTrendNote": "High uncertainly due to the T. parvispinus. Posibilities that the Late cycle will grow, compared with early and medium cyle",
    "mega": {
+    "name": "SWEET PEPPER BLOCKY PGH",
     "marketValueEur": 90405811.0,
     "syngentaValueEur": 26600738.95,
     "syngentaSharePct": 29.4,
@@ -1205,6 +1356,14 @@
    "planVolumeShare": 0.6202395312769258,
    "lastYearVolumeShare": 0.8103540726134261,
    "maxHistoricalShare": 0.8103540726134261,
+   "avgHistoricalShare": 0.8083978155274922,
+   "baselineShare": 0.6377161238439888,
+   "shareJumpPts": -9.215779194669427,
+   "monthHistoryAvg": 14066.0,
+   "monthHistoryYears": [
+    2025
+   ],
+   "monthVsAvgPct": -0.5437579980093843,
    "fyValue": 17808771.43,
    "valueShare": 0.608906840400012,
    "planValueShare": 0.6681116913391814,
@@ -1284,6 +1443,11 @@
    "month_outlier",
    "against_market_trend",
    "price_outside_history"
+  ],
+  "expectedMessages": [
+   "6,418 KS is -3.3 sigma from the plan for this month (12,835) and far from last year (14,066); 54% below the historical September average (14,066 KS, 2025).",
+   "Demand moves down while planted area is growing (+20.5% vs 2025). Market note: High uncertainly due to the T. parvispinus. Posibilities that the Late cycle will grow, compared with early and medium cyle",
+   "Net price EUR 560/KS is outside the historical band EUR 359-498."
   ]
  },
  {
@@ -1395,9 +1559,30 @@
     73.0,
     68.0
    ],
+   "monthlyHistory": [
+    {
+     "year": 2025,
+     "basis": "actuals",
+     "qtyKs": [
+      76.0,
+      76.0,
+      74.0,
+      694.0,
+      1389.0,
+      1349.0,
+      610.0,
+      70.0,
+      64.0,
+      80.0,
+      73.0,
+      68.0
+     ]
+    }
+   ],
    "submitted": {},
    "marketTrendNote": "The most impacted cycle due to the T. parvispinus. High uncertainty",
    "mega": {
+    "name": "SWEET PEPPER BLOCKY PGH",
     "marketValueEur": 90405811.0,
     "syngentaValueEur": 26600738.95,
     "syngentaSharePct": 29.4,
@@ -1464,6 +1649,14 @@
    "planVolumeShare": 0.09892347977887693,
    "lastYearVolumeShare": 0.10482993197278911,
    "maxHistoricalShare": 0.1269993164730007,
+   "avgHistoricalShare": 0.1159146242228949,
+   "baselineShare": 0.08781883425467947,
+   "shareJumpPts": 0.3006497914848222,
+   "monthHistoryAvg": 80.0,
+   "monthHistoryYears": [
+    2025
+   ],
+   "monthVsAvgPct": 1.325,
    "fyValue": 1533477.81,
    "valueShare": 0.09412817146245438,
    "planValueShare": 0.10209005682759839,
@@ -1541,6 +1734,9 @@
   },
   "expectedFlags": [
    "against_market_trend"
+  ],
+  "expectedMessages": [
+   "Demand moves up while planted area is shrinking (-6.5% vs 2025). Market note: The most impacted cycle due to the T. parvispinus. High uncertainty"
   ]
  },
  {
@@ -1652,9 +1848,30 @@
     576.0,
     626.0
    ],
+   "monthlyHistory": [
+    {
+     "year": 2025,
+     "basis": "actuals",
+     "qtyKs": [
+      687.0,
+      620.0,
+      711.0,
+      698.0,
+      727.0,
+      682.0,
+      9698.0,
+      13876.0,
+      14066.0,
+      3882.0,
+      576.0,
+      626.0
+     ]
+    }
+   ],
    "submitted": {},
    "marketTrendNote": "High uncertainly due to the T. parvispinus. Posibilities that the Late cycle will grow, compared with early and medium cyle",
    "mega": {
+    "name": "SWEET PEPPER BLOCKY PGH",
     "marketValueEur": 90405811.0,
     "syngentaValueEur": 26600738.95,
     "syngentaSharePct": 29.4,
@@ -1721,6 +1938,14 @@
    "planVolumeShare": 0.6202395312769258,
    "lastYearVolumeShare": 0.8103540726134261,
    "maxHistoricalShare": 0.8103540726134261,
+   "avgHistoricalShare": 0.8083978155274922,
+   "baselineShare": 0.6377161238439888,
+   "shareJumpPts": 340.5781492331553,
+   "monthHistoryAvg": 14066.0,
+   "monthHistoryYears": [
+    2025
+   ],
+   "monthVsAvgPct": 16.773354187402248,
    "fyValue": 127319971.43,
    "valueShare": 4.353248163579868,
    "planValueShare": 0.6681116913391814,
@@ -1798,8 +2023,306 @@
   },
   "expectedFlags": [
    "share_over_100",
+   "share_jump",
    "implied_ha_over_market",
    "month_outlier"
+  ],
+  "expectedMessages": [
+   "Implied share is 404.3%, above the whole market.",
+   "This entry is 1677% above the historical September average (14,066 KS, 2025) and lifts share from 63.8% to 404.3% (+340.6 pts).",
+   "This volume needs 13,408 ha of Syngenta seed; the market only plants 3,316 ha.",
+   "250,000 KS is +123.2 sigma from the plan for this month (12,835) and far from last year (14,066)."
+  ]
+ },
+ {
+  "name": "2432 storyboard: October lifts share 20% to 35%",
+  "context": {
+   "year": 2026,
+   "clockMonth": 9,
+   "marketHectares": 1347.0,
+   "marketQtyKs": 33675.0,
+   "density": 25.0,
+   "priceExseed": 382.0,
+   "planQtyKs": 6807.0,
+   "planValueEur": 2627564.62,
+   "planNetPrice": 386.01,
+   "lastYearQtyKs": 8427.0,
+   "lastYearValueEur": 3321025.41,
+   "marketHistory": [
+    {
+     "year": 2024,
+     "hectares": 833.96,
+     "qtyKs": 20849.0
+    },
+    {
+     "year": 2025,
+     "hectares": 825.62,
+     "qtyKs": 20640.5
+    },
+    {
+     "year": 2026,
+     "hectares": 1347.0,
+     "qtyKs": 33675.0
+    }
+   ],
+   "planQtyHistory": [
+    {
+     "year": 2024,
+     "hectares": 0.0,
+     "qtyKs": 8319.0
+    },
+    {
+     "year": 2025,
+     "hectares": 0.0,
+     "qtyKs": 8427.0
+    },
+    {
+     "year": 2026,
+     "hectares": 0.0,
+     "qtyKs": 6807.0
+    }
+   ],
+   "netPriceHistory": [
+    366.75,
+    394.09,
+    386.01
+   ],
+   "monthlyPlan": [
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    901.0,
+    2103.0,
+    2102.0,
+    901.0
+   ],
+   "monthlyActual": [
+    90.0,
+    99.0,
+    102.0,
+    104.0,
+    96.0,
+    99.0,
+    97.0,
+    105.0,
+    null,
+    null,
+    null,
+    null
+   ],
+   "monthlyActualValue": [
+    34379.15,
+    37491.16,
+    39304.79,
+    39802.93,
+    36966.32,
+    38270.67,
+    37710.5,
+    40354.4,
+    null,
+    null,
+    null,
+    null
+   ],
+   "lastYearMonthly": [
+    128.0,
+    128.0,
+    117.0,
+    120.0,
+    118.0,
+    125.0,
+    127.0,
+    127.0,
+    1171.0,
+    2421.0,
+    2641.0,
+    1204.0
+   ],
+   "monthlyHistory": [
+    {
+     "year": 2025,
+     "basis": "actuals",
+     "qtyKs": [
+      128.0,
+      128.0,
+      117.0,
+      120.0,
+      118.0,
+      125.0,
+      127.0,
+      127.0,
+      1171.0,
+      2421.0,
+      2641.0,
+      1204.0
+     ]
+    }
+   ],
+   "submitted": {},
+   "marketTrendNote": "The auctions are getting more relevance compeared with cooperatives",
+   "mega": {
+    "name": "SWEET PEPPER BLOCKY PGH",
+    "marketValueEur": 90405811.0,
+    "syngentaValueEur": 26600738.95,
+    "syngentaSharePct": 29.4,
+    "competitors": [
+     {
+      "name": "Limagrain",
+      "sharePct": 22.5
+     },
+     {
+      "name": "Others",
+      "sharePct": 14.3
+     },
+     {
+      "name": "Sur Seeds",
+      "sharePct": 14.3
+     },
+     {
+      "name": "Rijk Zwaan",
+      "sharePct": 6.1
+     },
+     {
+      "name": "Enza Zaden",
+      "sharePct": 4.1
+     },
+     {
+      "name": "Nunhems/BASF",
+      "sharePct": 3.1
+     },
+     {
+      "name": "Semillas Fito",
+      "sharePct": 3.1
+     },
+     {
+      "name": "Panora Seeds",
+      "sharePct": 3.1
+     }
+    ],
+    "impliedHaBaseline": 2831.2685714285712,
+    "growerCeilingHa": 28393.0
+   }
+  },
+  "entry": {
+   "month": 10,
+   "value": 7090.0,
+   "low": 6700.0,
+   "high": 7500.0,
+   "price": null
+  },
+  "expected": {
+   "actualsToDate": 792.0,
+   "monthsRemaining": 4,
+   "fyEstimate": 11786.0,
+   "fyLow": 11396.0,
+   "fyHigh": 12196.0,
+   "planFy": 6807.0,
+   "gapToPlan": 4979.0,
+   "ytgRemaining": 6015.0,
+   "requiredMonthlyRate": 1503.75,
+   "enteredMonthlyRate": 2748.5,
+   "historicalMonthlyRate": 1859.25,
+   "volumeShare": 0.349992576095026,
+   "volumeShareLow": 0.3384112843355605,
+   "volumeShareHigh": 0.36216778025241275,
+   "planVolumeShare": 0.2021380846325167,
+   "lastYearVolumeShare": 0.40827499333833966,
+   "maxHistoricalShare": 0.40827499333833966,
+   "avgHistoricalShare": 0.40364346817859476,
+   "baselineShare": 0.20190051967334818,
+   "shareJumpPts": 14.80920564216778,
+   "monthHistoryAvg": 2421.0,
+   "monthHistoryYears": [
+    2025
+   ],
+   "monthVsAvgPct": 1.9285419248244526,
+   "fyValue": 4548073.859999999,
+   "valueShare": 0.35355464032929484,
+   "planValueShare": 0.20425958169599304,
+   "megaShareBaseline": 0.2942370479924128,
+   "megaShare": 0.3154802536974089,
+   "competitors": [
+    {
+     "name": "Limagrain",
+     "baselinePct": 22.5,
+     "newPct": 21.822758261817526,
+     "deltaPts": -0.6772417381824738
+    },
+    {
+     "name": "Others",
+     "baselinePct": 14.3,
+     "newPct": 13.86957525084403,
+     "deltaPts": -0.4304247491559714
+    },
+    {
+     "name": "Sur Seeds",
+     "baselinePct": 14.3,
+     "newPct": 13.86957525084403,
+     "deltaPts": -0.4304247491559714
+    },
+    {
+     "name": "Rijk Zwaan",
+     "baselinePct": 6.1,
+     "newPct": 5.916392239870529,
+     "deltaPts": -0.18360776012947078
+    },
+    {
+     "name": "Enza Zaden",
+     "baselinePct": 4.1,
+     "newPct": 3.976591505486749,
+     "deltaPts": -0.12340849451325075
+    },
+    {
+     "name": "Nunhems/BASF",
+     "baselinePct": 3.1,
+     "newPct": 3.0066911382948596,
+     "deltaPts": -0.09330886170514052
+    },
+    {
+     "name": "Semillas Fito",
+     "baselinePct": 3.1,
+     "newPct": 3.0066911382948596,
+     "deltaPts": -0.09330886170514052
+    },
+    {
+     "name": "Panora Seeds",
+     "baselinePct": 3.1,
+     "newPct": 3.0066911382948596,
+     "deltaPts": -0.09330886170514052
+    }
+   ],
+   "impliedHa": 471.44,
+   "impliedHaLow": 455.84,
+   "impliedHaHigh": 487.84,
+   "marketHa": 1347.0,
+   "megaImpliedHa": 3030.428571428571,
+   "revenue": {
+    "lastYear": 3321025.41,
+    "estimate": 4548073.859999999,
+    "change": 1227048.4499999993,
+    "volumeEffect": 1323759.8614204344,
+    "priceEffect": -96711.41142043518,
+    "priceShareOfChange": -0.06808403187698216,
+    "avgPrice": 385.8878211437298,
+    "lastYearPrice": 394.09343894624425
+   },
+   "monthExpected": 2103.0,
+   "monthLastYear": 2421.0,
+   "monthSigma": 315.45,
+   "monthZ": 15.80916151529561
+  },
+  "expectedFlags": [
+   "share_jump",
+   "month_outlier"
+  ],
+  "expectedMessages": [
+   "This entry is 193% above the historical October average (2,421 KS, 2025) and lifts share from 20.2% to 35.0% (+14.8 pts).",
+   "7,090 KS is +15.8 sigma from the plan for this month (2,103) and far from last year (2,421)."
   ]
  },
  {
@@ -1911,12 +2434,33 @@
     2641.0,
     1204.0
    ],
+   "monthlyHistory": [
+    {
+     "year": 2025,
+     "basis": "actuals",
+     "qtyKs": [
+      128.0,
+      128.0,
+      117.0,
+      120.0,
+      118.0,
+      125.0,
+      127.0,
+      127.0,
+      1171.0,
+      2421.0,
+      2641.0,
+      1204.0
+     ]
+    }
+   ],
    "submitted": {
     "10": 2600.0,
     "11": 2500.0
    },
    "marketTrendNote": "The auctions are getting more relevance compeared with cooperatives",
    "mega": {
+    "name": "SWEET PEPPER BLOCKY PGH",
     "marketValueEur": 90405811.0,
     "syngentaValueEur": 26600738.95,
     "syngentaSharePct": 29.4,
@@ -1983,6 +2527,14 @@
    "planVolumeShare": 0.2021380846325167,
    "lastYearVolumeShare": 0.40827499333833966,
    "maxHistoricalShare": 0.40827499333833966,
+   "avgHistoricalShare": 0.40364346817859476,
+   "baselineShare": 0.22847809948032666,
+   "shareJumpPts": 1.184855233853005,
+   "monthHistoryAvg": 1204.0,
+   "monthHistoryYears": [
+    2025
+   ],
+   "monthVsAvgPct": 0.07973421926910298,
    "fyValue": 3122538.9299999997,
    "valueShare": 0.2427375109317972,
    "planValueShare": 0.20425958169599304,
@@ -2058,7 +2610,8 @@
    "monthSigma": 135.15,
    "monthZ": 2.9522752497225304
   },
-  "expectedFlags": []
+  "expectedFlags": [],
+  "expectedMessages": []
  },
  {
   "name": "PT 2482 from uploads, flat plan, no actuals",
@@ -2147,9 +2700,11 @@
     0.0,
     0.0
    ],
+   "monthlyHistory": [],
    "submitted": {},
    "marketTrendNote": "Small market",
    "mega": {
+    "name": "",
     "marketValueEur": 4200000.0,
     "syngentaValueEur": 1000000.0,
     "syngentaSharePct": 20.0,
@@ -2188,6 +2743,12 @@
    "planVolumeShare": 0.23809523809523808,
    "lastYearVolumeShare": 0.0,
    "maxHistoricalShare": 0.23809523809523808,
+   "avgHistoricalShare": 0.0,
+   "baselineShare": 0.19841269841269837,
+   "shareJumpPts": 0.7936507936507964,
+   "monthHistoryAvg": 0.0,
+   "monthHistoryYears": [],
+   "monthVsAvgPct": 0.0,
    "fyValue": 866666.6666666666,
    "valueShare": 0.20634920634920634,
    "planValueShare": 0.23809523809523808,
@@ -2221,6 +2782,7 @@
    "monthSigma": 50.0,
    "monthZ": 1.666666666666667
   },
-  "expectedFlags": []
+  "expectedFlags": [],
+  "expectedMessages": []
  }
 ]

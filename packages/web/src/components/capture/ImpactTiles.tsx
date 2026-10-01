@@ -14,7 +14,7 @@ function Delta({ value, suffix }: { value: number; suffix: string }) {
   );
 }
 
-export function ShareTile({ impact }: { impact: Impact }) {
+export function ShareTile({ impact, megaName = "Mega-segment" }: { impact: Impact; megaName?: string }) {
   const movers = [...impact.competitors].sort((a, b) => a.deltaPts - b.deltaPts).slice(0, 3);
   return (
     <Card data-testid="tile-share">
@@ -37,11 +37,11 @@ export function ShareTile({ impact }: { impact: Impact }) {
         </div>
         <div className="mt-3 border-t border-line pt-2">
           <p className="text-[11px] font-medium uppercase tracking-wide text-muted">
-            Blocky PGH value share {fmtPct(impact.megaShare)} ({fmtPts((impact.megaShare - impact.megaShareBaseline) * 100)})
+            {megaName} value share {fmtPct(impact.megaShare)} ({fmtPts((impact.megaShare - impact.megaShareBaseline) * 100)})
           </p>
           {impact.megaShare > 1 && (
             <p className="mt-1 text-xs text-crit-700" data-testid="mega-overflow">
-              Syngenta would exceed the whole Blocky PGH market; competitor shares stop at 0%.
+              Syngenta would exceed the whole {megaName} market; competitor shares stop at 0%.
             </p>
           )}
           {movers.map((c) => (

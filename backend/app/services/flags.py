@@ -11,6 +11,21 @@ def _num(value: float) -> str:
     return f"{value:,.0f}"
 
 
+MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August",
+          "September", "October", "November", "December"]
+
+
+def _vs_average(entry: EntryInput, impact: Impact) -> str:
+    """'40% above the historical October average (5,062 KS, 2024-2025)'."""
+    years = impact.month_history_years
+    span = f"{min(years)}-{max(years)}" if len(years) > 1 else str(years[0]) if years else "last year"
+    direction = "above" if impact.month_vs_avg_pct >= 0 else "below"
+    return (
+        f"{abs(impact.month_vs_avg_pct) * 100:.0f}% {direction} the historical "
+        f"{MONTHS[entry.month - 1]} average ({_num(impact.month_history_avg)} KS, {span})"
+    )
+
+
 def evaluate_flags(
     ctx: SegmentContext,
     entry: EntryInput,
@@ -51,6 +66,18 @@ def evaluate_flags(
             )
         )
 
+    if abs(impact.share_jump_pts) > t.share_jump_pts:
+        moved = (
+            f"{'lifts' if impact.share_jump_pts > 0 else 'cuts'} share from {_pct(impact.baseline_share)} "
+            f"to {_pct(impact.volume_share)} ({impact.share_jump_pts:+.1f} pts)"
+        )
+        message = (
+            f"This entry is {_vs_average(entry, impact)} and {moved}."
+            if impact.month_history_avg > 0
+            else f"This entry {moved} in a single month."
+        )
+        flags.append(Flag(code="share_jump", severity="warning", message=message))
+
     if impact.implied_ha > impact.market_ha:
         flags.append(
             Flag(
@@ -72,7 +99,12 @@ def evaluate_flags(
                 message=(
                     f"{_num(entry.value)} KS is {impact.month_z:+.1f} sigma from the plan for this "
                     f"month ({_num(impact.month_expected)}) and far from last year "
-                    f"({_num(impact.month_last_year)})."
+                    f"({_num(impact.month_last_year)})"
+                    + (
+                        f"; {_vs_average(entry, impact)}."
+                        if impact.month_history_avg > 0 and not any(f.code == "share_jump" for f in flags)
+                        else "."
+                    )
                 ),
             )
         )
@@ -121,7 +153,7 @@ def evaluate_flags(
                 code="above_grower_potential",
                 severity="warning",
                 message=(
-                    f"Blocky PGH would need {_num(impact.mega_implied_ha)} ha on Syngenta seed, "
+                    f"{ctx.mega.name or 'The mega-segment'} would need {_num(impact.mega_implied_ha)} ha on Syngenta seed, "
                     f"above the {_num(ctx.mega.grower_ceiling_ha)} ha of CRM grower potential."
                 ),
             )

@@ -1,4 +1,4 @@
-import type { Flag, Impact, SegmentContext, Thresholds } from "./mathTypes";
+import type { Flag, Impact, LeadRuleSpec, SegmentContext, Thresholds } from "./mathTypes";
 
 export type Role = "rep" | "lead" | "admin";
 
@@ -91,6 +91,7 @@ export interface Cube {
   clockMonth: number;
   yearClosed: boolean;
   thresholds: Thresholds;
+  rules?: LeadRuleSpec[];
   competitors: CompetitorRow[];
   varieties: string[];
   segments: SegmentCube[];
@@ -309,6 +310,74 @@ export interface AdminUser {
   active: boolean;
   lastSeenAt: string | null;
   scopes: UserScope[];
+}
+
+export interface RuleSlots {
+  metric: string;
+  comparator: "above" | "below";
+  threshold: number;
+  months: number[] | null;
+  segmentIds: number[] | null;
+  requiredDriver: string | null;
+  severity: "warning" | "critical";
+}
+
+export interface RulePreviewExample {
+  entryId: string;
+  label: string;
+  userName: string;
+  value: number;
+  metricValue: number;
+  resolution: string | null;
+}
+
+export interface RulePreview {
+  checked: number;
+  fired: number;
+  confirmed: number;
+  contradicted: number;
+  inconclusive: number;
+  pending: number;
+  catchesSource: boolean | null;
+  examples: RulePreviewExample[];
+}
+
+export interface RuleDraft {
+  ok: boolean;
+  rejection: string | null;
+  slots: RuleSlots | null;
+  description: string | null;
+  provider: string;
+  confidences: Record<string, number>;
+  lowConfidenceFields: string[];
+  decisions: Record<string, string>;
+  preview: RulePreview | null;
+}
+
+export interface RuleRequest {
+  countryCode: string;
+  megaSegmentId: string;
+  text: string;
+  sourceEntryId?: string | null;
+}
+
+export interface LeadRule {
+  id: number;
+  countryCode: string;
+  megaSegmentId: string;
+  slots: RuleSlots;
+  text: string;
+  description: string;
+  provider: string;
+  sourceEntryId: string | null;
+  sourceLabel: string | null;
+  createdBy: string;
+  createdByName: string;
+  createdAt: string;
+  active: boolean;
+  retiredByName: string | null;
+  retiredAt: string | null;
+  stats: { fired: number; confirmed: number; contradicted: number; inconclusive: number; pending: number };
 }
 
 export interface AppSettings {

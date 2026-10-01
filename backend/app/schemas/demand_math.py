@@ -14,7 +14,14 @@ class Competitor(CamelModel):
     share_pct: float
 
 
+class YearMonthly(CamelModel):
+    year: int
+    basis: str
+    qty_ks: list[float]
+
+
 class MegaContext(CamelModel):
+    name: str = ""
     market_value_eur: float
     syngenta_value_eur: float
     syngenta_share_pct: float
@@ -42,6 +49,7 @@ class SegmentContext(CamelModel):
     monthly_actual: list[float | None]
     monthly_actual_value: list[float | None]
     last_year_monthly: list[float]
+    monthly_history: list[YearMonthly] = []
     submitted: dict[str, float]
     market_trend_note: str | None = None
     mega: MegaContext
@@ -91,6 +99,12 @@ class Impact(CamelModel):
     plan_volume_share: float
     last_year_volume_share: float
     max_historical_share: float
+    avg_historical_share: float
+    baseline_share: float
+    share_jump_pts: float
+    month_history_avg: float
+    month_history_years: list[int]
+    month_vs_avg_pct: float
     fy_value: float
     value_share: float
     plan_value_share: float
@@ -115,8 +129,22 @@ class Flag(CamelModel):
     message: str
 
 
+class LeadRuleSpec(CamelModel):
+    id: int
+    segment_ids: list[int] | None = None
+    months: list[int] | None = None
+    metric: str
+    comparator: str
+    threshold: float
+    required_driver: str | None = None
+    severity: str
+    description: str
+    author: str
+
+
 class Thresholds(CamelModel):
     share_history_margin_pts: float = 10.0
+    share_jump_pts: float = 10.0
     month_sigma_multiplier: float = 2.0
     min_month_sigma_pct: float = 0.15
     min_month_sigma_abs: float = 50.0

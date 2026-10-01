@@ -8,6 +8,7 @@ import { CapturePage } from "@/pages/CapturePage";
 import { ConsensusPage } from "@/pages/ConsensusPage";
 import { DataQualityPage } from "@/pages/DataQualityPage";
 import { LedgerPage } from "@/pages/LedgerPage";
+import { RulesPage } from "@/pages/RulesPage";
 import { TrackRecordPage } from "@/pages/TrackRecordPage";
 
 function Home() {
@@ -24,6 +25,7 @@ export function App() {
         <Route path="/capture" element={<CapturePage />} />
         <Route path="/ledger" element={<LedgerPage />} />
         <Route path="/consensus" element={<ConsensusPage />} />
+        <Route path="/rules" element={<RulesPage />} />
         <Route path="/reps" element={<TrackRecordPage />} />
         <Route path="/data-quality" element={<DataQualityPage />} />
         <Route path="/admin/data" element={<AdminDataPage />} />

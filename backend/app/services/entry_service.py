@@ -3,6 +3,7 @@ from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.ai.decision_provider import JustificationInput, decision_policy, get_decision_provider
+from app.ai.questions import DRIVER_LABELS
 from app.constants.demo import MONTH_NAMES
 from app.database import async_session
 from app.models import Claim, DemandEntry, Segment
@@ -14,6 +15,8 @@ from app.services.context_service import build_context, segment_label, variety_o
 from app.services.cube_builder import Reference
 from app.services.demand_math import compute_impact
 from app.services.flags import evaluate_flags
+from app.services.lead_rules import evaluate_rules, unmet_driver_flags
+from app.services.rule_service import active_specs
 from app.services.seed_service import signal_for
 from app.services.settings_service import AppSettings, get_app_settings
 from app.services.user_service import CurrentUser, can_submit, user_names
@@ -42,8 +45,12 @@ async def _evaluate(db: AsyncSession, body: EntryIn, settings: AppSettings):
         raise HTTPException(status_code=400, detail="That month is closed; actuals are already in")
     entry = EntryInput(month=body.month, value=body.value, low=body.low, high=body.high, price=body.price)
     impact = compute_impact(ctx, entry, settings.thresholds)
-    flags = evaluate_flags(ctx, entry, impact, settings.thresholds)
-    return ctx, segment, ref, entry, impact, flags
+    rules = await active_specs(db, body.country_code, segment.mega_segment_id)
+    flags = [
+        *evaluate_flags(ctx, entry, impact, settings.thresholds),
+        *evaluate_rules(ctx, segment.id, entry, impact, rules),
+    ]
+    return ctx, segment, ref, entry, impact, flags, rules
 
 
 async def _structure(
@@ -82,21 +89,24 @@ async def _structure(
 
 async def analyze(db: AsyncSession, body: EntryIn) -> AnalyzeOut:
     settings = await get_app_settings(db)
-    ctx, segment, ref, entry, impact, flags = await _evaluate(db, body, settings)
+    ctx, segment, ref, entry, impact, flags, rules = await _evaluate(db, body, settings)
     claim = await _structure(ctx, segment, ref, body, entry, impact, flags, settings)
+    if claim:
+        unmet = unmet_driver_flags(rules, flags, claim.driver, DRIVER_LABELS)
+        claim = claim.model_copy(update={"mismatches": [*claim.mismatches, *unmet]})
     return AnalyzeOut(impact=impact, flags=flags, claim=claim)
 
 
 async def create_entry(db: AsyncSession, user: CurrentUser, body: EntryIn) -> EntryOut:
     settings = await get_app_settings(db)
-    ctx, segment, ref, entry, impact, flags = await _evaluate(db, body, settings)
+    ctx, segment, ref, entry, impact, flags, rules = await _evaluate(db, body, settings)
     if not can_submit(user, body.country_code, segment):
         raise HTTPException(status_code=403, detail="Only a rep assigned to this segment can submit for it")
     if flags and not (body.justification or "").strip():
         raise HTTPException(status_code=422, detail="A justification is required when flags fire")
     claim = await _structure(ctx, segment, ref, body, entry, impact, flags, settings)
     if claim:
-        flags = [*flags, *claim.mismatches]
+        flags = [*flags, *claim.mismatches, *unmet_driver_flags(rules, flags, claim.driver, DRIVER_LABELS)]
 
     await db.execute(
         update(DemandEntry)

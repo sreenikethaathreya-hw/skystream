@@ -13,6 +13,7 @@ const NAV = [
   { to: "/capture", label: "Capture", roles: ["rep"] },
   { to: "/ledger", label: "Ledger" },
   { to: "/consensus", label: "Consensus", roles: ["lead", "admin"] },
+  { to: "/rules", label: "Lead rules" },
   { to: "/reps", label: "Track record" },
   { to: "/data-quality", label: "Data quality" },
   { to: "/admin/data", label: "Admin: data", roles: ["admin"] },

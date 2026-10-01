@@ -66,6 +66,20 @@ def compute_impact(ctx: SegmentContext, entry: EntryInput, thresholds: Threshold
         for p in ctx.plan_qty_history
         if p.year <= ctx.year and p.year in market_by_year
     ]
+    past_shares = [
+        _div(p.qty_ks, market_by_year[p.year].qty_ks)
+        for p in ctx.plan_qty_history
+        if p.year < ctx.year and p.year in market_by_year
+    ]
+
+    baseline_month = ctx.submitted.get(str(entry.month), ctx.monthly_plan[entry.month - 1])
+    baseline_share = _div(fy - entry.value + baseline_month, ctx.market_qty_ks)
+
+    month_history = [h for h in ctx.monthly_history if h.year < ctx.year]
+    month_values = [h.qty_ks[entry.month - 1] for h in month_history]
+    month_avg = (
+        sum(month_values) / len(month_values) if month_values else ctx.last_year_monthly[entry.month - 1]
+    )
 
     market_value = ctx.market_qty_ks * ctx.price_exseed
     mega = ctx.mega
@@ -119,6 +133,12 @@ def compute_impact(ctx: SegmentContext, entry: EntryInput, thresholds: Threshold
         plan_volume_share=_div(ctx.plan_qty_ks, ctx.market_qty_ks),
         last_year_volume_share=_div(ctx.last_year_qty_ks, last_market.qty_ks if last_market else 0),
         max_historical_share=max(historical_shares, default=0.0),
+        avg_historical_share=_div(sum(past_shares), len(past_shares)),
+        baseline_share=baseline_share,
+        share_jump_pts=(_div(fy, ctx.market_qty_ks) - baseline_share) * 100,
+        month_history_avg=month_avg,
+        month_history_years=[h.year for h in month_history],
+        month_vs_avg_pct=_div(entry.value - month_avg, month_avg),
         fy_value=fy_value,
         value_share=_div(fy_value, market_value),
         plan_value_share=_div(ctx.plan_value_eur, market_value),

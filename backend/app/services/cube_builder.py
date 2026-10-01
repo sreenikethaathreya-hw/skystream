@@ -3,7 +3,7 @@
 from collections import defaultdict
 from dataclasses import dataclass, field
 
-from app.schemas.demand_math import Competitor, MarketPoint, MegaContext, SegmentContext
+from app.schemas.demand_math import Competitor, MarketPoint, MegaContext, SegmentContext, YearMonthly
 
 
 @dataclass
@@ -46,7 +46,9 @@ def build_mega(ref: Reference, year: int) -> MegaContext:
                 implied_ha += p.qty_ks / m.density
     rows = [c for c in ref.competitors if c.year == year]
     syngenta = next((c for c in rows if c.competitor == "Syngenta"), None)
+    first = ref.segments[0] if ref.segments else None
     return MegaContext(
+        name=getattr(first, "mega_segment_desc", "") or "",
         market_value_eur=market_value,
         syngenta_value_eur=syngenta_value,
         syngenta_share_pct=syngenta.share_pct if syngenta else 0.0,
@@ -66,6 +68,24 @@ def last_year_basis(ref: Reference, segment_id: int, year: int) -> str:
     if rows and all(r is not None for r in rows):
         return "actuals"
     return "plan" if (segment_id, year - 1) in _index(ref.plan) else "none"
+
+
+def monthly_history(ref: Reference, segment_id: int, year: int) -> list[YearMonthly]:
+    """Each earlier year's monthly volume: full actuals when all 12 months are loaded, else phased plan."""
+    years = sorted(
+        {r.year for r in ref.monthly_actuals if r.segment_id == segment_id and r.year < year}
+        | {r.year for r in ref.monthly_plan if r.segment_id == segment_id and r.year < year}
+    )
+    out: list[YearMonthly] = []
+    for y in years:
+        actuals = _monthly(ref.monthly_actuals, y).get(segment_id)
+        if actuals and all(r is not None for r in actuals):
+            out.append(YearMonthly(year=y, basis="actuals", qty_ks=[r.qty_ks for r in actuals]))
+            continue
+        plan_rows = _monthly(ref.monthly_plan, y).get(segment_id)
+        if plan_rows and any(r is not None for r in plan_rows):
+            out.append(YearMonthly(year=y, basis="plan", qty_ks=[r.qty_ks if r else 0.0 for r in plan_rows]))
+    return out
 
 
 def build_segment_context(
@@ -128,6 +148,7 @@ def build_segment_context(
         monthly_actual=[r.qty_ks if r else None for r in revealed],
         monthly_actual_value=[r.value_eur if r else None for r in revealed],
         last_year_monthly=[r.qty_ks if r else 0.0 for r in last_rows],
+        monthly_history=monthly_history(ref, segment_id, year),
         submitted={str(month): value for month, value in submitted.items() if month >= clock_month},
         market_trend_note=(m.notes or {}).get("dynamics"),
         mega=mega,

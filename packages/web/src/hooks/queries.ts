@@ -7,6 +7,7 @@ import type {
   Cube,
   DataQuality,
   Entry,
+  LeadRule,
   Meta,
   Queue,
   Scope,
@@ -24,6 +25,13 @@ export const useMeta = (enabled = true) =>
 
 export const useScopes = (enabled = true) =>
   useQuery({ queryKey: ["/scopes"], queryFn: () => api.get<ScopeOption[]>("/scopes"), enabled });
+
+export const useRules = (scope: Scope | null) =>
+  useQuery({
+    queryKey: ["/rules", scope],
+    queryFn: () => api.get<LeadRule[]>(`/rules?${scopeQuery(scope)}`),
+    enabled: scope !== null,
+  });
 
 export const useCube = (scope: Scope | null) =>
   useQuery({
