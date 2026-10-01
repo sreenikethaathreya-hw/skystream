@@ -5,7 +5,7 @@ import { Checks, DemandInstrument } from "@/components/capture/DemandInstrument"
 import { EntryPanel } from "@/components/capture/EntryPanel";
 import { IbpPanel } from "@/components/capture/IbpPanel";
 import { JustificationBox } from "@/components/capture/JustificationBox";
-import { MonthGrid } from "@/components/capture/MonthGrid";
+import { MonthView } from "@/components/capture/MonthView";
 import { SegmentList } from "@/components/capture/SegmentList";
 import { SubmitReceipt } from "@/components/capture/SubmitReceipt";
 import { AskButton } from "@/components/chat/AskButton";
@@ -294,7 +294,7 @@ export function CapturePage() {
                 </Button>
               </div>
             </div>
-            <MonthGrid segment={segment} selectedMonth={month} draftValue={entry.value} onSelect={setMonth} />
+            <MonthView segment={segment} selectedMonth={month} draftValue={entry.value} onSelect={setMonth} />
           </CardBody>
         </Card>
 
