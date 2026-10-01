@@ -1,3 +1,4 @@
+import { CheckCircle2 } from "lucide-react";
 import { fmtNum, fmtPct, fmtPts } from "@/lib/format";
 import type { EntryInput, Flag, Impact } from "@/lib/mathTypes";
 import { cn } from "@/lib/utils";
@@ -132,24 +133,41 @@ export function DemandInstrument({ impact, entry, flags }: { impact: Impact; ent
   );
 }
 
-/** The most serious check, shown right under the number while typing. */
-export function LeadCheck({ flag, more }: { flag: Flag | undefined; more: number }) {
-  if (!flag) return null;
-  const critical = flag.severity === "critical";
+/** Every check, right under the number while typing: the most serious first and largest. */
+export function Checks({ flags }: { flags: Flag[] }) {
+  const ordered = [...flags].sort((a, b) => Number(b.severity === "critical") - Number(a.severity === "critical"));
+  const lead = ordered[0];
+  const critical = lead?.severity === "critical";
   return (
-    <div
-      key={flag.code}
-      data-testid={`flag-${flag.code}`}
-      className={cn(
-        "animate-rise rounded-md border-l-[3px] px-3 py-2 text-sm",
-        critical ? "border-crit-500 bg-crit-50 text-crit-700" : "border-warn-500 bg-warn-50 text-warn-700",
-      )}
-    >
-      <p>{flag.message}</p>
-      {more > 0 && (
-        <p className="mt-0.5 text-xs opacity-80">
-          {more} more check{more > 1 ? "s" : ""} below.
+    <div data-testid="checks">
+      <p className="sr-only" aria-live="polite">
+        {flags.length ? `${flags.length} check${flags.length > 1 ? "s" : ""} raised, a reason is required` : "No checks raised"}
+      </p>
+      {!lead ? (
+        <p className="flex items-center gap-1.5 text-sm text-brand-700">
+          <CheckCircle2 size={15} aria-hidden="true" /> No flags. This number is in line with history.
         </p>
+      ) : (
+        <div
+          key={lead.code}
+          className={cn(
+            "animate-rise flex flex-col gap-1.5 rounded-md border-l-[3px] px-3 py-2",
+            critical ? "border-crit-500 bg-crit-50" : "border-warn-500 bg-warn-50",
+          )}
+        >
+          {ordered.map((f, i) => (
+            <p
+              key={f.code}
+              data-testid={`flag-${f.code}`}
+              className={cn(
+                i === 0 ? "text-sm" : "text-xs",
+                f.severity === "critical" ? "text-crit-700" : "text-warn-700",
+              )}
+            >
+              {f.message}
+            </p>
+          ))}
+        </div>
       )}
     </div>
   );

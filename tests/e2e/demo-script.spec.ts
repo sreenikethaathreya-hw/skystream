@@ -56,7 +56,7 @@ test("demo script: capture, flag, structure, submit, consensus, advance, track r
 
   // A clean line at plan from a reliable rep is routine.
   await page.getByTestId("segment-2484").click();
-  await expect(page.getByTestId("tile-flags")).toContainText("No flags");
+  await expect(page.getByTestId("checks")).toContainText("No flags");
   await page.getByTestId("justification-input").fill("Hokkaido bookings confirmed by a Nijar cooperative.");
   await page.getByTestId("submit-entry").click();
   await expect(page.getByText(/Submitted .* for 2484/)).toBeVisible();

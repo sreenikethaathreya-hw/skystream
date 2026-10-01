@@ -1,12 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { BaselinePanel } from "@/components/capture/BaselinePanel";
-import { DemandInstrument, LeadCheck } from "@/components/capture/DemandInstrument";
+import { Checks, DemandInstrument } from "@/components/capture/DemandInstrument";
 import { EntryPanel } from "@/components/capture/EntryPanel";
-import { FlagsTile, HectaresTile, ShareTile, YtgTile } from "@/components/capture/ImpactTiles";
+import { HectaresTile, ShareTile, YtgTile } from "@/components/capture/ImpactTiles";
 import { JustificationBox } from "@/components/capture/JustificationBox";
 import { MonthGrid } from "@/components/capture/MonthGrid";
 import { SegmentList } from "@/components/capture/SegmentList";
+import { SubmitReceipt } from "@/components/capture/SubmitReceipt";
 import { VolumePriceBar } from "@/components/capture/VolumePriceBar";
 import { TrackRecordInline } from "@/components/reps/TrackRecordInline";
 import { Badge } from "@/components/ui/badge";
@@ -20,8 +21,8 @@ import { useCube } from "@/hooks/queries";
 import { useCaptureDraft } from "@/hooks/useCaptureDraft";
 import { useScope } from "@/hooks/useScope";
 import { useSession } from "@/hooks/useSession";
-import { fmtKs, monthName } from "@/lib/format";
-import type { EntryPayload, StructuredClaim } from "@/lib/types";
+import { monthName } from "@/lib/format";
+import type { Entry, EntryPayload, StructuredClaim } from "@/lib/types";
 
 const BASIS_LABELS: Record<string, string> = {
   synthetic: "synthetic seasonal curve (demo)",
@@ -42,16 +43,14 @@ function CaptureSkeleton() {
         ))}
       </div>
       <div className="flex flex-col gap-4">
-        <div className="flex flex-col gap-5 rounded-lg border border-line bg-surface p-5">
+        <div className="flex flex-col gap-4 rounded-lg border border-line bg-surface p-5">
           <Skeleton className="h-6 w-56" />
-          <Skeleton className="h-16" />
+          <Skeleton className="h-24" />
+        </div>
+        <Skeleton className="h-44 rounded-lg" />
+        <div className="flex flex-col gap-5 rounded-lg border border-line bg-surface p-5">
           <Skeleton className="h-16 w-72" />
           <Skeleton className="h-14" />
-        </div>
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          {Array.from({ length: 4 }, (_, i) => (
-            <Skeleton key={i} className="h-40 rounded-lg" />
-          ))}
         </div>
       </div>
     </div>
@@ -84,6 +83,7 @@ export function CapturePage() {
   );
   const [justification, setJustification] = useState("");
   const [claim, setClaim] = useState<{ key: string; claim: StructuredClaim } | null>(null);
+  const [saved, setSaved] = useState<{ key: string; entry: Entry } | null>(null);
   const analyze = useAnalyze();
   const submit = useSubmitEntry();
   const toast = useToast();
@@ -152,7 +152,8 @@ export function CapturePage() {
 
   const owns = segment.editable;
   const needsJustification = live.flags.length > 0;
-  const leadFlag = live.flags.find((f) => f.severity === "critical") ?? live.flags[0];
+  const cellKey = `${segment.id}|${month}`;
+  const receipt = saved && saved.key === cellKey && !dirty ? saved.entry : null;
   const missingReason = needsJustification && !justification.trim();
   const canSubmit = owns && entry.value >= 0 && !missingReason && !submit.isPending;
 
@@ -164,12 +165,8 @@ export function CapturePage() {
 
   const onSubmit = () =>
     submit.mutate(payload, {
-      onSuccess: (saved) => {
-        toast({
-          tone: "success",
-          title: `Submitted ${fmtKs(saved.value)} for ${saved.segmentLabel}, ${monthName(saved.month)}`,
-          body: saved.claim ? `Reason recorded; checked against ${monthName(saved.claim.checkMonth)} actuals.` : "Recorded in the ledger.",
-        });
+      onSuccess: (entry) => {
+        setSaved({ key: cellKey, entry });
         setJustification("");
         setClaim(null);
         markSaved();
@@ -185,8 +182,8 @@ export function CapturePage() {
       </aside>
 
       <section className="flex min-w-0 flex-col gap-4">
-        <Card className="border-ink/15 shadow-[0_1px_2px_rgb(22_33_26/0.05),0_12px_32px_-16px_rgb(22_33_26/0.25)]">
-          <CardBody className="flex flex-col gap-5 pt-5">
+        <Card>
+          <CardBody className="flex flex-col gap-4 pt-5">
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div className="min-w-0">
                 <h1 className="text-lg font-semibold" data-testid="segment-title">
@@ -216,15 +213,6 @@ export function CapturePage() {
               )}
             </div>
             <MonthGrid segment={segment} selectedMonth={month} draftValue={entry.value} onSelect={setMonth} />
-            <EntryPanel
-              month={month}
-              planMonth={segment.context.monthlyPlan[month - 1]}
-              planNetPrice={segment.context.planNetPrice}
-              draft={draft}
-              onChange={setDraft}
-            />
-            <DemandInstrument impact={live.impact} entry={entry} flags={live.flags} />
-            <LeadCheck flag={leadFlag} more={live.flags.length - 1} />
           </CardBody>
         </Card>
 
@@ -236,14 +224,19 @@ export function CapturePage() {
           megaName={cube.megaSegmentDesc}
         />
 
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          <ShareTile impact={live.impact} megaName={cube.megaSegmentDesc} />
-          <YtgTile impact={live.impact} />
-          <HectaresTile impact={live.impact} />
-          <FlagsTile flags={live.flags} shownAbove={leadFlag?.code} />
-        </div>
-
-        <VolumePriceBar revenue={live.impact.revenue} />
+        <Card className="border-ink/15 shadow-[0_1px_2px_rgb(22_33_26/0.05),0_12px_32px_-16px_rgb(22_33_26/0.25)]">
+          <CardBody className="flex flex-col gap-5 pt-5">
+            <EntryPanel
+              month={month}
+              planMonth={segment.context.monthlyPlan[month - 1]}
+              planNetPrice={segment.context.planNetPrice}
+              draft={draft}
+              onChange={setDraft}
+            />
+            <DemandInstrument impact={live.impact} entry={entry} flags={live.flags} />
+            <Checks flags={live.flags} />
+          </CardBody>
+        </Card>
 
         <JustificationBox
           text={justification}
@@ -263,6 +256,19 @@ export function CapturePage() {
             {submit.isPending ? "Submitting…" : `Submit ${monthName(month)} demand`}
           </Button>
         </div>
+        {receipt && <SubmitReceipt entry={receipt} />}
+
+        <section aria-labelledby="impact-title" className="mt-4 flex flex-col gap-4">
+          <h2 id="impact-title" className="eyebrow">
+            What this number means
+          </h2>
+          <div className="grid gap-4 md:grid-cols-3">
+            <ShareTile impact={live.impact} megaName={cube.megaSegmentDesc} />
+            <YtgTile impact={live.impact} />
+            <HectaresTile impact={live.impact} />
+          </div>
+          <VolumePriceBar revenue={live.impact.revenue} />
+        </section>
       </section>
     </div>
   );

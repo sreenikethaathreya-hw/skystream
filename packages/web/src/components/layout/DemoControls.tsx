@@ -6,6 +6,8 @@ import { useAdvanceMonth, useResetDemo } from "@/hooks/mutations";
 import { useMeta } from "@/hooks/queries";
 import { monthName } from "@/lib/format";
 
+const ON_DARK = "h-7 whitespace-nowrap text-white/80 hover:bg-white/10 hover:text-white";
+
 /** Demo mode only: a simulated calendar. Real mode closes a month when its actuals are uploaded. */
 export function DemoControls() {
   const { data: meta } = useMeta();
@@ -31,18 +33,25 @@ export function DemoControls() {
     reset.mutate(undefined, { onSuccess: () => toast({ tone: "info", title: "Demo reset to seed data" }) });
 
   return (
-    <div className="flex items-center gap-2">
-      <span className="tabular inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-line bg-surface px-2.5 py-1 text-xs font-medium">
-        <CalendarClock size={13} className="text-muted" aria-hidden="true" />
+    <div className="flex items-center gap-1">
+      <span className="tabular inline-flex items-center gap-1.5 whitespace-nowrap px-1 font-medium text-white">
+        <CalendarClock size={13} className="text-white/55" aria-hidden="true" />
         {monthName(meta.clock.month)} {meta.clock.year}
       </span>
-      <Button size="sm" variant="secondary" className="whitespace-nowrap" onClick={onAdvance}
-        disabled={advance.isPending} data-testid="advance-month">
+      <Button
+        size="sm"
+        variant="ghost"
+        className={ON_DARK}
+        onClick={onAdvance}
+        disabled={advance.isPending}
+        data-testid="advance-month"
+      >
         <FastForward size={14} aria-hidden="true" /> Advance month
       </Button>
       <ConfirmButton
         size="sm"
         variant="ghost"
+        className={ON_DARK}
         onConfirm={onReset}
         confirmLabel="Reset demo?"
         disabled={reset.isPending}

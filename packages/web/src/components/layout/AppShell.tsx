@@ -2,7 +2,6 @@ import { lazy, Suspense, useCallback, useState, type ReactNode } from "react";
 import { NavLink } from "react-router-dom";
 import { LogOut, MessageSquare } from "lucide-react";
 import { DemoControls } from "@/components/layout/DemoControls";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Sheet } from "@/components/ui/sheet";
 import { useMeta } from "@/hooks/queries";
@@ -25,15 +24,32 @@ const NAV = [
   { to: "/admin/settings", label: "Admin: settings", roles: ["admin"] },
 ];
 
-function AiStatusBadge() {
+function AiStatus() {
   const { data } = useMeta();
   if (!data) return null;
   const live = data.ai.mode === "live" || data.ai.mode === "record";
   const jev = !data.ai.externalAiAllowed ? "Jev off (not cleared)" : live ? "Jev live" : "Jev replay/offline";
   return (
-    <Badge tone="jev" title={`Jev ${data.ai.jevModel} · Gemini ${data.ai.geminiModel}`}>
+    <span className="whitespace-nowrap text-white/55" title={`Jev ${data.ai.jevModel} · Gemini ${data.ai.geminiModel}`}>
       {jev} · Gemini {data.ai.geminiConfigured ? "on" : "off"}
-    </Badge>
+    </span>
+  );
+}
+
+/** Demo-only controls, kept apart from the product header so they read as stage machinery. */
+function DemoBar() {
+  return (
+    <div className="bg-ink text-xs text-white/80">
+      <div className="mx-auto flex max-w-[1440px] flex-wrap items-center gap-x-4 gap-y-1 px-6 py-1">
+        <span className="font-mono text-[10.5px] font-medium uppercase tracking-[0.12em] text-white">Demo</span>
+        <span className="hidden text-white/55 md:inline">Anonymized seed data</span>
+        <AiStatus />
+        <div className="ml-auto flex flex-wrap items-center gap-3">
+          <DemoControls />
+          <RoleSwitcher />
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -63,11 +79,11 @@ function ScopePicker() {
 function RoleSwitcher() {
   const { user, users, setUserId } = useSession();
   return (
-    <label className="flex items-center gap-2 whitespace-nowrap text-xs text-muted">
+    <label className="flex items-center gap-2 whitespace-nowrap text-white/55">
       Acting as
       <select
         aria-label="Acting as"
-        className="h-8 rounded-lg border border-line bg-surface px-2 text-sm text-ink"
+        className="h-7 rounded-md border border-white/20 bg-white/10 px-2 text-xs text-white [&>option]:text-ink"
         value={user?.id ?? ""}
         onChange={(e) => setUserId(e.target.value)}
       >
@@ -137,10 +153,11 @@ export function AppShell({ children }: { children: ReactNode }) {
       >
         Skip to content
       </a>
+      {dataMode === "demo" && <DemoBar />}
       <header className="border-b border-line bg-surface">
         <div className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-3 px-6 pt-3">
           <div className="flex items-center gap-3">
-            <svg className="size-12 rounded-lg" viewBox="0 0 32 32" aria-hidden="true">
+            <svg className="size-10 shrink-0" viewBox="0 0 32 32" aria-hidden="true">
               <defs>
                 <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0" stopColor="#7dd3fc" />
@@ -169,36 +186,29 @@ export function AppShell({ children }: { children: ReactNode }) {
                 <path d="M22 6 L22.5 9 L25.5 11 L22.5 13 L22 16 L21.5 13 L18.5 11 L21.5 9Z" fill="#fbbf24" />
               </g>
             </svg>
-            <div className="flex flex-col gap-1">
-              <p className="whitespace-nowrap text-sm font-semibold leading-tight">
-                Defensible Demand Ledger
-                {dataMode === "demo" && <Badge className="ml-2">demo data</Badge>}
-              </p>
-              <ScopePicker />
+            <div className="leading-tight">
+              <p className="text-[17px] font-semibold tracking-tight">Skystream</p>
+              <p className="eyebrow">Defensible demand ledger</p>
             </div>
+            <span aria-hidden="true" className="mx-1 hidden h-8 w-px bg-line sm:block" />
+            <ScopePicker />
           </div>
           <div className="flex flex-wrap items-center gap-3">
             <AskTheData />
-            <AiStatusBadge />
-            {dataMode === "demo" ? (
-              <>
-                <DemoControls />
-                <RoleSwitcher />
-              </>
-            ) : (
-              <UserMenu />
-            )}
+            {dataMode !== "demo" && <UserMenu />}
           </div>
         </div>
-        <nav aria-label="Main" className="mx-auto flex max-w-[1440px] flex-wrap items-center gap-1 px-6 pb-2 pt-2">
+        <nav aria-label="Main" className="mx-auto flex max-w-[1440px] flex-wrap items-center gap-1 px-6 pt-2">
           {NAV.filter((n) => !n.roles || (user && n.roles.includes(user.role))).map((n) => (
             <NavLink
               key={n.to}
               to={n.to}
               className={({ isActive }) =>
                 cn(
-                  "whitespace-nowrap rounded-lg px-3 py-1.5 text-sm font-medium",
-                  isActive ? "bg-brand-50 text-brand-700" : "text-muted hover:text-ink",
+                  "relative whitespace-nowrap px-3 pb-2.5 pt-1.5 text-sm font-medium",
+                  isActive
+                    ? "text-ink after:absolute after:inset-x-3 after:-bottom-px after:h-0.5 after:rounded-full after:bg-ink"
+                    : "text-muted hover:text-ink",
                 )
               }
             >

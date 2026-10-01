@@ -6,6 +6,7 @@ const STAMPS: Record<string, string> = {
   confirmed: "-rotate-2 border-brand-600 text-brand-700",
   contradicted: "-rotate-2 border-crit-500 text-crit-700",
   inconclusive: "-rotate-2 border-warn-500 text-warn-700",
+  recorded: "-rotate-2 border-brand-600 text-brand-700",
 };
 
 /** The claim's outcome, marked like a stamp on a paper receipt. */

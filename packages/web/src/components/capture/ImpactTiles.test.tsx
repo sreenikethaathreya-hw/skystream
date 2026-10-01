@@ -3,7 +3,8 @@ import cases from "@fixtures/demand_math_cases.json";
 import { computeImpact } from "@/lib/demandMath";
 import { evaluateFlags } from "@/lib/flags";
 import type { EntryInput, SegmentContext } from "@/lib/mathTypes";
-import { FlagsTile, HectaresTile, ShareTile, YtgTile } from "./ImpactTiles";
+import { Checks } from "./DemandInstrument";
+import { HectaresTile, ShareTile, YtgTile } from "./ImpactTiles";
 
 const golden = cases as unknown as { name: string; context: SegmentContext; entry: EntryInput }[];
 
@@ -21,7 +22,7 @@ describe("impact tiles", () => {
         <ShareTile impact={impact} />
         <YtgTile impact={impact} />
         <HectaresTile impact={impact} />
-        <FlagsTile flags={flags} />
+        <Checks flags={flags} />
       </>,
     );
     expect(screen.getByTestId("share-value")).toHaveTextContent(`${(impact.volumeShare * 100).toFixed(1)}%`);
@@ -38,9 +39,9 @@ describe("impact tiles", () => {
 
   it("lists every flag for an implausible number", () => {
     const { flags } = live("2482 unrealistic");
-    render(<FlagsTile flags={flags} />);
+    render(<Checks flags={flags} />);
     expect(screen.getByTestId("flag-share_over_100")).toBeInTheDocument();
     expect(screen.getByTestId("flag-implied_ha_over_market")).toBeInTheDocument();
-    expect(screen.getByText(/justification required/)).toBeInTheDocument();
+    expect(screen.getByText(/a reason is required/)).toBeInTheDocument();
   });
 });

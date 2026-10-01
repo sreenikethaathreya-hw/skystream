@@ -1,7 +1,7 @@
-import { AlertTriangle, CheckCircle2, Map as MapIcon, PieChart, Target } from "lucide-react";
+import { Map as MapIcon, PieChart, Target } from "lucide-react";
 import { Card, CardBody, CardHeader } from "@/components/ui/card";
 import { fmtKs, fmtNum, fmtPct, fmtPts } from "@/lib/format";
-import type { Flag, Impact } from "@/lib/mathTypes";
+import type { Impact } from "@/lib/mathTypes";
 import { cn } from "@/lib/utils";
 
 function Delta({ value, suffix }: { value: number; suffix: string }) {
@@ -114,39 +114,6 @@ export function HectaresTile({ impact }: { impact: Impact }) {
         <p className="tabular mt-1 text-xs text-muted">
           {fmtPct(ratio, 0)} of the market · range {fmtNum(impact.impliedHaLow)} to {fmtNum(impact.impliedHaHigh)} ha
         </p>
-      </CardBody>
-    </Card>
-  );
-}
-
-/** `shownAbove` is the flag already shown under the demand input; it is not repeated here. */
-export function FlagsTile({ flags, shownAbove }: { flags: Flag[]; shownAbove?: string }) {
-  const listed = flags.filter((f) => f.code !== shownAbove);
-  return (
-    <Card data-testid="tile-flags" className={cn(flags.some((f) => f.severity === "critical") && "border-crit-500/50")}>
-      <CardHeader
-        title="Checks"
-        subtitle={flags.length ? `${flags.length} flag${flags.length > 1 ? "s" : ""}, justification required` : "Checked against history"}
-        icon={flags.length ? <AlertTriangle size={15} /> : <CheckCircle2 size={15} />}
-      />
-      <CardBody className="flex flex-col gap-2">
-        <p className="sr-only" aria-live="polite">
-          {flags.length ? `${flags.length} check${flags.length > 1 ? "s" : ""} raised` : "No checks raised"}
-        </p>
-        {flags.length === 0 && <p className="text-sm text-brand-700">No flags. This number is in line with history.</p>}
-        {shownAbove && flags.length > 0 && <p className="text-xs text-muted">The main check is shown under your number.</p>}
-        {listed.map((f) => (
-          <div
-            key={f.code}
-            data-testid={`flag-${f.code}`}
-            className={cn(
-              "rounded-md border px-2.5 py-1.5 text-xs",
-              f.severity === "critical" ? "border-crit-500/30 bg-crit-50 text-crit-700" : "border-warn-500/30 bg-warn-50 text-warn-700",
-            )}
-          >
-            {f.message}
-          </div>
-        ))}
       </CardBody>
     </Card>
   );
