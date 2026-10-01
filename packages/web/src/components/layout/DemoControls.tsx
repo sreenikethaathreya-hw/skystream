@@ -1,5 +1,6 @@
 import { CalendarClock, FastForward, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ConfirmButton } from "@/components/ui/confirm-button";
 import { useToast } from "@/components/ui/toast";
 import { useAdvanceMonth, useResetDemo } from "@/hooks/mutations";
 import { useMeta } from "@/hooks/queries";
@@ -32,16 +33,24 @@ export function DemoControls() {
   return (
     <div className="flex items-center gap-2">
       <span className="tabular inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-line bg-surface px-2.5 py-1 text-xs font-medium">
-        <CalendarClock size={13} className="text-muted" />
+        <CalendarClock size={13} className="text-muted" aria-hidden="true" />
         {monthName(meta.clock.month)} {meta.clock.year}
       </span>
       <Button size="sm" variant="secondary" className="whitespace-nowrap" onClick={onAdvance}
         disabled={advance.isPending} data-testid="advance-month">
-        <FastForward size={14} /> Advance month
+        <FastForward size={14} aria-hidden="true" /> Advance month
       </Button>
-      <Button size="sm" variant="ghost" onClick={onReset} disabled={reset.isPending} title="Reset demo data">
-        <RotateCcw size={14} />
-      </Button>
+      <ConfirmButton
+        size="sm"
+        variant="ghost"
+        onConfirm={onReset}
+        confirmLabel="Reset demo?"
+        disabled={reset.isPending}
+        title="Reset demo data"
+        aria-label="Reset demo data"
+      >
+        <RotateCcw size={14} aria-hidden="true" />
+      </ConfirmButton>
     </div>
   );
 }

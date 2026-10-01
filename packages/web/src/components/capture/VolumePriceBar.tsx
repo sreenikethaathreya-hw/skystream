@@ -26,12 +26,12 @@ export function VolumePriceBar({ revenue }: { revenue: RevenueSplit }) {
       <CardBody className="flex flex-col gap-2 text-xs">
         <div className="flex items-center gap-3">
           <span className="w-16 text-muted">Volume</span>
-          {bar(revenue.volumeEffect, revenue.volumeEffect >= 0 ? "bg-brand-500" : "bg-crit-500")}
+          {bar(revenue.volumeEffect, "bg-ink/45")}
           <span className="tabular w-24 text-right">{revenue.volumeEffect >= 0 ? "+" : ""}{fmtEur(revenue.volumeEffect)}</span>
         </div>
         <div className="flex items-center gap-3">
           <span className="w-16 text-muted">Price</span>
-          {bar(revenue.priceEffect, revenue.priceEffect >= 0 ? "bg-info-500" : "bg-crit-500")}
+          {bar(revenue.priceEffect, "bg-info-500")}
           <span className="tabular w-24 text-right">{revenue.priceEffect >= 0 ? "+" : ""}{fmtEur(revenue.priceEffect)}</span>
         </div>
         <p className="text-muted">

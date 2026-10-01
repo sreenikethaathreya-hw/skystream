@@ -97,8 +97,8 @@ def evaluate_flags(
                 code="month_outlier",
                 severity="warning",
                 message=(
-                    f"{_num(entry.value)} KS is {impact.month_z:+.1f} sigma from the plan for this "
-                    f"month ({_num(impact.month_expected)}) and far from last year "
+                    f"{_num(entry.value)} KS is far from the plan for this "
+                    f"month ({_num(impact.month_expected)}) and from last year "
                     f"({_num(impact.month_last_year)})"
                     + (
                         f"; {_vs_average(entry, impact)}."

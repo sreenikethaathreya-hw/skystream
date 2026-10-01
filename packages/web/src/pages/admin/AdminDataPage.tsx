@@ -9,7 +9,7 @@ import { useBatchAction, useUpload } from "@/hooks/mutations";
 import { useUploadKinds, useUploads } from "@/hooks/queries";
 import { useSession } from "@/hooks/useSession";
 import { api } from "@/lib/api";
-import { fmtNum } from "@/lib/format";
+import { fmtDate, fmtDateTime, fmtNum } from "@/lib/format";
 import type { UploadBatch } from "@/lib/types";
 
 export function AdminDataPage() {
@@ -89,7 +89,7 @@ export function AdminDataPage() {
               className="text-sm"
             />
             <Button onClick={onUpload} disabled={!file || upload.isPending} data-testid="upload-button">
-              {upload.isPending ? "Validating..." : "Upload and preview"}
+              {upload.isPending ? "Validating…" : "Upload and preview"}
             </Button>
           </CardBody>
         </Card>
@@ -111,17 +111,18 @@ export function AdminDataPage() {
                 </span>
                 <span className="flex items-center gap-2">
                   {k.lastCommittedAt ? (
-                    <Badge tone="brand">{new Date(k.lastCommittedAt).toLocaleDateString()}</Badge>
+                    <Badge tone="brand">{fmtDate(k.lastCommittedAt)}</Badge>
                   ) : (
                     <Badge tone={k.required ? "warn" : "neutral"}>not loaded</Badge>
                   )}
                   {k.template && (
                     <button
                       title="Download template"
-                      className="text-muted hover:text-ink"
+                      aria-label={`Download ${k.label} template`}
+                      className="rounded text-muted hover:text-ink"
                       onClick={() => void api.download(`/admin/templates/${k.kind}.csv`, `${k.kind}-template.csv`)}
                     >
-                      <Download size={14} />
+                      <Download size={14} aria-hidden="true" />
                     </button>
                   )}
                 </span>
@@ -155,10 +156,18 @@ export function AdminDataPage() {
               </thead>
               <tbody>
                 {history.map((b) => (
-                  <tr key={b.id} className="cursor-pointer border-t border-line/60 hover:bg-canvas" onClick={() => setCurrent(b)}>
-                    <td className="py-1 text-xs">{new Date(b.createdAt).toLocaleString()}</td>
+                  <tr key={b.id} className="border-t border-line/60 hover:bg-canvas">
+                    <td className="py-1 text-xs">{fmtDateTime(b.createdAt)}</td>
                     <td>{b.kind}</td>
-                    <td className="max-w-56 truncate">{b.filename}</td>
+                    <td className="max-w-56 truncate">
+                      <button
+                        type="button"
+                        className="max-w-full truncate rounded text-left text-brand-700 hover:underline"
+                        onClick={() => setCurrent(b)}
+                      >
+                        {b.filename}
+                      </button>
+                    </td>
                     <td>
                       <StatusBadge status={b.status === "previewed" ? "pending" : b.status} />
                     </td>

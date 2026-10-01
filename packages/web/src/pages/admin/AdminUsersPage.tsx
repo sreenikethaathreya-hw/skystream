@@ -6,6 +6,7 @@ import { useToast } from "@/components/ui/toast";
 import { useSaveUser } from "@/hooks/mutations";
 import { useAdminUsers } from "@/hooks/queries";
 import { useSession } from "@/hooks/useSession";
+import { fmtDate } from "@/lib/format";
 import type { AdminUser, UserScope } from "@/lib/types";
 
 const EMPTY = { email: "", name: "", role: "rep" as AdminUser["role"], active: true, scopes: "" };
@@ -74,7 +75,7 @@ export function AdminUsersPage() {
                     {u.role} {!u.active && <StatusBadge status="superseded" />}
                   </td>
                   <td className="whitespace-pre text-xs">{formatScopes(u.scopes) || "-"}</td>
-                  <td className="text-xs">{u.lastSeenAt ? new Date(u.lastSeenAt).toLocaleDateString() : "never"}</td>
+                  <td className="text-xs">{u.lastSeenAt ? fmtDate(u.lastSeenAt) : "never"}</td>
                   <td>
                     <Button
                       size="sm"
@@ -94,9 +95,11 @@ export function AdminUsersPage() {
       <Card>
         <CardHeader title={form.email ? `Edit ${form.email}` : "Add a user"} />
         <CardBody className="flex flex-col gap-3 text-sm">
-          <input className="h-9 rounded-lg border border-line px-2" placeholder="email@company.com" aria-label="Email"
+          <input className="h-9 rounded-lg border border-line px-2" placeholder="name@company.com…" aria-label="Email"
+            type="email" name="email" autoComplete="off" spellCheck={false}
             value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
-          <input className="h-9 rounded-lg border border-line px-2" placeholder="Name" aria-label="Name"
+          <input className="h-9 rounded-lg border border-line px-2" placeholder="Full name…" aria-label="Name"
+            name="name" autoComplete="off"
             value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
           <select className="h-9 rounded-lg border border-line px-2" aria-label="Role" value={form.role}
             onChange={(e) => setForm({ ...form, role: e.target.value as AdminUser["role"] })}>

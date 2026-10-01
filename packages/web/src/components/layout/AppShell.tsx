@@ -1,7 +1,6 @@
-import { useCallback, useState, type ReactNode } from "react";
+import { lazy, Suspense, useCallback, useState, type ReactNode } from "react";
 import { NavLink } from "react-router-dom";
 import { LogOut, MessageSquare, Sprout } from "lucide-react";
-import { ChatPanel } from "@/components/chat/ChatPanel";
 import { DemoControls } from "@/components/layout/DemoControls";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -11,13 +10,16 @@ import { useScope } from "@/hooks/useScope";
 import { useSession } from "@/hooks/useSession";
 import { cn } from "@/lib/utils";
 
+const loadChat = () => import("@/components/chat/ChatPanel");
+const ChatPanel = lazy(() => loadChat().then((m) => ({ default: m.ChatPanel })));
+
 const NAV = [
   { to: "/capture", label: "Capture", roles: ["rep"] },
   { to: "/ledger", label: "Ledger" },
   { to: "/consensus", label: "Consensus", roles: ["lead", "admin"] },
-  { to: "/rules", label: "Lead rules" },
+  { to: "/rules", label: "Lead rules", roles: ["lead", "admin"] },
   { to: "/reps", label: "Track record" },
-  { to: "/data-quality", label: "Data quality" },
+  { to: "/data-quality", label: "Data quality", roles: ["lead", "admin"] },
   { to: "/admin/data", label: "Admin: data", roles: ["admin"] },
   { to: "/admin/users", label: "Admin: users", roles: ["admin"] },
   { to: "/admin/settings", label: "Admin: settings", roles: ["admin"] },
@@ -88,12 +90,21 @@ function AskTheData() {
   if (!user || !meta?.ai.chatEnabled) return null;
   return (
     <>
-      <Button size="sm" variant="secondary" onClick={() => setOpen(true)} data-testid="ask-the-data">
-        <MessageSquare size={14} />
+      <Button
+        size="sm"
+        variant="secondary"
+        onClick={() => setOpen(true)}
+        onPointerEnter={() => void loadChat()}
+        onFocus={() => void loadChat()}
+        data-testid="ask-the-data"
+      >
+        <MessageSquare size={14} aria-hidden="true" />
         Ask the data
       </Button>
       <Sheet open={open} onClose={close} title="Ask the data">
-        <ChatPanel key={user.id} role={user.role} scope={scope} offline={meta.ai.chatMode !== "agent"} />
+        <Suspense fallback={<p className="p-4 text-sm text-muted">Loading…</p>}>
+          <ChatPanel key={user.id} role={user.role} scope={scope} offline={meta.ai.chatMode !== "agent"} />
+        </Suspense>
       </Sheet>
     </>
   );
@@ -109,8 +120,8 @@ function UserMenu() {
           {email} · {user?.role}
         </span>
       </span>
-      <Button size="sm" variant="ghost" onClick={signOut} title="Sign out">
-        <LogOut size={14} />
+      <Button size="sm" variant="ghost" onClick={signOut} title="Sign out" aria-label="Sign out">
+        <LogOut size={14} aria-hidden="true" />
       </Button>
     </div>
   );
@@ -120,6 +131,12 @@ export function AppShell({ children }: { children: ReactNode }) {
   const { user, dataMode } = useSession();
   return (
     <div className="min-h-screen">
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-surface focus:px-3 focus:py-2 focus:text-sm focus:shadow-lg"
+      >
+        Skip to content
+      </a>
       <header className="border-b border-line bg-surface">
         <div className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-3 px-6 pt-3">
           <div className="flex items-center gap-3">
@@ -147,7 +164,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             )}
           </div>
         </div>
-        <nav className="mx-auto flex max-w-[1440px] flex-wrap items-center gap-1 px-6 pb-2 pt-2">
+        <nav aria-label="Main" className="mx-auto flex max-w-[1440px] flex-wrap items-center gap-1 px-6 pb-2 pt-2">
           {NAV.filter((n) => !n.roles || (user && n.roles.includes(user.role))).map((n) => (
             <NavLink
               key={n.to}
@@ -164,7 +181,9 @@ export function AppShell({ children }: { children: ReactNode }) {
           ))}
         </nav>
       </header>
-      <main className="mx-auto max-w-[1440px] px-6 py-6">{children}</main>
+      <main id="main" tabIndex={-1} className="mx-auto max-w-[1440px] px-6 py-6 focus:outline-none">
+        {children}
+      </main>
     </div>
   );
 }

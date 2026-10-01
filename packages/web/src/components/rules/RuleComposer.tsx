@@ -128,7 +128,7 @@ export function RuleComposer({
       )}
       <div className="flex items-center gap-2">
         <Button variant="jev" size="sm" onClick={onCheck} disabled={text.trim().length < 5 || compile.isPending} data-testid="check-rule">
-          <Sparkles size={13} /> {compile.isPending ? "Reading..." : "Check rule"}
+          <Sparkles size={13} /> {compile.isPending ? "Reading…" : "Check rule"}
         </Button>
         <span className="text-[11px] text-muted">The AI only picks from fixed options; the limit and months come from your words.</span>
       </div>
@@ -165,7 +165,7 @@ export function RuleComposer({
           <Preview draft={current} />
           <div className="flex justify-end">
             <Button size="sm" onClick={onActivate} disabled={create.isPending} data-testid="activate-rule">
-              <Gavel size={13} /> {create.isPending ? "Saving..." : "Activate rule"}
+              <Gavel size={13} /> {create.isPending ? "Saving…" : "Activate rule"}
             </Button>
           </div>
         </div>

@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 function Delta({ value, suffix }: { value: number; suffix: string }) {
   return (
-    <span className={cn("tabular text-xs font-medium", value >= 0 ? "text-brand-700" : "text-crit-700")}>
+    <span className="tabular text-xs font-medium text-ink">
       {value >= 0 ? "+" : ""}
       {value.toFixed(1)}
       {suffix}
@@ -20,7 +20,7 @@ export function ShareTile({ impact, megaName = "Mega-segment" }: { impact: Impac
     <Card data-testid="tile-share">
       <CardHeader title="Market share" subtitle="Full-year volume share of the micro-segment" icon={<PieChart size={15} />} />
       <CardBody>
-        <p className="tabular text-3xl font-semibold" data-testid="share-value">
+        <p className="font-num tabular text-2xl font-semibold" data-testid="share-value">
           {fmtPct(impact.volumeShare)}
         </p>
         <p className="tabular mt-0.5 text-xs text-muted">
@@ -36,7 +36,7 @@ export function ShareTile({ impact, megaName = "Mega-segment" }: { impact: Impac
           <span>value share {fmtPct(impact.valueShare)}</span>
         </div>
         <div className="mt-3 border-t border-line pt-2">
-          <p className="text-[11px] font-medium uppercase tracking-wide text-muted">
+          <p className="eyebrow">
             {megaName} value share {fmtPct(impact.megaShare)} ({fmtPts((impact.megaShare - impact.megaShareBaseline) * 100)})
           </p>
           {impact.megaShare > 1 && (
@@ -64,7 +64,7 @@ export function YtgTile({ impact }: { impact: Impact }) {
     <Card data-testid="tile-ytg">
       <CardHeader title="Year to go" subtitle={`${impact.monthsRemaining} open months`} icon={<Target size={15} />} />
       <CardBody>
-        <p className={cn("tabular text-3xl font-semibold", gap >= 0 ? "text-brand-700" : "text-crit-700")} data-testid="ytg-gap">
+        <p className={cn("font-num tabular text-2xl font-semibold", gap >= 0 && "text-brand-700")} data-testid="ytg-gap">
           {gap >= 0 ? "+" : "-"}
           {fmtNum(Math.abs(gap))}
         </p>
@@ -94,13 +94,20 @@ export function HectaresTile({ impact }: { impact: Impact }) {
     <Card data-testid="tile-hectares">
       <CardHeader title="Implied hectares" subtitle="Full-year volume ÷ plant density" icon={<MapIcon size={15} />} />
       <CardBody>
-        <p className={cn("tabular text-3xl font-semibold", ratio > 1 && "text-crit-700")}>
+        <p className={cn("font-num tabular text-2xl font-semibold", ratio > 1 && "text-crit-700")}>
           {fmtNum(impact.impliedHa)} ha
         </p>
         <p className="tabular text-xs text-muted">of {fmtNum(impact.marketHa)} ha planted in the segment</p>
-        <div className="mt-3 h-3 overflow-hidden rounded-full bg-line">
+        <div
+          role="meter"
+          aria-label="Share of planted hectares"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={Math.round(ratio * 100)}
+          className="mt-3 h-1.5 overflow-hidden rounded-full bg-line"
+        >
           <div
-            className={cn("h-full rounded-full", ratio > 1 ? "bg-crit-500" : ratio > 0.85 ? "bg-warn-500" : "bg-brand-500")}
+            className={cn("h-full rounded-full", ratio > 1 ? "bg-crit-500" : ratio > 0.85 ? "bg-warn-500" : "bg-ink/60")}
             style={{ width: `${Math.min(1, ratio) * 100}%` }}
           />
         </div>
@@ -112,22 +119,28 @@ export function HectaresTile({ impact }: { impact: Impact }) {
   );
 }
 
-export function FlagsTile({ flags }: { flags: Flag[] }) {
+/** `shownAbove` is the flag already shown under the demand input; it is not repeated here. */
+export function FlagsTile({ flags, shownAbove }: { flags: Flag[]; shownAbove?: string }) {
+  const listed = flags.filter((f) => f.code !== shownAbove);
   return (
     <Card data-testid="tile-flags" className={cn(flags.some((f) => f.severity === "critical") && "border-crit-500/50")}>
       <CardHeader
-        title="Plausibility"
+        title="Checks"
         subtitle={flags.length ? `${flags.length} flag${flags.length > 1 ? "s" : ""}, justification required` : "Checked against history"}
         icon={flags.length ? <AlertTriangle size={15} /> : <CheckCircle2 size={15} />}
       />
       <CardBody className="flex flex-col gap-2">
+        <p className="sr-only" aria-live="polite">
+          {flags.length ? `${flags.length} check${flags.length > 1 ? "s" : ""} raised` : "No checks raised"}
+        </p>
         {flags.length === 0 && <p className="text-sm text-brand-700">No flags. This number is in line with history.</p>}
-        {flags.map((f) => (
+        {shownAbove && flags.length > 0 && <p className="text-xs text-muted">The main check is shown under your number.</p>}
+        {listed.map((f) => (
           <div
             key={f.code}
             data-testid={`flag-${f.code}`}
             className={cn(
-              "rounded-lg border px-2.5 py-1.5 text-xs",
+              "rounded-md border px-2.5 py-1.5 text-xs",
               f.severity === "critical" ? "border-crit-500/30 bg-crit-50 text-crit-700" : "border-warn-500/30 bg-warn-50 text-warn-700",
             )}
           >

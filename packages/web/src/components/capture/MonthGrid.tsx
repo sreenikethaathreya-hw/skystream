@@ -31,7 +31,9 @@ export function MonthGrid({
       <table className="w-full min-w-[760px] border-separate border-spacing-0 text-xs">
         <thead>
           <tr>
-            <th className="w-20" />
+            <th className="w-20">
+              <span className="sr-only">Row</span>
+            </th>
             {MONTHS.map((name, i) => {
               const m = i + 1;
               const open = m >= ctx.clockMonth;
@@ -39,12 +41,13 @@ export function MonthGrid({
                 <th key={name} className="px-0.5 pb-1">
                   <button
                     disabled={!open}
+                    aria-pressed={m === selectedMonth}
                     onClick={() => onSelect(m)}
                     data-testid={`month-${m}`}
                     className={cn(
                       "w-full rounded-md py-1 text-xs font-medium",
-                      m === selectedMonth && "bg-brand-600 text-white",
-                      m !== selectedMonth && open && "text-ink hover:bg-brand-50",
+                      m === selectedMonth && "bg-ink text-white",
+                      m !== selectedMonth && open && "text-ink hover:bg-canvas",
                       !open && "cursor-default text-muted/60",
                     )}
                   >
@@ -69,7 +72,7 @@ export function MonthGrid({
                     className={cn(
                       "tabular px-1 py-1 text-right",
                       closed && "bg-canvas",
-                      m === selectedMonth && "bg-brand-50",
+                      m === selectedMonth && "bg-ink/[0.06]",
                       row.className,
                     )}
                   >

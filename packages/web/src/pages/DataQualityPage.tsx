@@ -1,6 +1,7 @@
 import { Card, CardBody, CardHeader } from "@/components/ui/card";
+import { PageHeader } from "@/components/ui/page-header";
 import { useDataQuality } from "@/hooks/queries";
-import { humanize } from "@/lib/format";
+import { fmtDecimal, humanize } from "@/lib/format";
 
 const SECTION_TITLES: Record<string, string> = {
   sales: "MV360 Sales (Syngenta 5-year plan)",
@@ -21,7 +22,7 @@ function render(value: unknown): string {
       .map(([k, v]) => `${k}: ${String(v)}`)
       .join(" · ");
   }
-  if (typeof value === "number") return value.toLocaleString("en-US");
+  if (typeof value === "number") return fmtDecimal(value);
   return String(value);
 }
 
@@ -29,12 +30,9 @@ export function DataQualityPage() {
   const { data } = useDataQuality();
   return (
     <div className="flex flex-col gap-4">
-      <div>
-        <h1 className="text-lg font-semibold">Data quality</h1>
-        <p className="text-sm text-muted">
-          What the ingest found and fixed in the source spreadsheets before anything reached the tool.
-        </p>
-      </div>
+      <PageHeader eyebrow="Inputs" title="Data quality">
+        What the ingest found and fixed in the source spreadsheets before anything reached the tool.
+      </PageHeader>
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {data &&
           Object.entries(data).map(([section, values]) => (

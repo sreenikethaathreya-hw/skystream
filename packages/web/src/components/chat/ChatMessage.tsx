@@ -1,6 +1,5 @@
 import { ShieldAlert } from "lucide-react";
 import { ChatSources } from "@/components/chat/ChatSources";
-import { Badge } from "@/components/ui/badge";
 import type { ChatMessage as ChatMessageData } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -22,16 +21,11 @@ export function ChatMessage({ message }: { message: ChatMessageData }) {
           <>
             {message.numbersRedacted && (
               <p className="mt-2 flex items-center gap-1 text-xs text-warn-700" data-testid="chat-redacted">
-                <ShieldAlert size={12} />
+                <ShieldAlert size={12} aria-hidden="true" />
                 Numbers the data could not confirm were removed. See the tables for the figures.
               </p>
             )}
             <ChatSources sources={message.sources} links={message.links} />
-            {message.provider && (
-              <Badge className="mt-2" tone="neutral">
-                {message.provider}
-              </Badge>
-            )}
           </>
         )}
       </div>

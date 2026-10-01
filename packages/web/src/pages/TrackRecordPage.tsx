@@ -1,6 +1,7 @@
 import { EntryCard } from "@/components/ledger/EntryCard";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardBody, CardHeader } from "@/components/ui/card";
+import { PageHeader } from "@/components/ui/page-header";
 import { ProbBar } from "@/components/ui/prob-bar";
 import { useEntries, useReps } from "@/hooks/queries";
 import { fmtPct } from "@/lib/format";
@@ -10,7 +11,7 @@ function Metric({ label, value, hint, bar }: { label: string; value: string; hin
   return (
     <div className="rounded-lg bg-canvas p-3">
       <p className="text-xs text-muted">{label}</p>
-      <p className="tabular text-2xl font-semibold">{value}</p>
+      <p className="font-num tabular text-2xl font-semibold">{value}</p>
       {bar !== undefined && <ProbBar value={bar} tone="brand" className="mt-1" />}
       <p className="mt-1 text-[11px] text-muted">{hint}</p>
     </div>
@@ -49,7 +50,7 @@ function RepCard({ record }: { record: TrackRecord }) {
         </div>
         {resolved.length > 0 && (
           <div className="flex flex-col gap-2">
-            <p className="text-xs font-medium uppercase tracking-wide text-muted">Latest resolved claims</p>
+            <p className="eyebrow">Latest resolved claims</p>
             {resolved.map((e) => (
               <EntryCard key={e.id} entry={e} />
             ))}
@@ -64,13 +65,10 @@ export function TrackRecordPage() {
   const { data } = useReps();
   return (
     <div className="flex flex-col gap-4">
-      <div>
-        <h1 className="text-lg font-semibold">Track record</h1>
-        <p className="text-sm text-muted">
-          Descriptive statistics from resolved claims, not a forecasting model. Shown next to every new entry and used to
-          decide what the consensus meeting discusses.
-        </p>
-      </div>
+      <PageHeader eyebrow="Accountability" title="Track record">
+        Descriptive statistics from resolved claims, not a forecasting model. Shown next to every new entry and used to
+        decide what the consensus meeting discusses.
+      </PageHeader>
       <div className="grid gap-4 xl:grid-cols-2">{data?.map((r) => <RepCard key={r.user.id} record={r} />)}</div>
     </div>
   );

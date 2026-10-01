@@ -8,6 +8,15 @@ async function actAs(page: Page, userId: string) {
   await page.getByLabel("Acting as").selectOption(userId);
 }
 
+async function openResolvedRow(page: Page) {
+  const row = page
+    .getByTestId("ledger-row")
+    .filter({ has: page.getByTestId("claim-stamp").filter({ hasText: /confirmed|contradicted|inconclusive/ }) })
+    .first();
+  await row.getByRole("button", { expanded: false }).first().click();
+  await expect(row.getByTestId("claim-receipt")).toContainText("Resolved against actuals");
+}
+
 test("demo script: capture, flag, structure, submit, consensus, advance, track record", async ({ page, request }) => {
   expect((await request.post("http://localhost:8000/api/demo/reset")).status()).toBe(204);
   await page.goto("/capture");
@@ -84,7 +93,7 @@ test("demo script: capture, flag, structure, submit, consensus, advance, track r
   await page.getByTestId("advance-month").click();
   await expect(page.getByText(/Sep closed, clock now Oct/)).toBeVisible();
   await page.goto("/ledger");
-  await expect(page.getByTestId("ledger-list")).toContainText("Resolved against actuals");
+  await openResolvedRow(page);
   await page.screenshot({ path: `${SHOTS}/05-ledger.png`, fullPage: true });
 
   // 8. Track record and data quality.
@@ -126,6 +135,7 @@ test("lead turns a missed claim into a rule that reps meet on the next keystroke
   await page.reload();
 
   await page.getByLabel("Missed claims only").check();
+  await page.getByTestId("ledger-row").first().getByRole("button", { expanded: false }).click();
   await page.getByTestId("add-rule-from-miss").first().click();
   await page
     .getByLabel("Rule in plain language")
@@ -155,6 +165,7 @@ test("lead turns a missed claim into a rule that reps meet on the next keystroke
   await actAs(page, "lead");
   await page.goto("/rules");
   await page.getByRole("button", { name: "Retire" }).click();
+  await page.getByRole("button", { name: "Confirm retire" }).click();
   await expect(page.getByTestId("rule-card")).toContainText("retired");
 });
 
@@ -209,6 +220,6 @@ test("admin uploads monthly actuals and the rep's claim resolves", async ({ page
   await expect(page.getByText(/1 claims resolved against the new actuals/)).toBeVisible();
 
   await page.goto("/ledger");
-  await expect(page.getByTestId("ledger-list")).toContainText("Resolved against actuals");
+  await openResolvedRow(page);
   await expect(page.getByText(/Oct 2026/).first()).toBeVisible();
 });

@@ -1,5 +1,6 @@
+import { memo, useMemo } from "react";
 import { Badge } from "@/components/ui/badge";
-import { fmtPct } from "@/lib/format";
+import { fmtNum, fmtPct } from "@/lib/format";
 import type { SegmentCube } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -10,7 +11,7 @@ const COLOR_DOT: Record<string, string> = {
   GREEN: "bg-green-500",
 };
 
-export function SegmentList({
+export const SegmentList = memo(function SegmentList({
   segments,
   selectedId,
   onSelect,
@@ -19,28 +20,39 @@ export function SegmentList({
   selectedId: number | undefined;
   onSelect: (id: number) => void;
 }) {
-  const ordered = [...segments].sort(
-    (a, b) => Number(b.editable) - Number(a.editable) || b.context.planQtyKs - a.context.planQtyKs,
+  const ordered = useMemo(
+    () =>
+      [...segments].sort(
+        (a, b) => Number(b.editable) - Number(a.editable) || b.context.planQtyKs - a.context.planQtyKs,
+      ),
+    [segments],
   );
   return (
-    <div className="flex flex-col gap-1.5">
-      <p className="px-1 text-xs font-medium uppercase tracking-wide text-muted">Micro-segments</p>
+    <nav aria-labelledby="segment-list-title" className="flex flex-col gap-1.5">
+      <h2 id="segment-list-title" className="px-1 eyebrow">
+        Micro-segments
+      </h2>
       {ordered.map((s) => {
         const share = s.context.marketQtyKs ? s.context.planQtyKs / s.context.marketQtyKs : 0;
+        const selected = s.id === selectedId;
         return (
           <button
             key={s.id}
             onClick={() => onSelect(s.id)}
+            aria-pressed={selected}
             data-testid={`segment-${s.id}`}
             className={cn(
               "rounded-lg border px-3 py-2 text-left transition-colors",
-              s.id === selectedId ? "border-brand-500 bg-brand-50" : "border-line bg-surface hover:border-brand-100",
+              selected ? "border-brand-500 bg-brand-50" : "border-line bg-surface hover:border-brand-100",
             )}
           >
             <div className="flex items-center justify-between gap-2">
-              <span className="flex items-center gap-2 text-sm font-medium">
-                <span className={cn("size-2 rounded-full", COLOR_DOT[s.color ?? ""] ?? "bg-gray-400")} />
-                {s.label}
+              <span className="flex min-w-0 items-center gap-2 text-sm font-medium">
+                <span
+                  aria-hidden="true"
+                  className={cn("size-2 shrink-0 rounded-full", COLOR_DOT[s.color ?? ""] ?? "bg-gray-400")}
+                />
+                <span className="break-words">{s.label}</span>
               </span>
               <span className="tabular text-xs text-muted">{fmtPct(share)}</span>
             </div>
@@ -48,13 +60,11 @@ export function SegmentList({
               <Badge tone={s.editable ? "brand" : "neutral"}>
                 {s.editable ? "Yours" : s.ownerNames.join(", ") || "Unassigned"}
               </Badge>
-              <span className="tabular text-[11px] text-muted">
-                plan {Math.round(s.context.planQtyKs).toLocaleString("en-US")} KS
-              </span>
+              <span className="tabular text-[11px] text-muted">plan {fmtNum(s.context.planQtyKs)} KS</span>
             </div>
           </button>
         );
       })}
-    </div>
+    </nav>
   );
-}
+});

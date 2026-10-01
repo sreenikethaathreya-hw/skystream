@@ -43,7 +43,7 @@ export function AdminSettingsPage() {
   }, [data]);
 
   if (user?.role !== "admin") return <p className="text-sm text-muted">Only admins can change settings.</p>;
-  if (!form) return <p className="text-sm text-muted">Loading settings...</p>;
+  if (!form) return <p className="text-sm text-muted">Loading settings…</p>;
 
   const onSave = () =>
     save.mutate(form, {

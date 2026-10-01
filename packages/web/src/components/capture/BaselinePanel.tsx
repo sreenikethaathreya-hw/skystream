@@ -25,14 +25,14 @@ function ShareHistory({ ctx, impact }: { ctx: SegmentContext; impact: Impact }) 
   ];
   return (
     <div data-testid="baseline-share-history">
-      <p className="text-[11px] font-medium uppercase tracking-wide text-muted">Syngenta volume share by year</p>
+      <p className="eyebrow">Syngenta volume share by year</p>
       <div className="mt-2 flex flex-col gap-1.5">
         {bars.map((b) => (
           <div key={b.label} className="grid grid-cols-[72px_1fr_48px] items-center gap-2 text-xs">
             <span className={cn("text-muted", b.live && "font-medium text-ink")}>{b.label}</span>
             <div className="h-2 overflow-hidden rounded-full bg-line">
               <div
-                className={cn("h-full rounded-full", b.live ? (b.share > impact.maxHistoricalShare ? "bg-warn-500" : "bg-brand-500") : "bg-muted/50")}
+                className={cn("h-full rounded-full", b.live ? (b.share > impact.maxHistoricalShare ? "bg-warn-500" : "bg-ink") : "bg-muted/40")}
                 style={{ width: `${Math.min(1, b.share / top) * 100}%` }}
               />
             </div>
@@ -77,7 +77,7 @@ export function BaselinePanel({
         <ShareHistory ctx={ctx} impact={impact} />
 
         <div>
-          <p className="text-[11px] font-medium uppercase tracking-wide text-muted">{monthName(month)} benchmarks</p>
+          <p className="eyebrow">{monthName(month)} benchmarks</p>
           <dl className="mt-2 grid grid-cols-2 gap-x-2 gap-y-1 text-xs">
             <Row label="Plan" value={`${fmtNum(impact.monthExpected)} KS`} />
             <Row label="Last year" value={`${fmtNum(impact.monthLastYear)} KS`} />
@@ -86,7 +86,7 @@ export function BaselinePanel({
           </dl>
           {impact.monthHistoryAvg > 0 && (
             <p
-              className={cn("tabular mt-2 text-xs font-medium", Math.abs(vsAvg) > 0.25 ? "text-warn-700" : "text-brand-700")}
+              className={cn("tabular mt-2 text-xs font-medium", Math.abs(vsAvg) > 0.25 ? "text-warn-700" : "text-muted")}
               data-testid="baseline-vs-average"
             >
               {(Math.abs(vsAvg) * 100).toFixed(0)}% {vsAvg >= 0 ? "above" : "below"} the historical {monthName(month)} average
@@ -95,7 +95,7 @@ export function BaselinePanel({
         </div>
 
         <div>
-          <p className="text-[11px] font-medium uppercase tracking-wide text-muted">Market potential</p>
+          <p className="eyebrow">Market potential</p>
           <dl className="mt-2 grid grid-cols-2 gap-x-2 gap-y-1 text-xs">
             <Row label="Planted area" value={`${fmtNum(ctx.marketHectares)} ha`} />
             <Row label="Market volume" value={`${fmtNum(ctx.marketQtyKs)} KS`} />

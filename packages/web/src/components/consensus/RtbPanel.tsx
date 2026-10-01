@@ -31,7 +31,7 @@ export function RtbPanel({ countryCode, segments }: { countryCode: string; segme
             ))}
           </select>
           <Button variant="secondary" onClick={() => draft.mutate({ countryCode, segmentId })} disabled={draft.isPending} data-testid="draft-rtb">
-            {draft.isPending ? "Drafting..." : "Draft RTB"}
+            {draft.isPending ? "Drafting…" : "Draft RTB"}
           </Button>
         </div>
         {draft.data && (

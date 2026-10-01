@@ -4,7 +4,6 @@ import type { Auth, User } from "firebase/auth";
 import { SignInPage } from "@/pages/SignInPage";
 import { useConfig, useMeta } from "@/hooks/queries";
 import { ApiError, getStoredUserId, setTokenProvider, storeUserId } from "@/lib/api";
-import { firebaseAuth, signOutUser, watchUser } from "@/lib/firebase";
 import type { DataMode, DemoUser } from "@/lib/types";
 
 interface SessionState {
@@ -36,14 +35,24 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       setTokenProvider(null);
       return;
     }
-    if (!config.firebase) return;
-    const a = firebaseAuth(config.firebase);
-    setAuth(a);
-    return watchUser(a, (user) => {
-      setFirebaseUser(user);
-      setTokenProvider(user ? () => user.getIdToken() : async () => null);
-      queryClient.invalidateQueries();
+    const firebase = config.firebase;
+    if (!firebase) return;
+    let cancelled = false;
+    let unsubscribe: (() => void) | undefined;
+    void import("@/lib/firebase").then(({ firebaseAuth, watchUser }) => {
+      if (cancelled) return;
+      const a = firebaseAuth(firebase);
+      setAuth(a);
+      unsubscribe = watchUser(a, (user) => {
+        setFirebaseUser(user);
+        setTokenProvider(user ? () => user.getIdToken() : async () => null);
+        queryClient.invalidateQueries();
+      });
     });
+    return () => {
+      cancelled = true;
+      unsubscribe?.();
+    };
   }, [config, queryClient]);
 
   const signedIn = !!config && (!real || !!firebaseUser);
@@ -58,7 +67,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     [queryClient],
   );
   const signOut = useCallback(() => {
-    if (auth) void signOutUser(auth);
+    if (auth) void import("@/lib/firebase").then(({ signOutUser }) => signOutUser(auth));
   }, [auth]);
 
   const value = useMemo<SessionState>(
@@ -73,12 +82,12 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     [config, meta, firebaseUser, setUserId, signOut],
   );
 
-  if (configError) return <Centered>Could not reach the server: {String(configError)}</Centered>;
-  if (!config) return <Centered>Loading...</Centered>;
+  if (configError) return <Centered>Could not reach the server. Check your connection and reload the page.</Centered>;
+  if (!config) return <Centered>Loading…</Centered>;
   if (real && !config.firebase) {
     return <Centered>Sign-in is not configured on the server (FIREBASE_PROJECT_ID / FIREBASE_WEB_API_KEY).</Centered>;
   }
-  if (real && firebaseUser === undefined) return <Centered>Checking your session...</Centered>;
+  if (real && firebaseUser === undefined) return <Centered>Checking your session…</Centered>;
   if (real && !firebaseUser && auth) return <SignInPage auth={auth} />;
   if (metaError instanceof ApiError && metaError.status === 403) {
     return (
@@ -93,7 +102,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       </Centered>
     );
   }
-  if (!meta) return <Centered>Loading your workspace...</Centered>;
+  if (!meta) return <Centered>Loading your workspace…</Centered>;
   return <SessionContext.Provider value={value}>{children}</SessionContext.Provider>;
 }
 

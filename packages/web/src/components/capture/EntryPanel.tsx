@@ -1,4 +1,5 @@
-import { fmtNum, monthName } from "@/lib/format";
+import { useState } from "react";
+import { fmtNum, monthName, parseWhole } from "@/lib/format";
 
 export interface DraftNumbers {
   value: number;
@@ -6,6 +7,13 @@ export interface DraftNumbers {
   highPct: number;
   price: number | null;
 }
+
+const parsePrice = (text: string) => {
+  const n = Number(text.replace(/,/g, ""));
+  return text.trim() === "" || !Number.isFinite(n) ? null : Math.max(0, n);
+};
+
+const INPUT = "tabular h-11 rounded-md border border-line bg-surface px-3";
 
 export function EntryPanel({
   month,
@@ -20,55 +28,64 @@ export function EntryPanel({
   draft: DraftNumbers;
   onChange: (next: DraftNumbers) => void;
 }) {
+  const [demandText, setDemandText] = useState("");
+  const [priceText, setPriceText] = useState("");
+  // Show what the rep typed while it still matches the draft; otherwise the draft changed elsewhere (new cell).
+  const demandShown = parseWhole(demandText) === draft.value ? demandText : fmtNum(draft.value);
+  const priceShown = parsePrice(priceText) === draft.price ? priceText : (draft.price?.toString() ?? "");
   const low = draft.value * (1 - draft.lowPct);
   const high = draft.value * (1 + draft.highPct);
+
   return (
-    <div className="grid gap-4 md:grid-cols-[1.2fr_1fr_0.8fr]">
+    <div className="grid gap-x-8 gap-y-4 md:grid-cols-[1.4fr_1fr_0.8fr] md:items-end">
       <label className="flex flex-col gap-1">
-        <span className="text-xs font-medium text-muted">
-          {monthName(month)} demand (thousand seeds) · plan {fmtNum(planMonth)}
+        <span className="eyebrow">
+          {monthName(month)} demand · thousand seeds · plan {fmtNum(planMonth)}
         </span>
         <input
-          type="number"
+          type="text"
           inputMode="numeric"
-          min={0}
+          name="demand"
+          autoComplete="off"
+          spellCheck={false}
+          placeholder="0"
           data-testid="demand-input"
-          value={Number.isFinite(draft.value) ? draft.value : ""}
-          onChange={(e) => onChange({ ...draft, value: Math.max(0, Number(e.target.value)) })}
-          className="tabular h-14 rounded-xl border border-line bg-surface px-4 text-3xl font-semibold outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
+          value={demandShown}
+          onChange={(e) => {
+            setDemandText(e.target.value);
+            onChange({ ...draft, value: parseWhole(e.target.value) });
+          }}
+          onBlur={() => setDemandText(draft.value ? fmtNum(draft.value) : "")}
+          className="font-num tabular w-full border-0 border-b-2 border-ink bg-transparent px-0 pb-1 text-6xl font-semibold leading-tight tracking-tight placeholder:text-line focus-visible:border-brand-600 focus-visible:outline-none"
         />
       </label>
 
-      <div className="flex flex-col gap-1">
-        <span className="text-xs font-medium text-muted">
-          How sure? Range {fmtNum(low)} to {fmtNum(high)}
+      <div className="flex flex-col gap-1" role="group" aria-label="Range">
+        <span className="eyebrow tabular">
+          How sure? {fmtNum(low)}–{fmtNum(high)}
         </span>
-        <div className="flex flex-col gap-2 rounded-xl border border-line bg-surface px-3 py-2">
-          <RangeRow
-            label="Low"
-            value={draft.lowPct}
-            onChange={(v) => onChange({ ...draft, lowPct: v })}
-            testId="range-low"
-          />
-          <RangeRow
-            label="High"
-            value={draft.highPct}
-            onChange={(v) => onChange({ ...draft, highPct: v })}
-            testId="range-high"
-          />
+        <div className="flex flex-col gap-2 rounded-md border border-line bg-surface px-3 py-2">
+          <RangeRow label="Low" value={draft.lowPct} onChange={(v) => onChange({ ...draft, lowPct: v })} testId="range-low" />
+          <RangeRow label="High" value={draft.highPct} onChange={(v) => onChange({ ...draft, highPct: v })} testId="range-high" />
         </div>
       </div>
 
       <label className="flex flex-col gap-1">
-        <span className="text-xs font-medium text-muted">Net price EUR/KS (optional)</span>
+        <span className="eyebrow">Net price EUR/KS · optional</span>
         <input
-          type="number"
-          min={0}
-          placeholder={`plan ${fmtNum(planNetPrice)}`}
+          type="text"
+          inputMode="decimal"
+          name="net-price"
+          autoComplete="off"
+          spellCheck={false}
+          placeholder={`plan ${fmtNum(planNetPrice)}…`}
           data-testid="price-input"
-          value={draft.price ?? ""}
-          onChange={(e) => onChange({ ...draft, price: e.target.value === "" ? null : Number(e.target.value) })}
-          className="tabular h-14 rounded-xl border border-line bg-surface px-4 text-lg outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
+          value={priceShown}
+          onChange={(e) => {
+            setPriceText(e.target.value);
+            onChange({ ...draft, price: parsePrice(e.target.value) });
+          }}
+          className={`${INPUT} text-lg`}
         />
       </label>
     </div>
@@ -99,7 +116,10 @@ function RangeRow({
         onChange={(e) => onChange(Number(e.target.value))}
         className="flex-1 accent-brand-600"
       />
-      <span className="tabular w-10 text-right">{label === "Low" ? "-" : "+"}{Math.round(value * 100)}%</span>
+      <span className="tabular w-10 text-right">
+        {label === "Low" ? "−" : "+"}
+        {Math.round(value * 100)}%
+      </span>
     </label>
   );
 }

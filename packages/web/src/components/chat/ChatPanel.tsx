@@ -2,11 +2,10 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Loader2, MessageSquarePlus, Send, Trash2 } from "lucide-react";
 import { ChatMessage } from "@/components/chat/ChatMessage";
 import { Button } from "@/components/ui/button";
+import { ConfirmButton } from "@/components/ui/confirm-button";
 import { useCreateChatSession, useDeleteChatSession, useSendChatMessage } from "@/hooks/mutations";
 import { useChatSession, useChatSessions } from "@/hooks/queries";
 import type { ChatMessage as ChatMessageData, Role, Scope } from "@/lib/types";
-import { cn } from "@/lib/utils";
-
 const STARTERS: Record<Role, string[]> = {
   rep: [
     "Which segments can I ask about?",
@@ -46,9 +45,14 @@ export function ChatPanel({
   const sendMessage = useSendChatMessage();
   const deleteSession = useDeleteChatSession();
   const bottom = useRef<HTMLDivElement>(null);
+  const input = useRef<HTMLTextAreaElement>(null);
 
   const messages: ChatMessageData[] = history.data?.messages ?? [];
   const busy = sendMessage.isPending || createSession.isPending;
+
+  useEffect(() => {
+    input.current?.focus();
+  }, []);
 
   useEffect(() => {
     bottom.current?.scrollIntoView?.({ block: "end" });
@@ -65,7 +69,8 @@ export function ChatPanel({
       setSessionId(id);
       await sendMessage.mutateAsync({ sessionId: id, text: question, scope });
     } catch (err) {
-      setError(err instanceof Error ? err.message : "The question could not be answered");
+      const reason = err instanceof Error ? err.message : "The question could not be answered.";
+      setError(`${reason} Your question is back in the box; try again or rephrase it.`);
       setDraft(question);
     } finally {
       setPending(null);
@@ -93,30 +98,43 @@ export function ChatPanel({
             </option>
           ))}
         </select>
-        <Button size="sm" variant="ghost" onClick={() => setSessionId(null)} title="New conversation">
-          <MessageSquarePlus size={14} />
-        </Button>
         <Button
+          size="sm"
+          variant="ghost"
+          onClick={() => setSessionId(null)}
+          title="New conversation"
+          aria-label="New conversation"
+        >
+          <MessageSquarePlus size={14} aria-hidden="true" />
+        </Button>
+        <ConfirmButton
           size="sm"
           variant="ghost"
           disabled={!sessionId || deleteSession.isPending}
           title="Delete conversation"
-          onClick={() => {
+          aria-label="Delete conversation"
+          confirmLabel="Delete?"
+          onConfirm={() => {
             if (!sessionId) return;
             deleteSession.mutate(sessionId, { onSuccess: () => setSessionId(null) });
           }}
         >
-          <Trash2 size={14} />
-        </Button>
+          <Trash2 size={14} aria-hidden="true" />
+        </ConfirmButton>
       </div>
 
       {offline && (
         <p className="border-b border-line bg-warn-50 px-4 py-2 text-xs text-warn-700" data-testid="chat-offline">
-          Limited answers (offline): Gemini is off, so answers come from fixed templates, one table per question.
+          Short answers only right now: each answer is one table from the data.
         </p>
       )}
 
-      <div className="min-h-0 flex-1 space-y-3 overflow-y-auto px-4 py-3" data-testid="chat-thread">
+      <div
+        role="log"
+        aria-live="polite"
+        className="min-h-0 flex-1 space-y-3 overflow-y-auto overscroll-contain px-4 py-3"
+        data-testid="chat-thread"
+      >
         {!messages.length && !pending && (
           <div className="space-y-3 text-sm text-muted">
             <p>
@@ -168,18 +186,18 @@ export function ChatPanel({
       )}
       <form onSubmit={onSubmit} className="flex items-end gap-2 border-t border-line px-4 py-3">
         <textarea
+          ref={input}
+          data-autofocus
+          name="question"
           aria-label="Ask a question about the data"
-          className={cn(
-            "min-h-10 flex-1 resize-none rounded-lg border border-line bg-surface px-3 py-2 text-sm text-ink",
-            "focus:outline-none focus:ring-2 focus:ring-brand-500/40",
-          )}
+          className="min-h-10 flex-1 resize-none rounded-lg border border-line bg-surface px-3 py-2 text-sm text-ink"
           rows={2}
           maxLength={MAX_LENGTH}
-          placeholder="e.g. How is 2482 tracking against plan?"
+          placeholder="e.g. How is 2482 tracking against plan…"
           value={draft}
           onChange={(e) => setDraft(e.target.value)}
           onKeyDown={(e) => {
-            if (e.key === "Enter" && !e.shiftKey) {
+            if (e.key === "Enter" && !e.shiftKey && !e.nativeEvent.isComposing) {
               e.preventDefault();
               void ask(draft);
             }

@@ -94,8 +94,8 @@ export function evaluateFlags(
       code: "month_outlier",
       severity: "warning",
       message:
-        `${num(entry.value)} KS is ${signed(impact.monthZ, 1)} sigma from the plan for this month ` +
-        `(${num(impact.monthExpected)}) and far from last year (${num(impact.monthLastYear)})` +
+        `${num(entry.value)} KS is far from the plan for this month ` +
+        `(${num(impact.monthExpected)}) and from last year (${num(impact.monthLastYear)})` +
         (impact.monthHistoryAvg > 0 && !flags.some((f) => f.code === "share_jump")
           ? `; ${vsAverage(entry, impact)}.`
           : "."),

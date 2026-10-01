@@ -8,7 +8,7 @@ function Stat({ label, value, tone }: { label: string; value: number; tone?: str
   return (
     <div className="rounded-lg bg-canvas px-3 py-2">
       <p className="text-[11px] text-muted">{label}</p>
-      <p className={`tabular text-lg font-semibold ${tone ?? ""}`}>{fmtNum(value)}</p>
+      <p className={`font-num tabular text-lg font-semibold ${tone ?? ""}`}>{fmtNum(value)}</p>
     </div>
   );
 }
@@ -50,7 +50,7 @@ export function BatchPreview({
         </div>
         {!!report.warnings?.length && (
           <div>
-            <p className="text-xs font-medium uppercase tracking-wide text-muted">Warnings</p>
+            <p className="eyebrow">Warnings</p>
             <ul className="mt-1 flex flex-col gap-1 text-sm">
               {report.warnings.map((w) => (
                 <li key={w.message} className="flex justify-between gap-3 rounded bg-warn-50 px-2 py-1 text-warn-700">
@@ -73,7 +73,7 @@ export function BatchPreview({
         )}
         {!!report.rejects?.length && (
           <div>
-            <p className="text-xs font-medium uppercase tracking-wide text-muted">
+            <p className="eyebrow">
               Rejected rows {report.rejectsTruncated ? `(first ${report.rejects.length})` : ""}
             </p>
             <div className="mt-1 max-h-56 overflow-auto rounded border border-line">
@@ -107,7 +107,7 @@ export function BatchPreview({
               Discard
             </Button>
             <Button onClick={onCommit} disabled={busy || batch.accepted === 0} data-testid="commit-upload">
-              {busy ? "Working..." : `Commit ${fmtNum(batch.accepted)} rows`}
+              {busy ? "Working…" : `Commit ${fmtNum(batch.accepted)} rows`}
             </Button>
           </div>
         )}

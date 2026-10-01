@@ -5,12 +5,15 @@ type Variant = "primary" | "secondary" | "ghost" | "danger" | "jev";
 type Size = "sm" | "md";
 
 const variants: Record<Variant, string> = {
-  primary: "bg-brand-600 text-white hover:bg-brand-700 disabled:bg-brand-600/50",
-  secondary: "bg-surface text-ink border border-line hover:bg-canvas disabled:opacity-50",
-  ghost: "text-muted hover:bg-canvas hover:text-ink disabled:opacity-50",
-  danger: "bg-crit-500 text-white hover:bg-crit-700 disabled:opacity-50",
-  jev: "bg-jev text-white hover:opacity-90 disabled:opacity-50",
+  primary: "bg-brand-600 text-white hover:bg-brand-700",
+  secondary: "bg-surface text-ink border border-line hover:bg-canvas",
+  ghost: "text-muted hover:bg-canvas hover:text-ink disabled:bg-transparent disabled:text-muted/50",
+  danger: "bg-crit-500 text-white hover:bg-crit-700",
+  jev: "bg-jev text-white hover:bg-jev/90",
 };
+
+// Filled buttons go flat grey when disabled, so they never read as clickable.
+const DISABLED = "disabled:cursor-not-allowed disabled:border-transparent disabled:bg-line disabled:text-muted";
 
 const sizes: Record<Size, string> = {
   sm: "h-8 px-3 text-xs",
@@ -26,7 +29,8 @@ export function Button({
   return (
     <button
       className={cn(
-        "inline-flex items-center justify-center gap-1.5 rounded-lg font-medium transition-colors disabled:cursor-not-allowed",
+        "inline-flex items-center justify-center gap-1.5 rounded-lg font-medium transition-colors",
+        DISABLED,
         variants[variant],
         sizes[size],
         className,

@@ -16,17 +16,17 @@ export function TrackRecordInline({ userId }: { userId: string }) {
       />
       <CardBody className="tabular grid grid-cols-3 gap-2 text-center text-xs">
         <div>
-          <p className="text-lg font-semibold">{record.claimHitRate == null ? "-" : fmtPct(record.claimHitRate, 0)}</p>
+          <p className="font-num tabular text-lg font-semibold">{record.claimHitRate == null ? "-" : fmtPct(record.claimHitRate, 0)}</p>
           <p className="text-muted">claims right</p>
         </div>
         <div>
-          <p className="text-lg font-semibold">
+          <p className="font-num tabular text-lg font-semibold">
             {record.biasPct == null ? "-" : `${record.biasPct >= 0 ? "+" : ""}${fmtPct(record.biasPct, 0)}`}
           </p>
           <p className="text-muted">bias</p>
         </div>
         <div>
-          <p className="text-lg font-semibold">{record.rangeCoverage == null ? "-" : fmtPct(record.rangeCoverage, 0)}</p>
+          <p className="font-num tabular text-lg font-semibold">{record.rangeCoverage == null ? "-" : fmtPct(record.rangeCoverage, 0)}</p>
           <p className="text-muted">in range</p>
         </div>
       </CardBody>

@@ -4,6 +4,8 @@ import { EntryCard } from "@/components/ledger/EntryCard";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardBody, CardHeader } from "@/components/ui/card";
+import { ConfirmButton } from "@/components/ui/confirm-button";
+import { PageHeader } from "@/components/ui/page-header";
 import { ProbBar } from "@/components/ui/prob-bar";
 import { useToast } from "@/components/ui/toast";
 import { useBulkApprove, useDecide } from "@/hooks/mutations";
@@ -52,9 +54,15 @@ function ExceptionCard({ item, canDecide }: { item: QueueItem; canDecide: boolea
             <Button size="sm" variant="secondary" onClick={() => act("discuss")} disabled={decide.isPending}>
               Discuss
             </Button>
-            <Button size="sm" variant="danger" onClick={() => act("challenge")} disabled={decide.isPending}>
+            <ConfirmButton
+              size="sm"
+              variant="secondary"
+              onConfirm={() => act("challenge")}
+              confirmLabel="Confirm challenge"
+              disabled={decide.isPending}
+            >
               Challenge
-            </Button>
+            </ConfirmButton>
           </div>
         )}
       </div>
@@ -78,17 +86,15 @@ export function ConsensusPage() {
   return (
     <div className="grid gap-6 xl:grid-cols-[1fr_380px]">
       <section className="flex flex-col gap-4">
-        <div className="flex flex-wrap items-end justify-between gap-3">
-          <div>
-            <h1 className="text-lg font-semibold">Consensus: exceptions only</h1>
-            <p className="text-sm text-muted">
-              The meeting only covers flagged numbers, wide ranges and reps with a weak track record. Everything else is
-              approved in bulk.
-            </p>
-          </div>
-          {!isLead && <Badge tone="warn">Only a consensus lead can decide</Badge>}
-        </div>
-        {isLoading && <p className="text-sm text-muted">Loading queue...</p>}
+        <PageHeader
+          eyebrow="Monthly meeting"
+          title="Consensus: exceptions only"
+          actions={!isLead && <Badge tone="warn">Only a consensus lead can decide</Badge>}
+        >
+          The meeting only covers flagged numbers, wide ranges and reps with a weak track record. Everything else is
+          approved in bulk.
+        </PageHeader>
+        {isLoading && <p className="text-sm text-muted">Loading queue…</p>}
         <div className="flex flex-col gap-3" data-testid="exceptions">
           {queue?.exceptions.map((item) => <ExceptionCard key={item.entry.id} item={item} canDecide={isLead} />)}
           {queue && queue.exceptions.length === 0 && (
