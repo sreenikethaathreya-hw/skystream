@@ -178,7 +178,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               <g clipPath="url(#clip)">
                 <path d="M2 30 L2 19 L7 21 L12 15 L17 18 L22 11 L27 14 L32 8 L32 30Z" fill="url(#mtn)" />
                 <line x1="22" y1="12" x2="22" y2="30" stroke="#fff" strokeWidth="2" />
-                <line x1="22" y1="12" x2="22" y2="30" stroke="#7dd3fc" strokeWidth="1" />
+                <line x1="22" y1="12" x2="22" y2="30" stroke="#87CEEB" strokeWidth="1" />
                 <polyline points="2,19 7,21 12,15 17,18 22,11 27,14 32,8" fill="none" stroke="#fff" strokeWidth="1.5" />
                 <circle cx="12" cy="15" r="2" fill="#f97316" stroke="#fff" strokeWidth="1" />
                 <circle cx="22" cy="11" r="2" fill="#f97316" stroke="#fff" strokeWidth="1" />
@@ -187,7 +187,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               </g>
             </svg>
             <div className="leading-tight">
-              <p className="text-[17px] font-semibold tracking-tight">Skystream</p>
+              <p className="text-[17px] font-semibold tracking-tight"><span style={{ color: '#87CEEB' }}>Sky</span>stream</p>
               <p className="eyebrow">Defensible demand ledger</p>
             </div>
             <span aria-hidden="true" className="mx-1 hidden h-8 w-px bg-line sm:block" />

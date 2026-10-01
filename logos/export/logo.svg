@@ -57,7 +57,7 @@
       
       <!-- Projection line - Light blue with white outline -->
       <line x1="190" y1="240" x2="190" y2="360" stroke="#ffffff" stroke-width="8" stroke-linecap="round"/>
-      <line x1="190" y1="240" x2="190" y2="360" stroke="#7dd3fc" stroke-width="4" stroke-linecap="round"/>
+      <line x1="190" y1="240" x2="190" y2="360" stroke="#87CEEB" stroke-width="4" stroke-linecap="round"/>
       
       <!-- Trend line on mountain peaks -->
       <polyline points="40,290 70,310 100,250 130,275 160,210 190,235 220,175 240,195" 
@@ -97,7 +97,7 @@
   <!-- Wordmark Group -->
   <g id="wordmark">
     <text x="280" y="270" font-family="Helvetica, Arial, sans-serif" font-weight="600" font-size="72">
-      <tspan fill="#0284c7">Sky</tspan><tspan fill="#1e293b">stream</tspan>
+      <tspan fill="#87CEEB">Sky</tspan><tspan fill="#1e293b">stream</tspan>
     </text>
   </g>
 </svg>
