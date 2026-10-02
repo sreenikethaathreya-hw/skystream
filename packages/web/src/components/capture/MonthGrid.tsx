@@ -1,4 +1,4 @@
-import { SERIES, monthPoints, type MonthPoint } from "@/components/capture/MonthChart";
+import { SERIES, monthPoints, vsPlanText, type MonthPoint } from "@/components/capture/MonthChart";
 import { MONTHS, fmtNum } from "@/lib/format";
 import type { SegmentCube } from "@/lib/types";
 import { cn } from "@/lib/utils";
@@ -18,11 +18,6 @@ function value(point: MonthPoint, key: SeriesKey): number | null {
 
 function vsPlan(point: MonthPoint): number | null {
   return point.demand !== null && point.plan ? ((point.demand - point.plan) / point.plan) * 100 : null;
-}
-
-function signed(pct: number): string {
-  if (Math.abs(pct) < 0.5) return "on plan";
-  return `${pct > 0 ? "+" : ""}${pct.toFixed(0)}%`;
 }
 
 function total(points: MonthPoint[], key: SeriesKey): number | null {
@@ -167,7 +162,7 @@ export function MonthGrid({
                   className={cn("tabular py-2 text-[11px]", columnClass(p), far ? "font-semibold text-ink" : "text-muted")}
                   data-testid={`vs-plan-${p.month}`}
                 >
-                  {pct === null ? "" : signed(pct)}
+                  {pct === null ? "" : vsPlanText(pct)}
                 </td>
               );
             })}

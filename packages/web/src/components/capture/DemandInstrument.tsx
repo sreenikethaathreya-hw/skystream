@@ -44,11 +44,20 @@ function groupMarkers(markers: Marker[], axis: Axis) {
 
 const shareAxis = (max: number): Axis => ({ min: 0, span: max });
 
-/** Moves an absolutely positioned child along the full axis width with a transform, not `left`. */
+/**
+ * Moves an absolutely positioned child along the full axis width with a transform, not `left`.
+ * The rail stays put and only a zero-width mover travels, in container units (`cqw`): translating a full-width box
+ * by a percentage pushed it past the right edge and gave the whole page a horizontal scroll.
+ */
 function Slider({ at, className, children }: { at: string; className?: string; children: React.ReactNode }) {
   return (
-    <div className={cn("pointer-events-none absolute inset-x-0 transition-transform duration-200 ease-out", className)} style={{ transform: `translateX(${at})` }}>
-      {children}
+    <div className={cn("pointer-events-none absolute inset-x-0 [container-type:inline-size]", className)}>
+      <div
+        className="absolute inset-y-0 left-0 w-0 transition-transform duration-200 ease-out"
+        style={{ transform: `translateX(${at.replace("%", "cqw")})` }}
+      >
+        {children}
+      </div>
     </div>
   );
 }

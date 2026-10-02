@@ -49,9 +49,20 @@ export function niceMax(value: number): number {
   return step * power;
 }
 
-function compact(value: number): string {
-  if (value >= 1000) return `${fmtNum(value / 1000)}k`;
+/** Axis ticks keep one decimal in thousands, so 1,500 reads "1.5k" and never repeats its neighbour. */
+export function compact(value: number): string {
+  if (value >= 1000) return `${Number((value / 1000).toFixed(1))}k`;
   return fmtNum(value);
+}
+
+/**
+ * Demand against plan in words: "on plan", a signed percent, or a multiple once it passes 10x
+ * (a plan of 1 KS would otherwise print "+899900%").
+ */
+export function vsPlanText(pct: number, suffix = ""): string {
+  if (Math.abs(pct) < 0.5) return "on plan";
+  if (pct >= 900) return `${fmtNum(1 + pct / 100)}× plan`;
+  return `${pct > 0 ? "+" : ""}${pct.toFixed(0)}%${suffix}`;
 }
 
 function useWidth<T extends HTMLElement>() {
@@ -115,11 +126,7 @@ function Tooltip({ point, left }: { point: MonthPoint; left: number }) {
       ))}
       {vsPlan !== null && (
         <p className="mt-1 border-t border-line pt-1 text-muted">
-          Demand vs plan{" "}
-          <span className="tabular font-medium text-ink">
-            {vsPlan >= 0 ? "+" : ""}
-            {vsPlan.toFixed(1)}%
-          </span>
+          Demand vs plan <span className="tabular font-medium text-ink">{vsPlanText(vsPlan)}</span>
         </p>
       )}
     </div>
@@ -248,9 +255,7 @@ export function MonthChart({
               {fmtNum(selected.demand)}
               {selectedVsPlan !== null && (
                 <tspan x={x(selectedMonth)} dy="1.2em" className="fill-muted text-[10px] font-medium">
-                  {Math.abs(selectedVsPlan) < 0.5
-                    ? "on plan"
-                    : `${selectedVsPlan > 0 ? "+" : ""}${selectedVsPlan.toFixed(0)}% vs plan`}
+                  {vsPlanText(selectedVsPlan, " vs plan")}
                 </tspan>
               )}
             </text>
